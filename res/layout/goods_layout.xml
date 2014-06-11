@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="#ffffff"
+        >
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:padding="10dp"
+                      android:orientation="vertical">
+            <LinearLayout android:layout_width="340dp"
+                          android:layout_height="140dp"
+                          android:background="#cccccc"
+                          android:orientation="horizontal"
+                          android:padding="20dp">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="货主："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="货物类型："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="重量："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                </LinearLayout>
+                <Button android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="请求"
+                        android:background="#999999"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:padding="10dp"
+                      android:orientation="vertical">
+            <LinearLayout android:layout_width="340dp"
+                          android:layout_height="140dp"
+                          android:background="#cccccc"
+                          android:orientation="horizontal"
+                          android:padding="20dp">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="vertical"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="货主："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="货物类型："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="重量："
+                              android:textColor="#000000"
+                              android:textSize="25dp"/>
+                </LinearLayout>
+                <Button android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:text="请求"
+                        android:background="#999999"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_alignParentBottom="true"
+                  android:clipToPadding="false">
+        <Button android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="发送"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+        <Button android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="查看"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+        <Button android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="我的"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+    </LinearLayout>
+</RelativeLayout>
+

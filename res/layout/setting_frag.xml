@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_weight="1"
+                  android:background="#cccccc">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="用户名："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+            <TextView android:id="@+id/setting_user"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="角色："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+            <TextView android:id="@+id/setting_userType"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="称呼："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+            <TextView android:id="@+id/setting_nickName"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button android:id="@+id/setting_unregister"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="注销"
+            android:textSize="30dp"/>
+</LinearLayout>

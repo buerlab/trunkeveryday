@@ -1,0 +1,42 @@
+billCol
+[
+{
+	"type":"trunk"/"goods"
+	"from":"深圳福田区"
+	"to":"广州天河区"
+	"price":1000
+	"weight":1000(kg)
+	"time":datetime()
+	"sender":ObjectId()
+	"receiver":ObjectId() #could be None
+}
+]
+
+
+userCol:
+[
+{
+	"_id":ObjectId()
+	"username":"zql"
+	"psw":"fine"
+	"regtime":13898394849
+	#----------
+	#opt
+	"IDNum":"440881198810086159"
+	"lisence":"fdsfads"   
+	"useTrunk":ObjectId()
+	"owntrunks":[ObjectId()]
+}
+]
+
+
+trunkCol
+[
+{
+	"_id":
+	"licensePlate":"粤ASH890"
+	"type":"东风"
+	"load":1500(kg)
+}
+
+]

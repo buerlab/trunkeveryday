@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">returntrunk</string>
+    <string name="server_addr">http://115.29.8.74:9288/</string>
+    <string name="server_port">8888</string>
+    <string name="debug_log">DEBUG_FROM_APP</string>
+</resources>
