@@ -51,8 +51,8 @@ public class NewBillDialog extends DialogFragment {
         final View view = inflater.inflate(User.getInstance().getNewBillDialog(), null);
         final EditText tFrom = (EditText)view.findViewById(R.id.new_bill_dialog_from);
         final EditText tTo = (EditText)view.findViewById(R.id.new_bill_dialog_to);
-        final DatePicker datePicker = null;//(DatePicker)view.findViewById(R.id.new_bill_dialog_date);
         final TimePicker timePicker = (TimePicker)view.findViewById(R.id.new_bill_dialog_time);
+        final String billtype = User.getInstance().getBillType();
 
         builder.setView(view)
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -62,13 +62,18 @@ public class NewBillDialog extends DialogFragment {
                         String timeStr = calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + " "
                                 + timePicker.getCurrentHour() + ":" + timePicker.getCurrentMinute() + ":00";
                         DateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-                        String billtype = User.getInstance().getBillType();
+
                         try {
                             Date date = format.parse(timeStr);
                             Bill bill = new Bill(billtype, tFrom.getText().toString(), tTo.getText().toString(), String.valueOf(date.getTime()));
                             if(billtype == Bill.BILLTYPE_GOODS){
-                                EditText mat = (EditText)view.findViewById(R.id.new_bill_dialog_mat);
-                                bill.setGoodsInfo(mat.getText().toString(), 0, 0);
+                                EditText matT = (EditText)view.findViewById(R.id.new_bill_dialog_mat);
+                                EditText weightT = (EditText)view.findViewById(R.id.new_bill_dialog_weight);
+                                EditText priceT = (EditText)view.findViewById(R.id.new_bill_dialog_price);
+                                EditText commentT = (EditText)view.findViewById(R.id.new_bill_dialog_comment);
+                                float price = Float.parseFloat(priceT.getText().toString());
+                                float weight = Float.parseFloat(weightT.getText().toString());
+                                bill.setGoodsInfo(matT.getText().toString(), price, weight, commentT.getText().toString());
                             }
                             mListener.onNewBillDialogConfirm(bill);
 

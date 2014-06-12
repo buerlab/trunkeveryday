@@ -60,9 +60,7 @@ public class PickUserTypeActivity extends Activity {
                     User.getInstance().setUserType(type);
                     User.getInstance().nickName = nickname;
 
-                    Intent intent = new Intent(self, MainActivity.class);
-                    self.startActivity(intent);
-                    self.finish();
+                    Utils.safeSwitchToMainActivity(self);
                 }
                 else{
                     Utils.defaultNetProAction(self, result);

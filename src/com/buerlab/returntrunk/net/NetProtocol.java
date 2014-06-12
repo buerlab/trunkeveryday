@@ -1,6 +1,8 @@
 package com.buerlab.returntrunk.net;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 /**
  * Created by zhongqiling on 14-5-29.
@@ -23,11 +25,13 @@ public class NetProtocol {
     public int code;
     public String msg = "";
     public JSONObject data = null;
+    public JSONArray arrayData = null;
 
-    public NetProtocol(int _code, String _msg, JSONObject _data){
+    public NetProtocol(int _code, String _msg, JSONObject _data, JSONArray _arrayData){
         code = _code;
         msg = _msg;
         data = _data;
+        arrayData = _arrayData;
     }
 
 }

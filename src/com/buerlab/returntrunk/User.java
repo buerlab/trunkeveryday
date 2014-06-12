@@ -2,9 +2,11 @@ package com.buerlab.returntrunk;
 
 import android.util.Log;
 import android.widget.Toast;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,6 +32,7 @@ public class User {
     private int newBill;
 
     public String driveLisence = "";
+    public List<Trunk> trunks;
 
     static private User instance = null;
     static public User getInstance(){
@@ -52,6 +55,7 @@ public class User {
         newBill = R.layout.new_bill_trunk;
 
         driveLisence = "";
+        trunks = new ArrayList<Trunk>();
     }
 
     public void initUser(JSONObject obj){
@@ -67,6 +71,8 @@ public class User {
                 setUserType(obj.getString("userType"));
             if(obj.has("nickName"))
                 this.nickName = obj.getString("nickName");
+            if(obj.has("trunks"))
+                this.trunks = extractArray(obj.getJSONArray("trunks"));
 
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
@@ -97,6 +103,10 @@ public class User {
         mBills.add(bill);
     }
 
+    public void addTrunk(Trunk trunk){
+        trunks.add(trunk);
+    }
+
     public List<Bill> getBills(){
         return mBills;
     }
@@ -117,5 +127,23 @@ public class User {
         return newBill;
     }
 
+    private List<Trunk> extractArray(JSONArray data){
+        List<Trunk> result = new ArrayList<Trunk>();
+
+        try{
+            for(int i = 0; i < data.length(); i++) {
+                JSONObject d = data.getJSONObject(i);
+                String type = d.has("type") ? d.getString("type") : "";
+                float length = d.has("length") ? Float.valueOf(d.getString("length")) : 0.0f;
+                float load = d.has("load") ? Float.valueOf(d.getString("load")) : 0.0f;
+                String lisence = d.has("licensePlate") ? d.getString("licensePlate") : "";
+                result.add(new Trunk(type, length, load, lisence));
+            }
+            return result;
+        }catch (JSONException e){
+            Log.d("EXRACT TRUNK ERROR INIT USER", e.toString());
+            return null;
+        }
+    }
 
 }

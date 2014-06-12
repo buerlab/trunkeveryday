@@ -14,7 +14,21 @@
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="用户名："
+                      android:text="称呼："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+            <TextView android:id="@+id/setting_nickName"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="手机号："
                       android:textSize="26dp"
                       android:textColor="#000000"/>
             <TextView android:id="@+id/setting_user"
@@ -28,10 +42,35 @@
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="角色："
+                      android:text="身份证号："
                       android:textSize="26dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_userType"
+            <TextView android:id="@+id/setting_IDNum"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+        </LinearLayout>
+        <TextView android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="车辆:"
+                  android:textSize="26dp"
+                  android:textColor="#000000"/>
+        <LinearLayout android:id="@+id/setting_trunks"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="评价："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+            <TextView android:id="@+id/setting_judgement"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="26dp"
@@ -42,15 +81,33 @@
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="称呼："
+                      android:text="push设置："
                       android:textSize="26dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_nickName"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
+            <ToggleButton android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"/>
         </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="切换身份："
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="关于我们"
+                      android:textSize="26dp"
+                      android:textColor="#000000"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

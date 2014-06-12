@@ -4,4 +4,5 @@
     <string name="server_addr">http://115.29.8.74:9288/</string>
     <string name="server_port">8888</string>
     <string name="debug_log">DEBUG_FROM_APP</string>
+    <integer name="normal_font_size">26</integer>
 </resources>

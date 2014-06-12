@@ -31,12 +31,8 @@ public class EntryActivity extends Activity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("userId", User.getInstance().userId);
                     editor.commit();
-                    if(User.getInstance().getUserType().length() == 0){
-                        self.startActivity(new Intent(self, PickUserTypeActivity.class));
-                    }else{
-                        self.startActivity(new Intent(self, MainActivity.class));
-                    }
-                    self.finish();
+
+                    Utils.safeSwitchToMainActivity(self);
                 }
                 else{
                     Intent intent = new Intent(self, LoginActivity.class);

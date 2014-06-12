@@ -75,12 +75,7 @@ public class LoginActivity extends Activity {
                     editor.putString("userId", User.getInstance().userId);
                     editor.commit();
 
-                    if(User.getInstance().getUserType().isEmpty()){
-                        self.startActivity(new Intent(self, PickUserTypeActivity.class));
-                    }else{
-                        self.startActivity(new Intent(self, MainActivity.class));
-                    }
-                    self.finish();
+                    Utils.safeSwitchToMainActivity(self);
                 }else{
                     Utils.defaultNetProAction(self, result);
                 }

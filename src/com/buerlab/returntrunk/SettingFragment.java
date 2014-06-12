@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +24,17 @@ public class SettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.setting_frag, container, false);
         TextView userText = (TextView)view.findViewById(R.id.setting_user);
         userText.setText(User.getInstance().username);
-        TextView typeText = (TextView)view.findViewById(R.id.setting_userType);
-        typeText.setText(User.getInstance().getUserType());
         TextView nickNameText = (TextView)view.findViewById(R.id.setting_nickName);
         nickNameText.setText(User.getInstance().nickName);
+
+        ViewGroup trunksContainer = (ViewGroup)view.findViewById(R.id.setting_trunks);
+        for(Trunk trunk : User.getInstance().trunks){
+            TextView textView = new TextView(getActivity());
+            textView.setTextColor(0);
+            textView.setTextSize(24);
+            textView.setText(trunk.toString());
+            trunksContainer.addView(textView);
+        }
 
         final Activity activity = getActivity();
         Button unregisterBtn = (Button)view.findViewById(R.id.setting_unregister);

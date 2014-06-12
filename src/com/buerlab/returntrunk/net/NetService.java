@@ -6,11 +6,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
+import java.security.Key;
 import java.util.*;
 
 /**
@@ -22,9 +24,9 @@ public class NetService {
         public void onCall(NetProtocol result);
     }
 
-    public interface BillsCallBack{
-        public void onCall(NetProtocol result, List<Bill> bills);
-    }
+    public interface UserCallBack{ public void onCall(NetProtocol result, JSONObject userData); }
+
+    public interface BillsCallBack{ public void onCall(NetProtocol result, List<Bill> bills); }
 
     private Activity mActivity = null;
 
@@ -57,6 +59,10 @@ public class NetService {
         request(mActivity.getString(R.string.server_addr)+"api/user", createReqParms(parms), "PUT", callback);
     }
 
+    public void addUserTrunk(Trunk trunk, NetCallBack callback){
+        request(mActivity.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
+    }
+
 
     //////////////////////////
     //BILLS
@@ -70,8 +76,8 @@ public class NetService {
         request(mActivity.getString(R.string.server_addr) + "api/bill", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.data != null){
-                    callBack.onCall(result, extractBills(result.data));
+                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                    callBack.onCall(result, extractBills(result.arrayData));
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -94,8 +100,8 @@ public class NetService {
         request(mActivity.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.data != null){
-                    callback.onCall(result, extractBills(result.data));
+                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                    callback.onCall(result, extractBills(result.arrayData));
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -168,7 +174,8 @@ public class NetService {
                         out.close();
                     }
 
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    InputStream in = conn.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                     StringBuffer buffer = new StringBuffer();
                     String currline = "";
                     while((currline=reader.readLine()) != null){
@@ -176,25 +183,33 @@ public class NetService {
                     }
                     saveCookie(conn);
                     reader.close();
+                    in.close();
+
                     if(buffer.length() > 0){
 
                         JSONObject receiveData = new JSONObject(buffer.toString());
                         String dataString = receiveData.getString("data");
                         JSONObject data = null;
+                        JSONArray arrayData = null;
                         try{
                             data = new JSONObject(dataString);
                         }catch (JSONException e){
                             data = null;
+                            try{
+                                arrayData = new JSONArray(dataString);
+                            }catch (JSONException e2){
+                                arrayData = null;
+                            }
                         }
-                        return new NetProtocol(receiveData.getInt("code"), receiveData.getString("msg"), data);
+                        return new NetProtocol(receiveData.getInt("code"), receiveData.getString("msg"), data, arrayData);
                     }else{
-                        return new NetProtocol(NetProtocol.NO_RESPONSE, "nothing response", null);
+                        return new NetProtocol(NetProtocol.NO_RESPONSE, "nothing response", null, null);
                     }
 
 
                 }catch (Exception e) {
                     Log.d("error:", e.toString());
-                    return new NetProtocol(NetProtocol.NET_EXCEPTION, e.toString(), null);
+                    return new NetProtocol(NetProtocol.NET_EXCEPTION, e.toString(), null, null);
                 }
                 finally {
                     conn.disconnect();
@@ -216,49 +231,65 @@ public class NetService {
         return pref.getString("cookie", null);
     }
 
-    private String saveCookie(HttpURLConnection connection){
+    private void saveCookie(HttpURLConnection connection){
+        Map<String, List<String>> headers = connection.getHeaderFields();
+        Iterator it = headers.keySet().iterator();
 
-        for(int i = 0; ; i++){
-            String headerkey = connection.getHeaderFieldKey(i);
-            String headerValue = connection.getHeaderField(i);
-
-            if(headerkey==null && headerValue==null){
-                return null;
-            }
-            if("Set-Cookie".equalsIgnoreCase(headerkey)){
-                List<HttpCookie> cookies = HttpCookie.parse(headerValue);
-                StringBuilder stringBuilder = new StringBuilder();
-                for(HttpCookie cookie : cookies){
-                    if(!cookie.hasExpired()){
-                        stringBuilder.append(cookie.toString());
-                        stringBuilder.append(";");
+        while(it.hasNext()){
+            Object key = it.next();
+            if( "Set-Cookie".equalsIgnoreCase(((String)key))){
+                SharedPreferences pref = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+                String casheCookieString = pref.getString("cookie", "");
+                Map<String, String> cookieMap = new HashMap<String, String>();
+                if(!casheCookieString.isEmpty()){
+                    for(String eachCookie : casheCookieString.split(";")){
+                        String[] keyAndValue = eachCookie.split("=");
+                        cookieMap.put(keyAndValue[0], keyAndValue[1]);
                     }
                 }
-                SharedPreferences pref = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
-                SharedPreferences.Editor editor = pref.edit();
+
+
+                for(String cookieString : headers.get(key)){
+                    List<HttpCookie> cookies = HttpCookie.parse(cookieString);
+                    for(HttpCookie cookie : cookies){
+                        if(!cookie.hasExpired()){
+                            cookieMap.put(cookie.getName(), cookie.getValue());
+                        }
+                    }
+                }
+
+                StringBuilder stringBuilder = new StringBuilder();
+                Iterator it2 = cookieMap.entrySet().iterator();
+                while(it2.hasNext()){
+                    Map.Entry entry = (Map.Entry) it2.next();
+                    stringBuilder.append(entry.getKey()+"="+entry.getValue());
+                    stringBuilder.append(";");
+                }
+
+                SharedPreferences pref2 = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+                SharedPreferences.Editor editor = pref2.edit();
                 editor.putString("cookie", stringBuilder.toString());
                 editor.commit();
                 Log.i("---get cookie:", stringBuilder.toString());
-
-                return null;
             }
         }
+
     }
 
-    private List<Bill> extractBills(JSONObject data){
+    private List<Bill> extractBills(JSONArray data){
         List<Bill> returnBills = new ArrayList<Bill>();
 
         try{
-            for(JSONObject item : extractArray(data)){
+            for(int i = 0; i < data.length(); i++){
+                JSONObject item = data.getJSONObject(i);
                 Bill bill = new Bill(item.getString("billType"),item.getString("from"), item.getString("to"), item.getString("billTime"));
                 bill.id = item.getString("billId");
-                bill.state = item.getString("state");
-
-
+                if(item.has("state"))
+                    bill.state = item.getString("state");
                 if(item.has("senderName"))
                     bill.setSenderName(item.getString("senderName"));
                 if(item.has("material"))
-                    bill.setGoodsInfo(item.getString("material"), 0, 0);
+                    bill.setGoodsInfo(item.getString("material"), 0, 0, "");
                 returnBills.add(bill);
             }
             return returnBills;
