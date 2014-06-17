@@ -1,18 +1,16 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -22,7 +20,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-27.
  */
-public class SendBillFragment extends Fragment implements NewBillDialog.NewBillDialogListener{
+public class SendBillFragment extends Fragment implements NewBillDialog.NewBillDialogListener {
 
     private TextView tips = null;
     private ViewPager billsPager = null;
@@ -36,11 +34,7 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
         return v;
     }
 
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-
+    public void init(){
         billsPager = (ViewPager)getActivity().findViewById(R.id.send_bill_frag_pager);
         billsAdapter = new BillPageAdapter(getFragmentManager());
         billsPager.setAdapter(billsAdapter);
@@ -54,8 +48,13 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
                 dialog.show(getFragmentManager(), "what");
             }
         });
+    }
 
-        initBills();
+    @Override
+    public void onHiddenChanged(boolean hidden){
+        if(!hidden){
+//            billsAdapter.notifyDataSetChanged();
+        }
     }
 
     private void initBills(){
@@ -92,7 +91,6 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
-                    User.getInstance().addBill(bill);
                     addBill(bill);
 
                     Toast toast = Toast.makeText(parActivity.getApplicationContext(), "添加成功", 2);

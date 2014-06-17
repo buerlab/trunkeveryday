@@ -1,5 +1,7 @@
 package com.buerlab.returntrunk;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 import org.json.JSONArray;
@@ -16,6 +18,19 @@ import java.util.List;
 public class User {
     static public String USERTYPE_TRUNK = "driver";
     static public String USERTYPE_OWNER = "owner";
+
+    static public boolean validate(Activity from){
+        if(User.getInstance().getUserType().isEmpty()){
+            from.startActivity(new Intent(from, PickUserTypeActivity.class));
+            from.finish();
+            return false;
+        }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks.isEmpty()){
+            from.startActivity(new Intent(from, SetTrunkActivity.class));
+            from.finish();
+            return false;
+        }
+        return true;
+    }
 
     public String userId = "";
     public String username = "";
@@ -38,6 +53,7 @@ public class User {
     static public User getInstance(){
         if(instance == null){
             instance = new User();
+            instance.init();
         }
         return instance;
     }
@@ -47,6 +63,9 @@ public class User {
         username = "";
         nickName = "";
         phoneNum = "";
+
+        mBills = new ArrayList<Bill>();
+
         //type would be trunk or owner
         userType = "";
         //billtype contains trunk, goods

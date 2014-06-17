@@ -31,8 +31,10 @@ public class Bill {
     public String material = "";
     public String comment = "";
 
+    private Trunk trunk = new Trunk();
     public String trunkType = "";
     public float trunkLength = 0.0f;
+    public float trunkLoad = 0.0f;
     public String licensePlate = "";
 
     public Bill(String _billType, String _from, String _to, String _time){
@@ -74,9 +76,20 @@ public class Bill {
         this.comment = _comment;
     }
 
-    public void setTrunkInfo(String _trunkType, float _trunkLength, String _licensePlate){
+    public void setTrunkInfo(String _trunkType, float _trunkLength, float _trunkLoad, String _licensePlate){
         this.trunkType = _trunkType;
         this.trunkLength = _trunkLength;
+        this.trunkLoad = _trunkLoad;
         this.licensePlate = _licensePlate;
     }
+
+    public void setTrunk(Trunk _trunk){
+        this.trunk = _trunk;
+        this.trunkType = trunk.type;
+        this.trunkLength = trunk.length;
+        this.trunkLoad = trunk.load;
+        this.licensePlate = trunk.lisencePlate;
+    }
+
+    public Trunk getTrunk(){ return trunk; }
 }

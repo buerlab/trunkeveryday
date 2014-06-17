@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

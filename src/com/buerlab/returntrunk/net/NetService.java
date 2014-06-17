@@ -6,13 +6,13 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
 import java.net.*;
-import java.security.Key;
 import java.util.*;
 
 /**
@@ -91,7 +91,15 @@ public class NetService {
         parmsMap.put("from", bill.from);
         parmsMap.put("to", bill.to);
         parmsMap.put("billTime", bill.time);
-        parmsMap.put("material", bill.material);
+        if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
+            parmsMap.put("material", bill.material);
+            parmsMap.put("price", String.valueOf(bill.price));
+            parmsMap.put("weight", String.valueOf(bill.weight));
+        }else{
+            parmsMap.put("trunkLength", String.valueOf(bill.trunkLength));
+            parmsMap.put("trunkWeight", String.valueOf(bill.weight));
+            parmsMap.put("licensePlate", bill.licensePlate);
+        }
 
         request(mActivity.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
     }

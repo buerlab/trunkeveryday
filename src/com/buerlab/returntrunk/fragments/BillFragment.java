@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.BillInvitationListAdapter;
+import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.User;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -45,6 +49,8 @@ public class BillFragment extends Fragment {
             tFrom = (TextView)v.findViewById(R.id.new_bill_trunk_from);
             tTo = (TextView)v.findViewById(R.id.new_bill_trunk_to);
             tTime = (TextView)v.findViewById(R.id.new_bill_trunk_time);
+            TextView tTrunk = (TextView)v.findViewById(R.id.new_bill_trunk_trunk);
+            tTrunk.setText(mBill.getTrunk().toString());
         }else if(User.getInstance().getUserType().equals(User.USERTYPE_OWNER)){
             ((TextView)v.findViewById(R.id.new_bill_goods_mat)).setText(mBill.material);
             tFrom = (TextView)v.findViewById(R.id.new_bill_goods_from);

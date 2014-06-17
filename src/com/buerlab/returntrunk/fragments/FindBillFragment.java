@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.FindBillListAdapter;
+import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -22,11 +25,6 @@ public class FindBillFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.find_bill_frag, container, false);
-
-        ListView list = (ListView)view.findViewById(R.id.find_bill_list);
-        findBillListAdapter = new FindBillListAdapter(getActivity());
-        list.setAdapter(findBillListAdapter);
-
 //        List<Bill> bills = new ArrayList<Bill>();
 //        for(int i = 0; i < 10; i++){
 //            Bill b = new Bill("trunk","GZ","SZ","2:00");
@@ -36,6 +34,12 @@ public class FindBillFragment extends Fragment {
 //        findBillListAdapter.setBills(bills);
 
         return view;
+    }
+
+    public void init(){
+        ListView list = (ListView)getView().findViewById(R.id.find_bill_list);
+        findBillListAdapter = new FindBillListAdapter(getActivity());
+        list.setAdapter(findBillListAdapter);
     }
 
     @Override

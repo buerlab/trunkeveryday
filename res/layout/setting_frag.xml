@@ -51,15 +51,29 @@
                       android:textSize="26dp"
                       android:textColor="#000000"/>
         </LinearLayout>
-        <TextView android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:text="车辆:"
-                  android:textSize="26dp"
-                  android:textColor="#000000"/>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="车辆:"
+                      android:textSize="26dp"
+                      android:textColor="#000000"
+                      android:layout_weight="1"/>
+            <Button android:id="@+id/setting_frag_add"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加"/>
+            <Button android:id="@+id/setting_frag_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="删除"/>
+        </LinearLayout>
+
         <LinearLayout android:id="@+id/setting_trunks"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal">
+                      android:orientation="vertical">
 
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"

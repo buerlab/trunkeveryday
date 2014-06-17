@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="#999999">
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <fragment android:name="com.buerlab.returntrunk.fragments.SlideMenuFragment"
+                  android:id="@+id/slide_menu_frag"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  tools:layout="@layout/slide_menu_frag"
+                  android:tag="sendbill"/>
+        <FrameLayout android:id="@+id/frag_content"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content">
+            <fragment android:id="@+id/find_bill_frag"
+                      android:name="com.buerlab.returntrunk.fragments.FindBillFragment"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/find_bill_frag"
+                      android:tag="findbill"/>
+
+            <!--<fragment android:name="com.buerlab.returntrunk.fragments.SettingFragment"-->
+                      <!--android:id="@+id/setting_frag"-->
+                      <!--android:layout_width="fill_parent"-->
+                      <!--android:layout_height="fill_parent"-->
+                      <!--tools:layout="@layout/setting_frag"-->
+                      <!--android:tag="setting"/>-->
+            <fragment android:name="com.buerlab.returntrunk.fragments.SendBillFragment"
+                      android:id="@+id/send_bill_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      tools:layout="@layout/send_bill_frag"
+                      android:tag="sendbill"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout android:id="@+id/bottomtab"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:clipToPadding="false">
+        <Button android:id="@+id/bottom_send_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="发送"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+        <Button android:id="@+id/bottom_list_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="查看"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+        <Button android:id="@+id/bottom_mine_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:text="我的"
+                android:textColor="#000000"
+                android:background="#cccccc"/>
+    </LinearLayout>
+</LinearLayout>
+

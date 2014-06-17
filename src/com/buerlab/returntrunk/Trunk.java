@@ -14,6 +14,8 @@ public class Trunk {
     public float load = 0.0f;
     public String lisencePlate = "";
 
+    public Trunk(){}
+
     public Trunk(String _type, float _length, float _load, String _licensePlate){
         type = _type;
         length = _length;
@@ -31,6 +33,6 @@ public class Trunk {
     }
 
     public String toString(){
-        return lisencePlate+" "+type+"长度"+String.valueOf(length)+"m 载重"+String.valueOf(load)+"kg ";
+        return lisencePlate+"-"+type+"-"+String.valueOf(length)+"m-"+String.valueOf(load)+"kg";
     }
 }
