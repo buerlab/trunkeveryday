@@ -146,10 +146,21 @@ public class NetService {
         return builder.toString();
     }
 
+
     public void request(String url, String parms, String method, final NetCallBack callback){
         final LoadingDialog loadingDialog = new LoadingDialog();
         loadingDialog.show(mActivity.getFragmentManager(), "loading");
+        urlRequest(url, parms, method, new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                loadingDialog.dismiss();
+                callback.onCall(result);
+            }
+        });
 
+    }
+
+    public void urlRequest(String url, String parms, String method, final NetCallBack callback){
         new AsyncTask<String, Integer, NetProtocol>(){
             protected NetProtocol doInBackground(String... args){
 
@@ -226,7 +237,6 @@ public class NetService {
             }
 
             protected void onPostExecute(NetProtocol result){
-                loadingDialog.dismiss();
                 callback.onCall(result);
 
             }
