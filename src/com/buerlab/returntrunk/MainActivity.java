@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.fragments.FindBillFragment;
 import com.buerlab.returntrunk.fragments.SendBillFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
@@ -22,6 +23,7 @@ import com.buerlab.returntrunk.net.NetService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
+import com.buerlab.returntrunk.service.BaiduMapService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,9 +37,9 @@ public class MainActivity extends Activity{
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout = null;
+//    private DrawerLayout mDrawerLayout = null;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle = null;
+//    private ActionBarDrawerToggle mDrawerToggle = null;
 
     private SlideMenu slideMenu = null;
     /**
@@ -46,8 +48,11 @@ public class MainActivity extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.main);
+
+        //启动位置上报服务
+        startService(new Intent(this, BaiduMapService.class));
 
         NetService service = new NetService(this);
         final Activity self = this;
