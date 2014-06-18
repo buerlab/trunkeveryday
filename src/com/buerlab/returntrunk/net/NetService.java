@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.net;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -29,38 +30,44 @@ public class NetService {
     public interface BillsCallBack{ public void onCall(NetProtocol result, List<Bill> bills); }
 
     private Activity mActivity = null;
+    private Context mContext = null;
 
     public NetService(Activity activity){
         mActivity = activity;
+        mContext = mActivity.getApplicationContext();
+    }
+    
+    public NetService(Context context){
+        mContext = context;
     }
 
     public void register(String username, String psw, final NetCallBack callback){
 
         String parms = "username="+username+"&password="+psw;
 
-        request(mActivity.getString(R.string.server_addr)+"api/admin/register", parms, "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/admin/register", parms, "POST", callback);
     }
 
     public void quickLogin(final NetCallBack callback){
-        request(mActivity.getString(R.string.server_addr)+"api/admin/qlogin", createReqParms(null), "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/admin/qlogin", createReqParms(null), "POST", callback);
     }
 
     public void login(String username, String psw, final NetCallBack callback){
 
         String parms = "username="+username+"&password="+psw;
 
-        request(mActivity.getString(R.string.server_addr)+"api/admin/login", parms, "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/admin/login", parms, "POST", callback);
     }
 
     //////////////////////////
     //USER
     //////////////////////////
     public void setUserData(Map<String, String> parms, NetCallBack callback){
-        request(mActivity.getString(R.string.server_addr)+"api/user", createReqParms(parms), "PUT", callback);
+        request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(parms), "PUT", callback);
     }
 
     public void addUserTrunk(Trunk trunk, NetCallBack callback){
-        request(mActivity.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
     }
 
 
@@ -73,7 +80,7 @@ public class NetService {
         parmsMap.put("num", String.valueOf(num));
         parmsMap.put("count", String.valueOf(count));
 
-        request(mActivity.getString(R.string.server_addr) + "api/bill", createReqParms(parmsMap), "GET", new NetCallBack() {
+        request(mContext.getString(R.string.server_addr) + "api/bill", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
@@ -101,11 +108,11 @@ public class NetService {
             parmsMap.put("licensePlate", bill.licensePlate);
         }
 
-        request(mActivity.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
+        request(mContext.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
     }
 
     public void findBills(final BillsCallBack callback){
-        request(mActivity.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
+        request(mContext.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
@@ -120,18 +127,18 @@ public class NetService {
     public void getUpdateBill(String billId, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billId", billId);
-        request(mActivity.getString(R.string.server_addr)+"api/bill/update", createReqParms(parmsMap), "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/bill/update", createReqParms(parmsMap), "POST", callback);
     }
 
     public void inviteBill(String from, String to, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("from", from);
         parmsMap.put("to", to);
-        request(mActivity.getString(R.string.server_addr)+"api/bill/invite", createReqParms(parmsMap), "POST", callback);
+        request(mContext.getString(R.string.server_addr)+"api/bill/invite", createReqParms(parmsMap), "POST", callback);
     }
 
     private String createReqParms(Map<String, String> parmsMap){
-        SharedPreferences pref = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+        SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
         String userId = pref.getString("userId", "");
 
         StringBuilder builder = new StringBuilder();
@@ -148,15 +155,20 @@ public class NetService {
 
 
     public void request(String url, String parms, String method, final NetCallBack callback){
-        final LoadingDialog loadingDialog = new LoadingDialog();
-        loadingDialog.show(mActivity.getFragmentManager(), "loading");
-        urlRequest(url, parms, method, new NetCallBack() {
-            @Override
-            public void onCall(NetProtocol result) {
-                loadingDialog.dismiss();
-                callback.onCall(result);
-            }
-        });
+
+        if(mActivity != null){
+            final LoadingDialog loadingDialog = new LoadingDialog();
+            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            urlRequest(url, parms, method, new NetCallBack() {
+                @Override
+                public void onCall(NetProtocol result) {
+                    loadingDialog.dismiss();
+                    callback.onCall(result);
+                }
+            });
+        }else{
+            urlRequest(url, parms, method, callback);
+        }
 
     }
 
@@ -245,7 +257,7 @@ public class NetService {
     }
 
     private String getCookie(){
-        SharedPreferences pref = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+        SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
         return pref.getString("cookie", null);
     }
 
@@ -256,7 +268,7 @@ public class NetService {
         while(it.hasNext()){
             Object key = it.next();
             if( "Set-Cookie".equalsIgnoreCase(((String)key))){
-                SharedPreferences pref = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+                SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
                 String casheCookieString = pref.getString("cookie", "");
                 Map<String, String> cookieMap = new HashMap<String, String>();
                 if(!casheCookieString.isEmpty()){
@@ -284,7 +296,7 @@ public class NetService {
                     stringBuilder.append(";");
                 }
 
-                SharedPreferences pref2 = mActivity.getSharedPreferences(mActivity.getString(R.string.app_name), 0);
+                SharedPreferences pref2 = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
                 SharedPreferences.Editor editor = pref2.edit();
                 editor.putString("cookie", stringBuilder.toString());
                 editor.commit();
@@ -312,7 +324,7 @@ public class NetService {
             }
             return returnBills;
         }catch (JSONException e){
-            Toast toast = Toast.makeText(mActivity.getApplicationContext(), "json parse error when extract bills", 2);
+            Toast toast = Toast.makeText(mContext, "json parse error when extract bills", 2);
             toast.show();
             return null;
         }
@@ -329,7 +341,7 @@ public class NetService {
                 result.add(data.getJSONObject(String.valueOf(i)));
             }
         }catch (JSONException e){
-            Toast toast = Toast.makeText(mActivity.getApplicationContext(), "json parse error when extract json array", 2);
+            Toast toast = Toast.makeText(mContext, "json parse error when extract json array", 2);
             toast.show();
 
             return null;

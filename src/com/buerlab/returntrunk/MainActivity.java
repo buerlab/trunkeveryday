@@ -31,6 +31,7 @@ public class MainActivity extends Activity{
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle = null;
 
+
     /**
      * Called when the activity is first created.
      */
@@ -70,6 +71,7 @@ public class MainActivity extends Activity{
             }
         });
 
+
     }
 
     private void init(){
@@ -78,12 +80,13 @@ public class MainActivity extends Activity{
         ((SendBillFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
         ((SettingFragment)manager.findFragmentById(R.id.setting_frag)).init();
 
+
         Button sendbtn = (Button)findViewById(R.id.bottom_send_btn);
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCurrFrag(0);
-//                showMenu();
+//                setCurrFrag(0);
+                showMenu();
             }
         });
 
@@ -107,7 +110,12 @@ public class MainActivity extends Activity{
     }
 
     private void showMenu(){
-        ViewGroup mainView = (ViewGroup)findViewById(R.id.main);
+
+//        ViewGroup slidermenu = (ViewGroup)findViewById(R.id.main_silde_menu);
+//        slidermenu.setVisibility(View.VISIBLE);
+//        slidermenu.requestLayout();
+        View mainView = (View)findViewById(R.id.main);
+
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slider_menu);
         mainView.startAnimation(animation);
     }

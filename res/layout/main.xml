@@ -5,7 +5,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <RelativeLayout android:id="@+id/main"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="match_parent">
         <LinearLayout android:id="@+id/main_content"
                       android:orientation="vertical"
@@ -66,12 +66,23 @@
                         android:background="#cccccc"/>
             </LinearLayout>
         </LinearLayout>
-        <fragment android:name="com.buerlab.returntrunk.fragments.SlideMenuFragment"
-                  android:id="@+id/main_silde_menu"
-                  android:layout_toLeftOf="@id/main_content"
-                  android:layout_width="wrap_content"
-                  android:layout_height="match_parent"
-                  tools:layout="@layout/slide_menu_frag"/>
+
+        <LinearLayout android:id="@+id/main_silde_menu"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="-100dp">
+            <!--<fragment android:name="com.buerlab.returntrunk.fragments.SlideMenuFragment"-->
+                      <!--android:layout_width="wrap_content"-->
+                      <!--android:layout_height="match_parent"-->
+                      <!--tools:layout="@layout/slide_menu_frag"/>-->
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="hello world"
+                      android:textColor="#ff0000"
+                      android:textSize="30dp"/>
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
