@@ -24,7 +24,6 @@ public class SlideMenuFragment extends Fragment {
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(getActivity(), android.R.layout.simple_list_item_1,
                                                               null, fromColumns, toViews);
         menulist.setAdapter(adapter);
-
         return view;
     }
 }

@@ -36,7 +36,7 @@ public class NetService {
         mActivity = activity;
         mContext = mActivity.getApplicationContext();
     }
-    
+
     public NetService(Context context){
         mContext = context;
     }
