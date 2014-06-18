@@ -4,18 +4,20 @@ import android.app.*;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
+//import android.support.v4.app.ActionBarDrawerToggle;
+//import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.*;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.fragments.FindBillFragment;
 import com.buerlab.returntrunk.fragments.SendBillFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.service.BaiduMapService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,9 +29,9 @@ public class MainActivity extends Activity{
     private List<String> fragsList = Arrays.asList("sendbill", "findbill","setting");
 
     private String[] mPlanetTitles;
-    private DrawerLayout mDrawerLayout = null;
+//    private DrawerLayout mDrawerLayout = null;
     private ListView mDrawerList;
-    private ActionBarDrawerToggle mDrawerToggle = null;
+//    private ActionBarDrawerToggle mDrawerToggle = null;
 
 
     /**
@@ -38,8 +40,11 @@ public class MainActivity extends Activity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.main);
+
+        //启动位置上报服务
+        startService(new Intent(this, BaiduMapService.class));
 
         NetService service = new NetService(this);
         final Activity self = this;

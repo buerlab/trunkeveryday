@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
+import com.baidu.mapapi.map.MyLocationData;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import org.json.JSONArray;
@@ -137,12 +138,21 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill/invite", createReqParms(parmsMap), "POST", callback);
     }
 
+
+    public void uploadLocation(MyLocationData locData, NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("latitude", Double.toString(locData.latitude) );
+        parmsMap.put("longitude", Double.toString(locData.longitude));
+//        parmsMap.put("time",time);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/location", createReqParms(parmsMap), "POST", callback);
+    }
+
     private String createReqParms(Map<String, String> parmsMap){
         SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
         String userId = pref.getString("userId", "");
 
         StringBuilder builder = new StringBuilder();
-        builder.append("userId="+userId);
+        builder.append("userId=" + userId);
 //        String str = "";
         if(parmsMap != null){
             for(Map.Entry<String, String> entry : parmsMap.entrySet()){
@@ -152,7 +162,6 @@ public class NetService {
         }
         return builder.toString();
     }
-
 
     public void request(String url, String parms, String method, final NetCallBack callback){
 
@@ -249,7 +258,10 @@ public class NetService {
             }
 
             protected void onPostExecute(NetProtocol result){
-                callback.onCall(result);
+                if(callback !=null){
+                    callback.onCall(result);
+                }
+
 
             }
 
