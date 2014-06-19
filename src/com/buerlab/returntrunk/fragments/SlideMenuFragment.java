@@ -12,7 +12,7 @@ import com.buerlab.returntrunk.R;
 /**
  * Created by zhongqiling on 14-6-17.
  */
-public class SlideMenuFragment extends Fragment {
+public class SlideMenuFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

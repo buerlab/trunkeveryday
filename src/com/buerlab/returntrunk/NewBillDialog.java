@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-27.
  */
-public class NewBillDialog extends DialogFragment {
+public class NewBillDialog extends BaseDialogFragment {
 
     public interface NewBillDialogListener{
         public void onNewBillDialogConfirm(Bill bill);

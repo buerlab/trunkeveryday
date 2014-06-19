@@ -29,6 +29,8 @@
                 android:configChanges="orientation|keyboardHidden"
                 android:screenOrientation="sensor" >
         </activity>
+
+        <activity android:name=".fragments.EditProfileFragments.EditNickNameFragmentActivity"/>
         <service android:name=".service.BaiduMapService">
             <intent-filter>
                 <action android:name="com.buerlab.returntrunk.service.BadiMapService"/>

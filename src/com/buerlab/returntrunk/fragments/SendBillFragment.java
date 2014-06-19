@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-27.
  */
-public class SendBillFragment extends Fragment implements NewBillDialog.NewBillDialogListener {
+public class SendBillFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener {
 
     private TextView tips = null;
     private ViewPager billsPager = null;
@@ -36,7 +36,7 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
 
     public void init(){
         billsPager = (ViewPager)getActivity().findViewById(R.id.send_bill_frag_pager);
-        billsAdapter = new BillPageAdapter(getFragmentManager());
+        billsAdapter = new BillPageAdapter(getActivity().getSupportFragmentManager());
         billsPager.setAdapter(billsAdapter);
 
         Button btn = (Button)getActivity().findViewById(R.id.frag_send_btn);
@@ -45,7 +45,7 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
             @Override
             public void onClick(View v) {
                 NewBillDialog dialog = new NewBillDialog(self);
-                dialog.show(getFragmentManager(), "what");
+                dialog.show(getActivity().getFragmentManager(), "what");
             }
         });
     }

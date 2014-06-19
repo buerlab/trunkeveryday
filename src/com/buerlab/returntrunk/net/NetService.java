@@ -139,13 +139,45 @@ public class NetService {
     }
 
 
-    public void uploadLocation(MyLocationData locData, NetCallBack callback){
+    public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("latitude", Double.toString(locData.latitude) );
-        parmsMap.put("longitude", Double.toString(locData.longitude));
+        parmsMap.put("latitude", Double.toString(latitude) );
+        parmsMap.put("longitude", Double.toString(longitude));
+
+        if(prov != null){
+            parmsMap.put("prov", prov);
+        }
+
+        if(city!=null){
+            parmsMap.put("city", city);
+        }
+
+        if(district!=null){
+            parmsMap.put("district", district);
+        }
+
+
 //        parmsMap.put("time",time);
         urlRequest(mContext.getString(R.string.server_addr) + "api/location", createReqParms(parmsMap), "POST", callback);
     }
+
+    public void addComment(int starNum,
+                           String commentText,
+                           String fromUserName,
+                           String fromUserId,
+                           String toUserId,
+                           String billId,
+                           NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("starNum",Integer.toString(starNum) );
+        parmsMap.put("text", commentText);
+        parmsMap.put("fromUserName", fromUserId);
+        parmsMap.put("fromUserId", fromUserId);
+        parmsMap.put("toUserId", toUserId);
+        parmsMap.put("billId", billId);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
+    }
+
 
     private String createReqParms(Map<String, String> parmsMap){
         SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);

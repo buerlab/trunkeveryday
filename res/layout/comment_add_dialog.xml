@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <Button android:id="@+id/star_btn_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0星"/>
+        <Button android:id="@+id/star_btn_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1星"/>
+        <Button android:id="@+id/star_btn_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2星"/>
+        <Button android:id="@+id/star_btn_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3星"/>
+    </LinearLayout>
+    <RadioGroup
+            android:id="@+id/comment_group_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:contentDescription="定位icon">
+        <RadioButton
+                android:id="@+id/comment_text_0_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="货主电话打不通，交易取消" >
+        </RadioButton>
+
+        <RadioButton
+                android:id="@+id/comment_text_0_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="货主爽约，交易取消。" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_0_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="货主要求降低运费，谈不拢，交易取消" >
+        </RadioButton>
+
+        <RadioButton
+                android:id="@+id/comment_text_0_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他" >
+        </RadioButton>
+    </RadioGroup>
+
+    <RadioGroup
+            android:id="@+id/comment_group_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:contentDescription="" >
+
+        <RadioButton
+                android:id="@+id/comment_text_1_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="基本满意，但货物比货主描述的更多" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_1_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="基本满意，但发生了一些费用纠纷" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_1_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="基本满意，但货主拖了好久才给付费" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_1_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他" >
+        </RadioButton>
+    </RadioGroup>
+
+    <RadioGroup
+            android:id="@+id/comment_group_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:contentDescription="" >
+
+        <RadioButton
+                android:id="@+id/comment_text_2_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="挺满意的，货主诚实守信" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_2_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="挺满意的，货一到货主就给钱了" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_2_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="挺满意的，货物与货主描述的一致">
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_2_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他" >
+        </RadioButton>
+    </RadioGroup>
+
+    <RadioGroup
+            android:id="@+id/comment_group_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:contentDescription="" >
+
+        <RadioButton
+                android:id="@+id/comment_text_3_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="非常满意，货主诚实守信，货物与货主描述的一致，按时付款，希望下次再合作" >
+        </RadioButton>
+        <RadioButton
+                android:id="@+id/comment_text_3_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="其他" >
+        </RadioButton>
+    </RadioGroup>
+    <!--<ListView android:id="@+id/comment_list"-->
+              <!--android:layout_width="fill_parent"-->
+              <!--android:layout_height="wrap_content">-->
+
+    <!--</ListView>-->
+    <EditText android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/other_text"
+              android:hint="自定义"/>
+</LinearLayout>

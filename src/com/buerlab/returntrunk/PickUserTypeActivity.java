@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * Created by zhongqiling on 14-6-4.
  */
-public class PickUserTypeActivity extends Activity {
+public class PickUserTypeActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

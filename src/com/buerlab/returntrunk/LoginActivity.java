@@ -18,7 +18,7 @@ import org.json.JSONObject;
 /**
  * Created by zhongqiling on 14-5-28.
  */
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
     public static final String addr = "http:127.0.0.1:8888";
 
     public void onCreate(Bundle savedInstanceState) {

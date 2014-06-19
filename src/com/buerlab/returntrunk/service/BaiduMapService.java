@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import android.widget.Toast;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.MyLocationConfigeration;
+import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.map.MyLocationConfigeration.LocationMode;
-import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.*;
 import com.buerlab.returntrunk.User;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -31,7 +27,8 @@ import  java.util.Date;
  * @author dev
  *
  */
-public class BaiduMapService extends Service {
+public class BaiduMapService extends Service implements
+        OnGetGeoCoderResultListener {
     private static final String TAG = "BaiduMapService" ;
     public static final String ACTION = "com.buerlab.returntrunk.service.BaiduMapService";
     // 定位相关
@@ -40,7 +37,10 @@ public class BaiduMapService extends Service {
     NetService service;
     Date date = null;
     Date currentDate = null;
+    GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
+    MyLocationData locData;
     final  static int PERIOD = 1000 * 60 * 15;  //15分钟报一次
+//    final  static int PERIOD = 1000 * 5;  //test
     @Override
     public IBinder onBind(Intent intent) {
         Log.v(TAG, "ServiceDemo onBind");
@@ -82,6 +82,35 @@ public class BaiduMapService extends Service {
         mLocClient.start();
         mLocClient.requestLocation();
 
+        // 初始化搜索模块，注册事件监听
+        mSearch = GeoCoder.newInstance();
+        mSearch.setOnGetGeoCodeResultListener(this);
+    }
+
+    @Override
+    public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+
+    }
+
+    @Override
+    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
+        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
+            Log.v(TAG, "抱歉，未能找到结果");
+            service.uploadLocation(result.getLocation().latitude,
+                    result.getLocation().longitude,
+                    null,
+                    null,
+                    null,null);
+
+        }else{
+            service.uploadLocation(result.getLocation().latitude,
+                    result.getLocation().longitude,
+                    result.getAddressDetail().province,
+                    result.getAddressDetail().city,
+                    result.getAddressDetail().district,
+                    null);
+            Log.v(TAG, result.getAddress()+";"+result.getAddressDetail().province+result.getAddressDetail().city+result.getAddressDetail().district);
+        }
     }
 
     /**
@@ -95,12 +124,17 @@ public class BaiduMapService extends Service {
             currentDate = new Date();
             if(currentDate.getTime() - date.getTime() > PERIOD){
                 date = currentDate;
-                MyLocationData locData = new MyLocationData.Builder()
+                locData = new MyLocationData.Builder()
                         .accuracy(location.getRadius())
                                 // 此处设置开发者获取到的方向信息，顺时针0-360
                         .direction(100).latitude(location.getLatitude())
                         .longitude(location.getLongitude()).build();
 
+                LatLng ptCenter = new LatLng(location.getLatitude(), location.getLongitude());
+
+                // 反Geo搜索
+                mSearch.reverseGeoCode(new ReverseGeoCodeOption()
+                        .location(ptCenter));
                 Log.v(TAG, "("+location.getLatitude()+","+ location.getLongitude()+")");
 
 //                service.uploadLocation(locData,null);

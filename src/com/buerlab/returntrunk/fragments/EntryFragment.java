@@ -10,7 +10,7 @@ import com.buerlab.returntrunk.R;
 /**
  * Created by zhongqiling on 14-6-17.
  */
-public class EntryFragment extends Fragment {
+public class EntryFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

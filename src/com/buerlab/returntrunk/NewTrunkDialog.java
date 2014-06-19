@@ -13,7 +13,7 @@ import android.widget.TextView;
 /**
  * Created by zhongqiling on 14-6-13.
  */
-public class NewTrunkDialog extends DialogFragment{
+public class NewTrunkDialog extends BaseDialogFragment{
 
     public interface NewTrunkDialogListener{
         public void onNewTrunkDialogConfirm(Trunk trunk);

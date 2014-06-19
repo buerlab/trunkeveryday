@@ -12,7 +12,7 @@ import com.buerlab.returntrunk.net.NetService;
 /**
  * Created by zhongqiling on 14-6-11.
  */
-public class SetTrunkActivity extends Activity {
+public class SetTrunkActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
