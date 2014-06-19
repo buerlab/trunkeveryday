@@ -3,21 +3,18 @@ package com.buerlab.returntrunk;
 import android.app.*;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.*;
+import cn.jpush.android.api.JPushInterface;
 import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.fragments.FindBillFragment;
 import com.buerlab.returntrunk.fragments.SendBillFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
-import com.buerlab.returntrunk.fragments.SlideMenuFragment;
+import com.buerlab.returntrunk.jpush.JPushCenter;
+import com.buerlab.returntrunk.jpush.JPushProtocal;
+import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.coboltforge.slidemenu.SlideMenu;
@@ -25,11 +22,10 @@ import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends Activity{
+public class MainActivity extends Activity implements JPushCenter.OnJpushListener {
 
     private int currFrag = -1;
     private int currHomeFrag = -1;
@@ -47,12 +43,14 @@ public class MainActivity extends Activity{
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.main);
 
         //启动位置上报服务
         startService(new Intent(this, BaiduMapService.class));
+        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
 
         NetService service = new NetService(this);
         final Activity self = this;
@@ -66,6 +64,7 @@ public class MainActivity extends Activity{
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
+                        JPushUtils.registerAlias(self, User.getInstance().userId);
 
                         init();
 
@@ -84,7 +83,23 @@ public class MainActivity extends Activity{
             }
         });
 
+    }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        JPushInterface.onResume(this);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        JPushInterface.onPause(this);
+    }
+
+    @Override
+    protected void onDestroy(){
+        JPushCenter.shared().unregister(JPushProtocal.JPUSH_PHONE_CALL, this);
     }
 
 
@@ -109,7 +124,7 @@ public class MainActivity extends Activity{
         FragmentManager manager = getFragmentManager();
         ((FindBillFragment)manager.findFragmentById(R.id.find_bill_frag)).init();
         ((SendBillFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
-
+        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
         Button sendbtn = (Button)findViewById(R.id.bottom_send_btn);
         sendbtn.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +155,11 @@ public class MainActivity extends Activity{
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onJPushCall(JPushProtocal protocal){
+        Toast toast = Toast.makeText(this, "server push:"+protocal.msg, 3);
+        toast.show();
     }
 
     private void setHomeFrag(int index){

@@ -6,14 +6,15 @@
               android:layout_height="fill_parent">
 
     <RelativeLayout android:id="@+id/main"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#999999">
         <com.coboltforge.slidemenu.SlideMenu
                 android:id="@+id/main_slideMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <FrameLayout android:layout_width="fill_parent"
+                     android:layout_height="fill_parent">
             <fragment android:name="com.buerlab.returntrunk.fragments.HomeFragment"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"

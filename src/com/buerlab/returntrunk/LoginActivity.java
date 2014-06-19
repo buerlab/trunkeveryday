@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import org.json.JSONException;
@@ -74,6 +75,7 @@ public class LoginActivity extends Activity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("userId", User.getInstance().userId);
                     editor.commit();
+                    JPushUtils.registerAlias(self, User.getInstance().userId);
 
                     Utils.safeSwitchToMainActivity(self);
                 }else{

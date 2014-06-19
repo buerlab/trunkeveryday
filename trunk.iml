@@ -19,6 +19,8 @@
     <orderEntry type="module" module-name="libslidemenu" />
     <orderEntry type="library" name="baidumapapi_v3_0_0" level="project" />
     <orderEntry type="library" name="locSDK_3.1" level="project" />
+    <orderEntry type="library" name="jpush-sdk-release1.6.1" level="project" />
+    <orderEntry type="library" name="armeabi" level="project" />
   </component>
 </module>
 

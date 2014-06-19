@@ -45,17 +45,13 @@ public class BillFragment extends Fragment {
         TextView tFrom = null;
         TextView tTo = null;
         TextView tTime = null;
-        if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK)){
-            tFrom = (TextView)v.findViewById(R.id.new_bill_trunk_from);
-            tTo = (TextView)v.findViewById(R.id.new_bill_trunk_to);
-            tTime = (TextView)v.findViewById(R.id.new_bill_trunk_time);
-            TextView tTrunk = (TextView)v.findViewById(R.id.new_bill_trunk_trunk);
-            tTrunk.setText(mBill.getTrunk().toString());
-        }else if(User.getInstance().getUserType().equals(User.USERTYPE_OWNER)){
-            ((TextView)v.findViewById(R.id.new_bill_goods_mat)).setText(mBill.material);
-            tFrom = (TextView)v.findViewById(R.id.new_bill_goods_from);
-            tTo = (TextView)v.findViewById(R.id.new_bill_goods_to);
-            tTime = (TextView)v.findViewById(R.id.new_bill_goods_time);
+        tFrom = (TextView)v.findViewById(R.id.new_bill_from);
+        tTo = (TextView)v.findViewById(R.id.new_bill_to);
+        tTime = (TextView)v.findViewById(R.id.new_bill_time);
+//            TextView tTrunk = (TextView)v.findViewById(R.id.new_bill_trunk);
+//            tTrunk.setText(mBill.getTrunk().toString());
+        if(User.getInstance().getUserType().equals(User.USERTYPE_OWNER)){
+            ((TextView)v.findViewById(R.id.new_bill_mat)).setText(mBill.material);
         }
         tFrom.setText(mBill.from);
         tTo.setText(mBill.to);

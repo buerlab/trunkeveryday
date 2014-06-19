@@ -77,11 +77,10 @@ public class SettingFragment extends Fragment implements NewTrunkDialog.NewTrunk
 
                 Intent intent = new Intent(activity, LoginActivity.class);
                 activity.startActivity(intent);
+                activity.finish();
 
                 Toast toast = Toast.makeText(activity.getApplicationContext(), "已注销", 2);
                 toast.show();
-
-                activity.finish();
             }
         });
     }

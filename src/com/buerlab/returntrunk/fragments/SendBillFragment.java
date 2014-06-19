@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.adapters.SendBillListAdapter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -23,8 +25,8 @@ import java.util.List;
 public class SendBillFragment extends Fragment implements NewBillDialog.NewBillDialogListener {
 
     private TextView tips = null;
-    private ViewPager billsPager = null;
-    private BillPageAdapter billsAdapter = null;
+
+    private SendBillListAdapter mAdapter = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -35,9 +37,9 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
     }
 
     public void init(){
-        billsPager = (ViewPager)getActivity().findViewById(R.id.send_bill_frag_pager);
-        billsAdapter = new BillPageAdapter(getFragmentManager());
-        billsPager.setAdapter(billsAdapter);
+        ListView listView = (ListView)getView().findViewById(R.id.send_bill_list);
+        mAdapter = new SendBillListAdapter(getActivity());
+        listView.setAdapter(mAdapter);
 
         Button btn = (Button)getActivity().findViewById(R.id.frag_send_btn);
         final SendBillFragment self = this;
@@ -48,6 +50,8 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
                 dialog.show(getFragmentManager(), "what");
             }
         });
+
+        initBills();
     }
 
     @Override
@@ -58,7 +62,7 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
     }
 
     private void initBills(){
-        final BillPageAdapter adapter = billsAdapter;
+        final SendBillListAdapter adapter = mAdapter;
         NetService service = new NetService(getActivity());
         service.getBills(0, -1, new NetService.BillsCallBack() {
             @Override
@@ -76,8 +80,7 @@ public class SendBillFragment extends Fragment implements NewBillDialog.NewBillD
     }
 
     private void addBill(Bill bill){
-        billsAdapter.addBill(bill);
-        billsPager.setCurrentItem(billsAdapter.getCount()-1);
+        mAdapter.addBill(bill);
     }
 
 

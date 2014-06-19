@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.service;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;

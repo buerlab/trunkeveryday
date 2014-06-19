@@ -3,35 +3,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical">
-    <LinearLayout android:id="@+id/send_bill_frag_content"
-                  android:orientation="vertical"
+              android:orientation="vertical"
+              android:background="#cccccc">
+    <FrameLayout android:id="@+id/send_bill_frag_content"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="1">
+        <TextView android:id="@+id/send_bill_frag_tips"
                   android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:layout_weight="1">
-        <FrameLayout android:layout_width="fill_parent"
-                     android:layout_height="fill_parent">
-            <TextView android:id="@+id/send_bill_frag_tips"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:text="你还没有发单"
-                      android:textSize="26dp"
-                      android:layout_gravity="center"
-                      android:gravity="center"/>
-            <android.support.v4.view.ViewPager
-                    android:id="@+id/send_bill_frag_pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                  android:text="你还没有发单"
+                  android:textSize="26dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"/>
 
-        </FrameLayout>
+        <ListView android:id="@+id/send_bill_list"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:dividerHeight="10dp">
 
-    </LinearLayout>
+        </ListView>
+        <!--<android.support.v4.view.ViewPager-->
+                <!--android:id="@+id/send_bill_frag_pager"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"/>-->
+
+    </FrameLayout>
 
     <Button android:id="@+id/frag_send_btn"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:text="发送"
             android:textSize="26dp"
-            android:layout_alignParentBottom="true"/>
+            android:layout_weight="0"/>
 
 </LinearLayout>

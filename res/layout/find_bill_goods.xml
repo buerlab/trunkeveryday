@@ -4,21 +4,21 @@
               android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#999999">
+              android:background="#ffffff">
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
                   android:layout_weight="1">
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content">
-            <TextView android:id="@+id/find_bill_goods_name"
+            <TextView android:id="@+id/find_bill_name"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="李先生"
                       android:textSize="24dp"
                       android:padding="5dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/find_bill_goods_mat"
+            <TextView android:id="@+id/find_bill_mat"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="木材"
@@ -29,7 +29,7 @@
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
-            <TextView android:id="@+id/find_bill_goods_from"
+            <TextView android:id="@+id/find_bill_from"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="深圳"
@@ -41,14 +41,20 @@
                       android:textSize="20dp"
                       android:padding="5dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/find_bill_goods_to"
+            <TextView android:id="@+id/find_bill_to"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="广州"
                       android:textSize="20dp"
                       android:textColor="#000000"/>
         </LinearLayout>
-        <TextView android:id="@+id/find_bill_goods_time"
+        <TextView android:id="@+id/find_bill_phonenum"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="13812989800"
+                  android:textSize="20dp"
+                  android:textColor="#000000"/>
+        <TextView android:id="@+id/find_bill_time"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:text="2:00"
@@ -58,9 +64,10 @@
 
     </LinearLayout>
 
-    <Button android:layout_width="wrap_content"
+    <Button android:id="@+id/find_bill_phone"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="请求"
+            android:text="电话"
             android:textSize="30dp"
             android:layout_gravity="center"/>
 
