@@ -1,9 +1,11 @@
 package com.buerlab.returntrunk;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.support.v13.app.FragmentStatePagerAdapter;
+
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.fragments.BillFragment;
 
 import java.util.*;
@@ -36,7 +38,7 @@ public class BillPageAdapter extends FragmentStatePagerAdapter{
     }
 
     @Override
-    public Fragment getItem(int position){
+    public BaseFragment getItem(int position){
         return new BillFragment(mBills.get(position));
     }
 

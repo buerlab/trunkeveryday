@@ -1,20 +1,18 @@
 package com.buerlab.returntrunk.fragments;
 
-import android.app.Activity;
-import android.app.Fragment;
+//import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.baidu.mapapi.map.MapView;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
@@ -22,12 +20,10 @@ import com.buerlab.returntrunk.net.NetService;
 /**
  * Created by zhongqiling on 14-6-4.
  */
-
-public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewTrunkDialogListener, AddCommentDialog.AddCommentDialogListener{
+public class CommentListFragment extends BaseFragment implements NewTrunkDialog.NewTrunkDialogListener, AddCommentDialog.AddCommentDialogListener{
 
     Button addCommentBtn;
     View mView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -52,7 +48,7 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
         TextView nickNameText = (TextView)mView.findViewById(R.id.setting_nickName);
         nickNameText.setText(User.getInstance().nickName);
 
-        final SettingFragment self = this;
+        final CommentListFragment self = this;
         Button addTrunk = (Button)mView.findViewById(R.id.setting_frag_add);
         addTrunk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +67,7 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
             }
         });
 
-        final Activity activity = getActivity();
+        final FragmentActivity activity = getActivity();
         Button unregisterBtn = (Button)mView.findViewById(R.id.setting_unregister);
         unregisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,10 +79,11 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
 
                 Intent intent = new Intent(activity, LoginActivity.class);
                 activity.startActivity(intent);
-                activity.finish();
 
                 Toast toast = Toast.makeText(activity.getApplicationContext(), "已注销", 2);
                 toast.show();
+
+                activity.finish();
             }
         });
 

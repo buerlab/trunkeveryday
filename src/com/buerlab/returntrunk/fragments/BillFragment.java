@@ -1,6 +1,6 @@
 package com.buerlab.returntrunk.fragments;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-31.
  */
-public class BillFragment extends Fragment {
+public class BillFragment extends BaseFragment {
 
     private Bill mBill;
     private BillInvitationListAdapter inivtationAdapter = null;
