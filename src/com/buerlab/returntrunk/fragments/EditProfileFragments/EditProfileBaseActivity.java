@@ -5,6 +5,6 @@ import com.buerlab.returntrunk.BaseActivity;
 /**
  * Created by teddywu on 14-6-19.
  */
-public abstract class EditProfileBaseFragmentActivity extends BaseActivity {
+public abstract class EditProfileBaseActivity extends BaseActivity {
 
 }

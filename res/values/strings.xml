@@ -8,4 +8,5 @@
     <string name="close_drawer">关闭抽屉</string>
     <integer name="normal_font_size">26</integer>
 
+    <string name="menu_new">12</string>
 </resources>

@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.fragments.EditProfileFragments.EditNickNameFragmentActivity;
+import com.buerlab.returntrunk.fragments.EditProfileFragments.EditNickNameActivity;
 
 /**
  * Created by zhongqiling on 14-6-17.
@@ -47,9 +47,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     }
 
     private void goToEditNickNameFragment(){
-        Intent intent = new Intent(getActivity(),EditNickNameFragmentActivity.class);
+        Intent intent = new Intent(getActivity(),EditNickNameActivity.class);
         String nickname = User.getInstance().nickName;
-        getActivity().startActivityForResult(intent, EDIT_NICKNAME);
+        startActivityForResult(intent, EDIT_NICKNAME);
     }
 
     @Override
