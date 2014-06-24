@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         //启动位置上报服务
-        startService(new Intent(this, BaiduMapService.class));
+//        startService(new Intent(this, BaiduMapService.class));
         JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         SDKInitializer.initialize(getApplicationContext());
 
