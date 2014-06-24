@@ -44,7 +44,7 @@ public class NetService {
 
     public void register(String username, String psw, final NetCallBack callback){
 
-        String parms = "username="+username+"&password="+psw;
+        String parms = "phoneNum="+username+"&password="+psw;
 
         request(mContext.getString(R.string.server_addr)+"api/admin/register", parms, "POST", callback);
     }
@@ -55,7 +55,7 @@ public class NetService {
 
     public void login(String username, String psw, final NetCallBack callback){
 
-        String parms = "username="+username+"&password="+psw;
+        String parms = "phoneNum="+username+"&password="+psw;
 
         request(mContext.getString(R.string.server_addr)+"api/admin/login", parms, "POST", callback);
     }
@@ -70,7 +70,6 @@ public class NetService {
     public void addUserTrunk(Trunk trunk, NetCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
     }
-
 
     //////////////////////////
     //BILLS
@@ -358,6 +357,8 @@ public class NetService {
                 JSONObject item = data.getJSONObject(i);
                 Bill bill = new Bill(item.getString("billType"),item.getString("from"), item.getString("to"), item.getString("billTime"));
                 bill.id = item.getString("billId");
+                if(item.has("phoneNum"))
+                    bill.phoneNum = item.getString("phoneNum");
                 if(item.has("state"))
                     bill.state = item.getString("state");
                 if(item.has("senderName"))

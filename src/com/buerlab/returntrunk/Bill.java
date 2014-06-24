@@ -17,6 +17,7 @@ public class Bill {
 
     public String id = "";
     public String senderName = "";
+    public String phoneNum = "";
     public String billType = "";
     public String from = "";
     public String to = "";

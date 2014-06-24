@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <Button android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="回程出发地"
+            android:gravity="left"/>
+    <Button android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="回程目的地"
+            android:gravity="left"/>
+    <Button android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="出发时间"
+            android:gravity="left"/>
+    <Button android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="选择车辆"
+            android:gravity="left"/>
+    <EditText android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:hint="备注"/>
+    <Button android:id="@+id/new_bill_activity_submit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="马上发布"/>
+</LinearLayout>

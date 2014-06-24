@@ -1,6 +1,5 @@
 package com.buerlab.returntrunk;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +10,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
+import com.buerlab.returntrunk.activities.BaseActivity;
 
 /**
  * Created by teddywu on 14-6-17.

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -47,11 +49,10 @@ public class FindBillListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
-        Bill bill = mBills.get(position);
+        final Bill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
             view = BillLayoutFactory.createFindBill(mInflater, bill);
-
         }else{
             ((TextView)view.findViewById(R.id.find_bill_name)).setText(bill.senderName);
             ((TextView)view.findViewById(R.id.find_bill_from)).setText(bill.from);
@@ -65,9 +66,9 @@ public class FindBillListAdapter extends BaseAdapter {
         phoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Bill> bills = User.getInstance().getBills();
-
-
+                if(!bill.phoneNum.isEmpty()){
+                    EventCenter.shared().dispatch(new DataEvent(DataEvent.PHONE_CALL, bill.phoneNum));
+                }
             }
         });
 

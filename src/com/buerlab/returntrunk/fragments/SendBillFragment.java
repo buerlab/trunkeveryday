@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.fragments;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -12,7 +13,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.NewTrunkBillActivity;
 import com.buerlab.returntrunk.adapters.SendBillListAdapter;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -22,7 +26,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-27.
  */
-public class SendBillFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener {
+public class SendBillFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
     private TextView tips = null;
 
@@ -46,12 +50,40 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewBillDialog dialog = new NewBillDialog(self);
-                dialog.show(getActivity().getFragmentManager(), "what");
+//                NewBillDialog dialog = new NewBillDialog(self);
+//                dialog.show(getActivity().getFragmentManager(), "what");
+
+                Intent intent = new Intent(self.getActivity(), NewTrunkBillActivity.class);
+                self.getActivity().startActivity(intent);
+
             }
         });
 
+        EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
+
         initBills();
+    }
+
+    @Override
+    public void onDestroy(){
+        EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == 0){
+            Bundle bundle = data.getExtras();
+            Bill bill =  (Bill)bundle.get("bill");
+            Toast toast = Toast.makeText(this.getActivity(), "get data from:"+bundle.getString("from"), 3);
+            toast.show();
+        }
+    }
+
+    @Override
+    public void onEventCall(DataEvent e) {
+        Bill bill = (Bill)e.data;
+        Toast toast = Toast.makeText(this.getActivity(), "get data from:"+bill.from, 3);
+        toast.show();
     }
 
     @Override

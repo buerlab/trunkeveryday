@@ -38,6 +38,11 @@
         <activity android:name=".fragments.EditProfileFragments.EditNickNameActivity"
 
                 />
+        <activity android:name=".activities.NewTrunkBillActivity"
+                  android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".MainActivity"/>
+        </activity>
         <service android:name=".service.BaiduMapService">
             <intent-filter>
                 <action android:name="com.buerlab.returntrunk.service.BadiMapService"/>
@@ -131,6 +136,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 
 </manifest>

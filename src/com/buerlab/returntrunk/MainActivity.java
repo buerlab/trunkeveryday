@@ -1,6 +1,5 @@
 package com.buerlab.returntrunk;
 
-import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,12 +9,13 @@ import android.os.Bundle;
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
 import com.baidu.mapapi.SDKInitializer;
+import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.fragments.FindBillFragment;
 import com.buerlab.returntrunk.fragments.SendBillFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
@@ -29,7 +29,6 @@ import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -71,7 +70,9 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-                        JPushUtils.registerAlias(self, User.getInstance().userId);
+//                        JPushUtils.registerAlias(self, User.getInstance().userId);
+                        JPushUtils.registerAlias(self, "zql");
+//                        JPushUtils.registerAlias();
 
                         init();
                         FragmentManager manager = self.getSupportFragmentManager();
@@ -89,7 +90,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                 }
             }
         });
-
     }
 
     @Override
@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
     @Override
     protected void onDestroy(){
+        super.onDestroy();
         JPushCenter.shared().unregister(JPushProtocal.JPUSH_PHONE_CALL, this);
     }
 
@@ -178,8 +179,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     }
 
     public void onJPushCall(JPushProtocal protocal) {
-        Toast toast = Toast.makeText(this, "server push:" + protocal.msg, 3);
-        toast.show();
+        PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
+        dialog.show(getFragmentManager(), "phonecall");
     }
 
 

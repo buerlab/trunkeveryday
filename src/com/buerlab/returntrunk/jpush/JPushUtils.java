@@ -14,7 +14,7 @@ import java.util.Set;
 public class JPushUtils {
 
     static public void registerAlias(Context context, String alias){
-        JPushInterface.setAlias(context, User.getInstance().userId, new TagAliasCallback() {
+        JPushInterface.setAlias(context, alias, new TagAliasCallback() {
             @Override
             public void gotResult(int i, String s, Set<String> strings) {
                 if (i == 0) {

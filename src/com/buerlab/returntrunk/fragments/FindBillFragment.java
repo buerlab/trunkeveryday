@@ -1,6 +1,8 @@
 package com.buerlab.returntrunk.fragments;
 
-import android.support.v4.app.Fragment;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,16 +11,17 @@ import android.widget.ListView;
 import com.buerlab.returntrunk.Bill;
 import com.buerlab.returntrunk.FindBillListAdapter;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by zhongqiling on 14-6-4.
  */
-public class FindBillFragment extends BaseFragment {
+public class FindBillFragment extends BaseFragment implements EventCenter.OnEventListener {
     private FindBillListAdapter findBillListAdapter = null;
 
     @Override
@@ -35,6 +38,19 @@ public class FindBillFragment extends BaseFragment {
 
         return view;
     }
+
+    @Override
+    public void onAttach(Activity activity){
+        super.onAttach(activity);
+        EventCenter.shared().addEventListener(DataEvent.PHONE_CALL, this);
+    }
+
+    @Override
+    public void onDetach(){
+        super.onDetach();
+        EventCenter.shared().removeEventListener(DataEvent.PHONE_CALL, this);
+    }
+
 
     public void init(){
         ListView list = (ListView)getView().findViewById(R.id.find_bill_list);
@@ -60,5 +76,10 @@ public class FindBillFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    public void onEventCall(DataEvent e){
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+(String)e.data));
+        getActivity().startActivity(intent);
     }
 }
