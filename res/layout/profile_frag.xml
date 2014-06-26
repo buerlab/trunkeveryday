@@ -9,57 +9,46 @@
                   android:orientation="vertical"
                   android:layout_weight="1"
                   android:background="#cccccc">
+
         <LinearLayout android:layout_width="fill_parent"
-                      android:id="@+id/edit_nickname"
+                      android:orientation="vertical"
+                      android:layout_marginBottom="50dp"
+                      android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:id="@+id/container_nickName"
                       android:layout_height="wrap_content"
-                      android:background="@drawable/textview_border"
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:height="60dp"
                       android:gravity="center_vertical"
-                      android:text="称呼："
+                      android:text="称呼"
                       android:textSize="26dp"
 
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_nickName"
+            <TextView android:id="@+id/textview_nickname"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:height="60dp"
                       android:gravity="center_vertical|right"
-                      android:text="asdfasdf"
+                      android:text="吴师傅"
                       android:textSize="26dp"
                       android:textColor="#333"/>
 
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:id="@+id/container_phoneNum"
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="手机号："
+                      android:text="手机号"
                       android:height="60dp"
                       android:gravity="center_vertical|center"
                       android:textSize="26dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_phoneNum"                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:height="60dp"
-                      android:gravity="center_vertical|right"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="常住地："
-                      android:height="60dp"
-                      android:gravity="center_vertical|center"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_location"                      android:layout_width="fill_parent"
+            <TextView android:id="@+id/textview_phoneNum"
+                      android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:height="60dp"
                       android:gravity="center_vertical|right"
@@ -69,15 +58,16 @@
 
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:id="@+id/container_location"
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="身份证："
+                      android:text="常住地"
                       android:height="60dp"
                       android:gravity="center_vertical|center"
                       android:textSize="26dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_IDNum"
+            <TextView android:id="@+id/textview_location"
                       android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:height="60dp"
@@ -85,24 +75,70 @@
                       android:textSize="26dp"
                       android:textColor="#000000"/>
         </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:orientation="vertical"
+                      android:layout_marginBottom="50dp"
+                      android:layout_height="wrap_content">
+
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:id="@+id/container_IDNum"
                       android:orientation="horizontal">
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="驾驶证："
+                      android:text="身份证"
                       android:height="60dp"
                       android:gravity="center_vertical|center"
                       android:textSize="26dp"
                       android:textColor="#000000"/>
-            <TextView android:id="@+id/setting_IDNum"
-                      android:layout_width="fill_parent"
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center_vertical|right"
+                    >
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:background="@drawable/actionbuttom"
+                        />
+                <TextView android:id="@+id/textview_IDNum"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:height="60dp"
+                          android:gravity="center_vertical|right"
+                          android:textSize="26dp"
+                          android:text="通过审核"
+                          android:textColor="#000000"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:id="@+id/container_driverLicense"
+                      android:orientation="horizontal">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="驾驶证"
                       android:height="60dp"
-                      android:gravity="center_vertical|right"
+                      android:gravity="center_vertical|center"
                       android:textSize="26dp"
-                      android:text="123123123123123123"
                       android:textColor="#000000"/>
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:gravity="center_vertical|right"
+                    >
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                        android:background="@drawable/actionbuttom"
+                        />
+                <TextView android:id="@+id/textview_driverLicense"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:height="60dp"
+                          android:gravity="center_vertical|right"
+                          android:textSize="26dp"
+                          android:text="提交审核"
+                          android:textColor="#000000"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -1,28 +1,40 @@
 package com.buerlab.returntrunk.fragments;
 
 //import android.app.Fragment;
-import android.app.FragmentTransaction;
 //import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.fragments.EditProfileFragments.EditNickNameActivity;
+import com.buerlab.returntrunk.activities.EditIDNumActivity;
+import com.buerlab.returntrunk.activities.EditNickNameActivity;
+import com.buerlab.returntrunk.activities.EditHomeLocationActivity;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 
 /**
  * Created by zhongqiling on 14-6-17.
  */
-public class ProfileFragment extends BaseFragment implements View.OnClickListener {
+public class ProfileFragment extends BaseFragment implements View.OnClickListener,EventCenter.OnEventListener {
     private static final String TAG = "ProfileFragment" ;
-    LinearLayout nickNameEdit ;
-    View mRoot;
+    LinearLayout nickNameContainer;
+    LinearLayout locationContainer;
+    LinearLayout IDNumContainer;
+    LinearLayout driverLicenseContainer;
 
+    TextView phoneNumTextView;
+    TextView nickNameTextView;
+    TextView IDNumTextView;
+    TextView locationTextView;
+    TextView driverLicenseTextView;
+
+    View mRoot;
+    User mUser;
     public final static int EDIT_NICKNAME = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,36 +45,72 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     private void intUI(){
 
-        nickNameEdit = (LinearLayout)mRoot.findViewById(R.id.edit_nickname);
-        nickNameEdit.setOnClickListener(this);
+        nickNameContainer = (LinearLayout)mRoot.findViewById(R.id.container_nickName);
+        nickNameContainer.setOnClickListener(this);
 
+        locationContainer= (LinearLayout)mRoot.findViewById(R.id.container_location);
+        locationContainer.setOnClickListener(this);
+
+        IDNumContainer =(LinearLayout)mRoot.findViewById(R.id.container_IDNum);
+        IDNumContainer.setOnClickListener(this);
+
+        driverLicenseContainer =(LinearLayout)mRoot.findViewById(R.id.container_driverLicense);
+        driverLicenseContainer.setOnClickListener(this);
+
+        nickNameTextView = (TextView)mRoot.findViewById(R.id.textview_nickname);
+        phoneNumTextView = (TextView)mRoot.findViewById(R.id.textview_phoneNum);
+        IDNumTextView = (TextView)mRoot.findViewById(R.id.textview_IDNum);
+        locationTextView = (TextView)mRoot.findViewById(R.id.textview_location);
+        driverLicenseTextView = (TextView)mRoot.findViewById(R.id.textview_driverLicense);
+
+
+        EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.edit_nickname: goToEditNickNameFragment();break;
+            case R.id.container_nickName: goToEditNickNameFragment();break;
+            case R.id.container_location: goToEditLocationFragment();break;
+            case R.id.container_IDNum: goToEditIDNumFragment();break;
+            case R.id.container_driverLicense: goToEditNickNameFragment();break;
             default:break;
         }
     }
 
     private void goToEditNickNameFragment(){
         Intent intent = new Intent(getActivity(),EditNickNameActivity.class);
-        String nickname = User.getInstance().nickName;
-        startActivityForResult(intent, EDIT_NICKNAME);
+        startActivity(intent);
     }
 
+    private void goToEditLocationFragment(){
+        Intent intent = new Intent(getActivity(),EditHomeLocationActivity.class);
+        startActivity(intent);
+
+    }
+
+    private void goToEditIDNumFragment(){
+        mUser = User.getInstance();
+        int IDNumVerified =  Integer.parseInt(mUser.IDNumVerified);
+        if(IDNumVerified==0 || IDNumVerified==3){
+            Intent intent = new Intent(getActivity(),EditIDNumActivity.class);
+            startActivity(intent);
+         }
+    }
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case EDIT_NICKNAME:
-                if (resultCode == 20){
-                    Log.i(TAG, data.getStringExtra("nickname"));
-                }
-                break;
+    public void onEventCall(DataEvent e) {
+        mUser = User.getInstance();
+        nickNameTextView.setText(mUser.nickName);
+        phoneNumTextView.setText(mUser.phoneNum);
+
+        locationTextView.setText(mUser.homeLocation);
+        int IDNumVerified =  Integer.parseInt(mUser.IDNumVerified);
+        switch (IDNumVerified){
+            case 0: IDNumTextView.setText("未审核");break;
+            case 1:IDNumTextView.setText("审核中");break;
+            case 2:IDNumTextView.setText("通过审核");break;
+            case 3:IDNumTextView.setText("审核失败");break;
             default:break;
         }
-
     }
 }

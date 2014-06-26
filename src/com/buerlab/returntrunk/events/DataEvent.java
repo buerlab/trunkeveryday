@@ -7,7 +7,7 @@ package com.buerlab.returntrunk.events;
 public class DataEvent {
     static public String PHONE_CALL = "phone_call";
     static public String NEW_BILL = "new_bill";
-
+    static public String USER_UPDATE = "user_update";
     public String type = "";
     public Object data = null;
 

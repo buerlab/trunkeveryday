@@ -9,13 +9,15 @@ import android.os.Bundle;
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
-import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.FindBillFragment;
 import com.buerlab.returntrunk.fragments.SendBillFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
@@ -34,6 +36,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements JPushCenter.OnJpushListener {
 
+    private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
     private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
@@ -56,7 +59,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         //启动位置上报服务
 //        startService(new Intent(this, BaiduMapService.class));
         JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
-        SDKInitializer.initialize(getApplicationContext());
+//        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
         final FragmentActivity self = this;
@@ -65,6 +68,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
                     User.getInstance().initUser(result.data);
+
+                    //注册用户初始化事件，用于个人资料得以初始化数据
+                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+                    EventCenter.shared().dispatch(evt);
+
                     if(User.validate(self)){
                         SharedPreferences pref = self.getSharedPreferences(self.getString(R.string.app_name), 0);
                         SharedPreferences.Editor editor = pref.edit();
@@ -164,6 +172,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         setHomeFrag(0);
 
         startLocationService();
+
+
     }
 
 
@@ -227,8 +237,5 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         transaction.commit();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-    }
+
 }

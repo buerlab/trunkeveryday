@@ -5,7 +5,10 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <EditText android:layout_width="fill_parent"
-              android:hint="吴师傅"
-              android:id="@+id/edit_nickname"
+              android:hint="身份证"
+              android:id="@+id/edit_IDNum"
               android:layout_height="wrap_content"/>
+    <Button android:layout_width="fill_parent"
+            android:id="@+id/btn_pic"
+            android:layout_height="wrap_content"/>
 </LinearLayout>

@@ -66,6 +66,7 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
     }
 
