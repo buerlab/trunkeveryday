@@ -60,7 +60,7 @@ public class EditIDNumActivity extends EditProfileBaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_idnum);
         init();
-        setActionBarLayout(R.layout.actionbar, "编辑身份证");
+        setActionBarLayout(R.layout.actionbar, "审核身份证");
     }
 
     @Override

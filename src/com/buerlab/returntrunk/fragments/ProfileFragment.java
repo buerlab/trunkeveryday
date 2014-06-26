@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.activities.EditDriverLicenseActivity;
 import com.buerlab.returntrunk.activities.EditIDNumActivity;
 import com.buerlab.returntrunk.activities.EditNickNameActivity;
 import com.buerlab.returntrunk.activities.EditHomeLocationActivity;
@@ -73,7 +74,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             case R.id.container_nickName: goToEditNickNameFragment();break;
             case R.id.container_location: goToEditLocationFragment();break;
             case R.id.container_IDNum: goToEditIDNumFragment();break;
-            case R.id.container_driverLicense: goToEditNickNameFragment();break;
+            case R.id.container_driverLicense: goToEditDriverLisenceFragment();break;
             default:break;
         }
     }
@@ -97,6 +98,16 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             startActivity(intent);
          }
     }
+
+    private void goToEditDriverLisenceFragment(){
+        mUser = User.getInstance();
+        int driverLisenceVerified =  Integer.parseInt(mUser.driverLicenseVerified);
+        if(driverLisenceVerified==0 || driverLisenceVerified==3){
+            Intent intent = new Intent(getActivity(),EditDriverLicenseActivity.class);
+            startActivity(intent);
+        }
+    }
+
     @Override
     public void onEventCall(DataEvent e) {
         mUser = User.getInstance();
@@ -110,6 +121,15 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             case 1:IDNumTextView.setText("审核中");break;
             case 2:IDNumTextView.setText("通过审核");break;
             case 3:IDNumTextView.setText("审核失败");break;
+            default:break;
+        }
+
+        int driverLisenceVerified =  Integer.parseInt(mUser.driverLicenseVerified);
+        switch (driverLisenceVerified){
+            case 0: driverLicenseTextView.setText("未审核");break;
+            case 1:driverLicenseTextView.setText("审核中");break;
+            case 2:driverLicenseTextView.setText("通过审核");break;
+            case 3:driverLicenseTextView.setText("审核失败");break;
             default:break;
         }
     }

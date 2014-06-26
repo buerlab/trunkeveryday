@@ -39,6 +39,8 @@ public class User {
     public String homeLocation = "";
     public String IDNum = "";
     public String IDNumVerified = "0";
+    public String driverLicense="";
+    public String driverLicenseVerified="0";
     private List<Bill> mBills;
 
     //type would be trunk or owner
@@ -68,6 +70,8 @@ public class User {
         homeLocation = "";
         IDNum="";
         IDNumVerified = "0";
+        driverLicense="";
+        driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
 
         //type would be trunk or owner
@@ -102,6 +106,10 @@ public class User {
                 this.IDNum = obj.getString("IDNum");
             if(obj.has("IDNumVerified"))
                 this.IDNumVerified = obj.getString("IDNumVerified");
+            if(obj.has("driverLicense"))
+                this.driverLicense = obj.getString("driverLicense");
+            if(obj.has("driverLicenseVerified"))
+                this.driverLicenseVerified = obj.getString("driverLicenseVerified");
 
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());

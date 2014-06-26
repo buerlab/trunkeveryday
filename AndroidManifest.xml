@@ -44,6 +44,9 @@
         <activity android:name=".activities.EditIDNumActivity"
                   android:theme="@style/custom_theme"
                 />
+        <activity android:name=".activities.EditDriverLicenseActivity"
+                  android:theme="@style/custom_theme"
+                />
 
         <activity android:name=".activities.NewTrunkBillActivity"
                   android:parentActivityName=".MainActivity">
