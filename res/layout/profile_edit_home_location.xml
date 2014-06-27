@@ -5,7 +5,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <EditText android:layout_width="fill_parent"
-              android:hint="吴师傅"
-              android:id="@+id/edit_nickname"
+              android:hint="广东深圳"
+              android:id="@+id/edit_homeLocation"
               android:layout_height="wrap_content"/>
 </LinearLayout>

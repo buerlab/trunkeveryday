@@ -2,12 +2,15 @@ package com.buerlab.returntrunk.net;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
+import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -247,6 +250,7 @@ public class NetService {
                         conn.setDoOutput(true);
                         OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
                         out.write(args[1]);
+
                         out.flush();
                         out.close();
                     }
@@ -303,6 +307,131 @@ public class NetService {
             }
 
         }.execute(url, parms, method);
+    }
+
+    public void uploadPic(String url,Bitmap bitmap, String filename, final NetCallBack callback){
+
+        if(mActivity != null){
+            final LoadingDialog loadingDialog = new LoadingDialog();
+            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            _uploadPic(url, bitmap, filename, new NetCallBack() {
+                @Override
+                public void onCall(NetProtocol result) {
+                    loadingDialog.dismiss();
+                    callback.onCall(result);
+                }
+            });
+        }else{
+            _uploadPic(url, bitmap, filename, callback);
+        }
+
+    }
+
+    public void _uploadPic(String url,Bitmap bitmap,String filename, final NetCallBack callBack){
+        new AsyncTask<Object, Integer, NetProtocol>() {
+            @Override
+            protected NetProtocol doInBackground(Object... params) {
+                String end ="\r\n";
+                String twoHyphens ="--";
+                String boundary ="*****";
+                HttpURLConnection con = null;
+
+
+                try
+                {
+                    String actionUrl = (String)params[0];
+                    Bitmap bitmap = (Bitmap)params[1];
+                    String filename = (String)params[2];
+                    URL url =new URL(actionUrl);
+                    con=(HttpURLConnection)url.openConnection();
+                    /* 允许Input、Output，不使用Cache */
+                    con.setDoInput(true);
+                    con.setDoOutput(true);
+                    con.setUseCaches(false);
+                    /* 设置传送的method=POST */
+                    con.setRequestMethod("POST");
+                    /* setRequestProperty */
+                    con.setRequestProperty("Connection", "Keep-Alive");
+                    con.setRequestProperty("Charset", "UTF-8");
+                    con.setRequestProperty("Content-Type",
+                            "multipart/form-data;boundary="+boundary);
+                      /* 设置DataOutputStream */
+                    DataOutputStream ds =
+                            new DataOutputStream(con.getOutputStream());
+                    ds.writeBytes(twoHyphens + boundary + end);
+                    ds.writeBytes("Content-Disposition: form-data; "+
+                            "name=\"file\";filename=\""+
+                            filename +"\""+ end);
+                    ds.writeBytes(end);
+                     /* 取得文件的FileInputStream */
+                    InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);
+        //            FileInputStream fStream =new FileInputStream(uploadFile);
+                     /* 设置每次写入1024bytes */
+                    int bufferSize =1024;
+                    byte[] buffer =new byte[bufferSize];
+                    int length =-1;
+                     /* 从文件读取数据至缓冲区 */
+                    while((length = fStream.read(buffer)) !=-1)
+                    {
+                      /* 将资料写入DataOutputStream中 */
+                        ds.write(buffer, 0, length);
+                    }
+                    ds.writeBytes(end);
+                    ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
+                    /* close streams */
+                    fStream.close();
+                    ds.flush();
+                   /* 取得Response内容 */
+                    InputStream in = con.getInputStream();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                    StringBuffer stringBuffer = new StringBuffer();
+                    String currline = "";
+                    while((currline=reader.readLine()) != null){
+                        stringBuffer.append(currline);
+                    }
+                    reader.close();
+                    in.close();
+                     /* 关闭DataOutputStream */
+                    ds.close();
+
+                    if(stringBuffer.length() > 0){
+
+                        JSONObject receiveData = new JSONObject(stringBuffer.toString());
+                        String dataString = receiveData.getString("data");
+                        JSONObject data = null;
+                        JSONArray arrayData = null;
+                        try{
+                            data = new JSONObject(dataString);
+                        }catch (JSONException e){
+                            data = null;
+                            try{
+                                arrayData = new JSONArray(dataString);
+                            }catch (JSONException e2){
+                                arrayData = null;
+                            }
+                        }
+                        return new NetProtocol(receiveData.getInt("code"), receiveData.getString("msg"), data, arrayData);
+                    }else{
+                        return new NetProtocol(NetProtocol.NO_RESPONSE, "nothing response", null, null);
+                    }
+
+                }
+                catch(Exception e)
+                {
+                    Log.d("error:", e.toString());
+                    return new NetProtocol(NetProtocol.NET_EXCEPTION, e.toString(), null, null);
+                }
+                finally {
+                    con.disconnect();
+                }
+            }
+
+            protected void onPostExecute(NetProtocol result){
+                if(callBack !=null){
+                    callBack.onCall(result);
+                }
+            }
+        }.execute(url, bitmap, filename);
     }
 
     private String getCookie(){

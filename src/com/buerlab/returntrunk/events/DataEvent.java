@@ -10,6 +10,7 @@ public class DataEvent {
     static public String DELETE_BILL = "delete_bill";
     static public String ADDR_CHANGE = "address_change";
 
+    static public String USER_UPDATE = "user_update";
     public String type = "";
     public Object data = null;
 
