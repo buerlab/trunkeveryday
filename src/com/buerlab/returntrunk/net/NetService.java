@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
-import com.baidu.mapapi.map.MyLocationData;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import org.json.JSONArray;
@@ -109,6 +108,13 @@ public class NetService {
         }
 
         request(mContext.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
+    }
+
+    public void deleteBill(Bill bill, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("billid", bill.id);
+
+        request(mContext.getString(R.string.server_addr)+"api/bill/delete", createReqParms(parmsMap), "POST", callBack);
     }
 
     public void findBills(final BillsCallBack callback){

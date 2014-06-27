@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
+
+    <RelativeLayout android:id="@+id/main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#999999">
+        <com.coboltforge.slidemenu.SlideMenu
+                android:id="@+id/main_slideMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        <FrameLayout android:layout_width="fill_parent"
+                     android:layout_height="fill_parent">
+            <fragment android:name="com.buerlab.returntrunk.fragments.HomeFragment"
+                      android:id="@+id/send_bill_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:tag="首页"
+                      tools:layout="@layout/send_bill_frag"/>
+            <fragment android:name="com.buerlab.returntrunk.fragments.ProfileFragment"
+                      android:id="@+id/slide_menu_profile"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/home_frag"
+                      android:tag="基本资料"/>
+            <!--<fragment android:name="com.buerlab.returntrunk.fragments.BillHistoryFragment"-->
+            <!--android:id="@+id/main_setting_frag"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--tools:layout="@layout/setting_frag"-->
+            <!--android:tag="历史货单"/>-->
+            <fragment android:name="com.buerlab.returntrunk.fragments.CommentListFragment"
+                      android:id="@+id/main_comment_list_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/setting_frag"
+                      android:tag="我的评价"/>
+            <fragment android:name="com.buerlab.returntrunk.fragments.SettingFragment"
+                      android:id="@+id/main_setting_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/setting_frag"
+                      android:tag="设置"/>
+        </FrameLayout>
+
+
+
+    </RelativeLayout>
+
+    <fragment android:name="com.buerlab.returntrunk.fragments.EntryFragment"
+              android:id="@+id/main_entry"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              tools:layout="@layout/entry_frag"
+              android:tag="entry"/>
+</FrameLayout>
+
+
+
+

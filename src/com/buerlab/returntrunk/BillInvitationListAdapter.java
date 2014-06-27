@@ -41,6 +41,6 @@ public class BillInvitationListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
-        return BillLayoutFactory.createInviteBill(mInflater, mBills.get(position));
+        return ViewsFactory.createInviteBill(mInflater, mBills.get(position));
     }
 }

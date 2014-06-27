@@ -43,6 +43,12 @@
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".MainActivity"/>
         </activity>
+        <activity android:name=".activities.FindBillActivity"
+                  android:parentActivityName=".MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".MainActivity"/>
+        </activity>
+        <activity android:name=".activities.PickAddrActivity"/>
         <service android:name=".service.BaiduMapService">
             <intent-filter>
                 <action android:name="com.buerlab.returntrunk.service.BadiMapService"/>

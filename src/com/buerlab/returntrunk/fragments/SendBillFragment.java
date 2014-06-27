@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.FindBillActivity;
 import com.buerlab.returntrunk.activities.NewTrunkBillActivity;
 import com.buerlab.returntrunk.adapters.SendBillListAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -45,9 +46,9 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
         mAdapter = new SendBillListAdapter(getActivity());
         listView.setAdapter(mAdapter);
 
-        Button btn = (Button)getActivity().findViewById(R.id.frag_send_btn);
+        Button sendBtn = (Button)getView().findViewById(R.id.frag_send_btn);
         final SendBillFragment self = this;
-        btn.setOnClickListener(new View.OnClickListener() {
+        sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                NewBillDialog dialog = new NewBillDialog(self);
@@ -55,17 +56,35 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
 
                 Intent intent = new Intent(self.getActivity(), NewTrunkBillActivity.class);
                 self.getActivity().startActivity(intent);
+            }
+        });
 
+        Button findBillBtn = (Button)getView().findViewById(R.id.send_bill_frag_goods);
+        findBillBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(self.getActivity(), FindBillActivity.class);
+                self.getActivity().startActivity(intent);
             }
         });
 
         EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
+        EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, new EventCenter.OnEventListener() {
+            @Override
+            public void onEventCall(DataEvent e) {
+                Bill bill = (Bill)e.data;
+                if(bill != null){
+                    mAdapter.removeBill(bill);
+                }
+            }
+        });
 
         initBills();
     }
 
     @Override
     public void onDestroy(){
+        super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
     }
 

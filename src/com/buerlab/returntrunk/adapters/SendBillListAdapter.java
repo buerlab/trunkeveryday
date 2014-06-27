@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
 
@@ -34,6 +33,11 @@ public class SendBillListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void removeBill(Bill bill){
+        mBills.remove(bill);
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getCount(){
         return mBills.size();
@@ -52,7 +56,7 @@ public class SendBillListAdapter extends BaseAdapter {
         Bill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
-            view = BillLayoutFactory.createSendBill(mInflater, bill);
+            view = ViewsFactory.createSendBill(mInflater, bill);
         }else{
             ((TextView)view.findViewById(R.id.new_bill_from)).setText(bill.from);
             ((TextView)view.findViewById(R.id.new_bill_to)).setText(bill.to);

@@ -28,7 +28,9 @@ import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
+import org.apache.http.util.EncodingUtils;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -52,11 +54,15 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+        getActionBar().hide();
         setContentView(R.layout.main);
+
         //启动位置上报服务
 //        startService(new Intent(this, BaiduMapService.class));
-        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
+//        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         SDKInitializer.initialize(getApplicationContext());
+        AssetManager.shared().init(this);
 
         NetService service = new NetService(this);
         final FragmentActivity self = this;
@@ -71,7 +77,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
 //                        JPushUtils.registerAlias(self, User.getInstance().userId);
-                        JPushUtils.registerAlias(self, "zql");
+//                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
 
                         init();
@@ -81,6 +87,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
+                        getActionBar().show();
                     }
                 }
                 else{
@@ -107,7 +114,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        JPushCenter.shared().unregister(JPushProtocal.JPUSH_PHONE_CALL, this);
     }
 
 
@@ -141,27 +147,28 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.ic_launcher));
 
         FragmentManager manager = getSupportFragmentManager();
-        ((FindBillFragment)manager.findFragmentById(R.id.find_bill_frag)).init();
+
         ((SendBillFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
         ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
-        Button sendbtn = (Button)findViewById(R.id.bottom_send_btn);
-        sendbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setHomeFrag(0);
-            }
-        });
-
-        Button findBtn = (Button)findViewById(R.id.bottom_list_btn);
-        findBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setHomeFrag(1);
-            }
-        });
+//        ((FindBillFragment)manager.findFragmentById(R.id.find_bill_frag)).init();
+//        Button sendbtn = (Button)findViewById(R.id.bottom_send_btn);
+//        sendbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setHomeFrag(0);
+//            }
+//        });
+//
+//        Button findBtn = (Button)findViewById(R.id.bottom_list_btn);
+//        findBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                setHomeFrag(1);
+//            }
+//        });
         setFrag(0);
-        setHomeFrag(0);
+//        setHomeFrag(0);
 
         startLocationService();
     }
