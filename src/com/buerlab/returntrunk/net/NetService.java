@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.baidu.mapapi.map.MyLocationData;
 import com.buerlab.returntrunk.*;
@@ -146,12 +147,16 @@ public class NetService {
     //COMMENTS
     //////////////////////////
 
-    public void getComments(final BillsCallBack callBack){
-        request(mContext.getString(R.string.server_addr) + "api/bill", createReqParms(null), "GET", new NetCallBack() {
+    public void getComments(int num, int count ,final CommentsCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("num", String.valueOf(num));
+        parmsMap.put("count", String.valueOf(count));
+
+        request(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
-                    callBack.onCall(result, extractBills(result.arrayData));
+                    callBack.onCall(result, extractComments(result.arrayData));
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -191,7 +196,7 @@ public class NetService {
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("starNum",Integer.toString(starNum) );
         parmsMap.put("text", commentText);
-        parmsMap.put("fromUserName", fromUserId);
+        parmsMap.put("fromUserName", fromUserName);
         parmsMap.put("fromUserId", fromUserId);
         parmsMap.put("toUserId", toUserId);
         parmsMap.put("billId", billId);
@@ -522,6 +527,27 @@ public class NetService {
         }
     }
 
+    private List<Comment> extractComments(JSONArray data){
+        List<Comment> retComments = new ArrayList<Comment>();
+        try{
+            for(int i = 0; i < data.length(); i++){
+                JSONObject item = data.getJSONObject(i);
+                Comment comment = new Comment(item.getInt("starNum"),
+                        item.getString("commentTime"),
+                        item.getString("fromUserName"),
+                        item.getString("fromUserId"),
+                        item.getString("toUserId"),
+                        item.getString("billId"),
+                        item.getString("text"));
+                comment.id = item.getString("commentId");
+                retComments.add(comment);
+            }
+            return retComments;
+        }catch (JSONException e){
+            Utils.showToast(mContext,"json parse error when extract comments");
+            return null;
+        }
+    }
     private List<JSONObject> extractArray(JSONObject data){
         List<JSONObject> result = new ArrayList<JSONObject>();
 
