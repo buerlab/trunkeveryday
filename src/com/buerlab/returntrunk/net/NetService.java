@@ -32,6 +32,8 @@ public class NetService {
 
     public interface BillsCallBack{ public void onCall(NetProtocol result, List<Bill> bills); }
 
+    public interface CommentsCallBack{ public void onCall(NetProtocol result, List<Comment> comments); }
+
     private Activity mActivity = null;
     private Context mContext = null;
 
@@ -146,6 +148,22 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill/invite", createReqParms(parmsMap), "POST", callback);
     }
 
+    //////////////////////////
+    //COMMENTS
+    //////////////////////////
+
+    public void getComments(final BillsCallBack callBack){
+        request(mContext.getString(R.string.server_addr) + "api/bill", createReqParms(null), "GET", new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                    callBack.onCall(result, extractBills(result.arrayData));
+                }else{
+                    Utils.defaultNetProAction(mActivity, result);
+                }
+            }
+        });
+    }
 
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();

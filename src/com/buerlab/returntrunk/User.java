@@ -50,8 +50,9 @@ public class User {
     private int newBillDialog;
     private int newBill;
 
-    public String driveLisence = "";
     public List<Trunk> trunks;
+
+    private List<Comment> mComments;
 
     static private User instance = null;
     static public User getInstance(){
@@ -73,7 +74,7 @@ public class User {
         driverLicense="";
         driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
-
+        mComments = new ArrayList<Comment>();
         //type would be trunk or owner
         userType = "";
         //billtype contains trunk, goods
@@ -81,7 +82,6 @@ public class User {
         newBillDialog = R.layout.new_bill_trunk_dialog;
         newBill = R.layout.new_bill_trunk;
 
-        driveLisence = "";
         trunks = new ArrayList<Trunk>();
     }
 
@@ -144,6 +144,11 @@ public class User {
         trunks.add(trunk);
     }
 
+    public void initComments(List<Comment> comments){
+        mComments = comments;
+    }
+
+    public List<Comment> getComment(){ return  mComments;}
     public List<Bill> getBills(){
         return mBills;
     }
