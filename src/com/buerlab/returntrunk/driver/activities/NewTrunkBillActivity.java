@@ -10,10 +10,13 @@ import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.adapters.TrunkSpinnerAdapter;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +57,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         for(Trunk trunk : User.getInstance().trunks){
             trunks.add(trunk.toString());
         }
-        TrunkListAdapter adapter = new TrunkListAdapter(this, trunks);
+        TrunkSpinnerAdapter adapter = new TrunkSpinnerAdapter(this, trunks);
         trunkSpinner.setAdapter(adapter);
 
         //选择出发地监听事件
@@ -101,11 +104,23 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                     return;
                 }
                 self.finish();
-                Bill bill = new Bill(Bill.BILLTYPE_TRUNK, Bill.formatString(currFromContent),
+                final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, Bill.formatString(currFromContent),
                         Bill.formatString(currToContent), currTimeStamp);
 
-                DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bill);
-                EventCenter.shared().dispatch(evt);
+                NetService service = new NetService(self);
+                service.sendBill(bill, new NetService.NetCallBack() {
+                    @Override
+                    public void onCall(NetProtocol result) {
+                        if (result.code == NetProtocol.SUCCESS) {
+                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bill);
+                            EventCenter.shared().dispatch(evt);
+                        } else {
+                            Utils.defaultNetProAction(self, result);
+                        }
+                    }
+                });
+
+
 
             }
         });

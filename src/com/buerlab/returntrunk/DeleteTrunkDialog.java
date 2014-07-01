@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
-import com.buerlab.returntrunk.adapters.OldTrunkListAdapter;
+import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,22 +43,23 @@ public class DeleteTrunkDialog extends DialogFragment {
         for(Trunk trunk : User.getInstance().trunks){
             trunkStr.add(trunk.toString());
         }
-        OldTrunkListAdapter adapter = new OldTrunkListAdapter(getActivity(), trunkStr);
-        trunksList.setAdapter(adapter);
 
-        builder.setView(view)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
+//        TrunkListAdapter adapter = new TrunkListAdapter(getActivity(), trunkStr);
+//        trunksList.setAdapter(adapter);
+//
+//        builder.setView(view)
+//                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                })
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
 
         return builder.create();
     }
