@@ -2,7 +2,6 @@ package com.buerlab.returntrunk.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,21 +10,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.BaseDialogFragment;
-import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.views.PickAddrView;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
+import com.buerlab.returntrunk.views.PickTimeView;
 
 import java.util.List;
 
 /**
- * Created by zhongqiling on 14-6-26.
+ * Created by zhongqiling on 14-6-28.
  */
-public class PickAddrDialog extends BaseDialogFragment implements PickAddrView.OnAddrListener{
+public class PickTimeDialog extends BaseDialogFragment implements PickTimeView.OnTimeLisener{
 
-
+    private String mTimeStamp = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -38,23 +35,24 @@ public class PickAddrDialog extends BaseDialogFragment implements PickAddrView.O
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final String[] provs = AssetManager.shared().getProvinces();
 
-        PickAddrView view = new PickAddrView(getActivity());
-        view.setListener(this);
+        PickTimeView view = new PickTimeView(getActivity());
+        view.setLisener(this);
 
         builder.setView(view)
-               .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                   @Override
-                   public void onClick(DialogInterface dialog, int which) {
-
-                   }
-               });
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EventCenter.shared().dispatch(new DataEvent(DataEvent.TIME_SETTLE, mTimeStamp));
+                    }
+                });
 
         AlertDialog dialog = builder.create();
         dialog.getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL | Gravity.BOTTOM;
         return dialog;
     }
 
-    public void OnAddrChanged(List<String> addr){
-        EventCenter.shared().dispatch(new DataEvent(DataEvent.ADDR_CHANGE, addr));
+    public void onTimeChange(List<String> time, String timeStamp){
+        mTimeStamp = timeStamp;
+        EventCenter.shared().dispatch(new DataEvent(DataEvent.TIME_CHANGE, time));
     }
 }

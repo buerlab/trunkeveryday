@@ -5,6 +5,25 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <EditText android:id="@+id/new_bill_goods"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:hint="货物名称"
+                  android:textSize="20dp"/>
+    </LinearLayout>
+    <EditText android:id="@+id/new_bill_weight"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:hint="重量（kg）"
+              android:numeric="integer"
+              android:textSize="20dp"/>
+    <EditText android:id="@+id/new_bill_price"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:hint="期望价格（元）"
+              android:numeric="integer"
+              android:textSize="20dp"/>
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="horizontal">
@@ -12,7 +31,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
                   android:gravity="center_vertical"
-                  android:hint="回程出发地"
+                  android:hint="出发地"
                   android:textSize="20dp"
                   android:layout_weight="1"/>
         <Button android:id="@+id/new_bill_from_btn"
@@ -28,7 +47,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="fill_parent"
                   android:gravity="center_vertical"
-                  android:hint="回程目的地"
+                  android:hint="目的地"
                   android:textSize="20dp"
                   android:layout_weight="1"/>
         <Button android:id="@+id/new_bill_to_btn"
@@ -53,11 +72,8 @@
                 android:text="选择"
                 android:gravity="left"/>
     </LinearLayout>
-    <Spinner android:id="@+id/new_bill_trunk_spinner"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content">
-    </Spinner>
-    <EditText android:layout_width="fill_parent"
+    <EditText android:id="@+id/new_bill_comment"
+              android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:hint="备注"/>
     <Button android:id="@+id/new_bill_activity_submit"

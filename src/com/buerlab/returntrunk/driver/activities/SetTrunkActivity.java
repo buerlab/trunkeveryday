@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.driver.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Trunk;
+import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -45,9 +50,9 @@ public class SetTrunkActivity extends BaseActivity {
                             Toast toast = Toast.makeText(self, "添加货车成功！", 2);
                             toast.show();
 
-                            Utils.safeSwitchToMainActivity(self);
+                            DriverUtils.safeSwitchToMainActivity(self);
                         }else{
-                            Utils.defaultNetProAction(self, result);
+                            DriverUtils.defaultNetProAction(self, result);
                         }
                     }
                 });

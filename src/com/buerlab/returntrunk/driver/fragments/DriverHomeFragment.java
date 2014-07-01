@@ -1,9 +1,7 @@
-package com.buerlab.returntrunk.fragments;
+package com.buerlab.returntrunk.driver.fragments;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +11,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.activities.FindBillActivity;
-import com.buerlab.returntrunk.activities.NewTrunkBillActivity;
+import com.buerlab.returntrunk.driver.activities.FindBillActivity;
+import com.buerlab.returntrunk.driver.activities.NewTrunkBillActivity;
 import com.buerlab.returntrunk.adapters.SendBillListAdapter;
+import com.buerlab.returntrunk.driver.activities.MainActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-5-27.
  */
-public class SendBillFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
+public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
     private TextView tips = null;
 
@@ -47,15 +47,15 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
         listView.setAdapter(mAdapter);
 
         Button sendBtn = (Button)getView().findViewById(R.id.frag_send_btn);
-        final SendBillFragment self = this;
+        final DriverHomeFragment self = this;
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                NewBillDialog dialog = new NewBillDialog(self);
 //                dialog.show(getActivity().getFragmentManager(), "what");
 
-                Intent intent = new Intent(self.getActivity(), NewTrunkBillActivity.class);
-                self.getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), NewTrunkBillActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -63,8 +63,8 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
         findBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(self.getActivity(), FindBillActivity.class);
-                self.getActivity().startActivity(intent);
+                Intent intent = new Intent(getActivity(), FindBillActivity.class);
+                getActivity().startActivity(intent);
             }
         });
 
@@ -100,9 +100,23 @@ public class SendBillFragment extends BaseFragment implements NewBillDialog.NewB
 
     @Override
     public void onEventCall(DataEvent e) {
-        Bill bill = (Bill)e.data;
-        Toast toast = Toast.makeText(this.getActivity(), "get data from:"+bill.from, 3);
-        toast.show();
+        final Bill bill = (Bill)e.data;
+
+        NetService service = new NetService(getActivity());
+        final MainActivity parActivity = (MainActivity)getActivity();
+        service.sendBill(bill, new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS){
+                    addBill(bill);
+
+                    Toast toast = Toast.makeText(parActivity.getApplicationContext(), "添加成功", 2);
+                    toast.show();
+                }else{
+                    Utils.defaultNetProAction(parActivity, result);
+                }
+            }
+        });
     }
 
     @Override

@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.TextView;
+import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,14 +48,8 @@ public class FindBillListAdapter extends BaseAdapter {
         if(view == null){
             view = ViewsFactory.createFindBill(mInflater, bill);
         }else{
-            ((TextView)view.findViewById(R.id.find_bill_name)).setText(bill.senderName);
-            ((TextView)view.findViewById(R.id.find_bill_from)).setText(bill.from);
-            ((TextView)view.findViewById(R.id.find_bill_to)).setText(bill.to);
-            ((TextView)view.findViewById(R.id.find_bill_time)).setText(Utils.tsToTimeString(bill.time));
-            if(bill.billType.equals(Bill.BILLTYPE_GOODS))
-                ((TextView)view.findViewById(R.id.find_bill_mat)).setText(bill.material);
+            ViewsFactory.fillFindBill(view, bill);
         }
-
         return view;
     }
 

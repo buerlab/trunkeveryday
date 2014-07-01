@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+            android:id="@+id/slide_menu_home"
+            android:icon="@drawable/ic_launcher"
+            android:title="首页">
+    </item>
+    <item
+            android:id="@+id/slide_menu_profile"
+            android:icon="@drawable/ic_launcher"
+            android:title="基本资料">
+    </item>
+    <item
+            android:id="@+id/slide_menu_bill_history"
+            android:icon="@drawable/ic_launcher"
+            android:title="历史货单">
+    </item>
+    <item
+            android:id="@+id/slide_menu_comment"
+            android:icon="@drawable/ic_launcher"
+            android:title="我的评价">
+    </item>
+
+    <item
+            android:id="@+id/slide_menu_setting"
+            android:icon="@drawable/ic_launcher"
+            android:title="设置">
+    </item>
+    <item
+            android:id="@+id/slide_menu_aboutus"
+            android:icon="@drawable/ic_launcher"
+            android:title="关于我们">
+    </item>
+</menu>

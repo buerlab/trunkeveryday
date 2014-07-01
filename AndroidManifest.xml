@@ -14,7 +14,16 @@
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
-        <activity android:name="MainActivity"
+        <!--<activity android:name=".driver.activities.MainActivity"-->
+                  <!--android:label="@string/app_name"-->
+                  <!--android:launchMode="singleInstance">-->
+            <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
+                <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
+        <!--</activity>-->
+
+        <activity android:name=".owner.activities.OwnerMainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
             <intent-filter>
@@ -23,11 +32,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity"
+        <activity android:name=".driver.activities.LoginActivity"
                   android:label="@string/app_name">
         </activity>
-        <activity android:name=".PickUserTypeActivity"/>
-        <activity android:name=".SetTrunkActivity"/>
+        <activity android:name=".driver.activities.initDriverActivity"/>
+        <activity android:name=".driver.activities.SetTrunkActivity"/>
 
         <activity
                 android:name=".BaiduMapActivity"
@@ -48,17 +57,25 @@
                   android:theme="@style/custom_theme"
                 />
 
-        <activity android:name=".activities.NewTrunkBillActivity"
-                  android:parentActivityName=".MainActivity">
+        <activity android:name=".driver.activities.NewTrunkBillActivity"
+                  android:parentActivityName=".driver.activities.MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".MainActivity"/>
+                       android:value=".driver.activities.MainActivity"/>
         </activity>
-        <activity android:name=".activities.FindBillActivity"
-                  android:parentActivityName=".MainActivity">
+        <activity android:name=".owner.activities.NewGoodsBillActivity"
+                  android:parentActivityName=".owner.activities.OwnerMainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".MainActivity"/>
+                       android:value=".owner.activities.OwnerMainActivity"/>
+        </activity>
+        <activity android:name=".driver.activities.FindBillActivity"
+                  android:parentActivityName=".driver.activities.MainActivity">
+            <meta-data android:name="android.support.PARENT_ACTIVITY"
+                       android:value=".driver.activities.MainActivity"/>
         </activity>
         <activity android:name=".activities.PickAddrActivity"/>
+
+
+
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->
                 <!--<action android:name="com.buerlab.returntrunk.service.BadiMapService"/>-->

@@ -115,12 +115,13 @@ public class PickAddrView extends LinearLayout {
 
         view.addScrollingListener(new OnWheelScrollListener() {
             @Override
-            public void onScrollingStarted(WheelView wheel) {
-            }
+            public void onScrollingStarted(WheelView wheel) {}
 
             @Override
             public void onScrollingFinished(WheelView wheel) {
-
+                if(mListener != null){
+                    mListener.OnAddrChanged(getCurrAddr());
+                }
             }
         });
         return view;

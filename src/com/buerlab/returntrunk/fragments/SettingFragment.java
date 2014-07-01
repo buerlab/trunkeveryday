@@ -1,7 +1,6 @@
 package com.buerlab.returntrunk.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,13 +8,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.baidu.mapapi.map.MapView;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.driver.DriverUtils;
+import com.buerlab.returntrunk.driver.activities.LoginActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -110,7 +108,7 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
                     User.getInstance().trunks.add(trunk);
                     updateTrunks();
                 }else{
-                    Utils.defaultNetProAction(getActivity(), result);
+                    DriverUtils.defaultNetProAction(getActivity(), result);
                 }
             }
         });

@@ -15,8 +15,8 @@
                 android:layout_height="match_parent" />
         <FrameLayout android:layout_width="fill_parent"
                      android:layout_height="fill_parent">
-            <fragment android:name="com.buerlab.returntrunk.fragments.HomeFragment"
-                      android:id="@+id/send_bill_frag"
+            <fragment android:name="com.buerlab.returntrunk.owner.fragments.OwnerHomeFragment"
+                      android:id="@+id/owner_home_frag"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
                       android:tag="首页"

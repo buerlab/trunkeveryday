@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
@@ -211,6 +212,7 @@ public class NetService {
 
         StringBuilder builder = new StringBuilder();
         builder.append("userId=" + userId);
+        builder.append("&userType="+User.getInstance().getUserType());
 //        String str = "";
         if(parmsMap != null){
             for(Map.Entry<String, String> entry : parmsMap.entrySet()){
@@ -236,7 +238,6 @@ public class NetService {
         }else{
             urlRequest(url, parms, method, callback);
         }
-
     }
 
     public void urlRequest(String url, String parms, String method, final NetCallBack callback){

@@ -59,7 +59,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity{
 
     private void init(){
         mDriverLicenseEdit = (EditText)findViewById(R.id.edit_driverlicense);
-        mDriverLicenseEdit.setText(User.getInstance().driveLisence);
+        mDriverLicenseEdit.setText(User.getInstance().driverLicense);
 
         mPicBtn =(Button)findViewById(R.id.btn_pic);
         mPicBtn.setOnClickListener(new View.OnClickListener() {

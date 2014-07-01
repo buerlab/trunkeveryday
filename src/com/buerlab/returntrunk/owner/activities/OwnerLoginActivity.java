@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.owner.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -7,16 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-
+import com.buerlab.returntrunk.owner.OwnerUtils;
 
 /**
- * Created by zhongqiling on 14-5-28.
+ * Created by zhongqiling on 14-7-1.
  */
-public class LoginActivity extends BaseActivity {
+public class OwnerLoginActivity extends BaseActivity {
+
     public static final String addr = "http:127.0.0.1:8888";
 
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,6 @@ public class LoginActivity extends BaseActivity {
                     Toast toast = Toast.makeText(self.getApplicationContext(), "请输入有效的用户名", 2);
                     toast.show();
                 }
-
             }
         });
     }
@@ -73,9 +76,9 @@ public class LoginActivity extends BaseActivity {
                     editor.commit();
                     JPushUtils.registerAlias(self, User.getInstance().userId);
 
-                    Utils.safeSwitchToMainActivity(self);
+                    OwnerUtils.safeSwitchToMainActivity(self);
                 }else{
-                    Utils.defaultNetProAction(self, result);
+                    OwnerUtils.defaultNetProAction(self, result);
                 }
             }
         });
