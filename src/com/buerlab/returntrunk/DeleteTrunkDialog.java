@@ -8,9 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.adapters.OldTrunkListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +43,7 @@ public class DeleteTrunkDialog extends DialogFragment {
         for(Trunk trunk : User.getInstance().trunks){
             trunkStr.add(trunk.toString());
         }
-        TrunkListAdapter adapter = new TrunkListAdapter(getActivity(), trunkStr);
+        OldTrunkListAdapter adapter = new OldTrunkListAdapter(getActivity(), trunkStr);
         trunksList.setAdapter(adapter);
 
         builder.setView(view)

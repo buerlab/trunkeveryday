@@ -73,8 +73,28 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(parms), "PUT", callback);
     }
 
+    public void getUserData(NetCallBack callback){
+        request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
+    }
+
+
+    //////////////////////////
+    //TRUNK
+    //////////////////////////
+    public  void deleteTrunk(String licensePlate,NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("licensePlate", licensePlate);
+        request(mContext.getString(R.string.server_addr) + "api/user/trunk/delete", createReqParms(parmsMap), "POST", callback);
+    }
+
     public void addUserTrunk(Trunk trunk, NetCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
+    }
+
+    public  void useTrunk(String licensePlate,NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("licensePlate", licensePlate);
+        request(mContext.getString(R.string.server_addr) + "api/user/trunk/use", createReqParms(parmsMap), "POST", callback);
     }
 
     //////////////////////////
@@ -164,6 +184,25 @@ public class NetService {
         });
     }
 
+    public void addComment(int starNum,
+                           String commentText,
+                           String fromUserName,
+                           String fromUserId,
+                           String toUserId,
+                           String billId,
+                           NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("starNum",Integer.toString(starNum) );
+        parmsMap.put("text", commentText);
+        parmsMap.put("fromUserName", fromUserName);
+        parmsMap.put("fromUserId", fromUserId);
+        parmsMap.put("toUserId", toUserId);
+        parmsMap.put("billId", billId);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
+    }
+
+
+
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("latitude", Double.toString(latitude) );
@@ -186,22 +225,6 @@ public class NetService {
         urlRequest(mContext.getString(R.string.server_addr) + "api/location", createReqParms(parmsMap), "POST", callback);
     }
 
-    public void addComment(int starNum,
-                           String commentText,
-                           String fromUserName,
-                           String fromUserId,
-                           String toUserId,
-                           String billId,
-                           NetCallBack callback){
-        Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("starNum",Integer.toString(starNum) );
-        parmsMap.put("text", commentText);
-        parmsMap.put("fromUserName", fromUserName);
-        parmsMap.put("fromUserId", fromUserId);
-        parmsMap.put("toUserId", toUserId);
-        parmsMap.put("billId", billId);
-        urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
-    }
 
 
     private String createReqParms(Map<String, String> parmsMap){

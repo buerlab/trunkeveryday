@@ -11,32 +11,111 @@
                   android:orientation="horizontal">
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:id="@+id/nickname"
+                  android:id="@+id/type_icon"
                   android:textColor="#000"
                   android:textSize="30sp"
                   android:layout_marginRight="30dp"
-                  android:text="吴师傅"
+                  android:text="平板车"
                 />
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:id="@+id/starNum"
+                  android:id="@+id/licensePlate"
                   android:textColor="#000"
                   android:textSize="30sp"
-                  android:text="3"
+                  android:layout_marginRight="10dp"
+                  android:text="粤A12929"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/isUsed"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:visibility="gone"
+                  android:text="当前车辆"
                 />
     </LinearLayout>
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/time"
-              android:textColor="#000"
-              android:textSize="30sp"
-              android:text="3"
-            />
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/comment_text"
-              android:textColor="#000"
-              android:text="123123123123123123"
-              android:textSize="30sp"/>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:text="类型:"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/type"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:layout_marginRight="30dp"
+                  android:text="平板车"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:text="荷载:"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/load"
+                  android:layout_marginRight="30dp"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:text="8吨"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:text="车长:"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/length"
+                  android:textColor="#000"
+                  android:textSize="20sp"
+                  android:text="9米"
+                />
+    </LinearLayout>
+    <GridLayout android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:columnCount="3"
+                android:padding="10dp"
+                android:id="@+id/pic_grid_layout"
+                android:orientation="horizontal" >
+        <Button android:id="@+id/btn_pic"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="100dp"
+                android:background="#222"
+                android:layout_height="100dp"/>
+        <Button android:id="@+id/btn_pic"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="100dp"
+                android:background="#333"
+                android:layout_height="100dp"/>
+        <Button android:id="@+id/btn_pic"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#444"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        <Button android:id="@+id/btn_pic"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="#555"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+        <Button android:id="@+id/btn_pic"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_width="100dp"
+                android:background="#666"
+                android:layout_height="100dp"/>
+                </GridLayout>
 
 </LinearLayout>

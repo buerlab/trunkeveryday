@@ -44,6 +44,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         return mRoot;
     }
 
+
     private void intUI(){
 
         nickNameContainer = (LinearLayout)mRoot.findViewById(R.id.container_nickName);
@@ -95,6 +96,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         int IDNumVerified =  Integer.parseInt(mUser.IDNumVerified);
         if(IDNumVerified==0 || IDNumVerified==3){
             Intent intent = new Intent(getActivity(),EditIDNumActivity.class);
+            intent.putExtra("isEdited",false);
             startActivity(intent);
          }
     }

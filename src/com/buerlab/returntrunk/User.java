@@ -3,13 +3,11 @@ package com.buerlab.returntrunk;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -24,7 +22,7 @@ public class User {
             from.startActivity(new Intent(from, PickUserTypeActivity.class));
             from.finish();
             return false;
-        }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks.isEmpty()){
+        }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks!=null &&   User.getInstance().trunks.isEmpty()){
             from.startActivity(new Intent(from, SetTrunkActivity.class));
             from.finish();
             return false;
@@ -50,6 +48,8 @@ public class User {
     private int newBillDialog;
     private int newBill;
 
+
+    public String useTrunk = "";
     public List<Trunk> trunks;
 
     private List<Comment> mComments;
@@ -83,6 +83,7 @@ public class User {
         newBill = R.layout.new_bill_trunk;
 
         trunks = new ArrayList<Trunk>();
+        useTrunk = "";
     }
 
     public void initUser(JSONObject obj){
@@ -99,7 +100,7 @@ public class User {
             if(obj.has("nickName"))
                 this.nickName = obj.getString("nickName");
             if(obj.has("trunks"))
-                this.trunks = extractArray(obj.getJSONArray("trunks"));
+                this.trunks = extractTrunk(obj.getJSONArray("trunks"));
             if(obj.has("homeLocation"))
                 this.homeLocation = obj.getString("homeLocation");
             if(obj.has("IDNum"))
@@ -110,6 +111,8 @@ public class User {
                 this.driverLicense = obj.getString("driverLicense");
             if(obj.has("driverLicenseVerified"))
                 this.driverLicenseVerified = obj.getString("driverLicenseVerified");
+            if(obj.has("useTrunk"))
+                this.useTrunk = obj.getString("useTrunk");
 
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
@@ -169,7 +172,7 @@ public class User {
         return newBill;
     }
 
-    private List<Trunk> extractArray(JSONArray data){
+    public static List<Trunk> extractTrunk(JSONArray data){
         List<Trunk> result = new ArrayList<Trunk>();
 
         try{
@@ -179,7 +182,30 @@ public class User {
                 float length = d.has("length") ? Float.valueOf(d.getString("length")) : 0.0f;
                 float load = d.has("load") ? Float.valueOf(d.getString("load")) : 0.0f;
                 String lisence = d.has("licensePlate") ? d.getString("licensePlate") : "";
-                result.add(new Trunk(type, length, load, lisence));
+
+                Trunk t = new Trunk(type, length, load, lisence);
+
+                //可能没有
+                if(d.has("isUsed")){
+                    t.isUsed = d.getBoolean("isUsed");
+                }else{
+                    t.isUsed = false;
+                }
+                if(d.has("trunkLicense")){
+                    t.trunkLicense = d.getString("trunkLicense");
+                }
+                if(d.has("trunkLicenseVerified")){
+                    t.trunkLicenseVerified = d.getString("trunkLicenseVerified");
+                }
+                if(d.has("trunkPicFilePaths")){
+                   JSONArray pics =  d.getJSONArray("trunkPicFilePaths");
+                    ArrayList<String> picArrayList = new ArrayList<String>();
+                    for(int j = 0; j < pics.length(); j++) {
+                        picArrayList.add((String)pics.get(j));
+                    }
+                    t.trunkPicFilePaths = picArrayList;
+                }
+                result.add(t);
             }
             return result;
         }catch (JSONException e){

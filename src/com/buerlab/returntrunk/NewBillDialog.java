@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.adapters.OldTrunkListAdapter;
 
 import java.text.*;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class NewBillDialog extends BaseDialogFragment {
             for(Trunk trunk : User.getInstance().trunks){
                 trunks.add(trunk.toString());
             }
-            TrunkListAdapter adapter = new TrunkListAdapter(getActivity(), trunks);
+            OldTrunkListAdapter adapter = new OldTrunkListAdapter(getActivity(), trunks);
             trunkSpinner.setAdapter(adapter);
         }
 

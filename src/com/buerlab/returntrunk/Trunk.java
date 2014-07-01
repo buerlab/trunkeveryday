@@ -1,5 +1,6 @@
 package com.buerlab.returntrunk;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,12 @@ public class Trunk {
     public float length= 0.0f;
     public float load = 0.0f;
     public String lisencePlate = "";
+
+    public Boolean isUsed = false;
+    //option
+    public String trunkLicense;
+    public String trunkLicenseVerified="0";
+    public ArrayList<String> trunkPicFilePaths;
 
     public Trunk(){}
 
@@ -29,6 +36,24 @@ public class Trunk {
         parmsMap.put("length", String.valueOf(length));
         parmsMap.put("load", String.valueOf(load));
         parmsMap.put("licensePlate", lisencePlate);
+
+        if(trunkLicense!=null){
+            parmsMap.put("trunkLicense", trunkLicense);
+        }
+
+        parmsMap.put("trunkLicenseVerified", trunkLicenseVerified);
+        parmsMap.put("isUsed",String.valueOf(isUsed) );
+        if(trunkPicFilePaths!=null && !trunkPicFilePaths.isEmpty()){
+            String picFileStr="";
+            for(int i =0;i<trunkPicFilePaths.size();i++){
+                if(i<trunkPicFilePaths.size()-1){
+                    picFileStr += trunkPicFilePaths.get(i) + "|";
+                }else{
+                    picFileStr += trunkPicFilePaths.get(i);
+                }
+            }
+            parmsMap.put("trunkPicFilePaths",picFileStr );
+        }
         return parmsMap;
     }
 
