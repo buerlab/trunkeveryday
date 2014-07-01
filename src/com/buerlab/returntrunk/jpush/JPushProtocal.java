@@ -8,8 +8,9 @@ import org.json.JSONObject;
  */
 public class JPushProtocal {
 
-    static public int JPUSH_ERROR = -1;
-    static public int JPUSH_PHONE_CALL = 1;
+    static public final int JPUSH_ERROR = -1;
+    static public final int JPUSH_PHONE_CALL = 1;
+    static public final int BILL_VISITED = 2;
 
     public int code = -1;
     public String msg = "not init";

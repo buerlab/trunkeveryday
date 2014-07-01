@@ -1,14 +1,10 @@
 package com.buerlab.returntrunk.views;
 
-import android.app.ActionBar;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.buerlab.returntrunk.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -18,11 +14,6 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import kankan.wheel.widget.OnWheelChangedListener;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
-
-import java.util.List;
 
 
 /**
@@ -41,11 +32,10 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.simple_bill_name)).setText(bill.senderName);
             ((TextView)bView.findViewById(R.id.simple_bill_from)).setText(bill.from);
             ((TextView)bView.findViewById(R.id.simple_bill_to)).setText(bill.to);
-            ((TextView)bView.findViewById(R.id.simple_bill_time)).setText(Utils.tsToTimeString(bill.time));
+            ((TextView)bView.findViewById(R.id.simple_bill_time)).setText(Utils.timestampToDisplay(bill.time));
             if(bill.billType.equals(Bill.BILLTYPE_GOODS))
                 ((TextView)bView.findViewById(R.id.simple_bill_mat)).setText(bill.material);
         }
-
 
         return inviteBill;
     }
@@ -74,7 +64,7 @@ public class ViewsFactory {
         ((TextView)bView.findViewById(R.id.find_bill_name)).setText(bill.senderName);
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(bill.from);
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(bill.to);
-        ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.tsToTimeString(bill.time));
+        ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
         if(bill.billType.equals(Bill.BILLTYPE_GOODS))
             ((TextView)bView.findViewById(R.id.find_bill_mat)).setText(bill.material);
     }
@@ -119,7 +109,13 @@ public class ViewsFactory {
     static public void fillSendBill(final View bView,final Bill bill){
         ((TextView)bView.findViewById(R.id.new_bill_from)).setText(bill.from);
         ((TextView)bView.findViewById(R.id.new_bill_to)).setText(bill.to);
-        ((TextView)bView.findViewById(R.id.new_bill_time)).setText(Utils.tsToTimeString(bill.time));
+        ((TextView)bView.findViewById(R.id.new_bill_time)).setText(Utils.timestampToDisplay(bill.time));
+        ((TextView)bView.findViewById(R.id.new_bill_visitedtimes)).setText(String.valueOf(bill.visitedTimes));
+        if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
+            ((TextView)bView.findViewById(R.id.new_bill_goods)).setText(bill.material);
+            ((TextView)bView.findViewById(R.id.new_bill_weight)).setText(String.valueOf(bill.weight));
+            ((TextView)bView.findViewById(R.id.new_bill_price)).setText(String.valueOf(bill.price));
+        }
     }
 
     static public View createBill(LayoutInflater inflater, Bill bill){
@@ -130,7 +126,7 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.simple_bill_name)).setText(bill.senderName);
             ((TextView)bView.findViewById(R.id.simple_bill_from)).setText(bill.from);
             ((TextView)bView.findViewById(R.id.simple_bill_to)).setText(bill.to);
-            ((TextView)bView.findViewById(R.id.simple_bill_time)).setText(Utils.tsToTimeString(bill.time));
+            ((TextView)bView.findViewById(R.id.simple_bill_time)).setText(Utils.timestampToDisplay(bill.time));
             if(bill.billType.equals(Bill.BILLTYPE_GOODS))
                 ((TextView)bView.findViewById(R.id.simple_bill_mat)).setText(bill.material);
         }

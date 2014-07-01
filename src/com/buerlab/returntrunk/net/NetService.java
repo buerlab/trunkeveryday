@@ -12,12 +12,14 @@ import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.net.*;
 import java.util.*;
 
@@ -537,21 +539,15 @@ public class NetService {
         try{
             for(int i = 0; i < data.length(); i++){
                 JSONObject item = data.getJSONObject(i);
-                Bill bill = new Bill(item.getString("billType"),item.getString("from"), item.getString("to"), item.getString("billTime"));
-                bill.id = item.getString("billId");
-                if(item.has("phoneNum"))
-                    bill.phoneNum = item.getString("phoneNum");
-                if(item.has("state"))
-                    bill.state = item.getString("state");
-                if(item.has("senderName"))
-                    bill.setSenderName(item.getString("senderName"));
-                if(item.has("material"))
-                    bill.setGoodsInfo(item.getString("material"), 0, 0, "");
-                returnBills.add(bill);
+                returnBills.add(new Bill(item));
             }
             return returnBills;
         }catch (JSONException e){
             Toast toast = Toast.makeText(mContext, "json parse error when extract bills", 2);
+            toast.show();
+            return null;
+        }catch (Exception e){
+            Toast toast = Toast.makeText(mContext, e.toString(), 2);
             toast.show();
             return null;
         }

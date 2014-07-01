@@ -51,7 +51,7 @@ public class BillFragment extends BaseFragment {
 //            TextView tTrunk = (TextView)v.findViewById(R.id.new_bill_trunk);
 //            tTrunk.setText(mBill.getTrunk().toString());
         if(User.getInstance().getUserType().equals(User.USERTYPE_OWNER)){
-            ((TextView)v.findViewById(R.id.new_bill_mat)).setText(mBill.material);
+            ((TextView)v.findViewById(R.id.new_bill_goods)).setText(mBill.material);
         }
         tFrom.setText(mBill.from);
         tTo.setText(mBill.to);

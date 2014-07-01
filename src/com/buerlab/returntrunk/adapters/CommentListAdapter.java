@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.buerlab.returntrunk.Comment;
-import com.buerlab.returntrunk.Comment;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 
@@ -71,7 +70,7 @@ public class CommentListAdapter extends BaseAdapter {
         holder.nickname.setText(comment.fromUserName);
         holder.starNum.setText(Integer.toString(comment.starNum));
         holder.time.setText(comment.text);
-        holder.commentText.setText(Utils.tsToTimeString(comment.commentTime));
+        holder.commentText.setText(Utils.timestampToDisplay(comment.commentTime));
         return convertView;
     }
 

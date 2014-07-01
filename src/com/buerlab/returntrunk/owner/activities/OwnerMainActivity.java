@@ -20,6 +20,7 @@ import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.SettingFragment;
 import com.buerlab.returntrunk.jpush.JPushCenter;
 import com.buerlab.returntrunk.jpush.JPushProtocal;
+import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.service.BaiduMapService;
@@ -81,7 +82,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-//                        JPushUtils.registerAlias(self, User.getInstance().userId);
+                        JPushUtils.registerAlias(self, User.getInstance().userId);
 //                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
 
