@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                     case R.id.slide_menu_home:setFrag(0);break;
                     case R.id.slide_menu_profile:setFrag(1);break;
                     case R.id.slide_menu_bill_history:setFrag(2);break;
-                    case R.id.slide_menu_car:setFrag(3);break;
+                    case R.id.slide_menu_trunk:setFrag(3);break;
                     case R.id.slide_menu_comment:setFrag(4);break;
                     case R.id.slide_menu_setting:setFrag(5);break;
                     case R.id.slide_menu_aboutus:setFrag(6);break;

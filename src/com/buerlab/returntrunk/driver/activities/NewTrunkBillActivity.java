@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 import com.buerlab.returntrunk.adapters.TrunkSpinnerAdapter;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
@@ -110,10 +111,10 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                 service.sendBill(bill, new NetService.NetCallBack() {
                     @Override
                     public void onCall(NetProtocol result) {
-                        if(result.code == NetProtocol.SUCCESS){
+                        if (result.code == NetProtocol.SUCCESS) {
                             DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bill);
                             EventCenter.shared().dispatch(evt);
-                        }else{
+                        } else {
                             Utils.defaultNetProAction(self, result);
                         }
                     }

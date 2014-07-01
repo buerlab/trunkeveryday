@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.*;
 import com.buerlab.returntrunk.adapters.TrunkSpinnerAdapter;
 
+
 import java.text.*;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -68,6 +69,7 @@ public class NewBillDialog extends BaseDialogFragment {
             for(Trunk trunk : User.getInstance().trunks){
                 trunks.add(trunk.toString());
             }
+
             TrunkSpinnerAdapter adapter = new TrunkSpinnerAdapter(getActivity(), trunks);
             trunkSpinner.setAdapter(adapter);
         }

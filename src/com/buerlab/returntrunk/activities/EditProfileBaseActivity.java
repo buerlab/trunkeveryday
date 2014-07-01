@@ -16,7 +16,7 @@ public abstract class EditProfileBaseActivity extends BaseActivity {
         if( null != actionBar ){
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("title");
+            actionBar.setTitle(title);
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(true);

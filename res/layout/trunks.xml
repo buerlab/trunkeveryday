@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:background="#cccccc">
+    <FrameLayout android:id="@+id/trunks_frag_content"
+                 android:layout_width="fill_parent"
+                 android:layout_height="fill_parent"
+                 android:layout_weight="1">
+        <TextView android:id="@+id/trunks_frag_tips"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:text="你没有任何货车信息"
+                  android:textSize="26dp"
+                  android:layout_gravity="center"
+                  android:gravity="center"/>
+
+        <ListView android:id="@+id/trunks_list"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:dividerHeight="10dp">
+
+        </ListView>
+        <!--<android.support.v4.view.ViewPager-->
+                <!--android:id="@+id/trunks_frag_pager"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"/>-->
+
+    </FrameLayout>
+    <Button android:id="@+id/add_trunk_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:text="添加货车"
+            android:textSize="26dp"
+            android:layout_weight="0"/>
+</LinearLayout>

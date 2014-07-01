@@ -17,7 +17,7 @@
             android:title="历史货单">
     </item>
     <item
-            android:id="@+id/slide_menu_car"
+            android:id="@+id/slide_menu_trunk"
             android:icon="@drawable/ic_launcher"
             android:title="车辆管理">
     </item>
