@@ -101,22 +101,10 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     @Override
     public void onEventCall(DataEvent e) {
         final Bill bill = (Bill)e.data;
+        addBill(bill);
 
-        NetService service = new NetService(getActivity());
-        final MainActivity parActivity = (MainActivity)getActivity();
-        service.sendBill(bill, new NetService.NetCallBack() {
-            @Override
-            public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS){
-                    addBill(bill);
-
-                    Toast toast = Toast.makeText(parActivity.getApplicationContext(), "添加成功", 2);
-                    toast.show();
-                }else{
-                    Utils.defaultNetProAction(parActivity, result);
-                }
-            }
-        });
+        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
+        toast.show();
     }
 
     @Override

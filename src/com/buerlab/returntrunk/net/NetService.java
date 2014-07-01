@@ -125,7 +125,7 @@ public class NetService {
     }
 
     public void findBills(final BillsCallBack callback){
-        request(mContext.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
+        request(mContext.getString(R.string.server_addr)+"api/bill/recomend", createReqParms(null), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
