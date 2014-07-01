@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 /**
  * Created by zhongqiling on 14-6-13.

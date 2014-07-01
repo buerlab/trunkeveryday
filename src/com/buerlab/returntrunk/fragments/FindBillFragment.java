@@ -28,13 +28,10 @@ public class FindBillFragment extends BaseFragment implements EventCenter.OnEven
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.find_bill_frag, container, false);
-//        List<Bill> bills = new ArrayList<Bill>();
-//        for(int i = 0; i < 10; i++){
-//            Bill b = new Bill("trunk","GZ","SZ","2:00");
-//            b.setSenderName("李师傅");
-//            bills.add(b);
-//        }
-//        findBillListAdapter.setBills(bills);
+
+        ListView list = (ListView)view.findViewById(R.id.find_bill_list);
+        findBillListAdapter = new FindBillListAdapter(getActivity());
+        list.setAdapter(findBillListAdapter);
 
         return view;
     }
@@ -51,20 +48,12 @@ public class FindBillFragment extends BaseFragment implements EventCenter.OnEven
         EventCenter.shared().removeEventListener(DataEvent.PHONE_CALL, this);
     }
 
-
-    public void init(){
-        ListView list = (ListView)getView().findViewById(R.id.find_bill_list);
-        findBillListAdapter = new FindBillListAdapter(getActivity());
-        list.setAdapter(findBillListAdapter);
-    }
-
     @Override
     public void onHiddenChanged(boolean hidden){
         if(!hidden){
             refresh();
         }
     }
-
 
     public void refresh(){
         NetService service = new NetService(getActivity());

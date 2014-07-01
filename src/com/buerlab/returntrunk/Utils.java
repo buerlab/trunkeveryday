@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
-import com.buerlab.returntrunk.activities.BaseActivity;
-import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.driver.activities.LoginActivity;
+import com.buerlab.returntrunk.driver.activities.MainActivity;
+import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;
+import com.buerlab.returntrunk.driver.activities.initDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.owner.activities.OwnerLoginActivity;
+import com.buerlab.returntrunk.owner.activities.OwnerMainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,8 +24,6 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,19 +34,38 @@ import java.util.regex.Pattern;
 public class Utils {
 
     static public void defaultNetProAction(Activity activity, NetProtocol result){
-        if(result.code == NetProtocol.AUTH_ERROR){
-            Toast toast = Toast.makeText(activity.getApplicationContext(), "请先登录", 2);
-            toast.show();
+        if(activity.getApplicationContext() != null){
+            if(result.code == NetProtocol.AUTH_ERROR){
+                Toast toast = Toast.makeText(activity.getApplicationContext(), "请先登录", 2);
+                toast.show();
+                Intent intent = null;
+                if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK)){
+                    intent = new Intent(activity, LoginActivity.class);
+                }else{
+                    intent = new Intent(activity, OwnerLoginActivity.class);
+                }
 
-            Intent intent = new Intent(activity, LoginActivity.class);
-            activity.startActivity(intent);
-            activity.finish();
+                activity.startActivity(intent);
+                activity.finish();
+            }else{
+                Toast toast = Toast.makeText(activity.getApplicationContext(),
+                        "http request error, code:"+result.code+"msg:"+result.msg, 2);
+                toast.show();
+            }
+        }
+
+    }
+
+    static public void safeSwitchToMainActivity(Activity from){
+        if(User.getInstance().nickName.isEmpty()){
+            from.startActivity(new Intent(from, initDriverActivity.class));
+            from.finish();
         }else{
-            Toast toast = Toast.makeText(activity.getApplicationContext(),
-                    "http request error, code:"+result.code+"msg:"+result.msg, 2);
-            toast.show();
+            from.startActivity(new Intent(from, OwnerMainActivity.class));
+            from.finish();
         }
     }
+
 
     static public String tsToTimeString(String ts){
         try {
@@ -54,20 +74,6 @@ public class Utils {
             return format.format(timestamp);
         }catch (Exception e){
             return ts;
-        }
-
-    }
-
-    static public void safeSwitchToMainActivity(Activity from){
-        if(User.getInstance().getUserType().isEmpty()){
-            from.startActivity(new Intent(from, PickUserTypeActivity.class));
-            from.finish();
-        }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks.isEmpty()){
-            from.startActivity(new Intent(from, SetTrunkActivity.class));
-            from.finish();
-        }else{
-            from.startActivity(new Intent(from, MainActivity.class));
-            from.finish();
         }
     }
 

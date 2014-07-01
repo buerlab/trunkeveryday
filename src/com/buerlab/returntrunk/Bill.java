@@ -21,6 +21,7 @@ public class Bill {
     public String billType = "";
     public String from = "";
     public String to = "";
+    //It must be a timestamp
     public String time = "";
 
     public String state = "";
@@ -37,6 +38,17 @@ public class Bill {
     public float trunkLength = 0.0f;
     public float trunkLoad = 0.0f;
     public String licensePlate = "";
+
+    //to simplify the communication to server, make a list value to a single string and parse in the same way.
+    static public String formatString(List<String> input){
+        String result = "";
+        if(input != null && input.size() > 0){
+            for(String item : input)
+                result += item+"-";
+            result = result.substring(0, result.length()-1);
+        }
+        return result;
+    }
 
     public Bill(String _billType, String _from, String _to, String _time){
         billType = _billType;

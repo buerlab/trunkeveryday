@@ -21,6 +21,7 @@
     <orderEntry type="library" name="locSDK_3.1" level="project" />
     <orderEntry type="library" name="jpush-sdk-release1.6.1" level="project" />
     <orderEntry type="library" name="armeabi" level="project" />
+    <orderEntry type="module" module-name="wheel" />
   </component>
 </module>
 

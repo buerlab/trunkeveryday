@@ -7,6 +7,11 @@ package com.buerlab.returntrunk.events;
 public class DataEvent {
     static public String PHONE_CALL = "phone_call";
     static public String NEW_BILL = "new_bill";
+    static public String DELETE_BILL = "delete_bill";
+    static public String ADDR_CHANGE = "address_change";
+    static public String TIME_CHANGE = "time_change";
+    static public String TIME_SETTLE = "time_settle";
+
     static public String USER_UPDATE = "user_update";
     public String type = "";
     public Object data = null;

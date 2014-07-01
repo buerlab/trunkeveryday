@@ -3,6 +3,8 @@ package com.buerlab.returntrunk;
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;
+import com.buerlab.returntrunk.driver.activities.initDriverActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +21,7 @@ public class User {
 
     static public boolean validate(Activity from){
         if(User.getInstance().getUserType().isEmpty()){
-            from.startActivity(new Intent(from, PickUserTypeActivity.class));
+            from.startActivity(new Intent(from, initDriverActivity.class));
             from.finish();
             return false;
         }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks!=null &&   User.getInstance().trunks.isEmpty()){

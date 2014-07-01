@@ -9,8 +9,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
-import com.baidu.mapapi.map.MyLocationData;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
@@ -137,6 +137,13 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
     }
 
+    public void deleteBill(Bill bill, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("billid", bill.id);
+
+        request(mContext.getString(R.string.server_addr)+"api/bill/delete", createReqParms(parmsMap), "POST", callBack);
+    }
+
     public void findBills(final BillsCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
             @Override
@@ -233,6 +240,7 @@ public class NetService {
 
         StringBuilder builder = new StringBuilder();
         builder.append("userId=" + userId);
+        builder.append("&userType="+User.getInstance().getUserType());
 //        String str = "";
         if(parmsMap != null){
             for(Map.Entry<String, String> entry : parmsMap.entrySet()){
@@ -258,7 +266,6 @@ public class NetService {
         }else{
             urlRequest(url, parms, method, callback);
         }
-
     }
 
     public void urlRequest(String url, String parms, String method, final NetCallBack callback){

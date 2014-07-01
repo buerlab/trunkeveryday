@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,6 @@ public class BillInvitationListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
-        return BillLayoutFactory.createInviteBill(mInflater, mBills.get(position));
+        return ViewsFactory.createInviteBill(mInflater, mBills.get(position));
     }
 }
