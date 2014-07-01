@@ -13,12 +13,12 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-6-12.
  */
-public class TrunkListAdapter extends BaseAdapter {
+public class TrunkSpinnerAdapter extends BaseAdapter {
 
     private List<String> trunks;
     private Context mContext;
 
-    public TrunkListAdapter(Context context, List<String> _trunks){
+    public TrunkSpinnerAdapter(Context context, List<String> _trunks){
         mContext = context;
         trunks = _trunks;
     }
