@@ -74,7 +74,6 @@ public class OwnerLoginActivity extends BaseActivity {
                     SharedPreferences.Editor editor = pref.edit();
                     editor.putString("userId", User.getInstance().userId);
                     editor.commit();
-                    JPushUtils.registerAlias(self, User.getInstance().userId);
 
                     OwnerUtils.safeSwitchToMainActivity(self);
                 }else{

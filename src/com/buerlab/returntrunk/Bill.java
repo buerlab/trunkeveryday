@@ -17,6 +17,7 @@ public class Bill {
 
     public String id = "";
     public String senderName = "";
+    public String senderId = "";
     public String phoneNum = "";
     public String billType = "";
     public String from = "";
@@ -65,6 +66,8 @@ public class Bill {
             to = item.getString("to");
             time = item.getString("billTime");
             id = item.getString("billId");
+            setSenderName(item.getString("senderName"));
+            senderId = item.getString("sender");
 
             if(item.has("visitedTimes"))
                 visitedTimes = item.getInt("visitedTimes");
@@ -72,8 +75,6 @@ public class Bill {
                 phoneNum = item.getString("phoneNum");
             if(item.has("state"))
                 state = item.getString("state");
-            if(item.has("senderName"))
-                setSenderName(item.getString("senderName"));
 
             if(item.has("material"))
                 material = item.getString("material");

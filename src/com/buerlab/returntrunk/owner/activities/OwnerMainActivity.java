@@ -82,7 +82,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-                        JPushUtils.registerAlias(self, User.getInstance().userId);
+//                        JPushUtils.registerAlias(self, User.getInstance().userId+User.USERTYPE_OWNER);
 //                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
 

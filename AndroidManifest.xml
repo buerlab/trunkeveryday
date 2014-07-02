@@ -14,16 +14,7 @@
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
-        <!--<activity android:name=".driver.activities.MainActivity"-->
-                  <!--android:label="@string/app_name"-->
-                  <!--android:launchMode="singleInstance">-->
-            <!--&lt;!&ndash;<intent-filter>&ndash;&gt;-->
-                <!--&lt;!&ndash;<action android:name="android.intent.action.MAIN"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<category android:name="android.intent.category.LAUNCHER"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;</intent-filter>&ndash;&gt;-->
-        <!--</activity>-->
-
-        <activity android:name=".owner.activities.OwnerMainActivity"
+        <activity android:name=".driver.activities.MainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
             <intent-filter>
@@ -31,6 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!--<activity android:name=".owner.activities.OwnerMainActivity"-->
+                  <!--android:label="@string/app_name"-->
+                  <!--android:launchMode="singleInstance">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity android:name=".driver.activities.LoginActivity"
                   android:label="@string/app_name">

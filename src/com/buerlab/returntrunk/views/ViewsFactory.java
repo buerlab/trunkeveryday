@@ -1,10 +1,13 @@
 package com.buerlab.returntrunk.views;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.buerlab.returntrunk.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -40,7 +43,7 @@ public class ViewsFactory {
         return inviteBill;
     }
 
-    static public View createFindBill(LayoutInflater inflater, final Bill bill){
+    static public View createFindBill(final LayoutInflater inflater, final Bill bill){
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.find_bill_goods : R.layout.find_bill_trunk;
         View bView = inflater.inflate(layoutId, null, false);
         if(bView != null){
@@ -50,9 +53,26 @@ public class ViewsFactory {
             phoneBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!bill.phoneNum.isEmpty()){
-                        EventCenter.shared().dispatch(new DataEvent(DataEvent.PHONE_CALL, bill.phoneNum));
+                    if(BaseActivity.currActivity != null){
+                        if(!bill.phoneNum.isEmpty()){
+                            NetService service = new NetService(inflater.getContext());
+                            service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
+                                @Override
+                                public void onCall(NetProtocol result) {
+                                    if(result.code == NetProtocol.SUCCESS){
+                                        Toast toast = Toast.makeText(inflater.getContext(), "billcall ok!", 2);
+                                        toast.show();
+                                    }
+                                }
+                            });
+
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
+                            BaseActivity.currActivity.startActivity(intent);
+                        }else{
+
+                        }
                     }
+
                 }
             });
         }

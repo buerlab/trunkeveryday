@@ -159,6 +159,13 @@ public class NetService {
         });
     }
 
+    public void billCall(String targetUserId, String billType, final NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("targetId", targetUserId);
+        parmsMap.put("billType", billType);
+        request(mContext.getString(R.string.server_addr)+"api/bill/call", createReqParms(parmsMap), "POST", callback);
+    }
+
     public void getUpdateBill(String billId, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billId", billId);
@@ -262,7 +269,8 @@ public class NetService {
                 @Override
                 public void onCall(NetProtocol result) {
                     loadingDialog.dismiss();
-                    callback.onCall(result);
+                    if(callback != null)
+                        callback.onCall(result);
                 }
             });
         }else{

@@ -68,7 +68,8 @@ public class FindBillFragment extends BaseFragment implements EventCenter.OnEven
     }
 
     public void onEventCall(DataEvent e){
-        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+(String)e.data));
+        Bill bill = (Bill)e.data;
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+bill.phoneNum));
         getActivity().startActivity(intent);
     }
 }
