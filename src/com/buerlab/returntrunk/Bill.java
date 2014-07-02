@@ -17,12 +17,14 @@ public class Bill {
 
     public String id = "";
     public String senderName = "";
+    public String senderId = "";
     public String phoneNum = "";
     public String billType = "";
     public String from = "";
     public String to = "";
     //It must be a timestamp
     public String time = "";
+    public int visitedTimes = 0;
 
     public String state = "";
     public List<String> inviteTo = new ArrayList<String>();
@@ -57,8 +59,32 @@ public class Bill {
         time = _time;
     }
 
-    public Bill(JSONObject object){
+    public Bill(JSONObject item) throws Exception{
+        try{
+            billType = item.getString("billType");
+            from = item.getString("from");
+            to = item.getString("to");
+            time = item.getString("billTime");
+            id = item.getString("billId");
+            setSenderName(item.getString("senderName"));
+            senderId = item.getString("sender");
 
+            if(item.has("visitedTimes"))
+                visitedTimes = item.getInt("visitedTimes");
+            if(item.has("phoneNum"))
+                phoneNum = item.getString("phoneNum");
+            if(item.has("state"))
+                state = item.getString("state");
+
+            if(item.has("material"))
+                material = item.getString("material");
+            if(item.has("weight"))
+                weight = Float.valueOf(item.getString("weight"));
+            if(item.has("price"))
+                price = Float.valueOf(item.getString("price"));
+        }catch (Exception e){
+            throw new Exception("bill init from jsonobject error");
+        }
     }
 
     public Map<String, String> toParmsMap(){

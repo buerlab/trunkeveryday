@@ -24,6 +24,7 @@ import com.buerlab.returntrunk.driver.fragments.DriverHomeFragment;
 import com.buerlab.returntrunk.fragments.SettingFragment;
 import com.buerlab.returntrunk.jpush.JPushCenter;
 import com.buerlab.returntrunk.jpush.JPushProtocal;
+import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.coboltforge.slidemenu.SlideMenu;
@@ -32,7 +33,9 @@ import com.coboltforge.slidemenu.SlideMenuInterface;
 import com.buerlab.returntrunk.service.BaiduMapService;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity implements JPushCenter.OnJpushListener {
 
@@ -75,6 +78,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                     User.getInstance().initUser(result.data);
                     User.getInstance().setUserType(User.USERTYPE_TRUNK);
 
+                    Map<String, String> jpushmap = new HashMap<String, String>();
+                    jpushmap.put("jpushId", JPushInterface.getRegistrationID(self.getApplicationContext()));
+                    NetService netservice = new NetService(self.getApplicationContext());
+                    netservice.setUserData(jpushmap, null);
+
                     //注册用户初始化事件，用于个人资料得以初始化数据
                     DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
                     EventCenter.shared().dispatch(evt);
@@ -84,7 +92,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-//                        JPushUtils.registerAlias(self, User.getInstance().userId);
+                        String alias = User.getInstance().userId+User.USERTYPE_TRUNK;
+                        JPushUtils.registerAlias(self, alias);
 //                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
 

@@ -25,6 +25,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,11 +69,18 @@ public class Utils {
     }
 
 
-    static public String tsToTimeString(String ts){
+    static public String timestampToDisplay(String ts){
         try {
-            Timestamp timestamp = new Timestamp(Long.parseLong(ts));
-            DateFormat format = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-            return format.format(timestamp);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.parseLong(ts));
+            int hours = calendar.get(Calendar.HOUR_OF_DAY);
+            String period = "上午";
+            if(hours > 12){
+                period = "下午";
+                hours -= 12;
+            }
+            return calendar.get(Calendar.YEAR)+" "+(calendar.get(Calendar.MONTH)+1)+"月"+
+                    calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
         }catch (Exception e){
             return ts;
         }

@@ -10,6 +10,8 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -168,7 +170,8 @@ public class PickTimeView extends LinearLayout {
         int currHours = periodWheel.getCurrentItem()==0 ? hourValue : hourValue+12;
         Calendar calendar = Calendar.getInstance();
         calendar.set(mYear, mMonth, mDays[dayWheel.getCurrentItem()], currHours, 0);
-        return calendar.getTime().toString();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return String.valueOf(Timestamp.valueOf(sdf.format(calendar.getTime())).getTime());
     }
 
 }

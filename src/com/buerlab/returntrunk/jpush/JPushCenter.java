@@ -1,5 +1,10 @@
 package com.buerlab.returntrunk.jpush;
 
+import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +31,21 @@ public class JPushCenter {
 
     public JPushCenter(){
         eventMap = new HashMap<Integer, List<OnJpushListener>>();
+    }
+
+    public void onPush(JPushProtocal protocal){
+        if(protocal.code == JPushProtocal.JPUSH_PHONE_CALL){
+            BaseActivity curr = BaseActivity.currActivity;
+            if(curr != null){
+                PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
+                dialog.show(curr.getFragmentManager(), "phonecall");
+            }
+        }
+        else if(protocal.code == JPushProtocal.BILL_VISITED){
+
+        }
+
+        EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
     }
 
     public void register(int code, OnJpushListener callback){

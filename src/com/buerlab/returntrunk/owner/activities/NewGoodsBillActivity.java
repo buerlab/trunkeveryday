@@ -105,8 +105,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
                 Bill bill = new Bill(Bill.BILLTYPE_GOODS, Bill.formatString(currFromContent),
                         Bill.formatString(currToContent), currTimeStamp);
 
-                bill.setGoodsInfo(goodsText.getText().toString(), Integer.valueOf(priceText.getText().toString()),
-                        Integer.valueOf(weightText.getText().toString()), commentText.getText().toString());
+                bill.setGoodsInfo(goodsText.getText().toString(), Float.valueOf(priceText.getText().toString()),
+                        Float.valueOf(weightText.getText().toString()), commentText.getText().toString());
 
                 NetService service = new NetService(self);
                 final Bill billToSend = bill;

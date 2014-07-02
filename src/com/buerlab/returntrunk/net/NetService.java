@@ -12,12 +12,14 @@ import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.net.*;
 import java.util.*;
 
@@ -145,7 +147,7 @@ public class NetService {
     }
 
     public void findBills(final BillsCallBack callback){
-        request(mContext.getString(R.string.server_addr)+"api/bill/conn", createReqParms(null), "GET", new NetCallBack() {
+        request(mContext.getString(R.string.server_addr)+"api/bill/recomend", createReqParms(null), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
@@ -155,6 +157,13 @@ public class NetService {
                 }
             }
         });
+    }
+
+    public void billCall(String targetUserId, String billType, final NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("targetId", targetUserId);
+        parmsMap.put("billType", billType);
+        request(mContext.getString(R.string.server_addr)+"api/bill/call", createReqParms(parmsMap), "POST", callback);
     }
 
     public void getUpdateBill(String billId, NetCallBack callback){
@@ -260,7 +269,8 @@ public class NetService {
                 @Override
                 public void onCall(NetProtocol result) {
                     loadingDialog.dismiss();
-                    callback.onCall(result);
+                    if(callback != null)
+                        callback.onCall(result);
                 }
             });
         }else{
@@ -563,21 +573,15 @@ public class NetService {
         try{
             for(int i = 0; i < data.length(); i++){
                 JSONObject item = data.getJSONObject(i);
-                Bill bill = new Bill(item.getString("billType"),item.getString("from"), item.getString("to"), item.getString("billTime"));
-                bill.id = item.getString("billId");
-                if(item.has("phoneNum"))
-                    bill.phoneNum = item.getString("phoneNum");
-                if(item.has("state"))
-                    bill.state = item.getString("state");
-                if(item.has("senderName"))
-                    bill.setSenderName(item.getString("senderName"));
-                if(item.has("material"))
-                    bill.setGoodsInfo(item.getString("material"), 0, 0, "");
-                returnBills.add(bill);
+                returnBills.add(new Bill(item));
             }
             return returnBills;
         }catch (JSONException e){
             Toast toast = Toast.makeText(mContext, "json parse error when extract bills", 2);
+            toast.show();
+            return null;
+        }catch (Exception e){
+            Toast toast = Toast.makeText(mContext, e.toString(), 2);
             toast.show();
             return null;
         }
