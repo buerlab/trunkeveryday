@@ -15,6 +15,7 @@ import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -65,6 +66,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
+        Utils.init(this);
         final FragmentActivity self = this;
         service.quickLogin(new NetService.NetCallBack() {
             @Override

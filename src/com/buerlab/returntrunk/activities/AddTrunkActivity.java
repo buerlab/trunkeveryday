@@ -12,14 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.events.DataEvent;
-import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.MultiPicSelector.ImgFileListActivity;
+import com.buerlab.returntrunk.MultiPicSelector.Util;
+import com.buerlab.returntrunk.adapters.TrunkPicGridAdapter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.views.MyGridView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,37 +27,33 @@ import java.util.ArrayList;
 /**
  * Created by zhongqiling on 14-6-23.
  */
-public class AddTrunkActivity extends EditProfileBaseActivity  {
+public class AddTrunkActivity extends EditProfileBaseActivity {
 
 
     EditText typeText;
     EditText lengthText;
     EditText loadText;
     EditText lisenceText;
-
+    EditText trunkLicenseText;
     Button mPicBtn;
     Button mTrunkLicensePicBtn;
     NetService service;
 
     Boolean isEdited = false;
     Bitmap mTrunkLicenseBitmap = null;
-    ArrayList<Bitmap> mTrunkPic = null;
-
+    MyGridView mPicGridView;
+    TrunkPicGridAdapter mTrunkPicGridAdapter;
     final AddTrunkActivity self = this;
     private String uploadFile = null;
-    private String actionUrl ="http://115.29.8.74:9289/upload/trunkLicense";
-    private int lastAddPicType = 0;
-
-    private final static int ADD_TRUNK_PIC_FLAG = 1;
-    private final static int ADD_TRUNK_LICENSE_PIC_FLAG = 2;
+    private String verifyTrunkLicenseUrl ="http://115.29.8.74:9289/upload/trunkLicense";
+    private String uploadTrunkPicUrl ="http://115.29.8.74:9288/upload/trunkpic";
+    ArrayList<String> picFileNames= new ArrayList<String>();
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_edit_trunk_frag);
-
         init();
         initData();
-
     }
 
     private void init(){
@@ -66,29 +62,31 @@ public class AddTrunkActivity extends EditProfileBaseActivity  {
         lengthText = (EditText)findViewById(R.id.set_trunk_length);
         loadText = (EditText)findViewById(R.id.set_trunk_load);
         lisenceText = (EditText)findViewById(R.id.set_trunk_licensePlate);
-
-
-        mPicBtn =(Button)findViewById(R.id.add_trunk_pic);
-        mPicBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                lastAddPicType = ADD_TRUNK_PIC_FLAG;
-                Utils.showPickPicDialog(self,"上传货车照片");
-            }
-        });
+        trunkLicenseText = (EditText)findViewById(R.id.set_trunk_license);
+//
+//        mPicBtn =(Button)findViewById(R.id.add_trunk_pic);
+//        mPicBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(self, ImgFileListActivity.class);
+//                startActivityForResult(intent, Util.REQUEST);
+//            }
+//        });
 
         mTrunkLicensePicBtn = (Button)findViewById(R.id.add_trunkLicense_pic);
         mTrunkLicensePicBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                lastAddPicType = ADD_TRUNK_LICENSE_PIC_FLAG;
                 Utils.showPickPicDialog(self,"上传行驶证");
             }
         });
-        service = new NetService(this);
 
+        mPicGridView = (MyGridView)findViewById(R.id.pic_gridview);
+        addPicToGridLayout(picFileNames);
+        service = new NetService(this);
     }
 
     private void initData(){
@@ -113,31 +111,41 @@ public class AddTrunkActivity extends EditProfileBaseActivity  {
         }else {
 
             if(dataVerify()){
-                float len = Float.parseFloat(lengthText.getText().toString());
-                float load = Float.parseFloat(loadText.getText().toString());
-                String type =typeText.getText().toString();
-                String license = lisenceText.getText().toString();
-
+                final float len = Float.parseFloat(lengthText.getText().toString());
+                final float load = Float.parseFloat(loadText.getText().toString());
+                final String type =typeText.getText().toString();
+                final String license = lisenceText.getText().toString();
+                final String trunkLicense =trunkLicenseText.getText().toString();
                 Trunk trunk = new Trunk(type,len,load,license);
                 service.addUserTrunk(trunk, new NetService.NetCallBack() {
                     @Override
                     public void onCall(NetProtocol result) {
                         if(result.code == NetProtocol.SUCCESS){
+                            if(!trunkLicense.isEmpty() && mTrunkLicenseBitmap!=null){
+                                String filename = license+ "_"+ User.getInstance().userId + trunkLicense;
+                                service.uploadPic(verifyTrunkLicenseUrl,mTrunkLicenseBitmap,filename, new NetService.NetCallBack(){
 
-                            service.getUserData(new NetService.NetCallBack() {
-                                @Override
-                                public void onCall(NetProtocol result) {
-                                    if(result.code == NetProtocol.SUCCESS && result.data !=null){
-                                        User.getInstance().initUser(result.data);
-                                        //注册用户初始化事件，用于个人资料得以初始化数据
-                                        DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
-                                        EventCenter.shared().dispatch(evt);
+                                    @Override
+                                    public void onCall(NetProtocol result) {
 
-                                        Utils.showToast(self,"保存成功");
-                                        finish();
                                     }
-                                }
-                            });
+                                });
+                            }
+
+//                            service.getUserData(new NetService.NetCallBack() {
+//                                @Override
+//                                public void onCall(NetProtocol result) {
+//                                    if(result.code == NetProtocol.SUCCESS && result.data !=null){
+//                                        User.getInstance().initUser(result.data);
+//                                        //注册用户初始化事件，用于个人资料得以初始化数据
+//                                        DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+//                                        EventCenter.shared().dispatch(evt);
+//
+//                                        Utils.showToast(self,"保存成功");
+////                                        finish();
+//                                    }
+//                                }
+//                            });
 
                         }else {
                             Utils.defaultNetProAction(self, result);
@@ -154,7 +162,6 @@ public class AddTrunkActivity extends EditProfileBaseActivity  {
         // 结果码不等于取消时候
         if (resultCode != RESULT_CANCELED) {
 
-            if(lastAddPicType == ADD_TRUNK_LICENSE_PIC_FLAG){
                 switch (requestCode) {
                     case Utils.IMAGE_REQUEST_CODE:
                         startPhotoZoom(data.getData());
@@ -173,9 +180,24 @@ public class AddTrunkActivity extends EditProfileBaseActivity  {
                             setImageToView(data);
                         }
                         break;
+                    case Util.REQUEST:
+                        if(resultCode == Util.HAS_VALUE){
+                            ArrayList<String> _fileNames = data.getStringArrayListExtra("files");
+                            picFileNames.addAll(_fileNames);
+                            addPicToGridLayout(picFileNames);
+//                            for(int i=0;i<fileNames.size();i++){
+//                                Utils.showToast(self,fileNames.get(i));
+//                            }
+                        }else if(resultCode==Util.EMPTY){
+                            Utils.showToast(self,"什么都没有选");
+                        }
+                        break;
+
                 }
+
+
             }
-        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -264,4 +286,25 @@ public class AddTrunkActivity extends EditProfileBaseActivity  {
         return  true;
     }
 
+    private void addPicToGridLayout(ArrayList<String> fileList){
+        mTrunkPicGridAdapter =new TrunkPicGridAdapter(this, fileList,onItemClickClass);
+        mPicGridView.setAdapter(mTrunkPicGridAdapter);
+    }
+
+    TrunkPicGridAdapter.OnItemClickClass onItemClickClass=new TrunkPicGridAdapter.OnItemClickClass() {
+        @Override
+        public void OnItemClick(View v, int Position) {
+            if(mTrunkPicGridAdapter.getItem(Position)=="add"){
+                Intent intent = new Intent();
+                intent.putExtra("hasSelected", picFileNames.size());
+                intent.setClass(self, ImgFileListActivity.class);
+                startActivityForResult(intent, Util.REQUEST);
+            }else {
+                picFileNames.remove(Position);
+                addPicToGridLayout(picFileNames);
+                Utils.showToast(self,"delete it");
+            }
+
+        }
+    };
 }

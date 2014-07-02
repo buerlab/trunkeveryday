@@ -374,7 +374,29 @@ public class NetService {
 
     }
 
+
     public void _uploadPic(String url,Bitmap bitmap,String filename, final NetCallBack callBack){
+        InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);
+        InputStream[] fstreams = {fStream};
+        String[] filenames = {filename};
+        _uploadPic(url,fstreams,filenames,callBack);
+    }
+    public void _uploadPic(String url,String filePath,String filename, final NetCallBack callBack){
+        try {
+            FileInputStream fStream =new FileInputStream(filePath);
+            InputStream[] fstreams = {fStream};
+            String[] filenames = {filename};
+            _uploadPic(url,fstreams,filenames,callBack);
+        }catch (FileNotFoundException e){
+            Log.e("NetService",e.toString());
+        }
+    }
+
+    public void _uploadPic(String url,final InputStream[] inputStreams,String[] filenames, final NetCallBack callBack){
+        if(inputStreams.length != filenames.length){
+            Log.e("NetService","inputStreams.length != filenames.length");
+            return;
+        }
         new AsyncTask<Object, Integer, NetProtocol>() {
             @Override
             protected NetProtocol doInBackground(Object... params) {
@@ -387,8 +409,8 @@ public class NetService {
                 try
                 {
                     String actionUrl = (String)params[0];
-                    Bitmap bitmap = (Bitmap)params[1];
-                    String filename = (String)params[2];
+                    final InputStream[] fStreams = (InputStream[])params[1];
+                    String[] filenames = (String[])params[2];
                     URL url =new URL(actionUrl);
                     con=(HttpURLConnection)url.openConnection();
                     /* 允许Input、Output，不使用Cache */
@@ -405,29 +427,34 @@ public class NetService {
                       /* 设置DataOutputStream */
                     DataOutputStream ds =
                             new DataOutputStream(con.getOutputStream());
-                    ds.writeBytes(twoHyphens + boundary + end);
-                    ds.writeBytes("Content-Disposition: form-data; "+
-                            "name=\"file\";filename=\""+
-                            filename +"\""+ end);
-                    ds.writeBytes(end);
+
+                    for(int i =0;i<fStreams.length;i++){
+                        ds.writeBytes(twoHyphens + boundary + end);
+                        ds.writeBytes("Content-Disposition: form-data; "+
+                                "name=\"file\";filename=\""+
+                                filenames[i] +"\""+ end);
+                        ds.writeBytes(end);
                      /* 取得文件的FileInputStream */
-                    InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);
-        //            FileInputStream fStream =new FileInputStream(uploadFile);
+//                    InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);
+                        //            FileInputStream fStream =new FileInputStream(uploadFile);
                      /* 设置每次写入1024bytes */
-                    int bufferSize =1024;
-                    byte[] buffer =new byte[bufferSize];
-                    int length =-1;
+                        int bufferSize =1024;
+                        byte[] buffer =new byte[bufferSize];
+                        int length =-1;
                      /* 从文件读取数据至缓冲区 */
-                    while((length = fStream.read(buffer)) !=-1)
-                    {
+                        while((length = fStreams[i].read(buffer)) !=-1)
+                        {
                       /* 将资料写入DataOutputStream中 */
-                        ds.write(buffer, 0, length);
+                            ds.write(buffer, 0, length);
+                        }
+                        ds.writeBytes(end);
+                        ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
+                        /* close streams */
+                        fStreams[i].close();
                     }
-                    ds.writeBytes(end);
-                    ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
-                    /* close streams */
-                    fStream.close();
                     ds.flush();
+                    /* 关闭DataOutputStream */
+                    ds.close();
                    /* 取得Response内容 */
                     InputStream in = con.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -438,8 +465,7 @@ public class NetService {
                     }
                     reader.close();
                     in.close();
-                     /* 关闭DataOutputStream */
-                    ds.close();
+
 
                     if(stringBuffer.length() > 0){
 
@@ -478,7 +504,7 @@ public class NetService {
                     callBack.onCall(result);
                 }
             }
-        }.execute(url, bitmap, filename);
+        }.execute(url, inputStreams, filenames);
     }
 
     private String getCookie(){

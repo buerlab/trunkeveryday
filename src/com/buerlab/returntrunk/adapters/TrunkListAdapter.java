@@ -65,7 +65,7 @@ public class TrunkListAdapter extends BaseAdapter {
             holder.typeTxtView = (TextView) convertView.findViewById(R.id.type);
             holder.loadTxtView = (TextView) convertView.findViewById(R.id.load);
             holder.lengthTxtView = (TextView) convertView.findViewById(R.id.length);
-            holder.picGridLayout = (GridLayout)convertView.findViewById(R.id.pic_grid_layout);
+            holder.picGridLayout = (GridLayout)convertView.findViewById(R.id.pic_gridview);
             holder.position = position;
 
             holder.isVerified =Integer.parseInt(trunk.trunkLicenseVerified);

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 import com.buerlab.returntrunk.driver.activities.LoginActivity;
 import com.buerlab.returntrunk.driver.activities.MainActivity;
@@ -178,5 +179,40 @@ public class Utils {
                     }
                 }).show();
 
+    }
+
+    public static void  init(Activity c){
+        screenSize = getScreenSize(c);
+        mDisplayMetrics= new DisplayMetrics();
+        c.getWindowManager().getDefaultDisplay().getMetrics(mDisplayMetrics);
+    }
+
+    private static int[] screenSize;
+    private static DisplayMetrics mDisplayMetrics;
+    public static int[] getScreenSize(){
+        return screenSize;
+    }
+
+    private static int[] getScreenSize(Activity c){
+        int[] size = new int[2] ;
+        DisplayMetrics metrics = new DisplayMetrics();
+        c.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int width = metrics.widthPixels;  // 屏幕宽度（像素）
+        int height = metrics.heightPixels;  // 屏幕高度（像素）
+        float density = metrics.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
+        int densityDpi = metrics.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
+        size[0] = width;
+        size[1] = height;
+        return  size;
+    }
+
+    public static int dip2px(float dipValue){
+        float scale = mDisplayMetrics.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
+        return (int)(dipValue * scale +0.5f);
+    }
+
+    public static int px2dip(float pxValue){
+        float scale = mDisplayMetrics.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
+        return (int)(pxValue / scale +0.5f);
     }
 }

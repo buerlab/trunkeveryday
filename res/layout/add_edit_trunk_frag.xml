@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#cccccc"
+            android:scrollbars="vertical">
+
+<LinearLayout
               android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#cccccc">
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:padding="15dp">
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="#cccccc"
+              android:scrollbars="vertical"
+              android:padding="15dp">
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
@@ -20,6 +25,7 @@
 
                       android:textColor="#000000"/>
         </LinearLayout>
+
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
@@ -57,7 +63,7 @@
                       android:layout_height="wrap_content"
                       android:layout_marginTop="30dp"
                       android:orientation="horizontal">
-            <EditText android:id="@+id/set_trunk_load"
+            <EditText android:id="@+id/set_trunk_license"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
@@ -82,22 +88,21 @@
                       android:textSize="23dp"
                       android:textColor="#888"/>
         </LinearLayout>
-        <GridLayout android:layout_width="fill_parent"
-                    android:background="#FFF"
-                    android:layout_marginTop="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:columnCount="3"
-                    android:padding="10dp"
-                    android:id="@+id/pic_grid_layout"
-                    android:orientation="horizontal" >
-            <Button android:id="@+id/add_trunk_pic"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_width="100dp"
-                    android:background="#222"
-                    android:text="添加图片"
-                    android:layout_height="100dp"/>
-        </GridLayout>
-    </LinearLayout>
+        <com.buerlab.returntrunk.views.MyGridView
+               android:id="@+id/pic_gridview"
+               android:layout_marginTop="30dp"
+               android:layout_width="fill_parent"
+               android:layout_height="wrap_content"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentLeft="true"
+               android:verticalSpacing="10dp"
+               android:horizontalSpacing="10dp"
+               android:listSelector="@color/bule_overlay"
+               android:scrollbars="none"
+               android:numColumns="3" >
+
+               </com.buerlab.returntrunk.views.MyGridView>
+
+
 </LinearLayout>
+    </ScrollView>

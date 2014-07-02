@@ -13,6 +13,9 @@ public class DataEvent {
     static public String TIME_SETTLE = "time_settle";
 
     static public String USER_UPDATE = "user_update";
+
+    public static String MULTI_PIC_SELECT = "multi_pic_select";
+
     public String type = "";
     public Object data = null;
 
