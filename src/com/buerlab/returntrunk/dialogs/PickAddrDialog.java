@@ -2,7 +2,6 @@ package com.buerlab.returntrunk.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -10,13 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.buerlab.returntrunk.AssetManager;
-import com.buerlab.returntrunk.BaseDialogFragment;
-import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.fragments.BaseDialogFragment;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.views.PickAddrView;
-import kankan.wheel.widget.WheelView;
-import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
 import java.util.List;
 

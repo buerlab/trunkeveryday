@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
 import com.buerlab.returntrunk.adapters.TrunkSpinnerAdapter;
+import com.buerlab.returntrunk.fragments.BaseDialogFragment;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 
 
 import java.text.*;

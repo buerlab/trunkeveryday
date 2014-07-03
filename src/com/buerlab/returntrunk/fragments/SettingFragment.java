@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.driver.activities.LoginActivity;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 

@@ -16,6 +16,7 @@ import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 

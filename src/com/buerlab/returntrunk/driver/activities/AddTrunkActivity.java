@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.activities;
+package com.buerlab.returntrunk.driver.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,17 +14,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.MultiPicSelector.ImgFileListActivity;
-import com.buerlab.returntrunk.MultiPicSelector.Util;
+import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
+import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
 import com.buerlab.returntrunk.adapters.TrunkPicGridAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.views.MyGridView;
 
 import java.io.File;
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 

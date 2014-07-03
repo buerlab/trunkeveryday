@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.buerlab.returntrunk.Comment;
+import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 

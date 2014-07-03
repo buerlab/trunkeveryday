@@ -1,8 +1,9 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.models;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
+import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;
 import com.buerlab.returntrunk.driver.activities.initDriverActivity;
 import org.json.JSONArray;

@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.MultiPicSelector;
+package com.buerlab.returntrunk.utils.MultiPicSelector;
 
 import java.util.ArrayList;
 import java.util.List;

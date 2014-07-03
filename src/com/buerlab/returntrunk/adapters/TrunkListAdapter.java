@@ -1,7 +1,6 @@
 package com.buerlab.returntrunk.adapters;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.buerlab.returntrunk.Trunk;
+import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import com.buerlab.returntrunk.MultiPicSelector.ImgCallBack;
-import com.buerlab.returntrunk.MultiPicSelector.ImgsActivity;
-import com.buerlab.returntrunk.MultiPicSelector.Util;
+import com.buerlab.returntrunk.utils.MultiPicSelector.ImgCallBack;
+import com.buerlab.returntrunk.utils.MultiPicSelector.ImgsActivity;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 

@@ -2,9 +2,8 @@ package com.buerlab.returntrunk;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import com.buerlab.returntrunk.models.Bill;
 
 /**
  * Created by zhongqiling on 14-6-24.

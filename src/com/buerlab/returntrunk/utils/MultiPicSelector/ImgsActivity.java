@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.MultiPicSelector;
+package com.buerlab.returntrunk.utils.MultiPicSelector;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;

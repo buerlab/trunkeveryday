@@ -1,16 +1,12 @@
-package com.buerlab.returntrunk.MultiPicSelector;
-import java.io.File;
+package com.buerlab.returntrunk.utils.MultiPicSelector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.ActionBar;
-import android.net.Uri;
-import android.os.Environment;
 import android.view.MenuItem;
 import com.buerlab.returntrunk.R;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 
 public class ImgFileListActivity extends BaseActivity implements OnItemClickListener{

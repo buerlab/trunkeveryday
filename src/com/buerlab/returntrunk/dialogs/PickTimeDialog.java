@@ -9,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.buerlab.returntrunk.AssetManager;
-import com.buerlab.returntrunk.BaseDialogFragment;
+import com.buerlab.returntrunk.fragments.BaseDialogFragment;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
-import com.buerlab.returntrunk.views.PickAddrView;
 import com.buerlab.returntrunk.views.PickTimeView;
 
 import java.util.List;

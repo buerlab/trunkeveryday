@@ -18,6 +18,8 @@ import com.buerlab.returntrunk.driver.activities.MainActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.widget.Toast;
 import com.buerlab.returntrunk.driver.activities.initDriverActivity;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.driver.activities.LoginActivity;
 import com.buerlab.returntrunk.driver.activities.MainActivity;
 import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;

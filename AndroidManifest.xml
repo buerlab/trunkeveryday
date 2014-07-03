@@ -17,16 +17,7 @@
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
-        <activity android:name=".driver.activities.MainActivity"
-                  android:label="@string/app_name"
-                  android:launchMode="singleInstance">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
-        <!--<activity android:name=".owner.activities.OwnerMainActivity"-->
+        <!--<activity android:name=".driver.activities.MainActivity"-->
                   <!--android:label="@string/app_name"-->
                   <!--android:launchMode="singleInstance">-->
             <!--<intent-filter>-->
@@ -34,6 +25,15 @@
                 <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
         <!--</activity>-->
+
+        <activity android:name=".owner.activities.OwnerMainActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
 
         <activity android:name=".driver.activities.LoginActivity"
                   android:label="@string/app_name">
@@ -56,10 +56,10 @@
         <activity android:name=".activities.EditIDNumActivity"
                   android:theme="@style/custom_theme"
                 />
-        <activity android:name=".activities.EditDriverLicenseActivity"
+        <activity android:name=".driver.activities.EditDriverLicenseActivity"
                   android:theme="@style/custom_theme"
                 />
-        <activity android:name=".activities.AddTrunkActivity"
+        <activity android:name=".driver.activities.AddTrunkActivity"
                   android:theme="@style/custom_theme"
                   />
 
@@ -84,8 +84,8 @@
                   android:parentActivityName=".owner.activities.OwnerMainActivity">
                 </activity>
 
-        <activity android:name=".MultiPicSelector.ImgFileListActivity"/>
-        <activity android:name=".MultiPicSelector.ImgsActivity"
+        <activity android:name=".utils.MultiPicSelector.ImgFileListActivity"/>
+        <activity android:name=".utils.MultiPicSelector.ImgsActivity"
                   android:theme="@style/custom_theme"/>
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->

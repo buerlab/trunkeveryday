@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.MultiPicSelector;
+package com.buerlab.returntrunk.utils.MultiPicSelector;
 
 import android.graphics.Bitmap;
 import android.widget.ImageView;

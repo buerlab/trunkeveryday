@@ -2,27 +2,25 @@ package com.buerlab.returntrunk.net;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
-import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.Comment;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.net.*;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by zhongqiling on 14-5-28.
@@ -250,7 +248,7 @@ public class NetService {
 
         StringBuilder builder = new StringBuilder();
         builder.append("userId=" + userId);
-        builder.append("&userType="+User.getInstance().getUserType());
+        builder.append("&userType="+ User.getInstance().getUserType());
 //        String str = "";
         if(parmsMap != null){
             for(Map.Entry<String, String> entry : parmsMap.entrySet()){

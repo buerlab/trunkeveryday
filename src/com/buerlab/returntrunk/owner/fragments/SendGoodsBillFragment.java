@@ -13,10 +13,11 @@ import com.buerlab.returntrunk.adapters.SendBillListAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.NewGoodsBillActivity;
-import com.buerlab.returntrunk.owner.activities.OwnerMainActivity;
 
 import java.util.List;
 
