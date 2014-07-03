@@ -17,12 +17,16 @@ import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.MultiPicSelector.ImgFileListActivity;
 import com.buerlab.returntrunk.MultiPicSelector.Util;
 import com.buerlab.returntrunk.adapters.TrunkPicGridAdapter;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.views.MyGridView;
 
 import java.io.File;
+import java.security.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by zhongqiling on 14-6-23.
@@ -46,7 +50,7 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
     final AddTrunkActivity self = this;
     private String uploadFile = null;
     private String verifyTrunkLicenseUrl ="http://115.29.8.74:9289/upload/trunkLicense";
-    private String uploadTrunkPicUrl ="http://115.29.8.74:9288/upload/trunkpic";
+    private String uploadTrunkPicUrl ="http://115.29.8.74:9288/api/user/trunk/uploadPic";
     ArrayList<String> picFileNames= new ArrayList<String>();
     public void onCreate(Bundle savedInstanceState) {
 
@@ -121,32 +125,45 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
                     @Override
                     public void onCall(NetProtocol result) {
                         if(result.code == NetProtocol.SUCCESS){
+                            //验证行驶证
+                            boolean uploadTrunkLicense = false;
+                            boolean uploadPic = false;
                             if(!trunkLicense.isEmpty() && mTrunkLicenseBitmap!=null){
-                                String filename = license+ "_"+ User.getInstance().userId + trunkLicense;
+                                uploadTrunkLicense = true;
+                                String filename = license+ "_"+ User.getInstance().userId + "_"+ trunkLicense;
+
                                 service.uploadPic(verifyTrunkLicenseUrl,mTrunkLicenseBitmap,filename, new NetService.NetCallBack(){
 
                                     @Override
                                     public void onCall(NetProtocol result) {
+                                        if(result.code == NetProtocol.SUCCESS){
+                                                updateData();
+                                        }
+                                    }
+                                });
+                            }
+                            //上传图片
+                            if(picFileNames.size()>0){
+                                uploadPic = true;
+                                String[] filenames = new String[picFileNames.size()];
+                                for(int i =0;i<picFileNames.size();i++){
+                                    Date d = new Date();
 
+                                    filenames[i] = license+ "_"+ User.getInstance().userId + "_"+ d.getTime()+i;
+                                }
+                                service.uploadPics(uploadTrunkPicUrl, picFileNames, filenames, new NetService.NetCallBack() {
+                                    @Override
+                                    public void onCall(NetProtocol result) {
+                                        if(result.code ==NetProtocol.SUCCESS){
+                                            updateData();
+                                        }
                                     }
                                 });
                             }
 
-//                            service.getUserData(new NetService.NetCallBack() {
-//                                @Override
-//                                public void onCall(NetProtocol result) {
-//                                    if(result.code == NetProtocol.SUCCESS && result.data !=null){
-//                                        User.getInstance().initUser(result.data);
-//                                        //注册用户初始化事件，用于个人资料得以初始化数据
-//                                        DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
-//                                        EventCenter.shared().dispatch(evt);
-//
-//                                        Utils.showToast(self,"保存成功");
-////                                        finish();
-//                                    }
-//                                }
-//                            });
-
+                            if(!uploadPic && !uploadTrunkLicense){
+                                updateData();
+                            }
                         }else {
                             Utils.defaultNetProAction(self, result);
                         }
@@ -157,6 +174,20 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
         }
     }
 
+    private void updateData(){
+        service.getUserData(new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS && result.data !=null){
+                    User.getInstance().initUser(result.data);
+                    //注册用户初始化事件，用于个人资料得以初始化数据
+                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+                    EventCenter.shared().dispatch(evt);
+                    finish();
+                }
+            }
+        });
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // 结果码不等于取消时候

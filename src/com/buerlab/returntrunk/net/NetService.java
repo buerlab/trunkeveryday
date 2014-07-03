@@ -22,6 +22,7 @@ import java.io.*;
 import java.lang.reflect.Field;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by zhongqiling on 14-5-28.
@@ -268,7 +269,14 @@ public class NetService {
             urlRequest(url, parms, method, new NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {
-                    loadingDialog.dismiss();
+                    try {
+                        if(loadingDialog!=null){
+                            loadingDialog.dismiss();
+                        }
+                    }catch (Exception e){
+                        Log.e("NetService","loading tips null");
+                    }
+
                     if(callback != null)
                         callback.onCall(result);
                 }
@@ -374,7 +382,14 @@ public class NetService {
             _uploadPic(url, bitmap, filename, new NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {
-                    loadingDialog.dismiss();
+                    try {
+                        if(loadingDialog!=null){
+                            loadingDialog.dismiss();
+                        }
+                    }catch (Exception e){
+                        Log.e("NetService","loading tips null");
+                    }
+
                     callback.onCall(result);
                 }
             });
@@ -384,25 +399,54 @@ public class NetService {
 
     }
 
+    public void uploadPics(String url,ArrayList<String> filePaths,String[] filenames, final NetCallBack callback){
 
+        if(mActivity != null){
+            final LoadingDialog loadingDialog = new LoadingDialog();
+            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            _uploadPics(url, filePaths, filenames, new NetCallBack() {
+                @Override
+                public void onCall(NetProtocol result) {
+                    loadingDialog.dismiss();
+                    callback.onCall(result);
+                }
+            });
+        }else{
+            _uploadPics(url, filePaths, filenames, callback);
+        }
+
+    }
     public void _uploadPic(String url,Bitmap bitmap,String filename, final NetCallBack callBack){
         InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);
         InputStream[] fstreams = {fStream};
         String[] filenames = {filename};
-        _uploadPic(url,fstreams,filenames,callBack);
+        _uploadPics(url, fstreams, filenames, callBack);
     }
     public void _uploadPic(String url,String filePath,String filename, final NetCallBack callBack){
         try {
             FileInputStream fStream =new FileInputStream(filePath);
             InputStream[] fstreams = {fStream};
             String[] filenames = {filename};
-            _uploadPic(url,fstreams,filenames,callBack);
+            _uploadPics(url, fstreams, filenames, callBack);
         }catch (FileNotFoundException e){
             Log.e("NetService",e.toString());
         }
     }
 
-    public void _uploadPic(String url,final InputStream[] inputStreams,String[] filenames, final NetCallBack callBack){
+    public void _uploadPics(String url,ArrayList<String> filePaths,String[] filenames, final NetCallBack callBack){
+        try {
+            InputStream[] fstreams = new InputStream[filePaths.size()];
+            for(int i=0;i<filePaths.size();i++){
+                FileInputStream fStream =new FileInputStream(filePaths.get(i));
+                fstreams[i] = fStream;
+            }
+            _uploadPics(url, fstreams, filenames, callBack);
+        }catch (FileNotFoundException e){
+            Log.e("NetService",e.toString());
+        }
+    }
+
+    public void _uploadPics(String url,final InputStream[] inputStreams,String[] filenames, final NetCallBack callBack){
         if(inputStreams.length != filenames.length){
             Log.e("NetService","inputStreams.length != filenames.length");
             return;
@@ -439,10 +483,11 @@ public class NetService {
                             new DataOutputStream(con.getOutputStream());
 
                     for(int i =0;i<fStreams.length;i++){
+                        String tmpStr=  java.net.URLEncoder.encode(filenames[i],"utf-8");
                         ds.writeBytes(twoHyphens + boundary + end);
                         ds.writeBytes("Content-Disposition: form-data; "+
                                 "name=\"file\";filename=\""+
-                                filenames[i] +"\""+ end);
+                                tmpStr +"\""+ end);
                         ds.writeBytes(end);
                      /* 取得文件的FileInputStream */
 //                    InputStream fStream = FormatUtils.getInstance().Bitmap2InputStream(bitmap);

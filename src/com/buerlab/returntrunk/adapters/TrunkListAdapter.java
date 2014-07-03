@@ -1,14 +1,19 @@
 package com.buerlab.returntrunk.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.Trunk;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +26,10 @@ public class TrunkListAdapter extends BaseAdapter {
     private List<Trunk> mTrunk = new ArrayList<Trunk>();
     private LayoutInflater mInflater = null;
     private View.OnLongClickListener mOnLongClickListener;
+    private Context mContext;
     public TrunkListAdapter(Context context, View.OnLongClickListener onLongClickListener){
         mInflater = LayoutInflater.from(context);
+        mContext = context;
         mOnLongClickListener = onLongClickListener;
     }
 
@@ -66,12 +73,14 @@ public class TrunkListAdapter extends BaseAdapter {
             holder.loadTxtView = (TextView) convertView.findViewById(R.id.load);
             holder.lengthTxtView = (TextView) convertView.findViewById(R.id.length);
             holder.picGridLayout = (GridLayout)convertView.findViewById(R.id.pic_gridview);
+            holder.verifyView = (TextView)convertView.findViewById(R.id.verify);
             holder.position = position;
 
             holder.isVerified =Integer.parseInt(trunk.trunkLicenseVerified);
             holder.isUsedTxtView = (TextView) convertView.findViewById(R.id.isUsed);
             convertView.setTag(holder); //绑定ViewHolder对象
             convertView.setOnLongClickListener(mOnLongClickListener);
+
 
         }else{
             holder = (ViewHolder) convertView.getTag(); //取出ViewHolder对象
@@ -83,11 +92,46 @@ public class TrunkListAdapter extends BaseAdapter {
         holder.lengthTxtView.setText(String.valueOf(trunk.length));
         holder.position = position;
 
+        int trunkLisenceVerified =  Integer.parseInt(trunk.trunkLicenseVerified);
+        switch (trunkLisenceVerified){
+            case 0:  holder.verifyView.setText("未审核");break;
+            case 1: holder.verifyView.setText("审核中");break;
+            case 2: holder.verifyView.setText("通过审核");break;
+            case 3: holder.verifyView.setText("审核失败");break;
+            default:break;
+        }
         if(trunk.isUsed){
             holder.isUsedTxtView.setVisibility(View.VISIBLE);
         }else{
             holder.isUsedTxtView.setVisibility(View.GONE);
         }
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        holder.picGridLayout.removeAllViews();
+        int width = (Utils.getScreenSize()[0] - 40)/3;
+        if(trunk.trunkPicFilePaths!=null){
+            for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
+                ImageView iv = new ImageView(mContext);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.setMargins(0,0,5,5);
+                params.width = width;
+                params.height = width;
+                holder.picGridLayout.addView(iv,params);
+                imageLoader.displayImage(mContext.getString(R.string.server_addr2)+ trunk.trunkPicFilePaths.get(i), iv);
+            }
+
+        }
+
+
+
+
+//        imageLoader.loadImage(mContext.getString(R.string.server_addr)+ trunk, new SimpleImageLoadingListener() {
+//            @Override
+//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                // Do whatever you want with Bitmap
+//            }
+//        });
         return convertView;
     }
 
@@ -97,6 +141,7 @@ public class TrunkListAdapter extends BaseAdapter {
         public TextView typeTxtView;
         public TextView loadTxtView;
         public TextView lengthTxtView;
+        public TextView verifyView;
         public GridLayout picGridLayout;
         public TextView isUsedTxtView;
         public int position;
