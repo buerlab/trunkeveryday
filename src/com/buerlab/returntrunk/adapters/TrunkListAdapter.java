@@ -4,10 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -25,8 +22,10 @@ public class TrunkListAdapter extends BaseAdapter {
     private LayoutInflater mInflater = null;
     private View.OnLongClickListener mOnLongClickListener;
     private Context mContext;
-    public TrunkListAdapter(Context context, View.OnLongClickListener onLongClickListener){
+    OnPhotoClickClass onPhotoClickClass;
+    public TrunkListAdapter(Context context, View.OnLongClickListener onLongClickListener,OnPhotoClickClass onPhotoClickClass){
         mInflater = LayoutInflater.from(context);
+        this.onPhotoClickClass = onPhotoClickClass;
         mContext = context;
         mOnLongClickListener = onLongClickListener;
     }
@@ -92,7 +91,7 @@ public class TrunkListAdapter extends BaseAdapter {
 
         int trunkLisenceVerified =  Integer.parseInt(trunk.trunkLicenseVerified);
         switch (trunkLisenceVerified){
-            case 0:  holder.verifyView.setText("未审核");break;
+            case 0: holder.verifyView.setText("未审核");break;
             case 1: holder.verifyView.setText("审核中");break;
             case 2: holder.verifyView.setText("通过审核");break;
             case 3: holder.verifyView.setText("审核失败");break;
@@ -117,20 +116,29 @@ public class TrunkListAdapter extends BaseAdapter {
                 params.height = width;
                 holder.picGridLayout.addView(iv,params);
                 imageLoader.displayImage(mContext.getString(R.string.server_addr2)+ trunk.trunkPicFilePaths.get(i), iv);
+                iv.setOnClickListener(new OnPhotoClick(i,trunk));
             }
 
         }
-
-
-
-
-//        imageLoader.loadImage(mContext.getString(R.string.server_addr)+ trunk, new SimpleImageLoadingListener() {
-//            @Override
-//            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                // Do whatever you want with Bitmap
-//            }
-//        });
         return convertView;
+    }
+
+    public interface OnPhotoClickClass {
+        public void OnItemClick(View v, int Position,Trunk trunk);
+    }
+
+    class OnPhotoClick implements View.OnClickListener {
+        int position;
+        Trunk mTrunk;
+        public OnPhotoClick(int position,Trunk trunk) {
+            this.position=position;
+            this.mTrunk = trunk;
+        }
+        @Override
+        public void onClick(View v) {
+            onPhotoClickClass.OnItemClick(v, position,mTrunk);
+        }
+
     }
 
     /*存放控件 的ViewHolder*/

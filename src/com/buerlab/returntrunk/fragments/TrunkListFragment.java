@@ -7,11 +7,14 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.EditIDNumActivity;
+import com.buerlab.returntrunk.activities.GalleryUrlActivity;
 import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -21,13 +24,14 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
  * Created by zhongqiling on 14-6-4.
  */
 public class TrunkListFragment extends BaseFragment implements EventCenter.OnEventListener{
-
+    private static final String TAG =  "TrunkListFragment";
     View mView;
     private TextView tips = null;
     TrunkListAdapter mAdapter;
@@ -47,7 +51,7 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     public void init(){
         tips = (TextView)mView.findViewById(R.id.trunks_frag_tips);
         mListView = (ListView)mView.findViewById(R.id.trunks_list);
-        mAdapter =new TrunkListAdapter(getActivity(), new ItemOnLongClickListener());
+        mAdapter =new TrunkListAdapter(getActivity(), new ItemOnLongClickListener(),new OnPhotoClickClass());
         mListView.setAdapter(mAdapter);
 
         mAddTrunkBtn = (Button)mView.findViewById(R.id.add_trunk_btn);
@@ -85,6 +89,34 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
         }
     }
 
+    class OnPhotoClickClass implements TrunkListAdapter.OnPhotoClickClass{
+
+        @Override
+        public void OnItemClick(View v, int pos,Trunk trunk) {
+            String[] urls = new String[trunk.trunkPicFilePaths.size()];
+            try {
+                for (int i=0;i<urls.length;i++){
+                    String[] path = trunk.trunkPicFilePaths.get(i).split("/");
+                    urls[i] = getString(R.string.server_addr2);
+                    for(int j =0;j<path.length;j++){
+                        if(!path[j].isEmpty()){
+                            urls[i] += "/"+ java.net.URLEncoder.encode(path[j],"utf-8");
+                        }
+                    }
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", pos);
+                bundle.putStringArray("urls",urls);
+                Intent intent = new Intent(getActivity(),GalleryUrlActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }catch (UnsupportedEncodingException e){
+                Log.e(TAG, e.toString());
+            }
+
+        }
+    }
     private void showOpSelectDialog(final Activity c, final View v) {
 
         TrunkListAdapter.ViewHolder vh = (TrunkListAdapter.ViewHolder)v.getTag();

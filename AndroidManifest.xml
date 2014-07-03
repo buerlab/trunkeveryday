@@ -17,16 +17,7 @@
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
-        <!--<activity android:name=".driver.activities.MainActivity"-->
-                  <!--android:label="@string/app_name"-->
-                  <!--android:launchMode="singleInstance">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-
-        <activity android:name=".owner.activities.OwnerMainActivity"
+        <activity android:name=".driver.activities.MainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
             <intent-filter>
@@ -34,6 +25,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!--<activity android:name=".owner.activities.OwnerMainActivity"-->
+                  <!--android:label="@string/app_name"-->
+                  <!--android:launchMode="singleInstance">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
 
         <activity android:name=".driver.activities.LoginActivity"
                   android:label="@string/app_name">
@@ -89,6 +89,7 @@
                   android:theme="@style/custom_theme"/>
 
         <activity android:name=".activities.PersonDetailActivity"></activity>
+        <activity android:name=".activities.GalleryUrlActivity"></activity>
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->
                 <!--<action android:name="com.buerlab.returntrunk.service.BadiMapService"/>-->
