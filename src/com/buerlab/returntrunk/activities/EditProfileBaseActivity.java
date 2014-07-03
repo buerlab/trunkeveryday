@@ -31,8 +31,7 @@ public abstract class EditProfileBaseActivity extends BaseActivity {
 
     public abstract void onOptionSave(MenuItem i);
 
-    @Override
     public void setActionBarLayout(String title){
-        setActionBarLayout(title,true);
+        setActionBarLayout(title,WITH_BACK);
     }
 }

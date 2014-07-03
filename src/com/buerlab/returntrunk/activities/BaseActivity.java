@@ -15,10 +15,13 @@ import com.buerlab.returntrunk.R;
 public class BaseActivity extends FragmentActivity {
 
     public static BaseActivity currActivity = null;
-
+    public final static int WITH_BACK = 1;
+    public final static int WITH_MENU = 2;
+    public final static int WITH_NONE = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setActionBarLayout(WITH_NONE);
     }
 
     @Override
@@ -58,11 +61,7 @@ public class BaseActivity extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
-    public void setActionBarLayout(String title){
-        setActionBarLayout(title,false);
-    }
-
-    public void setActionBarLayout(String title,boolean withBack){
+    public void setActionBarLayout(String title,int type){
         ActionBar actionBar = getActionBar();
         if( null != actionBar ){
             actionBar.setHomeButtonEnabled(true);
@@ -72,8 +71,15 @@ public class BaseActivity extends FragmentActivity {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
 
-            if(withBack){
+            if(type == WITH_BACK){
                 actionBar.setLogo(R.drawable.back);
+                actionBar.setHomeButtonEnabled(true);
+            }else if(type == WITH_NONE){
+                actionBar.setLogo(R.drawable.empty);
+                actionBar.setHomeButtonEnabled(false);
+            }else if(type == WITH_MENU){
+                actionBar.setLogo(R.drawable.menu);
+                actionBar.setHomeButtonEnabled(true);
             }
             LayoutInflater inflator = (LayoutInflater)   this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflator.inflate(R.layout.actionbar_custom, null);
@@ -81,5 +87,9 @@ public class BaseActivity extends FragmentActivity {
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             actionBar.setCustomView(v,layout);
         }
+    }
+
+    public void setActionBarLayout(int type){
+        setActionBarLayout(this.getString(R.string.app_name_cn) ,type);
     }
 }

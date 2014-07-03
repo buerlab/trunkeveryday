@@ -23,7 +23,7 @@ public class SetTrunkActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.set_trunk_activity);
-
+        setActionBarLayout(WITH_NONE);
         final Activity self = this;
         Button confirmBtn = (Button)findViewById(R.id.set_trunk_confirm);
         confirmBtn.setOnClickListener(new View.OnClickListener() {

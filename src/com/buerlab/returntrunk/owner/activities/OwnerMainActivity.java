@@ -95,7 +95,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         transaction.hide(entry);
                         transaction.commit();
                         getActionBar().show();
-                        setActionBarLayout("天天回程车");
+                        setActionBarLayout("天天回程车",WITH_MENU);
                     }
                 }
                 else{
@@ -196,7 +196,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
             return;
         execSetFrag(index, fragsList);
 //        getActionBar().setTitle(fragsList.get(index));
-        setActionBarLayout(fragsList.get(index));
+        setActionBarLayout(fragsList.get(index),WITH_MENU);
         currFrag = index;
     }
 

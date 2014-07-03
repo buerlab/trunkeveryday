@@ -30,7 +30,7 @@ public class FindBillActivity extends BaseActivity implements EventCenter.OnEven
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.find_bill_frag);
-        setActionBarLayout("推荐货源");
+        setActionBarLayout("推荐货源",WITH_MENU);
 
         ListView list = (ListView)findViewById(R.id.find_bill_list);
         findBillListAdapter = new FindBillListAdapter(this);

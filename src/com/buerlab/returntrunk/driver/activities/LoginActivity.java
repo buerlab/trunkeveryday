@@ -31,6 +31,7 @@ public class LoginActivity extends BaseActivity {
 
         Button loginbtn = (Button)findViewById(R.id.login_confirm_btn);
         final Activity self = this;
+        setActionBarLayout(WITH_NONE);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

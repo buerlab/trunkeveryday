@@ -29,6 +29,7 @@ public class OwnerLoginActivity extends BaseActivity {
         final EditText pswText = (EditText)findViewById(R.id.login_psw_input);
 
         Button loginbtn = (Button)findViewById(R.id.login_confirm_btn);
+        setActionBarLayout(WITH_NONE);
         final Activity self = this;
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override

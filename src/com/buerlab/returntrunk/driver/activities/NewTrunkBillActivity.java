@@ -46,8 +46,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.new_trunk_bill_activity);
-        getActionBar().setTitle("发送回程车单");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setActionBarLayout("发送回程车单",WITH_BACK);
 
         fromText = (TextView)findViewById(R.id.new_bill_from_text);
         toText = (TextView)findViewById(R.id.new_bill_to_text);

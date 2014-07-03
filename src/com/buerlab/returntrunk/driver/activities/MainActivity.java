@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
-                        setActionBarLayout("天天回程车");
+                        setActionBarLayout("天天回程车",WITH_MENU);
                         getActionBar().show();
                     }
                 }
@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         if(currFrag == index)
             return;
         execSetFrag(index, fragsList);
-        getActionBar().setTitle(fragsList.get(index));
+        setActionBarLayout(fragsList.get(index),WITH_MENU);
         currFrag = index;
     }
 
