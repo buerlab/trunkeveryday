@@ -1,14 +1,19 @@
 package com.buerlab.returntrunk.jpush;
 
+import android.content.Context;
+import android.widget.Toast;
+import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
+import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by zhongqiling on 14-6-19.
@@ -19,7 +24,7 @@ public class JPushCenter {
         public void onJPushCall(JPushProtocal protocal);
     }
 
-    private Map<Integer, List<OnJpushListener>> eventMap = null;
+    private Context mContext = null;
 
     static private JPushCenter instance = null;
     static public JPushCenter shared(){
@@ -28,12 +33,10 @@ public class JPushCenter {
         }
         return instance;
     }
+    public void init(Context context){ mContext = context; }
 
-    public JPushCenter(){
-        eventMap = new HashMap<Integer, List<OnJpushListener>>();
-    }
+    public void onPush(final JPushProtocal protocal){
 
-    public void onPush(JPushProtocal protocal){
         if(protocal.code == JPushProtocal.JPUSH_PHONE_CALL){
             BaseActivity curr = BaseActivity.currActivity;
             if(curr != null){
@@ -42,33 +45,33 @@ public class JPushCenter {
             }
         }
         else if(protocal.code == JPushProtocal.BILL_VISITED){
+            NetService service = new NetService(mContext);
+            service.getVisitedBill(new NetService.NetCallBack() {
+                @Override
+                public void onCall(NetProtocol result) {
+                    if(result.code == NetProtocol.SUCCESS && result.data != null){
+                        JSONObject billDict = result.data;
+                        Iterator it = billDict.keys();
+                        while (it.hasNext()){
+                            String billid = (String)it.next();
+                            Bill bill = User.getInstance().getBill(billid);
+                            if(bill != null){
+                                try{
+                                    bill.visitedTimes = billDict.getInt(billid);
+                                }catch (Exception e){ }
+                            }
+                         }
+                        EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
+                    }
+                }
+            });
 
         }
 
         EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
     }
 
-    public void register(int code, OnJpushListener callback){
-        if(!eventMap.containsKey(code)){
-            List<OnJpushListener> list = new ArrayList<OnJpushListener>();
-            list.add(callback);
-            eventMap.put(code, list);
-        }else{
-            eventMap.get(code).add(callback);
-        }
-    }
+    public void onOpenNotification(JPushProtocal protocal){
 
-    public void unregister(int code, OnJpushListener callback){
-        if(eventMap.containsKey(code) && eventMap.get(code).contains(callback)){
-            eventMap.get(code).remove(callback);
-        }
-
-    }
-
-    public void dispatch(JPushProtocal protocal){
-        if(eventMap.containsKey(protocal.code)){
-            for(OnJpushListener callback : eventMap.get(protocal.code))
-                callback.onJPushCall(protocal);
-        }
     }
 }

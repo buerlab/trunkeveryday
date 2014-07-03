@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.Address;
 
 import java.util.List;
 
@@ -102,8 +103,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
                     toast.show();
                     return;
                 }
-                Bill bill = new Bill(Bill.BILLTYPE_GOODS, Bill.formatString(currFromContent),
-                        Bill.formatString(currToContent), currTimeStamp);
+                Bill bill = new Bill(Bill.BILLTYPE_GOODS, new Address(currFromContent).toFullString(),
+                        new Address(currToContent).toFullString(), currTimeStamp);
 
                 bill.setGoodsInfo(goodsText.getText().toString(), Float.valueOf(priceText.getText().toString()),
                         Float.valueOf(weightText.getText().toString()), commentText.getText().toString());
@@ -147,15 +148,17 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         if(e.type.equals(DataEvent.TIME_SETTLE)){
             currTimeStamp = (String)e.data;
         }
-        else{
+        else if(e.type.equals(DataEvent.ADDR_CHANGE)){
             List<String> data = (List<String>)e.data;
-            currEditView.setText(Bill.formatString(data));
+            currEditView.setText(new Address(data).toFullString());
             if(currEditView == fromText)
                 currFromContent = data;
             else if(currEditView == toText)
                 currToContent = data;
-            else if(currEditView == timeText)
-                currTimeContent = data;
+        }else if(e.type.equals(DataEvent.TIME_CHANGE)){
+            List<String> data = (List<String>)e.data;
+            currEditView.setText(Bill.listToString(data));
+            currTimeContent = data;
         }
     }
 

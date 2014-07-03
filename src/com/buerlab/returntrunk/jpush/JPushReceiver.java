@@ -49,7 +49,7 @@ public class JPushReceiver extends BroadcastReceiver {
             JPushInterface.reportNotificationOpened(context, bundle.getString(JPushInterface.EXTRA_MSG_ID));
 
             JPushProtocal protocal = new JPushProtocal(msg);
-            JPushCenter.shared().dispatch(protocal);
+            JPushCenter.shared().onOpenNotification(protocal);
 
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

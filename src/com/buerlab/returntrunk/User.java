@@ -41,7 +41,9 @@ public class User {
     public String IDNumVerified = "0";
     public String driverLicense="";
     public String driverLicenseVerified="0";
+
     private List<Bill> mBills;
+    private List<Bill> mHistoryBills;
 
     //type would be trunk or owner
     private String userType = "";
@@ -75,7 +77,7 @@ public class User {
         IDNumVerified = "0";
         driverLicense="";
         driverLicenseVerified="0";
-        mBills = new ArrayList<Bill>();
+        mBills = null;
         mComments = new ArrayList<Comment>();
         //type would be trunk or owner
         userType = "";
@@ -141,9 +143,25 @@ public class User {
         mBills = bills;
     }
 
+    public List<Bill> getBills(){
+        return mBills;
+    }
+
+    public Bill getBill(String billid){
+        for(Bill bill : mBills){
+            if(bill.id.equals(billid))
+                return bill;
+        }
+        return null;
+    }
+
     public void addBill(Bill bill){
         mBills.add(bill);
     }
+
+    public void initHistoryBills(List<Bill> bills){ mHistoryBills = bills; }
+
+    public void extendHistoryBills(List<Bill> bills){ mHistoryBills.addAll(bills); }
 
     public void addTrunk(Trunk trunk){
         trunks.add(trunk);
@@ -154,10 +172,6 @@ public class User {
     }
 
     public List<Comment> getComment(){ return  mComments;}
-    public List<Bill> getBills(){
-        return mBills;
-    }
-
 
     public String getUserType(){
         return userType;

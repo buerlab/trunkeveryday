@@ -33,6 +33,10 @@ public class SendBillListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public List<Bill> getBills(){
+        return mBills;
+    }
+
     public void removeBill(Bill bill){
         mBills.remove(bill);
         notifyDataSetChanged();
@@ -63,4 +67,6 @@ public class SendBillListAdapter extends BaseAdapter {
 
         return view;
     }
+
+
 }

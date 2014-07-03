@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import com.buerlab.returntrunk.jpush.JPushCenter;
 
 import java.util.Set;
 
@@ -21,6 +22,6 @@ public class ReturnTrunkApp extends Application {
 
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);     		// 初始化 JPush
-
+        JPushCenter.shared().init(getApplicationContext());
     }
 }

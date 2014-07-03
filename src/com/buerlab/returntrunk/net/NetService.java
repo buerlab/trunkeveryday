@@ -159,6 +159,10 @@ public class NetService {
         });
     }
 
+    public void getVisitedBill(final NetCallBack callBack){
+        request(mContext.getString(R.string.server_addr)+"api/bill/visited", createReqParms(null), "POST", callBack);
+    }
+
     public void billCall(String targetUserId, String billType, final NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("targetId", targetUserId);
@@ -216,7 +220,6 @@ public class NetService {
         parmsMap.put("billId", billId);
         urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
     }
-
 
 
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){

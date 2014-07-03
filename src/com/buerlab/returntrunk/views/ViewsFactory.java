@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.Address;
 
 
 /**
@@ -82,8 +83,8 @@ public class ViewsFactory {
 
     static public void fillFindBill(View bView, Bill bill){
         ((TextView)bView.findViewById(R.id.find_bill_name)).setText(bill.senderName);
-        ((TextView)bView.findViewById(R.id.find_bill_from)).setText(bill.from);
-        ((TextView)bView.findViewById(R.id.find_bill_to)).setText(bill.to);
+        ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
+        ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
         if(bill.billType.equals(Bill.BILLTYPE_GOODS))
             ((TextView)bView.findViewById(R.id.find_bill_mat)).setText(bill.material);
@@ -127,8 +128,8 @@ public class ViewsFactory {
     }
 
     static public void fillSendBill(final View bView,final Bill bill){
-        ((TextView)bView.findViewById(R.id.new_bill_from)).setText(bill.from);
-        ((TextView)bView.findViewById(R.id.new_bill_to)).setText(bill.to);
+        ((TextView)bView.findViewById(R.id.new_bill_from)).setText(new Address(bill.from).toShortString());
+        ((TextView)bView.findViewById(R.id.new_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.new_bill_time)).setText(Utils.timestampToDisplay(bill.time));
         ((TextView)bView.findViewById(R.id.new_bill_visitedtimes)).setText(String.valueOf(bill.visitedTimes));
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
@@ -137,6 +138,8 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.new_bill_price)).setText(String.valueOf(bill.price));
         }
     }
+
+
 
     static public View createBill(LayoutInflater inflater, Bill bill){
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.simple_bill_goods : R.layout.simple_bill_trunk;

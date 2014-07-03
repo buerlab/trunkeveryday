@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.driver.activities.MainActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.jpush.JPushProtocal;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -56,6 +57,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
                 Intent intent = new Intent(getActivity(), NewTrunkBillActivity.class);
                 getActivity().startActivity(intent);
+
             }
         });
 
@@ -69,23 +71,26 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         });
 
         EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
-        EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, new EventCenter.OnEventListener() {
-            @Override
-            public void onEventCall(DataEvent e) {
-                Bill bill = (Bill)e.data;
-                if(bill != null){
-                    mAdapter.removeBill(bill);
-                }
-            }
-        });
+        EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
+        EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
 
         initBills();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        if(mAdapter != null){
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
+        EventCenter.shared().removeEventListener(DataEvent.DELETE_BILL, this);
+        EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
     }
 
     @Override
@@ -100,11 +105,22 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
     @Override
     public void onEventCall(DataEvent e) {
-        final Bill bill = (Bill)e.data;
-        addBill(bill);
+        if(e.type.equals(DataEvent.NEW_BILL)){
+            final Bill bill = (Bill)e.data;
+            addBill(bill);
 
-        Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
-        toast.show();
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
+            toast.show();
+        }else if(e.type.equals(DataEvent.DELETE_BILL)){
+            Bill bill = (Bill)e.data;
+            if(bill != null){
+                removeBill(bill);
+            }
+        }else if(e.type.equals(DataEvent.JPUSH_INFORM)){
+            if(((JPushProtocal)e.data).code == JPushProtocal.BILL_VISITED){
+                mAdapter.notifyDataSetChanged();
+            }
+        }
     }
 
     @Override
@@ -116,10 +132,11 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
     private void initBills(){
         final SendBillListAdapter adapter = mAdapter;
-        NetService service = new NetService(getActivity());
-        service.getBills(0, -1, new NetService.BillsCallBack() {
-            @Override
-            public void onCall(NetProtocol result, List<Bill> bills) {
+        if(User.getInstance().getBills() == null){
+            NetService service = new NetService(getActivity());
+            service.getBills(0, -1, new NetService.BillsCallBack() {
+                @Override
+                public void onCall(NetProtocol result, List<Bill> bills) {
                 if(result.code == NetProtocol.SUCCESS){
                     if(bills != null) {
                         User.getInstance().initBills(bills);
@@ -128,12 +145,23 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         tips.setAlpha(0.0f);
                     }
                 }
-            }
-        });
+                }
+            });
+        }else{
+            adapter.setBills(User.getInstance().getBills());
+        }
     }
 
     private void addBill(Bill bill){
         mAdapter.addBill(bill);
+    }
+
+    private void removeBill(Bill bill){
+        mAdapter.removeBill(bill);
+    }
+
+    public void updateBill(Bill bill){
+//        mAdapter.getBills().indexOf(bill);
     }
 
 
