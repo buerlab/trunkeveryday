@@ -45,12 +45,17 @@ public class CommentListFragment extends BaseFragment{
     private void initComments(){
         final CommentListAdapter adapter = mAdapter;
         NetService service = new NetService(getActivity());
-        service.getComments(0,-1,new NetService.CommentsCallBack() {
+        service.getComments(User.getInstance().getUserType(),0,-1,new NetService.CommentsCallBack() {
             @Override
             public void onCall(NetProtocol result, List<Comment> comments) {
                 if (result.code == NetProtocol.SUCCESS) {
                     if (comments != null) {
-                        User.getInstance().initComments(comments);
+                        if(User.getInstance().getUserType()=="driver"){
+                            User.getInstance().initDriverComments(comments);
+                        }
+                        if(User.getInstance().getUserType()=="owner"){
+                            User.getInstance().initOwnerComments(comments);
+                        }
                         adapter.setComments(comments);
 
                         tips.setAlpha(0.0f);

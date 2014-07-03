@@ -55,8 +55,8 @@ public class User {
     public String useTrunk = "";
     public List<Trunk> trunks;
 
-    private List<Comment> mComments;
-
+    private List<Comment> mDriverComments;
+    private List<Comment> mOnwerComments;
     static private User instance = null;
     static public User getInstance(){
         if(instance == null){
@@ -77,7 +77,7 @@ public class User {
         driverLicense="";
         driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
-        mComments = new ArrayList<Comment>();
+        mDriverComments = new ArrayList<Comment>();
         //type would be trunk or owner
         userType = "";
         //billtype contains trunk, goods
@@ -150,11 +150,14 @@ public class User {
         trunks.add(trunk);
     }
 
-    public void initComments(List<Comment> comments){
-        mComments = comments;
+    public void initDriverComments(List<Comment> comments){
+        mDriverComments = comments;
     }
-
-    public List<Comment> getComment(){ return  mComments;}
+    public void initOwnerComments(List<Comment> comments){
+        mOnwerComments = comments;
+    }
+    public List<Comment> getDriverComment(){ return mDriverComments;}
+    public List<Comment> getOnwerComment(){ return mOnwerComments;}
     public List<Bill> getBills(){
         return mBills;
     }

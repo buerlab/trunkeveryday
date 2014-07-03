@@ -63,7 +63,7 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
     }
 
     private void init(){
-        setActionBarLayout(R.layout.actionbar, "添加货车");
+        setActionBarLayout("添加货车");
         typeText = (EditText)findViewById(R.id.set_trunk_type);
         lengthText = (EditText)findViewById(R.id.set_trunk_length);
         loadText = (EditText)findViewById(R.id.set_trunk_load);

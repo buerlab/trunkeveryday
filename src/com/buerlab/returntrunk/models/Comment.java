@@ -15,6 +15,7 @@ public class Comment {
 
     public String id = "";
     public int starNum = 0;
+    public String userType;
     public String commentTime = "";
     public String fromUserName = "";
     public String fromUserId = "";
@@ -23,8 +24,9 @@ public class Comment {
     public String text="";
 
 
-    public Comment(int _starNum, String _commentTime, String _fromUserName, String _fromUserId, String _toUserId, String _billId,String _text){
+    public Comment(int _starNum,String _userType, String _commentTime, String _fromUserName, String _fromUserId, String _toUserId, String _billId,String _text){
         starNum = _starNum;
+        userType = _userType;
         commentTime = _commentTime;
         fromUserName = _fromUserName;
         fromUserId = _fromUserId;
@@ -40,6 +42,7 @@ public class Comment {
     public Map<String, String> toParmsMap(){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("starNum", Integer.toString(starNum) );
+        parmsMap.put("userType",userType);
         parmsMap.put("commentTime", commentTime);
         parmsMap.put("fromUserName", fromUserName);
         parmsMap.put("fromUserId", fromUserId);

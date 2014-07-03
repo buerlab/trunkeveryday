@@ -30,7 +30,7 @@ public class EditNickNameActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_nickname);
         init();
-        setActionBarLayout(R.layout.actionbar,"编辑昵称" );
+        setActionBarLayout("编辑昵称" );
     }
 
     @Override

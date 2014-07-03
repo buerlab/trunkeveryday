@@ -182,11 +182,11 @@ public class NetService {
     //COMMENTS
     //////////////////////////
 
-    public void getComments(int num, int count ,final CommentsCallBack callBack){
+    public void getComments(String userType, int num, int count ,final CommentsCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("num", String.valueOf(num));
         parmsMap.put("count", String.valueOf(count));
-
+        parmsMap.put("userType",userType);
         request(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -636,6 +636,7 @@ public class NetService {
             for(int i = 0; i < data.length(); i++){
                 JSONObject item = data.getJSONObject(i);
                 Comment comment = new Comment(item.getInt("starNum"),
+                        item.getString("userType"),
                         item.getString("commentTime"),
                         item.getString("fromUserName"),
                         item.getString("fromUserId"),

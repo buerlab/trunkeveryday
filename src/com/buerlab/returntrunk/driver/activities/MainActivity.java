@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -104,6 +104,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
+                        setActionBarLayout("天天回程车");
                         getActionBar().show();
                     }
                 }

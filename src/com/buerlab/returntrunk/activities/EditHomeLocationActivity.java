@@ -32,7 +32,7 @@ public class EditHomeLocationActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_home_location);
         init();
-        setActionBarLayout(R.layout.actionbar,"编辑常住地" );
+        setActionBarLayout("编辑常住地" );
     }
 
     @Override

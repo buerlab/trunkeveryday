@@ -50,7 +50,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_driverlicense);
         init();
-        setActionBarLayout(R.layout.actionbar, "审核驾驶证");
+        setActionBarLayout( "审核驾驶证");
     }
 
     @Override

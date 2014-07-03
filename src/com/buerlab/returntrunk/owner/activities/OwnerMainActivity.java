@@ -38,7 +38,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -95,6 +95,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         transaction.hide(entry);
                         transaction.commit();
                         getActionBar().show();
+                        setActionBarLayout("天天回程车");
                     }
                 }
                 else{
@@ -194,7 +195,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         if(currFrag == index)
             return;
         execSetFrag(index, fragsList);
-        getActionBar().setTitle(fragsList.get(index));
+//        getActionBar().setTitle(fragsList.get(index));
+        setActionBarLayout(fragsList.get(index));
         currFrag = index;
     }
 

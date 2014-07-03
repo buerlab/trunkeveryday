@@ -12,8 +12,8 @@
 
     <application android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher"
-                 android:name=".ReturnTrunkApp">
-                 <!--android:theme="@style/custom_theme">-->
+                 android:name=".ReturnTrunkApp"
+                 android:theme="@style/custom_theme">
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
@@ -87,6 +87,8 @@
         <activity android:name=".utils.MultiPicSelector.ImgFileListActivity"/>
         <activity android:name=".utils.MultiPicSelector.ImgsActivity"
                   android:theme="@style/custom_theme"/>
+
+        <activity android:name=".activities.PersonDetailActivity"></activity>
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->
                 <!--<action android:name="com.buerlab.returntrunk.service.BadiMapService"/>-->

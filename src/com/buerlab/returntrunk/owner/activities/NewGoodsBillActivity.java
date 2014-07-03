@@ -46,8 +46,9 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.new_goods_bill_activity);
-        getActionBar().setTitle("发送货单");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setActionBarLayout("发送货单");
+//        getActionBar().setTitle("发送货单");
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         goodsText = (EditText)findViewById(R.id.new_bill_goods);
         weightText = (EditText)findViewById(R.id.new_bill_weight);

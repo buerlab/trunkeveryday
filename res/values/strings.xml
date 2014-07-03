@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name_cn">天天回程车</string>
     <string name="app_name">returntrunkdriver</string>
     <string name="server_addr">http://115.29.8.74:9288/</string>
     <string name="server_addr2">http://115.29.8.74:9288</string>

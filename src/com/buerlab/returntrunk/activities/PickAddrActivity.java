@@ -10,6 +10,7 @@ public class PickAddrActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setActionBarLayout("选择地址");
     }
 
 

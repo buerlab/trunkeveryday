@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.PersonDetailActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.activities.EditHomeLocationActivity;
 import com.buerlab.returntrunk.activities.EditIDNumActivity;
@@ -38,6 +40,8 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
 
     View mRoot;
     User mUser;
+
+
     public final static int EDIT_NICKNAME = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,6 +74,9 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
         driverLicenseContainer.setVisibility(View.GONE);
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
+
+        Button person_detail_btn = (Button)mRoot.findViewById(R.id.person_detail_btn);
+        person_detail_btn.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +85,7 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
             case R.id.container_nickName: goToEditNickNameFragment();break;
             case R.id.container_location: goToEditLocationFragment();break;
             case R.id.container_IDNum: goToEditIDNumFragment();break;
+            case R.id.person_detail_btn:goToPersonDetail();
             default:break;
         }
     }
@@ -112,6 +120,10 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
         }
     }
 
+    private void goToPersonDetail(){
+        Intent intent = new Intent(getActivity(),PersonDetailActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void onEventCall(DataEvent e) {
         mUser = User.getInstance();
