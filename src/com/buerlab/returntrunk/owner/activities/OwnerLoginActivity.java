@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
-import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
@@ -31,6 +29,7 @@ public class OwnerLoginActivity extends BaseActivity {
         final EditText pswText = (EditText)findViewById(R.id.login_psw_input);
 
         Button loginbtn = (Button)findViewById(R.id.login_confirm_btn);
+        setActionBarLayout(WITH_NONE);
         final Activity self = this;
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.fragments;
+package com.buerlab.returntrunk.driver.fragments;
 
 //import android.app.Fragment;
 //import android.support.v4.app.ActionBarDrawerToggle;
@@ -10,19 +10,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.activities.EditDriverLicenseActivity;
+import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.driver.activities.EditDriverLicenseActivity;
 import com.buerlab.returntrunk.activities.EditIDNumActivity;
 import com.buerlab.returntrunk.activities.EditNickNameActivity;
 import com.buerlab.returntrunk.activities.EditHomeLocationActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 
 /**
  * Created by zhongqiling on 14-6-17.
  */
-public class ProfileFragment extends BaseFragment implements View.OnClickListener,EventCenter.OnEventListener {
-    private static final String TAG = "ProfileFragment" ;
+public class DriverProfileFragment extends BaseFragment implements View.OnClickListener,EventCenter.OnEventListener {
+    private static final String TAG = "DriverProfileFragment" ;
     LinearLayout nickNameContainer;
     LinearLayout locationContainer;
     LinearLayout IDNumContainer;

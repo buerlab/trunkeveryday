@@ -2,18 +2,16 @@ package com.buerlab.returntrunk.jpush;
 
 import android.content.Context;
 import android.widget.Toast;
-import com.buerlab.returntrunk.Bill;
-import com.buerlab.returntrunk.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import org.json.JSONObject;
-
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by zhongqiling on 14-6-19.

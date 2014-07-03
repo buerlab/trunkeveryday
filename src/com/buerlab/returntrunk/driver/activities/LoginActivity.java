@@ -8,8 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.jpush.JPushUtils;
@@ -32,6 +31,7 @@ public class LoginActivity extends BaseActivity {
 
         Button loginbtn = (Button)findViewById(R.id.login_confirm_btn);
         final Activity self = this;
+        setActionBarLayout(WITH_NONE);
         loginbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

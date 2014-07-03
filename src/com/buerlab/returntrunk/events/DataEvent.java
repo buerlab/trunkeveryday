@@ -14,6 +14,9 @@ public class DataEvent {
     static public final String JPUSH_INFORM = "jpush_inform";
 
     static public String USER_UPDATE = "user_update";
+
+    public static String MULTI_PIC_SELECT = "multi_pic_select";
+
     public String type = "";
     public Object data = null;
 

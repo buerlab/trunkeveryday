@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
-import com.buerlab.returntrunk.User;
 
 import java.util.Set;
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;

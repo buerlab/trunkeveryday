@@ -2,9 +2,6 @@ package com.buerlab.returntrunk.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,9 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,21 +18,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.utils.FormatUtils;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by teddywu on 14-6-17.
@@ -60,7 +49,7 @@ public class EditIDNumActivity extends EditProfileBaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_idnum);
         init();
-        setActionBarLayout(R.layout.actionbar, "审核身份证");
+        setActionBarLayout("审核身份证");
     }
 
     @Override

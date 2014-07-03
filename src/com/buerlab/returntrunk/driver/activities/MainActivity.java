@@ -14,7 +14,8 @@ import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -69,6 +70,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
+        Utils.init(this);
         final FragmentActivity self = this;
         service.quickLogin(new NetService.NetCallBack() {
             @Override
@@ -103,6 +105,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
+                        setActionBarLayout("天天回程车",WITH_MENU);
                         getActionBar().show();
                     }
                 }
@@ -197,7 +200,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         if(currFrag == index)
             return;
         execSetFrag(index, fragsList);
-        getActionBar().setTitle(fragsList.get(index));
+        setActionBarLayout(fragsList.get(index),WITH_MENU);
         currFrag = index;
     }
 

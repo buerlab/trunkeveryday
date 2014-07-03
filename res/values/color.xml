@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="deep_sky_blue">#00A1F8</color> <!--主色调-->
+    <color name="white">#FFF</color>
+    <color name="bule_overlay">#660D92DD</color>
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

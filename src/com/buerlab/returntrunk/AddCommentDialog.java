@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetService;
 
 

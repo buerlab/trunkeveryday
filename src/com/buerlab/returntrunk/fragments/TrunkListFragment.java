@@ -12,10 +12,12 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.activities.AddTrunkActivity;
+import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 

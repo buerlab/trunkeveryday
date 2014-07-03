@@ -7,9 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.Trunk;
-import com.buerlab.returntrunk.User;
-import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -24,7 +23,7 @@ public class SetTrunkActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.set_trunk_activity);
-
+        setActionBarLayout(WITH_NONE);
         final Activity self = this;
         Button confirmBtn = (Button)findViewById(R.id.set_trunk_confirm);
         confirmBtn.setOnClickListener(new View.OnClickListener() {

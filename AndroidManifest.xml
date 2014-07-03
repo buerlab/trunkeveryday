@@ -7,10 +7,13 @@
     <permission android:name="com.buerlab.returntrunk.permission.JPUSH_MESSAGE"
                 android:protectionLevel="signature" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Include next permission if you want to allow UIL to cache images on SD card -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application android:label="@string/app_name"
                  android:icon="@drawable/ic_launcher"
-                 android:name=".ReturnTrunkApp">
-                 <!--android:theme="@style/custom_theme">-->
+                 android:name=".ReturnTrunkApp"
+                 android:theme="@style/custom_theme">
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
@@ -53,10 +56,10 @@
         <activity android:name=".activities.EditIDNumActivity"
                   android:theme="@style/custom_theme"
                 />
-        <activity android:name=".activities.EditDriverLicenseActivity"
+        <activity android:name=".driver.activities.EditDriverLicenseActivity"
                   android:theme="@style/custom_theme"
                 />
-        <activity android:name=".activities.AddTrunkActivity"
+        <activity android:name=".driver.activities.AddTrunkActivity"
                   android:theme="@style/custom_theme"
                   />
 
@@ -81,6 +84,11 @@
                   android:parentActivityName=".owner.activities.OwnerMainActivity">
                 </activity>
 
+        <activity android:name=".utils.MultiPicSelector.ImgFileListActivity"/>
+        <activity android:name=".utils.MultiPicSelector.ImgsActivity"
+                  android:theme="@style/custom_theme"/>
+
+        <activity android:name=".activities.PersonDetailActivity"></activity>
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->
                 <!--<action android:name="com.buerlab.returntrunk.service.BadiMapService"/>-->

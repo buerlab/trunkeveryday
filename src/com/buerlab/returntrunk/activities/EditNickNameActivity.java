@@ -2,13 +2,12 @@ package com.buerlab.returntrunk.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
@@ -31,7 +30,7 @@ public class EditNickNameActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_nickname);
         init();
-        setActionBarLayout(R.layout.actionbar,"编辑昵称" );
+        setActionBarLayout("编辑昵称" );
     }
 
     @Override

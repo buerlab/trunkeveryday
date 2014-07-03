@@ -16,6 +16,7 @@ import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
@@ -46,8 +47,9 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.new_goods_bill_activity);
-        getActionBar().setTitle("发送货单");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        setActionBarLayout("发送货单",WITH_BACK);
+//        getActionBar().setTitle("发送货单");
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         goodsText = (EditText)findViewById(R.id.new_bill_goods);
         weightText = (EditText)findViewById(R.id.new_bill_weight);

@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.activities;
+package com.buerlab.returntrunk.driver.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -18,8 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -32,7 +33,7 @@ import java.util.Map;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditDriverLicenseActivity extends EditProfileBaseActivity{
+public class EditDriverLicenseActivity extends EditProfileBaseActivity {
     private static final String TAG = "EditDriverLicenseActivity" ;
     ActionBar mActionBar;
 
@@ -49,7 +50,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_driverlicense);
         init();
-        setActionBarLayout(R.layout.actionbar, "审核驾驶证");
+        setActionBarLayout( "审核驾驶证");
     }
 
     @Override

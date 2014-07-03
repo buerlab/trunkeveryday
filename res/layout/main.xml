@@ -21,7 +21,7 @@
                       android:layout_height="fill_parent"
                       android:tag="首页"
                       tools:layout="@layout/send_bill_frag"/>
-            <fragment android:name="com.buerlab.returntrunk.fragments.ProfileFragment"
+            <fragment android:name="com.buerlab.returntrunk.driver.fragments.DriverProfileFragment"
                       android:id="@+id/slide_menu_profile"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"

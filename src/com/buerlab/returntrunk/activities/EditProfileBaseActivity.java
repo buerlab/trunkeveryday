@@ -1,7 +1,12 @@
 package com.buerlab.returntrunk.activities;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.BaseActivity;
 
@@ -9,23 +14,6 @@ import com.buerlab.returntrunk.activities.BaseActivity;
  * Created by teddywu on 14-6-19.
  */
 public abstract class EditProfileBaseActivity extends BaseActivity {
-
-
-    public void setActionBarLayout( int layoutId,String title ){
-        ActionBar actionBar = getActionBar();
-        if( null != actionBar ){
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(title);
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setDisplayShowCustomEnabled(true);
-            actionBar.setDisplayShowTitleEnabled(true);
-//            LayoutInflater inflator = (LayoutInflater)   this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            View v = inflator.inflate(layoutId, null);
-//            ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            actionBar.setCustomView(v,layout);
-        }
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,4 +30,8 @@ public abstract class EditProfileBaseActivity extends BaseActivity {
     }
 
     public abstract void onOptionSave(MenuItem i);
+
+    public void setActionBarLayout(String title){
+        setActionBarLayout(title,WITH_BACK);
+    }
 }

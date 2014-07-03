@@ -22,6 +22,7 @@
     <orderEntry type="library" name="jpush-sdk-release1.6.1" level="project" />
     <orderEntry type="library" name="armeabi" level="project" />
     <orderEntry type="module" module-name="wheel" />
+    <orderEntry type="library" name="universal-image-loader-1.9.2" level="project" />
   </component>
 </module>
 

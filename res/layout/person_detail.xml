@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:background="#cccccc">
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:layout_height="100dp">
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:id="@+id/textview_nickname"
+                 android:textColor="#000"
+                 android:textSize="30dp"
+                 android:layout_marginLeft="40dp"
+                 android:layout_alignParentLeft="true"
+                 android:layout_centerVertical="true"
+                android:text="刘大海"/>
+        <com.buerlab.returntrunk.views.StarsView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/textview_nickname"
+                android:layout_centerVertical="true"
+                android:id="@+id/stars_view">
+        </com.buerlab.returntrunk.views.StarsView>
+    </RelativeLayout>
+</LinearLayout>

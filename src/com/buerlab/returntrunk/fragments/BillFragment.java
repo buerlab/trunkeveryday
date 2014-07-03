@@ -1,6 +1,5 @@
 package com.buerlab.returntrunk.fragments;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.BillInvitationListAdapter;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;

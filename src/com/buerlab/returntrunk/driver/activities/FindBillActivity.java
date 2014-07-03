@@ -1,6 +1,5 @@
 package com.buerlab.returntrunk.driver.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +7,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
 import android.widget.ListView;
-import com.buerlab.returntrunk.Bill;
+import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.FindBillListAdapter;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.BaseActivity;
@@ -31,9 +30,7 @@ public class FindBillActivity extends BaseActivity implements EventCenter.OnEven
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.find_bill_frag);
-        getActionBar().setTitle("推荐货源");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
+        setActionBarLayout("推荐货源",WITH_MENU);
 
         ListView list = (ListView)findViewById(R.id.find_bill_list);
         findBillListAdapter = new FindBillListAdapter(this);

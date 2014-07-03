@@ -12,7 +12,8 @@ import android.widget.ListView;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -20,7 +21,6 @@ import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.SettingFragment;
 import com.buerlab.returntrunk.jpush.JPushCenter;
 import com.buerlab.returntrunk.jpush.JPushProtocal;
-import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.service.BaiduMapService;
@@ -38,7 +38,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -66,6 +66,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         NetService service = new NetService(this);
         final FragmentActivity self = this;
+        Utils.init(this);
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -94,6 +95,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         transaction.hide(entry);
                         transaction.commit();
                         getActionBar().show();
+                        setActionBarLayout("天天回程车",WITH_MENU);
                     }
                 }
                 else{
@@ -193,7 +195,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         if(currFrag == index)
             return;
         execSetFrag(index, fragsList);
-        getActionBar().setTitle(fragsList.get(index));
+//        getActionBar().setTitle(fragsList.get(index));
+        setActionBarLayout(fragsList.get(index),WITH_MENU);
         currFrag = index;
     }
 

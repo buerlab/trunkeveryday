@@ -3,12 +3,12 @@ package com.buerlab.returntrunk;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ListView;
-import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.models.Trunk;
+import com.buerlab.returntrunk.models.User;
 
 import java.util.ArrayList;
 import java.util.List;

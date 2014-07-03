@@ -64,7 +64,7 @@
                     android:layout_gravity="left"
                     android:columnCount="3"
                     android:padding="10dp"
-                    android:id="@+id/pic_grid_layout"
+                    android:id="@+id/pic_gridview"
                     android:orientation="horizontal" >
             <Button android:id="@+id/add_trunk_pic"
                     android:layout_marginRight="5dp"

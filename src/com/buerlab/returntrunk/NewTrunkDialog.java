@@ -2,20 +2,19 @@ package com.buerlab.returntrunk;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
-import java.util.List;
+import com.buerlab.returntrunk.fragments.BaseDialogFragment;
+import com.buerlab.returntrunk.models.Trunk;
 
 
 /**
  * Created by zhongqiling on 14-6-13.
  */
-public class NewTrunkDialog extends BaseDialogFragment{
+public class NewTrunkDialog extends BaseDialogFragment {
 
     public interface NewTrunkDialogListener{
         public void onNewTrunkDialogConfirm(Trunk trunk);

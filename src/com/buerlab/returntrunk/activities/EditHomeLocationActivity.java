@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.User;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
@@ -32,7 +32,7 @@ public class EditHomeLocationActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_home_location);
         init();
-        setActionBarLayout(R.layout.actionbar,"编辑常住地" );
+        setActionBarLayout("编辑常住地" );
     }
 
     @Override
