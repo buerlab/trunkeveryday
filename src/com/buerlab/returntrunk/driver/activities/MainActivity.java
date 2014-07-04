@@ -1,5 +1,8 @@
 package com.buerlab.returntrunk.driver.activities;
 
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -159,8 +162,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         }, 300);
 
         // set optional header image
-        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.ic_launcher));
-
+        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
         FragmentManager manager = getSupportFragmentManager();
         ((DriverHomeFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
 

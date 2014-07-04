@@ -234,7 +234,8 @@ public class SlideMenu extends LinearLayout {
 	 * @param f A font.
 	 */
 	public void setFont(Typeface f) {
-		font = f;
+
+        font = f;
 	}
 
 
