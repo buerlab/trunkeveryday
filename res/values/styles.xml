@@ -19,6 +19,7 @@
     </style>
 
     <style name="custom_theme" parent="android:Theme.Holo.Light">
+        <item name="android:textColor">#000</item>
         <item name="android:actionBarStyle">@style/actionbar_def_style</item>
         <item name="android:actionButtonStyle">@style/actionbutton_def_style</item>
     </style>

@@ -3,9 +3,13 @@
     <color name="deep_sky_blue">#00A1F8</color> <!--主色调-->
     <color name="white">#FFF</color>
     <color name="black">#000</color>
-
-
+    <color name="background">#F2F2F2</color>
+    <color name="top_border">#DFDFDF</color>
+    <color name="bottom_border">#E2E2E2</color>
+    <color name="sub_text_color">#9C9C9C</color>
+    <color name="text_color">#000</color>
     <color name="bule_overlay">#660D92DD</color>
+
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

@@ -5,7 +5,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.views.StarsView;
+import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.views.StarsViewWithText;
 
 /**
  * Created by teddywu on 14-6-17.
@@ -13,7 +14,8 @@ import com.buerlab.returntrunk.views.StarsView;
 public class PersonDetailActivity extends EditProfileBaseActivity {
     private static final String TAG = "PersonDetailActivity" ;
 
-    StarsView starsView;
+    StarsViewWithText starsViewWithText;
+    StarsViewWithText starsViewWithText2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +30,15 @@ public class PersonDetailActivity extends EditProfileBaseActivity {
     }
 
     private void init(){
+        Utils.init(this);
+        starsViewWithText = (StarsViewWithText)findViewById(R.id.stars_view);
+        starsViewWithText.setStar(2.8f);
+        starsViewWithText.setSize(30);
 
-        starsView = (StarsView)findViewById(R.id.stars_view);
-        float a = 0f;
-        starsView.setStar(a);
+        starsViewWithText2 = (StarsViewWithText)findViewById(R.id.stars_view2);
+        starsViewWithText2.setStar(2.8f);
+
+
     }
 
 

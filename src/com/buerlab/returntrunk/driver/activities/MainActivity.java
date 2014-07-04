@@ -9,6 +9,8 @@ import android.os.Bundle;
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
@@ -51,6 +53,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //    private ActionBarDrawerToggle mDrawerToggle = null;
 
     private SlideMenu slideMenu = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -219,5 +222,16 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         transaction.commit();
     }
 
-
+    //按back键不退出，保留在后台
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // menuUtils.createTwoDispatcher(event);
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.HOME");
+            startActivity(intent);
+        }
+        return false;
+    }
 }

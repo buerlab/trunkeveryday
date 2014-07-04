@@ -18,6 +18,7 @@ public class BaseActivity extends FragmentActivity {
     public final static int WITH_BACK = 1;
     public final static int WITH_MENU = 2;
     public final static int WITH_NONE = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,6 @@ public class BaseActivity extends FragmentActivity {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setDisplayShowTitleEnabled(false);
-
             if(type == WITH_BACK){
                 actionBar.setLogo(R.drawable.back);
                 actionBar.setHomeButtonEnabled(true);
@@ -78,9 +78,10 @@ public class BaseActivity extends FragmentActivity {
                 actionBar.setLogo(R.drawable.empty);
                 actionBar.setHomeButtonEnabled(false);
             }else if(type == WITH_MENU){
-                actionBar.setLogo(R.drawable.menu);
+                actionBar.setLogo(R.drawable.list);
                 actionBar.setHomeButtonEnabled(true);
             }
+
             LayoutInflater inflator = (LayoutInflater)   this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflator.inflate(R.layout.actionbar_custom, null);
             ((TextView)v.findViewById(R.id.actionbar_text)).setText(title);

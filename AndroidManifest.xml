@@ -88,7 +88,12 @@
         <activity android:name=".utils.MultiPicSelector.ImgsActivity"
                   android:theme="@style/custom_theme"/>
 
-        <activity android:name=".activities.PersonDetailActivity"></activity>
+        <activity android:name=".activities.PersonDetailActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".activities.GalleryUrlActivity"></activity>
         <!--<service android:name=".service.BaiduMapService">-->
             <!--<intent-filter>-->

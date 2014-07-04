@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ListView;
 import cn.jpush.android.api.JPushInterface;
@@ -216,5 +217,17 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         transaction.commit();
     }
 
+    //按back键不退出，保留在后台
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // menuUtils.createTwoDispatcher(event);
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.HOME");
+            startActivity(intent);
+        }
+        return false;
+    }
 
 }
