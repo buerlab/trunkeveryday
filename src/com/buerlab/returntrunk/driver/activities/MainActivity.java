@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
+
 //        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
@@ -98,9 +99,9 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-                        String alias = User.getInstance().userId+User.USERTYPE_TRUNK;
-                        JPushUtils.registerAlias(self, alias);
-//                        JPushUtils.registerAlias(self, "zql");
+//                        String alias = User.getInstance().userId+User.USERTYPE_TRUNK;
+//                        JPushUtils.registerAlias(self, alias);
+                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
 
                         init();

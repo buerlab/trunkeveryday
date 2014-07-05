@@ -42,11 +42,11 @@ public class Bill {
     public String licensePlate = "";
 
     //to simplify the communication to server, make a list value to a single string and parse in the same way.
-    static public String formatString(List<String> input){
+    static public String listToString(List<String> input){
         String result = "";
         if(input != null && input.size() > 0){
-            for(String item : input)
-                result += item+"-";
+            for(int i = 0; i < input.size(); i++)
+                result += input.get(i)+"-";
             result = result.substring(0, result.length()-1);
         }
         return result;

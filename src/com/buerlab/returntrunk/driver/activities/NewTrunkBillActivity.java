@@ -19,6 +19,7 @@ import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.Address;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,8 +106,8 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                     return;
                 }
                 self.finish();
-                final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, Bill.formatString(currFromContent),
-                        Bill.formatString(currToContent), currTimeStamp);
+                final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, new Address(currFromContent).toFullString(),
+                        new Address(currToContent).toFullString(), currTimeStamp);
 
                 NetService service = new NetService(self);
                 service.sendBill(bill, new NetService.NetCallBack() {
@@ -120,8 +121,6 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                         }
                     }
                 });
-
-
 
             }
         });
@@ -148,15 +147,18 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         if(e.type.equals(DataEvent.TIME_SETTLE)){
             currTimeStamp = (String)e.data;
         }
-        else{
+        else if(e.type.equals(DataEvent.ADDR_CHANGE)){
             List<String> data = (List<String>)e.data;
-            currEditView.setText(Bill.formatString(data));
+            Address addr = new Address(data);
+            currEditView.setText(addr.toFullString());
             if(currEditView == fromText)
                 currFromContent = data;
             else if(currEditView == toText)
                 currToContent = data;
-            else if(currEditView == timeText)
-                currTimeContent = data;
+        }else if(e.type.equals(DataEvent.TIME_CHANGE)){
+            List<String> data = (List<String>)e.data;
+            currEditView.setText(Bill.listToString(data));
+            currTimeContent = data;
         }
     }
 
