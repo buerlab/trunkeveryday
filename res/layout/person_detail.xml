@@ -11,7 +11,7 @@
         android:layout_height="wrap_content">
 
     <RelativeLayout android:layout_width="fill_parent"
-                    android:background="@drawable/linear_layout_border"
+                    android:background="@drawable/infogroup_group_border"
                     android:layout_height="100dp">
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -53,36 +53,12 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:background="@drawable/linear_layout_border"
-                  android:paddingTop="1dp"
-                  android:paddingBottom="1dp"
-                  android:layout_marginTop="@dimen/layout_group_margin"
-
-            >
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="50dp"
-                      android:orientation="horizontal"
-                      android:layout_marginLeft="20dp"
-                      android:background="@drawable/linear_layout_sub_border"
-                >
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center_vertical"
-                      android:textColor="@color/sub_text_color"
-                      android:layout_weight="1"
-                      android:textSize="16dp"
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
+            <TextView style="@style/infogroup_sub_text"
                       android:text="手机号码"
                     />
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center_vertical"
-                      android:textColor="@color/text_color"
-                      android:layout_weight="0"
-                      android:layout_marginRight="16dp"
-                      android:textSize="16dp"
+            <TextView style="@style/infogroup_main_text"
                       android:text="158 1180 *****"
                     />
         </LinearLayout>
@@ -114,7 +90,7 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:background="@drawable/linear_layout_border"
+                  android:background="@drawable/infogroup_group_border"
                   android:paddingTop="1dp"
                   android:paddingBottom="1dp"
                   android:layout_marginTop="@dimen/layout_group_margin"
@@ -124,7 +100,7 @@
                       android:layout_height="50dp"
                       android:orientation="horizontal"
                       android:layout_marginLeft="20dp"
-                      android:background="@drawable/linear_layout_sub_border">
+                      android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="fill_parent"
                           android:layout_weight="1">
@@ -148,7 +124,6 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
-                           android:layout_weight="1"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -164,7 +139,7 @@
                       android:layout_height="50dp"
                       android:orientation="horizontal"
                       android:layout_marginLeft="20dp"
-                      android:background="@drawable/linear_layout_sub_border">
+                      android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="fill_parent"
                           android:layout_weight="1">
@@ -203,7 +178,7 @@
                       android:layout_height="50dp"
                       android:orientation="horizontal"
                       android:layout_marginLeft="20dp"
-                      android:background="@drawable/linear_layout_sub_border">
+                      android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="fill_parent"
                           android:layout_weight="1">
@@ -282,56 +257,19 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:background="@drawable/linear_layout_border"
+                  android:background="@drawable/infogroup_group_border"
                   android:paddingTop="1dp"
                   android:paddingBottom="1dp"
                   android:layout_marginTop="@dimen/layout_group_margin"
                   android:layout_marginBottom="@dimen/layout_group_margin"
 
             >
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="50dp"
-                      android:orientation="horizontal"
-                      android:layout_marginLeft="20dp"
-                      android:background="@drawable/linear_layout_sub_border">
-            <TextView android:layout_width="wrap_content"
-                      android:textColor="@color/text_color"
-                      android:textSize="18sp"
-                      android:text="刘大海"
-                      android:layout_gravity="center_vertical"
-                      android:layout_height="wrap_content"/>
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/bs_sfz"
-                       android:contentDescription="身份证"
-                       android:layout_marginLeft="5dp"
-                       android:layout_gravity="center_vertical"
-                    />
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/bs_jsz"
-                       android:layout_marginLeft="5dp"
-                       android:layout_gravity="center_vertical"
-                    />
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/bs_xsz"
-                       android:layout_marginLeft="5dp"
-                       android:layout_gravity="center_vertical"
-                    />
-            <ImageView android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:src="@drawable/bs_dw"
-                       android:layout_marginLeft="5dp"
-                       android:layout_gravity="center_vertical"
-                    />
-            <com.buerlab.returntrunk.views.StarsViewWithText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/stars_view2">
-            </com.buerlab.returntrunk.views.StarsViewWithText>
-        </LinearLayout>
+        <com.buerlab.returntrunk.views.NickNameBarView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nickname_bar"
+                >
+                </com.buerlab.returntrunk.views.NickNameBarView>
         <LinearLayout android:layout_width="fill_parent"
 
                       android:layout_height="40dp"

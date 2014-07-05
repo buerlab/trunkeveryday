@@ -62,6 +62,7 @@ public class BaseActivity extends FragmentActivity {
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
+
     public void setActionBarLayout(String title,int type){
         ActionBar actionBar = getActionBar();
         if( null != actionBar ){
@@ -88,7 +89,10 @@ public class BaseActivity extends FragmentActivity {
             ActionBar.LayoutParams layout = new ActionBar.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             actionBar.setCustomView(v,layout);
         }
+
+
     }
+
 
     public void setActionBarLayout(int type){
         setActionBarLayout(this.getString(R.string.app_name_cn) ,type);

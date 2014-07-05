@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.BackBaseActivity;
+import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
@@ -33,7 +35,7 @@ import java.util.Date;
 /**
  * Created by zhongqiling on 14-6-23.
  */
-public class AddTrunkActivity extends EditProfileBaseActivity {
+public class AddTrunkActivity extends BackBaseActivity {
 
 
     EditText typeText;
@@ -49,6 +51,7 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
     Bitmap mTrunkLicenseBitmap = null;
     MyGridView mPicGridView;
     TrunkPicGridAdapter mTrunkPicGridAdapter;
+    Button mBtnSave;
     final AddTrunkActivity self = this;
     private String uploadFile = null;
     private String verifyTrunkLicenseUrl ="http://115.29.8.74:9289/upload/trunkLicense";
@@ -63,12 +66,14 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
     }
 
     private void init(){
-        setActionBarLayout("添加货车");
+        setActionBarLayout("添加货车",WITH_BACK);
         typeText = (EditText)findViewById(R.id.set_trunk_type);
         lengthText = (EditText)findViewById(R.id.set_trunk_length);
         loadText = (EditText)findViewById(R.id.set_trunk_load);
         lisenceText = (EditText)findViewById(R.id.set_trunk_licensePlate);
         trunkLicenseText = (EditText)findViewById(R.id.set_trunk_license);
+
+
 //
 //        mPicBtn =(Button)findViewById(R.id.add_trunk_pic);
 //        mPicBtn.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +95,12 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
             }
         });
 
+        //动态设置大小，跟图片那个对齐
+        int width = (Utils.getScreenSize()[0] - Utils.dip2px(55))/4;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,width);
+        params.setMargins(0,10,10,10);
+        mTrunkLicensePicBtn.setLayoutParams(params);
+
         mPicGridView = (MyGridView)findViewById(R.id.pic_gridview);
         addPicToGridLayout(picFileNames);
         service = new NetService(this);
@@ -99,19 +110,7 @@ public class AddTrunkActivity extends EditProfileBaseActivity {
         isEdited = getIntent().getBooleanExtra("isEdited",false);
     }
 
-    @Override
-    public void onOptionSave(MenuItem i) {
-        saveTrunkData();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
-    }
-
-    private void saveTrunkData(){
+    public void saveTrunkData(View v){
         if(isEdited){
 
         }else {

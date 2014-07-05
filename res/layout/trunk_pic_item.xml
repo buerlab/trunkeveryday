@@ -20,7 +20,7 @@
                 android:id="@+id/image_add"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/xc"
                 android:scaleType="centerCrop">
         </ImageView>
         <ImageView

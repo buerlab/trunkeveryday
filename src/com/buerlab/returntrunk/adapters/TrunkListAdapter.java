@@ -23,9 +23,14 @@ public class TrunkListAdapter extends BaseAdapter {
     private View.OnLongClickListener mOnLongClickListener;
     private Context mContext;
     OnPhotoClickClass onPhotoClickClass;
-    public TrunkListAdapter(Context context, View.OnLongClickListener onLongClickListener,OnPhotoClickClass onPhotoClickClass){
+    OnSetTrunkClickClass onSetTrunkClickClass;
+    public TrunkListAdapter(Context context,
+                            View.OnLongClickListener onLongClickListener,
+                            OnPhotoClickClass onPhotoClickClass,
+                            OnSetTrunkClickClass onSetTrunkClickClass){
         mInflater = LayoutInflater.from(context);
         this.onPhotoClickClass = onPhotoClickClass;
+        this.onSetTrunkClickClass = onSetTrunkClickClass;
         mContext = context;
         mOnLongClickListener = onLongClickListener;
     }
@@ -70,13 +75,15 @@ public class TrunkListAdapter extends BaseAdapter {
             holder.loadTxtView = (TextView) convertView.findViewById(R.id.load);
             holder.lengthTxtView = (TextView) convertView.findViewById(R.id.length);
             holder.picGridLayout = (GridLayout)convertView.findViewById(R.id.pic_gridview);
-            holder.verifyView = (TextView)convertView.findViewById(R.id.verify);
+            holder.verifyIcon = (ImageView)convertView.findViewById(R.id.verify_icon);
+            holder.verifyText = (TextView)convertView.findViewById(R.id.verify_text);
             holder.position = position;
 
             holder.isVerified =Integer.parseInt(trunk.trunkLicenseVerified);
-            holder.isUsedTxtView = (TextView) convertView.findViewById(R.id.isUsed);
+            holder.isUsedImageView = (ImageView) convertView.findViewById(R.id.set_current_trunk_btn);
             convertView.setTag(holder); //绑定ViewHolder对象
             convertView.setOnLongClickListener(mOnLongClickListener);
+            holder.isUsedImageView.setOnClickListener(new OnSetTrunkClick(position,trunk));
 
 
         }else{
@@ -91,16 +98,20 @@ public class TrunkListAdapter extends BaseAdapter {
 
         int trunkLisenceVerified =  Integer.parseInt(trunk.trunkLicenseVerified);
         switch (trunkLisenceVerified){
-            case 0: holder.verifyView.setText("未审核");break;
-            case 1: holder.verifyView.setText("审核中");break;
-            case 2: holder.verifyView.setText("通过审核");break;
-            case 3: holder.verifyView.setText("审核失败");break;
+            case 0: holder.verifyIcon.setImageResource(R.drawable.qt2_zy);
+                    holder.verifyText.setText("未审核");break;
+            case 1: holder.verifyIcon.setImageResource(R.drawable.qt_dd);
+                    holder.verifyText.setText("审核中");break;
+            case 2: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
+                    holder.verifyText.setText("通过审核");break;
+            case 3: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
+                    holder.verifyText.setText("审核失败");break;
             default:break;
         }
         if(trunk.isUsed){
-            holder.isUsedTxtView.setVisibility(View.VISIBLE);
+            holder.isUsedImageView.setImageResource(R.drawable.sdqc2);
         }else{
-            holder.isUsedTxtView.setVisibility(View.GONE);
+            holder.isUsedImageView.setImageResource(R.drawable.sdqc1);
         }
 
         ImageLoader imageLoader = ImageLoader.getInstance();
@@ -141,15 +152,35 @@ public class TrunkListAdapter extends BaseAdapter {
 
     }
 
+    public interface OnSetTrunkClickClass {
+        public void OnItemClick(View v, int Position,Trunk trunk);
+    }
+
+    class OnSetTrunkClick implements View.OnClickListener {
+        int position;
+        Trunk mTrunk;
+
+        public OnSetTrunkClick(int position,Trunk trunk) {
+            this.position=position;
+            this.mTrunk = trunk;
+        }
+        @Override
+        public void onClick(View v) {
+            onSetTrunkClickClass.OnItemClick(v, position,mTrunk);
+        }
+
+    }
+
     /*存放控件 的ViewHolder*/
     public final class ViewHolder {
         public TextView licensePlateTxtView;
         public TextView typeTxtView;
         public TextView loadTxtView;
         public TextView lengthTxtView;
-        public TextView verifyView;
+        public ImageView verifyIcon;
+        public TextView verifyText;
         public GridLayout picGridLayout;
-        public TextView isUsedTxtView;
+        public ImageView isUsedImageView;
         public int position;
         public int isVerified;
     }

@@ -22,9 +22,10 @@ public class Comment {
     public String toUserId = "";
     public String billId = "";
     public String text="";
+    public NickBarData mUser;
 
 
-    public Comment(int _starNum,String _userType, String _commentTime, String _fromUserName, String _fromUserId, String _toUserId, String _billId,String _text){
+    public Comment(int _starNum,String _userType, String _commentTime, String _fromUserName, String _fromUserId, String _toUserId, String _billId,String _text, NickBarData _user){
         starNum = _starNum;
         userType = _userType;
         commentTime = _commentTime;
@@ -33,6 +34,7 @@ public class Comment {
         toUserId = _toUserId;
         billId = _billId;
         text = _text;
+        mUser = _user;
     }
 
     public Comment(JSONObject object){

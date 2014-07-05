@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="deep_sky_blue">#00A1F8</color> <!--主色调-->
+    <color name="main_blue">#00A1F8</color> <!--主色调-->
     <color name="white">#FFF</color>
     <color name="black">#000</color>
     <color name="background">#F2F2F2</color>

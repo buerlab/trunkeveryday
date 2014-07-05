@@ -4,7 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:background="#cccccc">
+              android:background="@color/background">
     <FrameLayout android:id="@+id/trunks_frag_content"
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
@@ -18,9 +18,11 @@
                   android:gravity="center"/>
 
         <ListView android:id="@+id/trunks_list"
+                  android:layout_marginTop="16dp"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                  android:dividerHeight="10dp">
+                  android:divider="@color/background"
+                    android:dividerHeight="10dp">
 
         </ListView>
         <!--<android.support.v4.view.ViewPager-->
@@ -29,10 +31,25 @@
                 <!--android:layout_height="match_parent"/>-->
 
     </FrameLayout>
-    <Button android:id="@+id/add_trunk_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:text="添加货车"
-            android:textSize="26dp"
-            android:layout_weight="0"/>
+
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/add_trunk_btn"
+                  android:gravity="center"
+                  android:layout_weight="0"
+                  android:orientation="horizontal"
+                  android:layout_height="50dp"
+                  android:background="@drawable/clickable_infogroup_group_wrapper"
+            >
+        <ImageView android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/qt2_addche"
+                   android:layout_gravity="center"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:text="添加货车"
+                  android:textSize="18dp"
+                  android:layout_gravity="center"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+
 </LinearLayout>

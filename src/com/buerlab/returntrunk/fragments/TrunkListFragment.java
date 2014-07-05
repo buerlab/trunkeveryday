@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
@@ -37,7 +38,7 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     TrunkListAdapter mAdapter;
     ListView mListView;
     NetService service;
-    Button mAddTrunkBtn;
+    LinearLayout mAddTrunkBtn;
     final TrunkListFragment self = this;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,10 +52,14 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     public void init(){
         tips = (TextView)mView.findViewById(R.id.trunks_frag_tips);
         mListView = (ListView)mView.findViewById(R.id.trunks_list);
-        mAdapter =new TrunkListAdapter(getActivity(), new ItemOnLongClickListener(),new OnPhotoClickClass());
+        mAdapter =new TrunkListAdapter(getActivity(),
+                new ItemOnLongClickListener(),
+                new OnPhotoClickClass(),
+                new OnSetTrunkClickClass()
+        );
         mListView.setAdapter(mAdapter);
 
-        mAddTrunkBtn = (Button)mView.findViewById(R.id.add_trunk_btn);
+        mAddTrunkBtn = (LinearLayout)mView.findViewById(R.id.add_trunk_btn);
 
         mAddTrunkBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -117,6 +122,14 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
 
         }
     }
+
+    class OnSetTrunkClickClass implements TrunkListAdapter.OnSetTrunkClickClass{
+
+        @Override
+        public void OnItemClick(View v, int Position, Trunk trunk) {
+            useTrunk(trunk.lisencePlate,Position);
+        }
+    }
     private void showOpSelectDialog(final Activity c, final View v) {
 
         TrunkListAdapter.ViewHolder vh = (TrunkListAdapter.ViewHolder)v.getTag();
@@ -124,44 +137,19 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
         final int position = vh.position;
         String[] items;
 
-        if(vh.isVerified==0 || vh.isVerified==4){
-            items = new String[] {"审核车辆", "选为当前车辆", "删除" };
-            new AlertDialog.Builder(c)
-                    .setItems(items, new DialogInterface.OnClickListener() {
+        items = new String[] {"删除" };
+        new AlertDialog.Builder(c)
+                .setItems(items, new DialogInterface.OnClickListener() {
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0:
-                                    Utils.showToast(getActivity(),"审核车辆");
-                                    break;
-                                case 1:
-                                    useTrunk(license,position);
-                                    break;
-                                case 2:
-                                    deleteTrunk(license);
-                                    break;
-                            }
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                deleteTrunk(license);
+                                break;
                         }
-                    }).show();
-        }else {
-            items = new String[] {"选为当前车辆", "删除" };
-            new AlertDialog.Builder(c)
-                    .setItems(items, new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 0:
-                                    useTrunk(license,position);
-                                    break;
-                                case 1:
-                                    deleteTrunk(license);
-                                    break;
-                            }
-                        }
-                    }).show();
-        }
+                    }
+                }).show();
 
     }
 

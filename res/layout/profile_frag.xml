@@ -3,146 +3,96 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
+              android:background="@color/background"
               android:layout_height="fill_parent">
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_weight="1"
-                  android:background="#cccccc">
-
-        <LinearLayout android:layout_width="fill_parent"
-                      android:orientation="vertical"
-                      android:layout_marginBottom="50dp"
-                      android:layout_height="wrap_content">
-        <LinearLayout android:layout_width="fill_parent"
-                      android:id="@+id/container_nickName"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:height="60dp"
-                      android:gravity="center_vertical"
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                      android:id="@+id/container_nickName">
+            <TextView style="@style/infogroup_sub_text"
                       android:text="称呼"
-                      android:textSize="26dp"
-
-                      android:textColor="#000000"/>
-            <TextView android:id="@+id/textview_nickname"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:height="60dp"
-                      android:gravity="center_vertical|right"
+                    />
+            <TextView style="@style/infogroup_main_text"
+                      android:id="@+id/textview_nickname"
                       android:text="吴师傅"
-                      android:textSize="26dp"
-                      android:textColor="#333"/>
-
+                    />
         </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/container_phoneNum"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="手机号"
-                      android:height="60dp"
-                      android:gravity="center_vertical|center"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-            <TextView android:id="@+id/textview_phoneNum"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:height="60dp"
-                      android:gravity="center_vertical|right"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:id="@+id/container_phoneNum">
+            <TextView style="@style/infogroup_sub_text"
+                      android:text="手机号码"
+                    />
+            <TextView style="@style/infogroup_main_text"
+                      android:id="@+id/textview_phoneNum"
+                      android:text="15507507400"
+                    />
         </LinearLayout>
-
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
                       android:id="@+id/container_location"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
+                >
+            <TextView style="@style/infogroup_sub_text"
                       android:text="常住地"
-                      android:height="60dp"
-                      android:gravity="center_vertical|center"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-            <TextView android:id="@+id/textview_location"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:height="60dp"
-                      android:gravity="center_vertical|right"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
+                    />
+            <TextView style="@style/infogroup_main_text"
+                      android:id="@+id/textview_location"
+                      android:text="广东 深圳"
+                    />
         </LinearLayout>
-        </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-                      android:orientation="vertical"
-                      android:layout_marginBottom="50dp"
-                      android:layout_height="wrap_content">
+    </LinearLayout>
 
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/container_IDNum"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                      android:id="@+id/container_IDNum">
+            <TextView style="@style/infogroup_sub_text"
                       android:text="身份证"
-                      android:height="60dp"
-                      android:gravity="center_vertical|center"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:gravity="center_vertical|right"
-                    >
+                    />
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="fill_parent"
+                          android:layout_weight="0">
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:background="@drawable/actionbuttom"
-                        />
-                <TextView android:id="@+id/textview_IDNum"
-                          android:layout_width="wrap_content"
+                           android:src="@drawable/qt2_wsh"
+                           android:layout_gravity="center_vertical"/>
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:height="60dp"
-                          android:gravity="center_vertical|right"
-                          android:textSize="26dp"
-                          android:text="通过审核"
-                          android:textColor="#000000"/>
+                          android:layout_gravity="center_vertical"
+                          android:textColor="@color/text_color"
+                          android:id="@+id/textview_IDNum"
+                          android:textSize="16dp"
+                          android:text="已认证" />
+
             </LinearLayout>
         </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:id="@+id/container_driverLicense"
-                      android:orientation="horizontal">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
+
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
+                      android:id="@+id/container_driverLicense">
+            <TextView style="@style/infogroup_sub_text"
                       android:text="驾驶证"
-                      android:height="60dp"
-                      android:gravity="center_vertical|center"
-                      android:textSize="26dp"
-                      android:textColor="#000000"/>
-            <LinearLayout android:layout_width="fill_parent"
-                          android:layout_height="wrap_content"
-                          android:gravity="center_vertical|right"
-                    >
+                    />
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="fill_parent"
+                          android:layout_weight="0">
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                        android:background="@drawable/actionbuttom"
-                        />
-                <TextView android:id="@+id/textview_driverLicense"
-                          android:layout_width="wrap_content"
+                           android:src="@drawable/qt2_wsh"
+                           android:layout_gravity="center_vertical"/>
+                <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:height="60dp"
-                          android:gravity="center_vertical|right"
-                          android:textSize="26dp"
-                          android:text="提交审核"
-                          android:textColor="#000000"/>
-                </LinearLayout>
+                          android:layout_gravity="center_vertical"
+                          android:textColor="@color/text_color"
+                          android:id="@+id/textview_driverLicense"
+                          android:textSize="16dp"
+                          android:text="已认证" />
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
+
+
         <Button android:layout_width="wrap_content"
                 android:text="查看个人详细资料"
                 android:id="@+id/person_detail_btn"
                 android:layout_height="wrap_content"/>
-    </LinearLayout>
 </LinearLayout>

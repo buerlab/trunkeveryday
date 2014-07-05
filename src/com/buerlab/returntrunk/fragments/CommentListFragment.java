@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.adapters.CommentListAdapter;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -19,7 +21,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-6-4.
  */
-public class CommentListFragment extends BaseFragment{
+public class CommentListFragment extends BaseFragment implements EventCenter.OnEventListener{
 
     View mView;
     private TextView tips = null;
@@ -39,9 +41,14 @@ public class CommentListFragment extends BaseFragment{
         mAdapter =new CommentListAdapter(getActivity());
         mListView.setAdapter(mAdapter);
 
-        initComments();
+        EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
+//        initComments();
     }
 
+    @Override
+    public void onEventCall(DataEvent e) {
+        initComments();
+    }
     private void initComments(){
         final CommentListAdapter adapter = mAdapter;
         NetService service = new NetService(getActivity());

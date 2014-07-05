@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditNickNameActivity extends EditProfileBaseActivity {
+public class EditNickNameActivity extends BackBaseActivity {
     private static final String TAG = "EditNickNameActivity" ;
     ActionBar mActionBar;
 
@@ -30,7 +30,7 @@ public class EditNickNameActivity extends EditProfileBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_edit_nickname);
         init();
-        setActionBarLayout("编辑昵称" );
+        setActionBarLayout("修改称呼");
     }
 
     @Override
@@ -41,18 +41,11 @@ public class EditNickNameActivity extends EditProfileBaseActivity {
     private void init(){
         mNickEdit = (EditText)findViewById(R.id.edit_nickname);
         mNickEdit.setText(User.getInstance().nickName);
+//        mNickEdit.setSelectAllOnFocus(true);
     }
 
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
-    }
-
-    public void onOptionSave(MenuItem i)
+    public void save(View i)
     {
         final String nickname = mNickEdit.getText().toString();
         if(nickname.length()==0){

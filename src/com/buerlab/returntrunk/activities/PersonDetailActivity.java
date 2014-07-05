@@ -11,7 +11,7 @@ import com.buerlab.returntrunk.views.StarsViewWithText;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class PersonDetailActivity extends EditProfileBaseActivity {
+public class PersonDetailActivity extends BackBaseActivity {
     private static final String TAG = "PersonDetailActivity" ;
 
     StarsViewWithText starsViewWithText;
@@ -35,23 +35,9 @@ public class PersonDetailActivity extends EditProfileBaseActivity {
         starsViewWithText.setStar(2.8f);
         starsViewWithText.setSize(30);
 
-        starsViewWithText2 = (StarsViewWithText)findViewById(R.id.stars_view2);
-        starsViewWithText2.setStar(2.8f);
+//        starsViewWithText2 = (StarsViewWithText)findViewById(R.id.stars_view2);
+//        starsViewWithText2.setStar(2.8f);
 
-
-    }
-
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
-    }
-
-    public void onOptionSave(MenuItem i)
-    {
 
     }
 

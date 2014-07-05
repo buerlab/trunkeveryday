@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:background="#cccccc">
+              style="@style/infogroup_group_wrapper"
+        >
+    <com.buerlab.returntrunk.views.NickNameBarView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nickname_bar"
+            >
 
+            </com.buerlab.returntrunk.views.NickNameBarView>
     <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
+
+                  android:layout_height="40dp"
+                  android:orientation="horizontal"
+                  android:layout_marginLeft="20dp">
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="fill_parent"
+                      android:layout_weight="1">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/sub_text_color"
+
+                      android:textSize="16sp"
+                      android:text="给我评星"
+                    />
+            <com.buerlab.returntrunk.views.StarsView
+                    android:id="@+id/star"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content">
+
+            </com.buerlab.returntrunk.views.StarsView>
+
+        </LinearLayout>
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:id="@+id/nickname"
-                  android:textColor="#000"
-                  android:textSize="30sp"
-                  android:layout_marginRight="30dp"
-                  android:text="吴师傅"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/starNum"
-                  android:textColor="#000"
-                  android:textSize="30sp"
-                  android:text="3"
-                />
+                  android:layout_gravity="center_vertical"
+                  android:textColor="@color/sub_text_color"
+                  android:layout_marginRight="20dp"
+                  android:layout_weight="0"
+                  android:textSize="16sp"
+                  android:id="@+id/time"
+                  android:text="2014-12-12" />
     </LinearLayout>
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:id="@+id/time"
-              android:textColor="#000"
-              android:textSize="30sp"
-              android:text="3"
-            />
-    <TextView android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:textSize="16sp"
               android:id="@+id/comment_text"
-              android:textColor="#000"
-              android:text="123123123123123123"
-              android:textSize="30sp"/>
-
+              android:textColor="@color/text_color"
+              android:text="吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!"
+            />
 </LinearLayout>

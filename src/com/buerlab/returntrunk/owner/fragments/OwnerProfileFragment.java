@@ -118,7 +118,7 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void goToPersonDetail(){
-        Intent intent = new Intent(getActivity(),GalleryUrlActivity.class);
+        Intent intent = new Intent(getActivity(),PersonDetailActivity.class);
         startActivity(intent);
     }
     @Override

@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.views.NickNameBarView;
+import com.buerlab.returntrunk.views.StarsView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,8 +59,9 @@ public class CommentListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.comment_item, null);
             holder = new ViewHolder();
                 /*得到各个控件的对象*/
-            holder.nickname = (TextView) convertView.findViewById(R.id.nickname);
-            holder.starNum = (TextView) convertView.findViewById(R.id.starNum);
+            holder.nickNameBarView = (NickNameBarView) convertView.findViewById(R.id.nickname_bar);
+            holder.star = (StarsView) convertView.findViewById(R.id.star);
+            holder.star.setSize(16);
             holder.time = (TextView) convertView.findViewById(R.id.time);
             holder.commentText = (TextView) convertView.findViewById(R.id.comment_text);
 
@@ -67,17 +71,20 @@ public class CommentListAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag(); //取出ViewHolder对象
         }
 
-        holder.nickname.setText(comment.fromUserName);
-        holder.starNum.setText(Integer.toString(comment.starNum));
-        holder.time.setText(comment.text);
-        holder.commentText.setText(Utils.timestampToDisplay(comment.commentTime));
+        holder.nickNameBarView.setUser(comment.mUser, User.getInstance().getUserType());
+//        holder.nickname.setText(comment.fromUserName);
+        holder.star.setStar(comment.starNum);
+
+        holder.time.setText(comment.commentTime);
+        holder.commentText.setText(Utils.timestampToDisplay(comment.text));
         return convertView;
     }
 
     /*存放控件 的ViewHolder*/
     public final class ViewHolder {
-        public TextView nickname;
-        public TextView starNum;
+//        public TextView nickname;
+        public NickNameBarView nickNameBarView;
+        public StarsView star;
         public TextView time;
         public TextView commentText;
     }

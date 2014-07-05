@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditIDNumActivity extends EditProfileBaseActivity{
+public class EditIDNumActivity extends BackBaseActivity{
     private static final String TAG = "EditIDNumActivity" ;
     ActionBar mActionBar;
 
@@ -60,7 +60,7 @@ public class EditIDNumActivity extends EditProfileBaseActivity{
     private void init(){
         mIDNumEdit = (EditText)findViewById(R.id.edit_IDNum);
         mIDNumEdit.setText(User.getInstance().IDNum);
-
+//        mIDNumEdit.setSelectAllOnFocus(true);
         mPicBtn =(Button)findViewById(R.id.btn_pic);
         mPicBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -140,14 +140,8 @@ public class EditIDNumActivity extends EditProfileBaseActivity{
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
-    }
 
-    public void onOptionSave(MenuItem i)
+    public void save(View i)
     {
         final String idNum = mIDNumEdit.getText().toString();
         if(idNum.length()==0){
@@ -162,6 +156,7 @@ public class EditIDNumActivity extends EditProfileBaseActivity{
 
         if(mBitmap == null){
             Utils.showToast(this,"请提供身份证正面照");
+            return;
         }
 
         String filename = mIDNumEdit.getText().toString().trim()+ "_" + User.getInstance().userId;

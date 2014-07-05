@@ -4,91 +4,101 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:background="#cccccc">
+                style="@style/infogroup_group_wrapper">
+    <RelativeLayout android:layout_width="wrap_content"
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/type_icon"
-                  android:textColor="#000"
-                  android:textSize="30sp"
-                  android:layout_marginRight="30dp"
-                  android:text="平板车"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/licensePlate"
-                  android:textColor="#000"
-                  android:textSize="30sp"
-                  android:layout_marginRight="10dp"
-                  android:text="粤A12929"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/isUsed"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:visibility="gone"
-                  android:text="当前车辆"
-                />
-    </LinearLayout>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:text="类型:"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/type"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:layout_marginRight="30dp"
-                  android:text="平板车"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:text="荷载:"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/load"
-                  android:layout_marginRight="30dp"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:text="8吨"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:text="车长:"
-                />
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:id="@+id/length"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:text="9米"
-                />
-    </LinearLayout>
-    <LinearLayout android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-            >
-        <TextView android:id="@+id/verify"
-                  android:layout_width="wrap_content"
-                  android:text="未审核"
-                  android:textColor="#000"
-                  android:textSize="20sp"
-                  android:layout_height="wrap_content"></TextView>
-    </LinearLayout>
+                  android:layout_height="wrap_content">
+        <LinearLayout
+                android:id="@+id/main_info_wrapper"
+                android:layout_width="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="16dp"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <ImageView android:layout_width="32dp"
+                       android:layout_height="16dp"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/che_xc"
+                       android:id="@+id/type_icon"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/licensePlate"
+                      android:textColor="#000"
+                      android:textSize="18sp"
+                      android:layout_marginRight="10dp"
+                      android:text="粤A12929"
+                    />
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt2_wtg"
+                       android:id="@+id/verify_icon"
+                    />
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/verify_text"
+                android:layout_gravity="center_vertical"
+                android:text="未审核"
+            />
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal"
+                android:id="@+id/sub_info_wrapper"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="16dp"
+                android:layout_below="@id/main_info_wrapper">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="类型:"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/type"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:layout_marginRight="30dp"
+                      android:text="平板车"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="荷载:"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/load"
+                      android:layout_marginRight="30dp"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="8吨"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="车长:"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:id="@+id/length"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="9米"
+                    />
+        </LinearLayout>
+        <ImageView android:layout_width="wrap_content"
+                     android:src="@drawable/sdqc2"
+                     android:layout_alignParentTop="true"
+                     android:layout_alignParentRight="true"
+                     android:id="@+id/set_current_trunk_btn"
+                     android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
     <GridLayout android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
