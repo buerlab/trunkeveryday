@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            style="@style/infogroup_item_wrapper_with_subborder">
+            style="@style/infogroup_item_wrapper_with_subborder"
+            android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+            android:id="@+id/nickname_bar"
+        >
 <TextView android:layout_width="wrap_content"
           android:id="@+id/nickname"
           android:textColor="@color/text_color"

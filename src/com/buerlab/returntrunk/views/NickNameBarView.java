@@ -1,13 +1,18 @@
 package com.buerlab.returntrunk.views;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.activities.PersonDetailActivity;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.NickBarData;
 import com.buerlab.returntrunk.models.User;
 
@@ -22,12 +27,15 @@ public class NickNameBarView extends LinearLayout {
     ImageView mLocationIcon;
     TextView mNickName;
     StarsViewWithText mStar;
+    Context mContext;
     public NickNameBarView(Context context) {
         super(context);
+        mContext = context;
     }
 
     public NickNameBarView(Context context, AttributeSet attrs){
         super(context,attrs);
+        mContext = context;
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.nickname_bar_view, this);
         init();
@@ -41,6 +49,19 @@ public class NickNameBarView extends LinearLayout {
         mLocationIcon = (ImageView)findViewById(R.id.location_icon);
         mStar = (StarsViewWithText)findViewById(R.id.stars_view);
         mStar.setSize(16);
+
+        LinearLayout mStarBar = (LinearLayout)findViewById(R.id.nickname_bar);
+        mStarBar.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mContext!=null){
+                    if(mContext instanceof BaseActivity){
+                        Intent intent = new Intent(mContext, PersonDetailActivity.class);
+                        (mContext).startActivity(intent);
+                    }
+                }
+            }
+        });
     }
 
     public void  setUser(NickBarData user,String myUserType){
@@ -69,11 +90,7 @@ public class NickNameBarView extends LinearLayout {
         if(!user.IDNumVerified.equals("2")){
             mIDNumIcon.setVisibility(GONE);
         }
-
-
-
-
-
     }
+
 
 }

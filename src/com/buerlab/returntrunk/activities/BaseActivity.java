@@ -42,6 +42,7 @@ public class BaseActivity extends FragmentActivity {
     protected void onDestroy() {
         super.onDestroy();
         clearReference();
+
     }
 
     private void clearReference(){
