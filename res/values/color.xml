@@ -16,6 +16,8 @@
     <color name="click_sub_main_green">#DF8DD908</color>
     <color name="dialog_background">#b0000000</color>
 
+    <color name="tab_clicked_blue">#0098D9</color>
+    <color name="tab_gray">#ABAAAA</color>
     <color name="border2">#EDE2E3</color>
     <color name="transparent">#00000000</color>
     <color name="ivory">#FFFFF0</color><!--象牙色 -->

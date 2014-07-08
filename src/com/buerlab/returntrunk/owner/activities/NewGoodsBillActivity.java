@@ -6,10 +6,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
@@ -48,8 +45,6 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
 
         setContentView(R.layout.new_goods_bill_activity);
         setActionBarLayout("发送货单",WITH_BACK);
-//        getActionBar().setTitle("发送货单");
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         goodsText = (EditText)findViewById(R.id.new_bill_goods);
         weightText = (EditText)findViewById(R.id.new_bill_weight);
@@ -60,7 +55,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         timeText = (TextView)findViewById(R.id.new_bill_time_text);
 
         //选择出发地监听事件
-        Button pickFromBtn = (Button)findViewById(R.id.new_bill_from_btn);
+        LinearLayout pickFromBtn = (LinearLayout)findViewById(R.id.new_bill_from_btn);
         final NewGoodsBillActivity self = this;
         pickFromBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +68,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         });
 
         //选择目的地监听事件
-        Button pickToBtn = (Button)findViewById(R.id.new_bill_to_btn);
+        LinearLayout pickToBtn = (LinearLayout)findViewById(R.id.new_bill_to_btn);
         pickToBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +79,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         });
 
         //选择时间地监听事件
-        Button pickTimeBtn = (Button)findViewById(R.id.new_bill_time_btn);
+        LinearLayout pickTimeBtn = (LinearLayout)findViewById(R.id.new_bill_time_btn);
         pickTimeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +129,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onStart();
         EventCenter.shared().addEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().addEventListener(DataEvent.TIME_CHANGE, this);
-        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
+//        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
     }
 
     @Override
@@ -142,27 +137,47 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onStop();
         EventCenter.shared().removeEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().removeEventListener(DataEvent.TIME_CHANGE, this);
-        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
+//        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
     }
 
+//    public void onEventCall(DataEvent e){
+//        if(e.type.equals(DataEvent.TIME_SETTLE)){
+//            currTimeStamp = (String)e.data;
+//        }
+//        else if(e.type.equals(DataEvent.ADDR_CHANGE)){
+//            List<String> data = (List<String>)e.data;
+//            currEditView.setText(new Address(data).toFullString());
+//            if(currEditView == fromText)
+//                currFromContent = data;
+//            else if(currEditView == toText)
+//                currToContent = data;
+//        }else if(e.type.equals(DataEvent.TIME_CHANGE)){
+//            List<String> data = (List<String>)e.data;
+//            currEditView.setText(Bill.listToString(data));
+//            currTimeContent = data;
+//        }
+//    }
     public void onEventCall(DataEvent e){
-        if(e.type.equals(DataEvent.TIME_SETTLE)){
-            currTimeStamp = (String)e.data;
-        }
-        else if(e.type.equals(DataEvent.ADDR_CHANGE)){
+    //        if(e.type.equals(DataEvent.TIME_SETTLE)){
+    //            currTimeStamp = (String)e.data;
+    //        }
+        if(e.type.equals(DataEvent.ADDR_CHANGE)){
             List<String> data = (List<String>)e.data;
-            currEditView.setText(new Address(data).toFullString());
+            Address addr = new Address(data);
+            currEditView.setText(addr.toFullString());
             if(currEditView == fromText)
                 currFromContent = data;
             else if(currEditView == toText)
                 currToContent = data;
         }else if(e.type.equals(DataEvent.TIME_CHANGE)){
-            List<String> data = (List<String>)e.data;
+            Bundle d = (Bundle)e.data;
+
+            List<String> data = d.getStringArrayList("timeList");
             currEditView.setText(Bill.listToString(data));
+            currTimeStamp = d.getString("timestamp");
             currTimeContent = data;
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){

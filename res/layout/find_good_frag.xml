@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
               android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:background="@color/background">
+
+
     <FrameLayout android:id="@+id/send_bill_frag_content"
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
                  android:layout_weight="1">
+
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
                       android:orientation="vertical"
-                      android:id="@+id/send_bill_frag_tips"
+                      android:id="@+id/no_bill_tips"
                 >
             <ImageView android:layout_width="fill_parent"
                        android:layout_height="wrap_content"
                        android:layout_marginTop="100dp"
-                       android:src="@drawable/dt_1"
+                       android:src="@drawable/dt_3"
                     />
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="预约发货可以被司机发现"
+                      android:text="目前没有推荐给您的货源"
                       android:textSize="18sp"
                       android:layout_marginTop="20dp"
                       android:textColor="@color/text_color"
@@ -30,27 +33,17 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="5dp"
-                      android:text="提高货物被运输的机会,并降低价格"
+                      android:text="完善个人资料可获得更多推荐机会"
                       android:textColor="@color/sub_text_color"
                       android:layout_gravity="center_horizontal"
                     />
         </LinearLayout>
-        <ListView android:id="@+id/send_bill_list"
+        <ListView android:id="@+id/find_bill_list"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
         </ListView>
 
-        <!--<android.support.v4.view.ViewPager-->
-        <!--android:id="@+id/send_bill_frag_pager"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"/>-->
 
     </FrameLayout>
-    <ImageView android:layout_width="wrap_content"
-               android:layout_gravity="center_horizontal"
-               android:id="@+id/send_bill_send_btn"
-               android:src="@drawable/clickable_yyfh"
-               android:layout_height="wrap_content"/>
-
 </LinearLayout>

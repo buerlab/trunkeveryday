@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 
@@ -19,6 +21,11 @@ import java.util.List;
  */
 public class OwnerHomeFragment extends BaseFragment {
 
+    TextView tabTextTrunk;
+    TextView tabTextGoods;
+    ImageView logoTrunk;
+    ImageView logoGoods;
+
     private  List<Integer> fragtaglist = Arrays.asList(R.id.owner_home_find_trunk_frag, R.id.owner_home_send_goods_frag);
 
     @Override
@@ -26,27 +33,48 @@ public class OwnerHomeFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.owner_home_frag, container, false);
 
-        Button sendbtn = (Button)view.findViewById(R.id.bottom_send_btn);
+        LinearLayout sendbtn = (LinearLayout)view.findViewById(R.id.tab_trunk_wrapper);
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setHomeFrag(0);
+                showTrunkTab();
             }
         });
 
-        Button findBtn = (Button)view.findViewById(R.id.bottom_list_btn);
+        LinearLayout findBtn = (LinearLayout)view.findViewById(R.id.tab_goods_wrapper);
         findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setHomeFrag(1);
+
+                showGoodsTab();
             }
         });
 
+        tabTextTrunk =(TextView)view.findViewById(R.id.tab_text_trunk);
+        tabTextGoods =(TextView)view.findViewById(R.id.tab_text_goods);
+        logoGoods =(ImageView)view.findViewById(R.id.tab_logo_goods);
+        logoTrunk =(ImageView)view.findViewById(R.id.tab_logo_trunk);
         setHomeFrag(0);
 
+        showTrunkTab();
         return view;
     }
 
+    private void showTrunkTab(){
+        tabTextTrunk.setTextColor(getResources().getColor(R.color.tab_clicked_blue)) ;
+        tabTextGoods.setTextColor(getResources().getColor(R.color.tab_gray));
+        logoTrunk.setImageResource(R.drawable.tab_che_push);
+        logoGoods.setImageResource(R.drawable.tab_huo);
+    }
+
+    private void showGoodsTab(){
+        tabTextTrunk.setTextColor(getResources().getColor(R.color.tab_gray)) ;
+        tabTextGoods.setTextColor(getResources().getColor(R.color.tab_clicked_blue));
+        logoTrunk.setImageResource(R.drawable.tab_che);
+        logoGoods.setImageResource(R.drawable.tab_huo_push);
+    }
     private void setHomeFrag(int i){
 
         execSetFrag(i, fragtaglist);

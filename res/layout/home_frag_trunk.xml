@@ -24,14 +24,14 @@
                   android:layout_height="wrap_content"
                   android:orientation="horizontal"
                   android:clipToPadding="false">
-        <Button android:id="@+id/bottom_send_btn"
+        <Button android:id="@+id/tab_trunk_wrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="发车"
                 android:textColor="#000000"
                 android:background="#999999"/>
-        <Button android:id="@+id/bottom_list_btn"
+        <Button android:id="@+id/tab_goods_wrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_weight="1"

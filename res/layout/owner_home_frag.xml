@@ -5,7 +5,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#999999">
+              android:background="@color/background">
     <FrameLayout android:id="@+id/frag_content"
                  android:layout_width="fill_parent"
                  android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
                   android:tag="sendgoods"
                   tools:layout="@layout/send_goods_bill_frag"/>
 
-        <fragment android:name="com.buerlab.returntrunk.fragments.FindBillFragment"
+        <fragment android:name="com.buerlab.returntrunk.owner.fragments.FindDriverFragment"
                   android:id="@+id/owner_home_find_trunk_frag"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
@@ -30,22 +30,74 @@
 
     <LinearLayout android:id="@+id/bottomtab"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="56dp"
                   android:orientation="horizontal"
+                  android:background="@drawable/dbtab"
                   android:clipToPadding="false">
-        <Button android:id="@+id/bottom_send_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="找车"
-                android:textColor="#000000"
-                android:background="#999999"/>
-        <Button android:id="@+id/bottom_list_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:text="发货"
-                android:textColor="#000000"
-                android:background="#999999"/>
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="52dp"
+                      android:layout_weight="1"
+                      android:gravity="center_horizontal"
+                      android:id="@+id/tab_trunk_wrapper"
+                      android:background="@drawable/clickable_tab"
+                >
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/tab_che_push"
+                       android:id="@+id/tab_logo_trunk"
+                       android:layout_gravity="center_vertical"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/tab_clicked_blue"
+                      android:textSize="18sp"
+                      android:id="@+id/tab_text_trunk"
+                      android:text="附近货车"
+                    />
+         </LinearLayout>
+        <LinearLayout android:layout_width="1dp"
+                      android:layout_height="60dp"
+                      android:layout_weight="0"
+                      android:background="#E2E2E2"
+                >
+
+                      </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="52dp"
+                      android:layout_weight="1"
+                      android:gravity="center_horizontal"
+                      android:id="@+id/tab_goods_wrapper"
+                      android:background="@drawable/clickable_tab"
+                >
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/tab_huo"
+                       android:id="@+id/tab_logo_goods"
+                       android:layout_gravity="center_vertical"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/tab_gray"
+                      android:textSize="18sp"
+                      android:id="@+id/tab_text_goods"
+                      android:text="预约发货"
+                    />
+        </LinearLayout>
+        <!--<Button android:id="@+id/bottom_send_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="找车"-->
+                <!--android:textColor="#000000"-->
+                <!--android:background="#999999"/>-->
+        <!--<Button android:id="@+id/bottom_list_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="50dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="发货"-->
+                <!--android:textColor="#000000"-->
+                <!--android:background="#999999"/>-->
     </LinearLayout>
 </LinearLayout>

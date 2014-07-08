@@ -15,12 +15,12 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-6-5.
  */
-public class FindBillListAdapter extends BaseAdapter {
+public class FindBillListAdapter2 extends BaseAdapter {
 
     private List<Bill> mBills = new ArrayList<Bill>();
     private LayoutInflater mInflater = null;
 
-    public FindBillListAdapter(Context context){
+    public FindBillListAdapter2(Context context){
         mInflater = LayoutInflater.from(context);
     }
 
@@ -47,7 +47,7 @@ public class FindBillListAdapter extends BaseAdapter {
         final Bill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
-            view = ViewsFactory.createFindGoodBill(mInflater, bill);
+            view = ViewsFactory.createFindBill(mInflater, bill);
         }else{
             ViewsFactory.fillFindBill(view, bill);
         }

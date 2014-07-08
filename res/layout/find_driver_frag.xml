@@ -20,11 +20,11 @@
             <ImageView android:layout_width="fill_parent"
                        android:layout_height="wrap_content"
                        android:layout_marginTop="100dp"
-                       android:src="@drawable/dt_3"
+                       android:src="@drawable/dt_2"
                     />
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="目前没有推荐给您的货源"
+                      android:text="目前附近没有合适的货车推荐给您"
                       android:textSize="18sp"
                       android:layout_marginTop="20dp"
                       android:textColor="@color/text_color"
@@ -33,10 +33,11 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginTop="5dp"
-                      android:text="完善个人资料可获得更多推荐机会"
+                      android:text="请稍后再过来看看"
                       android:textColor="@color/sub_text_color"
                       android:layout_gravity="center_horizontal"
                     />
+
         </LinearLayout>
         <ListView android:id="@+id/find_bill_list"
                   android:layout_width="match_parent"

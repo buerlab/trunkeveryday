@@ -145,7 +145,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
 
     private void init(){
-        getActionBar().setHomeButtonEnabled(true);
+        if(getActionBar() != null)
+            getActionBar().setHomeButtonEnabled(true);
 
         slideMenu = (SlideMenu)findViewById(R.id.main_slideMenu);
         slideMenu.init(this, R.menu.slide_menu, new SlideMenuInterface.OnSlideMenuItemClickListener() {
@@ -174,7 +175,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         setFrag(0);
 
         startLocationService();
-
     }
 
 

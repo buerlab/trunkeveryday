@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
-//    private TextView tips = null;
+    private LinearLayout tips = null;
     private SendBillListAdapter mAdapter = null;
     private boolean mHasInit = false;
 
@@ -37,6 +37,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.send_bill_frag, container, false);
+        tips = (LinearLayout)v.findViewById(R.id.no_bill_tips);
         return v;
     }
 
@@ -137,7 +138,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
     private void initBills(){
         final SendBillListAdapter adapter = mAdapter;
-        if(true){
+        if(!mHasInit){
             NetService service = new NetService(getActivity());
             service.getBills(0, -1, new NetService.BillsCallBack() {
                 @Override
@@ -147,6 +148,12 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
                         mHasInit = true;
+
+                        if(bills.size()>0){
+                            tips.setAlpha(0.0f);
+                        }else {
+                            tips.setAlpha(1);
+                        }
                     }
                 }
                 }
@@ -158,10 +165,20 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
     private void addBill(Bill bill){
         mAdapter.addBill(bill);
+        if(mAdapter.getCount()>0){
+            tips.setAlpha(0.0f);
+        }else {
+            tips.setAlpha(1);
+        }
     }
 
     private void removeBill(Bill bill){
         mAdapter.removeBill(bill);
+        if(mAdapter.getCount()>0){
+            tips.setAlpha(0.0f);
+        }else {
+            tips.setAlpha(1);
+        }
     }
 
     public void updateBill(Bill bill){

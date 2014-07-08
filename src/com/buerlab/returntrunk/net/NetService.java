@@ -140,7 +140,7 @@ public class NetService {
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billid", bill.id);
 
-        request(mContext.getString(R.string.server_addr)+"api/bill/delete", createReqParms(parmsMap), "POST", callBack);
+        request(mContext.getString(R.string.server_addr)+"api/bill/remove", createReqParms(parmsMap), "POST", callBack);
     }
 
     public void findBills(final BillsCallBack callback){

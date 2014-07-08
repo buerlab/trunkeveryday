@@ -155,7 +155,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         }, 300);
 
         // set optional header image
-        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.ic_launcher));
+        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
 
         FragmentManager manager = getSupportFragmentManager();
         ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();

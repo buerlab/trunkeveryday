@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.adapters.SendBillListAdapter;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -28,14 +26,15 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
 
     private SendBillListAdapter mAdapter = null;
     private boolean mInit = false;
-
+    private LinearLayout tips;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.send_goods_bill_frag, container, false);
-        Button sendBtn = (Button)view.findViewById(R.id.send_bill_send_btn);
+        ImageView sendBtn = (ImageView)view.findViewById(R.id.send_bill_send_btn);
 
         ListView listView = (ListView)view.findViewById(R.id.send_bill_list);
         mAdapter = new SendBillListAdapter(getActivity());
+        tips = (LinearLayout)view.findViewById(R.id.send_bill_frag_tips);
         listView.setAdapter(mAdapter);
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +83,11 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
                     if(bills != null) {
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
+                        if(bills.size()>0){
+                            tips.setAlpha(0.0f);
+                        }else {
+                            tips.setAlpha(1);
+                        }
                     }
                 }
             }
@@ -92,5 +96,10 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
 
     private void addBill(Bill bill){
         mAdapter.addBill(bill);
+        if(mAdapter.getCount()>0){
+            tips.setAlpha(0.0f);
+        }else {
+            tips.setAlpha(1);
+        }
     }
 }
