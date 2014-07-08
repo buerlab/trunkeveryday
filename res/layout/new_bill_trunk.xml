@@ -5,7 +5,7 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="horizontal"
-              android:background="#ffffff">
+              android:background="@color/white">
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
@@ -65,5 +65,107 @@
                   android:textColor="#000000"/>
     </LinearLayout>
 
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:paddingBottom="8dp"
+            >
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="fill_parent"
+
+                    android:layout_weight="1">
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_vertical"
+                          android:text="广州•白云区"
+                          android:textSize="18sp"
+                        />
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/qt_you1"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_vertical"
+                          android:text="深圳•南山区"
+                          android:textSize="18sp"
+                        />
+             </LinearLayout>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/qt_xg"
+                       android:layout_gravity="center_vertical"
+                    />
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="20dp"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight="1"
+                    >
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/xingxing1"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="回程时间: "
+                          android:textColor="@color/sub_text_color"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="2014-06-16 上午9点"
+                          android:textColor="@color/sub_text_color"
+                        />
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                         android:layout_weight="0"
+                          android:layout_marginTop="8dp"
+                          android:paddingRight="20dp"
+                    >
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/xingxing1"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="浏览: "
+                          android:textColor="@color/sub_text_color"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="2,123次"
+                          android:textColor="@color/sub_text_color"
+                        />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="20dp"
+                      android:layout_marginTop="8dp"
+                >
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/xingxing1"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="有效期: "
+                      android:textColor="@color/sub_text_color"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="1天"
+                      android:textColor="@color/sub_text_color"
+                    />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:paddingLeft="20dp"
+                  android:paddingRight="20dp"
+                  android:layout_marginTop="8dp"
+                  android:text="我是备注我是备注我是备注我是备注我是备注我是备注我是备注我是备注我是备注"
+                />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -27,6 +27,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
     private TextView tips = null;
     CommentListAdapter mAdapter;
     ListView mListView;
+    NetService service;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -43,6 +44,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
 //        initComments();
+        service = new NetService(getActivity());
     }
 
     @Override
@@ -51,24 +53,26 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
     }
     private void initComments(){
         final CommentListAdapter adapter = mAdapter;
-        NetService service = new NetService(getActivity());
-        service.getComments(User.getInstance().getUserType(),0,-1,new NetService.CommentsCallBack() {
-            @Override
-            public void onCall(NetProtocol result, List<Comment> comments) {
-                if (result.code == NetProtocol.SUCCESS) {
-                    if (comments != null) {
-                        if(User.getInstance().getUserType()=="driver"){
-                            User.getInstance().initDriverComments(comments);
-                        }
-                        if(User.getInstance().getUserType()=="owner"){
-                            User.getInstance().initOwnerComments(comments);
-                        }
-                        adapter.setComments(comments);
 
-                        tips.setAlpha(0.0f);
+        if(service!=null){
+            service.getComments(User.getInstance().getUserType(),0,-1,new NetService.CommentsCallBack() {
+                @Override
+                public void onCall(NetProtocol result, List<Comment> comments) {
+                    if (result.code == NetProtocol.SUCCESS) {
+                        if (comments != null) {
+                            if(User.getInstance().getUserType()=="driver"){
+                                User.getInstance().initDriverComments(comments);
+                            }
+                            if(User.getInstance().getUserType()=="owner"){
+                                User.getInstance().initOwnerComments(comments);
+                            }
+                            adapter.setComments(comments);
+
+                            tips.setAlpha(0.0f);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 }

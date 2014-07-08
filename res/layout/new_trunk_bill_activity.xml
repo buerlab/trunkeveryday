@@ -3,71 +3,162 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
+              android:background="@color/background"
               android:layout_height="match_parent">
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:id="@+id/new_bill_from_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/new_bill_from_text"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:hint="选择回程出发地"
 
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-        <TextView android:id="@+id/new_bill_from_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="fill_parent"
-                  android:gravity="center_vertical"
-                  android:hint="回程出发地"
-                  android:textSize="20dp"
-                  android:layout_weight="1"/>
-        <Button android:id="@+id/new_bill_from_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择"
-                android:gravity="left"/>
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
+        </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/new_bill_to_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/new_bill_to_text"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:hint="选择回程目的地"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
+        </LinearLayout>
     </LinearLayout>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-        <TextView android:id="@+id/new_bill_to_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="fill_parent"
-                  android:gravity="center_vertical"
-                  android:hint="回程目的地"
-                  android:textSize="20dp"
-                  android:layout_weight="1"/>
-        <Button android:id="@+id/new_bill_to_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择"
-                android:gravity="left"/>
-    </LinearLayout>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal">
-        <TextView android:id="@+id/new_bill_time_text"
-                  android:layout_width="wrap_content"
-                  android:layout_height="fill_parent"
-                  android:gravity="center_vertical"
-                  android:hint="出发时间"
-                  android:textSize="20dp"
-                  android:layout_weight="1"/>
-        <Button android:id="@+id/new_bill_time_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="选择"
-                android:gravity="left"/>
-    </LinearLayout>
-    <Spinner android:id="@+id/new_bill_trunk_spinner"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content">
-    </Spinner>
-    <EditText android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:hint="备注"/>
-    <Button android:id="@+id/new_bill_activity_submit"
+
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:id="@+id/new_bill_time_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:id="@+id/new_bill_time_text"
+                      android:hint="选择回程时间"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                    />
+        </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/span_wrapper"
+                      android:paddingLeft="12dp"
+                >
+            <Spinner android:id="@+id/new_bill_trunk_spinner"
+                     android:background="@color/white"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="马上发布"/>
-    <LinearLayout android:id="@+id/new_bill_extra_container"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
-
+            android:layout_weight="1"
+            android:layout_height="50dp">
+            </Spinner>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                    />
+        </LinearLayout>
     </LinearLayout>
+    <LinearLayout style="@style/infogroup_group_wrapper"
+            >
+        <EditText android:layout_width="fill_parent"
+                  android:background="@color/white"
+                  android:padding="20dp"
+                  android:maxLines="4"
+                  android:gravity="top"
+                  android:hint="输入备注信息"
+                  android:layout_height="120dp"/>
+    </LinearLayout>
+
+    <Button style="@style/clickable_button_with_main_color"
+            android:text="马上发布"
+            android:id="@+id/new_bill_activity_submit"
+            />
+    <!--<LinearLayout android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:orientation="horizontal">-->
+        <!--<TextView android:id="@+id/new_bill_from_text"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="fill_parent"-->
+                  <!--android:gravity="center_vertical"-->
+                  <!--android:hint="回程出发地"-->
+                  <!--android:textSize="20dp"-->
+                  <!--android:layout_weight="1"/>-->
+        <!--<Button android:id="@+id/new_bill_from_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="选择"-->
+                <!--android:gravity="left"/>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:orientation="horizontal">-->
+        <!--<TextView android:id="@+id/new_bill_to_text"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="fill_parent"-->
+                  <!--android:gravity="center_vertical"-->
+                  <!--android:hint="回程目的地"-->
+                  <!--android:textSize="20dp"-->
+                  <!--android:layout_weight="1"/>-->
+        <!--<Button android:id="@+id/new_bill_to_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="选择"-->
+                <!--android:gravity="left"/>-->
+    <!--</LinearLayout>-->
+    <!--<LinearLayout android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:orientation="horizontal">-->
+        <!--<TextView android:id="@+id/new_bill_time_text"-->
+                  <!--android:layout_width="wrap_content"-->
+                  <!--android:layout_height="fill_parent"-->
+                  <!--android:gravity="center_vertical"-->
+                  <!--android:hint="出发时间"-->
+                  <!--android:textSize="20dp"-->
+                  <!--android:layout_weight="1"/>-->
+        <!--<Button android:id="@+id/new_bill_time_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="选择"-->
+                <!--android:gravity="left"/>-->
+    <!--</LinearLayout>-->
+    <!--<Spinner android:id="@+id/new_bill_trunk_spinner"-->
+             <!--android:layout_width="fill_parent"-->
+             <!--android:layout_height="wrap_content">-->
+    <!--</Spinner>-->
+    <!--<EditText android:layout_width="fill_parent"-->
+              <!--android:layout_height="wrap_content"-->
+              <!--android:hint="备注"/>-->
+    <!--<Button android:id="@+id/new_bill_activity_submit"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="马上发布"/>-->
+    <!--<LinearLayout android:id="@+id/new_bill_extra_container"-->
+                  <!--android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:orientation="vertical">-->
+
+    <!--</LinearLayout>-->
 </LinearLayout>

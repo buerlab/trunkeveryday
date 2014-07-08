@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.views;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -27,7 +28,7 @@ public class PickAddrView extends LinearLayout {
     public WheelView provWheel = null;
     public WheelView cityWheel = null;
     public WheelView regionWheel = null;
-    public LinearLayout regWheelContainer = null;
+//    public LinearLayout regWheelContainer = null;
 
     private OnAddrListener mListener = null;
 
@@ -38,6 +39,15 @@ public class PickAddrView extends LinearLayout {
 
     public PickAddrView(final Context context){
         super(context);
+
+        init(context);
+    }
+    public PickAddrView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
+    private  void init(Context context){
         mContext = context;
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -55,12 +65,28 @@ public class PickAddrView extends LinearLayout {
 
         String[] cities = AssetManager.shared().getCities(provs[0]);
         String[] regions = AssetManager.shared().getRegions(provs[0], cities[0]);
-        regWheelContainer = (LinearLayout)view.findViewById(R.id.pick_addr_reg);
+
+        regionWheel = (WheelView)view.findViewById(R.id.pick_addr_reg);
+        regionWheel.setVisibleItems(6);
+        regionWheel.addScrollingListener(new OnWheelScrollListener() {
+            @Override
+            public void onScrollingStarted(WheelView wheel) {}
+
+            @Override
+            public void onScrollingFinished(WheelView wheel) {
+                if(mListener != null){
+                    mListener.OnAddrChanged(getCurrAddr());
+                }
+            }
+        });
         if(regions != null && regions.length > 0)
         {
-            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            regionWheel = createRegView(new ArrayWheelAdapter(context, regions));
-            regWheelContainer.addView(regionWheel, parms);
+            regionWheel.setVisibility(VISIBLE);
+//            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//            regionWheel = createRegView(new ArrayWheelAdapter(context, regions));
+//            regWheelContainer.addView(regionWheel, parms);
+        }else {
+            regionWheel.setVisibility(GONE);
         }
 
         provWheel.addChangingListener(new OnWheelChangedListener() {
@@ -108,7 +134,9 @@ public class PickAddrView extends LinearLayout {
                 updateReg();
             }
         });
+
     }
+
 
     private WheelView createRegView(ArrayWheelAdapter<String> adapter){
         WheelView view = createWheelView(mContext, adapter);
@@ -130,6 +158,11 @@ public class PickAddrView extends LinearLayout {
 
     public void setListener(OnAddrListener listener){
         mListener = listener;
+        //第一次读地址
+        if(mListener != null){
+            mListener.OnAddrChanged(getCurrAddr());
+        }
+
     }
 
     private void updateCity(){
@@ -146,18 +179,23 @@ public class PickAddrView extends LinearLayout {
         String[] regions = AssetManager.shared().getRegions(currProv, currCity);
         if(regions != null && regions.length > 0){
             ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(mContext, regions);
-            if(regionWheel != null)
+            if(regionWheel != null){
                 regionWheel.setViewAdapter(adapter);
+                regionWheel.setVisibility(VISIBLE);
+            }
             else{
-                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                regionWheel = createRegView(adapter);
-                regWheelContainer.addView(regionWheel, parms);
+                regionWheel.setVisibility(GONE);
+//                LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//                regionWheel = createRegView(adapter);
+
+//                regWheelContainer.addView(regionWheel, parms);
             }
             regionWheel.setCurrentItem(0);
 
         }else if(regionWheel != null){
-            regWheelContainer.removeView(regionWheel);
-            regionWheel = null;
+            regionWheel.setVisibility(GONE);
+//            regWheelContainer.removeView(regionWheel);
+//            regionWheel = null;
         }
 
         if(mListener != null){

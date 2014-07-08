@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
-import com.buerlab.returntrunk.adapters.TrunkSpinnerAdapter;
 import com.buerlab.returntrunk.fragments.BaseDialogFragment;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.Trunk;
@@ -74,8 +73,15 @@ public class NewBillDialog extends BaseDialogFragment {
                 trunks.add(trunk.toString());
             }
 
-            TrunkSpinnerAdapter adapter = new TrunkSpinnerAdapter(getActivity(), trunks);
+            String [] trunkStrings = new String[trunks.size()];
+            for(int i =0;i<trunks.size();i++){
+                trunkStrings[i] = trunks.get(i).toString();
+            }
+            ArrayAdapter adapter =new  ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item,trunkStrings);
+            adapter.setDropDownViewResource(R.layout.trunk_span_item);
+
             trunkSpinner.setAdapter(adapter);
+
         }
 
         builder.setView(view)

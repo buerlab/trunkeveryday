@@ -67,8 +67,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             public void onClick(View v) {
                 currEditView = fromText;
 
-                PickAddrDialog dialog = new PickAddrDialog();
-                dialog.show(getFragmentManager(), "pickaddr");
+                PickAddrDialog dialog = new PickAddrDialog(self,R.style.dialog);
+                dialog.show();
             }
         });
 
@@ -78,9 +78,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             @Override
             public void onClick(View v) {
                 currEditView = toText;
-
-                PickAddrDialog dialog = new PickAddrDialog();
-                dialog.show(getFragmentManager(), "pickaddr");
+                PickAddrDialog dialog = new PickAddrDialog(self,R.style.dialog);
+                dialog.show();
             }
         });
 
@@ -90,8 +89,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             @Override
             public void onClick(View v) {
                 currEditView = timeText;
-                PickTimeDialog dialog = new PickTimeDialog();
-                dialog.show(getFragmentManager(), "picktime");
+                PickTimeDialog dialog = new PickTimeDialog(self,R.style.dialog);
+                dialog.show();
             }
         });
 

@@ -262,7 +262,7 @@ public class NetService {
 
     public void request(String url, String parms, String method, final NetCallBack callback){
 
-        if(mActivity != null){
+        if(mActivity != null ){
             final LoadingDialog loadingDialog = new LoadingDialog();
             loadingDialog.show(mActivity.getFragmentManager(), "loading");
             urlRequest(url, parms, method, new NetCallBack() {

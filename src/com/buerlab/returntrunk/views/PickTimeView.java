@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.views;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -44,9 +45,21 @@ public class PickTimeView extends LinearLayout {
     private boolean mPeriodScrolling = false;
     private boolean mTimeScrolling = false;
 
+
+    public PickTimeView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
+
     public PickTimeView(Context context){
         super(context);
 
+        init(context);
+
+    }
+
+
+    private void init(Context context){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.pick_time_view, this);
 
@@ -149,11 +162,14 @@ public class PickTimeView extends LinearLayout {
                     mLisener.onTimeChange(getTimeList(), getTimeStamp());
             }
         });
-
     }
 
     public void setLisener(OnTimeLisener lisener){
         mLisener = lisener;
+        //第一次读地址
+        if(mLisener != null){
+            mLisener.onTimeChange(getTimeList(), getTimeStamp());
+        }
     }
 
     public List<String> getTimeList(){

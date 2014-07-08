@@ -6,10 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.driver.activities.FindBillActivity;
 import com.buerlab.returntrunk.driver.activities.NewTrunkBillActivity;
@@ -32,24 +29,25 @@ import java.util.List;
  */
 public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
-    private TextView tips = null;
-
+//    private TextView tips = null;
+    private LinearLayout tips = null;
     private SendBillListAdapter mAdapter = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.send_bill_frag, container, false);
-        tips = (TextView)v.findViewById(R.id.send_bill_frag_tips);
+        tips = (LinearLayout)v.findViewById(R.id.send_bill_frag_tips);
         return v;
     }
 
     public void init(){
         ListView listView = (ListView)getView().findViewById(R.id.send_bill_list);
+
         mAdapter = new SendBillListAdapter(getActivity());
         listView.setAdapter(mAdapter);
 
-        Button sendBtn = (Button)getView().findViewById(R.id.frag_send_btn);
+        LinearLayout sendBtn = (LinearLayout)getView().findViewById(R.id.frag_send_btn);
         final DriverHomeFragment self = this;
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +61,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
             }
         });
 
-        Button findBillBtn = (Button)getView().findViewById(R.id.send_bill_frag_goods);
+        LinearLayout findBillBtn = (LinearLayout)getView().findViewById(R.id.send_bill_frag_goods);
         findBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
