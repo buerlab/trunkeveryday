@@ -30,7 +30,6 @@ import java.util.List;
 public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
 //    private TextView tips = null;
-    private LinearLayout tips = null;
     private SendBillListAdapter mAdapter = null;
     private boolean mHasInit = false;
 
@@ -38,7 +37,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.send_bill_frag, container, false);
-        tips = (LinearLayout)v.findViewById(R.id.send_bill_frag_tips);
         return v;
     }
 
@@ -148,8 +146,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                     if(bills != null) {
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
-
-                        tips.setAlpha(0.0f);
                         mHasInit = true;
                     }
                 }

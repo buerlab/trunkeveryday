@@ -15,7 +15,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="v13" level="project" />
+    <orderEntry type="library" name="v13" level="project" />
     <orderEntry type="module" module-name="libslidemenu" />
     <orderEntry type="library" name="baidumapapi_v3_0_0" level="project" />
     <orderEntry type="library" name="locSDK_3.1" level="project" />
@@ -26,6 +26,7 @@
     <orderEntry type="module" module-name="library" />
     <orderEntry type="module" module-name="PullToRefreshListFragment" />
     <orderEntry type="module" module-name="PullToRefreshViewPager" />
+    <orderEntry type="module" module-name="AndroidTouchGallery" />
   </component>
 </module>
 
