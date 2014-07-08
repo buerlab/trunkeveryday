@@ -37,7 +37,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.send_bill_frag, container, false);
-        tips = (LinearLayout)v.findViewById(R.id.send_bill_frag_tips);
+        tips = (LinearLayout)v.findViewById(R.id.no_bill_tips);
         return v;
     }
 
@@ -142,7 +142,12 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
 
-                        tips.setAlpha(0.0f);
+                        if(bills.size()>0){
+                            tips.setAlpha(0.0f);
+                        }else {
+                            tips.setAlpha(1);
+                        }
+
                     }
                 }
                 }
@@ -154,10 +159,20 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
     private void addBill(Bill bill){
         mAdapter.addBill(bill);
+        if(mAdapter.getCount()>0){
+            tips.setAlpha(0.0f);
+        }else {
+            tips.setAlpha(1);
+        }
     }
 
     private void removeBill(Bill bill){
         mAdapter.removeBill(bill);
+        if(mAdapter.getCount()>0){
+            tips.setAlpha(0.0f);
+        }else {
+            tips.setAlpha(1);
+        }
     }
 
     public void updateBill(Bill bill){

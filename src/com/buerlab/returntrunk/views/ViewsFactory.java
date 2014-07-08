@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.models.Bill;
@@ -51,6 +52,48 @@ public class ViewsFactory {
             fillFindBill(bView, bill);
 
             Button phoneBtn = (Button)bView.findViewById(R.id.find_bill_phone);
+            phoneBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(BaseActivity.currActivity != null){
+                        if(!bill.phoneNum.isEmpty()){
+                            NetService service = new NetService(inflater.getContext());
+                            service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
+                                @Override
+                                public void onCall(NetProtocol result) {
+                                    if(result.code == NetProtocol.SUCCESS){
+                                        Toast toast = Toast.makeText(inflater.getContext(), "billcall ok!", 2);
+                                        toast.show();
+                                    }
+                                }
+                            });
+
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
+                            BaseActivity.currActivity.startActivity(intent);
+                        }else{
+
+                        }
+                    }
+
+                }
+            });
+        }
+
+        return bView;
+    }
+
+    static public View createFindGoodBill(final LayoutInflater inflater, final Bill bill){
+        int layoutId = R.layout.find_bill_goods;
+        View bView = inflater.inflate(layoutId, null, false);
+        if(bView != null){
+//            fillFindBill(bView, bill);
+            ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
+            ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
+            ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
+            if(bill.billType.equals(Bill.BILLTYPE_GOODS))
+                ((TextView)bView.findViewById(R.id.find_bill_mat)).setText(bill.material);
+
+            ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
             phoneBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

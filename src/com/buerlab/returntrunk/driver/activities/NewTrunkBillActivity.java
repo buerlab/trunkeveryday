@@ -51,7 +51,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         fromText = (TextView)findViewById(R.id.new_bill_from_text);
         toText = (TextView)findViewById(R.id.new_bill_to_text);
         timeText = (TextView)findViewById(R.id.new_bill_time_text);
-        mExtraContainer = (LinearLayout)findViewById(R.id.new_bill_extra_container);
+//        mExtraContainer = (LinearLayout)findViewById(R.id.new_bill_extra_container);
 
         Spinner trunkSpinner = (Spinner)findViewById(R.id.new_bill_trunk_spinner);
         List<String> trunks = new ArrayList<String>();
@@ -145,7 +145,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onStart();
         EventCenter.shared().addEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().addEventListener(DataEvent.TIME_CHANGE, this);
-        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
+//        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onStop();
         EventCenter.shared().removeEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().removeEventListener(DataEvent.TIME_CHANGE, this);
-        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
+//        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
     }
 
     public void onEventCall(DataEvent e){

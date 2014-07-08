@@ -44,8 +44,7 @@
                       </LinearLayout>
         <ListView android:id="@+id/send_bill_list"
                   android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:dividerHeight="10dp">
+                  android:layout_height="match_parent">
 
         </ListView>
 
@@ -56,17 +55,19 @@
 
     </FrameLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
-                  android:layout_height="60dp"
-                  android:layout_gravity="center_vertical"
+                  android:layout_marginTop="0dp"
+                  android:layout_height="65dp"
+                  android:background="@drawable/dbtab"
+                  android:paddingTop="5dp"
+                  android:gravity="center_vertical"
                   android:orientation="horizontal">
         <LinearLayout android:id="@+id/frag_send_btn"
-                android:layout_marginTop="0dp"
                 android:layout_width="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:background="@drawable/radius_button_blue"
                 android:layout_height="50dp">
                 <ImageView android:layout_width="wrap_content"
@@ -83,7 +84,7 @@
                         />
          </LinearLayout>
         <LinearLayout android:id="@+id/send_bill_frag_goods"
-                      android:layout_marginRight="10dp"
+                      android:layout_marginRight="5dp"
                       android:layout_width="80dp"
                       android:gravity="center_horizontal"
                       android:layout_gravity="center_vertical"
