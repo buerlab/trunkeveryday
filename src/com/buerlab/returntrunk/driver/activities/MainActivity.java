@@ -14,6 +14,8 @@ import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.fragments.HistoryBillsFragment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
@@ -80,7 +82,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                     User.getInstance().setUserType(User.USERTYPE_TRUNK);
 
                     Map<String, String> jpushmap = new HashMap<String, String>();
-                    jpushmap.put("jpushId", JPushInterface.getRegistrationID(self.getApplicationContext()));
+                    jpushmap.put("driverJPushId", JPushInterface.getRegistrationID(self.getApplicationContext()));
                     NetService netservice = new NetService(self.getApplicationContext());
                     netservice.setUserData(jpushmap, null);
 
@@ -161,7 +163,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
         FragmentManager manager = getSupportFragmentManager();
         ((DriverHomeFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
-
+        ((HistoryBillsFragment)manager.findFragmentById(R.id.main_history_frag)).init();
         ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
         setFrag(0);
@@ -208,10 +210,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         for(int i = 0; i < tags.size(); i++){
-            Fragment fragment = manager.findFragmentByTag(tags.get(i));
+            BaseFragment fragment = (BaseFragment)manager.findFragmentByTag(tags.get(i));
             if(fragment !=null){
                 if(i == index){
                     transaction.show(fragment);
+                    fragment.onShow();
                 }else{
                     transaction.hide(fragment);
                 }

@@ -105,7 +105,6 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                     toast.show();
                     return;
                 }
-                self.finish();
                 final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, new Address(currFromContent).toFullString(),
                         new Address(currToContent).toFullString(), currTimeStamp);
 
@@ -116,6 +115,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                         if (result.code == NetProtocol.SUCCESS) {
                             DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bill);
                             EventCenter.shared().dispatch(evt);
+                            self.finish();
                         } else {
                             Utils.defaultNetProAction(self, result);
                         }

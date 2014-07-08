@@ -35,6 +35,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     private TextView tips = null;
 
     private SendBillListAdapter mAdapter = null;
+    private boolean mHasInit = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     }
 
     public void init(){
+
         ListView listView = (ListView)getView().findViewById(R.id.send_bill_list);
         mAdapter = new SendBillListAdapter(getActivity());
         listView.setAdapter(mAdapter);
@@ -76,13 +78,13 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
         EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
 
-        initBills();
     }
 
     @Override
     public void onStart(){
         super.onStart();
         if(mAdapter != null){
+            initBills();
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -132,9 +134,14 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         }
     }
 
+    @Override
+    public void onShow(){
+        initBills();
+    }
+
     private void initBills(){
         final SendBillListAdapter adapter = mAdapter;
-        if(User.getInstance().getBills() == null){
+        if(true){
             NetService service = new NetService(getActivity());
             service.getBills(0, -1, new NetService.BillsCallBack() {
                 @Override
@@ -145,6 +152,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         adapter.setBills(bills);
 
                         tips.setAlpha(0.0f);
+                        mHasInit = true;
                     }
                 }
                 }

@@ -23,6 +23,9 @@
     <orderEntry type="library" name="armeabi" level="project" />
     <orderEntry type="module" module-name="wheel" />
     <orderEntry type="library" name="universal-image-loader-1.9.2" level="project" />
+    <orderEntry type="module" module-name="library" />
+    <orderEntry type="module" module-name="PullToRefreshListFragment" />
+    <orderEntry type="module" module-name="PullToRefreshViewPager" />
   </component>
 </module>
 

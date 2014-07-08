@@ -1,5 +1,6 @@
 package com.buerlab.returntrunk.models;
 
+import com.buerlab.returntrunk.R;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Bill {
     public String from = "";
     public String to = "";
     //It must be a timestamp
-    public String time = "";
+    public String time;
     public int visitedTimes = 0;
 
     public String state = "";
@@ -62,10 +63,10 @@ public class Bill {
     public Bill(JSONObject item) throws Exception{
         try{
             billType = item.getString("billType");
-            from = item.getString("from");
-            to = item.getString("to");
+            from = item.getString("fromAddr");
+            to = item.getString("toAddr");
             time = item.getString("billTime");
-            id = item.getString("billId");
+            id = item.getString("id");
             setSenderName(item.getString("senderName"));
             senderId = item.getString("sender");
 
@@ -131,4 +132,8 @@ public class Bill {
     }
 
     public Trunk getTrunk(){ return trunk; }
+
+    public int getHistoryBillLayout(){
+        return billType == Bill.BILLTYPE_TRUNK ? R.layout.history_bill_trunk : R.layout.history_bill_goods;
+    }
 }

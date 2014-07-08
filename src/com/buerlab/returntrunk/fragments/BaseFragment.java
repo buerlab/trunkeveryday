@@ -17,6 +17,8 @@ public class BaseFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
+    public void onShow(){}
+
 }
 
 

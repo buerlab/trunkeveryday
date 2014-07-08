@@ -34,12 +34,12 @@
                       tools:layout="@layout/home_frag"
                       android:tag="车辆管理"/>
 
-            <!--<fragment android:name="com.buerlab.returntrunk.fragments.BillHistoryFragment"-->
-                      <!--android:id="@+id/main_setting_frag"-->
-                      <!--android:layout_width="fill_parent"-->
-                      <!--android:layout_height="fill_parent"-->
-                      <!--tools:layout="@layout/setting_frag"-->
-                      <!--android:tag="历史货单"/>-->
+            <fragment android:name="com.buerlab.returntrunk.fragments.HistoryBillsFragment"
+                      android:id="@+id/main_history_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/setting_frag"
+                      android:tag="历史货单"/>
             <fragment android:name="com.buerlab.returntrunk.fragments.CommentListFragment"
                       android:id="@+id/main_comment_list_frag"
                       android:layout_width="fill_parent"

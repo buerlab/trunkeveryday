@@ -139,6 +139,12 @@ public class ViewsFactory {
         }
     }
 
+    static public View createHisotryBill(LayoutInflater inflater, final Bill bill){
+        int layoutId = bill.getHistoryBillLayout();
+        View bView = inflater.inflate(layoutId, null, false);
+
+        return bView;
+    }
 
 
     static public View createBill(LayoutInflater inflater, Bill bill){
