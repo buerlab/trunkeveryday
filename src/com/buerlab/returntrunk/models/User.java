@@ -59,6 +59,10 @@ public class User {
 
     private List<Comment> mDriverComments;
     private List<Comment> mOnwerComments;
+
+    public double driverStars;
+    public double ownerStars;
+
     static private User instance = null;
     static public User getInstance(){
         if(instance == null){
@@ -80,6 +84,7 @@ public class User {
         driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
         mDriverComments = new ArrayList<Comment>();
+        mOnwerComments = new ArrayList<Comment>();
         //type would be trunk or owner
         userType = "";
         //billtype contains trunk, goods
@@ -89,6 +94,8 @@ public class User {
 
         trunks = new ArrayList<Trunk>();
         useTrunk = "";
+        driverStars = 0;
+        ownerStars = 0;
     }
 
     public void initUser(JSONObject obj){
@@ -118,7 +125,12 @@ public class User {
                 this.driverLicenseVerified = obj.getString("driverLicenseVerified");
             if(obj.has("useTrunk"))
                 this.useTrunk = obj.getString("useTrunk");
-
+            if(obj.has("driverStars")){
+                this.driverStars = obj.getDouble("driverStars");
+            }
+            if(obj.has("ownerStars")){
+                this.ownerStars = obj.getDouble("ownerStars");
+            }
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
         }

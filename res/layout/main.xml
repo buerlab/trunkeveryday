@@ -52,6 +52,12 @@
                       android:layout_height="fill_parent"
                       tools:layout="@layout/setting_frag"
                       android:tag="设置"/>
+            <fragment android:name="com.buerlab.returntrunk.fragments.AboutusFragment"
+                      android:id="@+id/main_aboutus_frag"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      tools:layout="@layout/setting_frag"
+                      android:tag="关于我们"/>
         </FrameLayout>
 
 

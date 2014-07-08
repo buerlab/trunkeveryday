@@ -4,19 +4,44 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:background="#cccccc">
+              android:background="@color/background">
     <FrameLayout android:id="@+id/send_bill_frag_content"
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
                  android:layout_weight="1">
-        <TextView android:id="@+id/send_bill_frag_tips"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:text="你还没有发单"
-                  android:textSize="26dp"
-                  android:layout_gravity="center"
-                  android:gravity="center"/>
-
+        <!--<TextView android:id="@+id/send_bill_frag_tips"-->
+                  <!--android:layout_width="fill_parent"-->
+                  <!--android:layout_height="wrap_content"-->
+                  <!--android:text="你还没有发单"-->
+                  <!--android:textSize="26dp"-->
+                  <!--android:layout_gravity="center"-->
+                  <!--android:gravity="center"/>-->
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+                      android:id="@+id/no_bill_tips"
+                >
+                <ImageView android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="100dp"
+                           android:src="@drawable/dt_4"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="正在等待本地货主呼叫..."
+                          android:textSize="18sp"
+                          android:layout_marginTop="20dp"
+                          android:textColor="@color/text_color"
+                          android:layout_gravity="center_horizontal"
+                        />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="5dp"
+                      android:text="如果需要发布回程车，请点击下面的按钮。"
+                      android:textColor="@color/sub_text_color"
+                      android:layout_gravity="center_horizontal"
+                    />
+                      </LinearLayout>
         <ListView android:id="@+id/send_bill_list"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -30,23 +55,48 @@
                 <!--android:layout_height="match_parent"/>-->
 
     </FrameLayout>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:layout_height="60dp"
+                  android:layout_gravity="center_vertical"
                   android:orientation="horizontal">
-        <Button android:id="@+id/frag_send_btn"
+        <LinearLayout android:id="@+id/frag_send_btn"
+                android:layout_marginTop="0dp"
                 android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:text="发送"
-                android:textSize="26dp"
-                android:layout_weight="6"/>
-        <Button android:id="@+id/send_bill_frag_goods"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:text="推荐"
-                android:textSize="26dp"
-                android:layout_weight="1"/>
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/radius_button_blue"
+                android:layout_height="50dp">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/fabu"
+                           android:layout_gravity="center_vertical"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="发布回程车"
+                          android:textSize="18dp"
+                          android:layout_gravity="center_vertical"
+                          android:textColor="@color/white"
+                        />
+         </LinearLayout>
+        <LinearLayout android:id="@+id/send_bill_frag_goods"
+                      android:layout_marginRight="10dp"
+                      android:layout_width="80dp"
+                      android:gravity="center_horizontal"
+                      android:layout_gravity="center_vertical"
+                      android:background="@drawable/radius_button_green"
+                      android:layout_height="50dp">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="推荐"
+
+                      android:textSize="18dp"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/white"
+                    />
+        </LinearLayout>
     </LinearLayout>
-
-
-
 </LinearLayout>

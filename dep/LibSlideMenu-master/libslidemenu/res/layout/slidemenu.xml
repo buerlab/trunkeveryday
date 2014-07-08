@@ -1,26 +1,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"	
+    android:layout_height="fill_parent"
      >
 
     <LinearLayout
         android:layout_width="250dip"
         android:layout_height="fill_parent"
+        android:background="#1A1A1A"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/menu_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" 
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="30dp"
             />
-
+        <ImageView android:layout_width="fill_parent"
+                   android:layout_height="3dp"
+                    android:src="@drawable/menu_item_divier"/>
         <ListView
             android:id="@+id/menu_listview"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:divider="@android:color/darker_gray"
-            android:dividerHeight="1dip" />
+            android:divider="@drawable/menu_item_divier"
+            android:dividerHeight="3dip" />
+        <ImageView android:layout_width="fill_parent"
+                   android:layout_height="3dp"
+                   android:src="@drawable/menu_item_divier"/>
     </LinearLayout>
 
     <FrameLayout

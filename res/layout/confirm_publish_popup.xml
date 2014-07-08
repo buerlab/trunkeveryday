@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:gravity="center_vertical"
+              android:layout_height="wrap_content">
+       <RelativeLayout android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:gravity="center_horizontal"
+                     android:background="@drawable/tanchuang1"
+                     android:orientation="vertical">
+           <LinearLayout android:layout_width="fill_parent"
+                         android:id="@+id/nickname_wrap"
+                         android:gravity="center_horizontal"
+                         android:layout_marginTop="10dp"
+                         android:paddingBottom="16dp"
+                         android:layout_height="wrap_content">
+           <TextView android:layout_width="wrap_content"
+                     android:textColor="@color/text_color"
+                     android:textSize="18sp"
+                     android:text="您已经离开常住地 "
+                     android:layout_gravity="center_vertical"
+                     android:layout_height="wrap_content"/>
+               <TextView android:layout_width="wrap_content"
+                         android:id="@+id/nickname"
+                         android:textColor="@color/main_blue"
+                         android:textSize="18sp"
+                         android:text="广州"
+                         android:layout_gravity="center_vertical"
+                         android:layout_height="wrap_content"/>
+               <TextView android:layout_width="wrap_content"
+                         android:id="@+id/nickname"
+                         android:textColor="@color/text_color"
+                         android:textSize="18sp"
+                         android:text=" ，"
+                         android:layout_gravity="center_vertical"
+                         android:layout_height="wrap_content"/>
+           </LinearLayout>
+           <TextView android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:textSize="18sp"
+                     android:text="需要发布回程车信息吗？"
+                     android:layout_centerHorizontal="true"
+                     android:layout_marginTop="34dp"
+                     android:paddingBottom="16dp"
+                   />
+        </RelativeLayout>
+
+
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:background="@drawable/tanchuang2">
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/new_bill_from_btn"
+                      android:background="@drawable/popup_item_wrapper_bottom_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/new_bill_from_text"
+                      android:layout_weight="1"
+                      android:textSize="16sp"
+                      android:hint="选择回程出发地"
+
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
+        </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/new_bill_to_btn"
+                      android:background="@drawable/popup_item_wrapper_bottom_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/new_bill_to_text"
+                      android:layout_weight="1"
+                      android:textSize="16sp"
+                      android:hint="选择回程目的地"
+
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
+        </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/new_bill_time_btn"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:layout_weight="1"
+                      android:textSize="16sp"
+                      android:id="@+id/new_bill_time_text"
+                      android:hint="选择回程时间"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center_horizontal"
+            >
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:id="@+id/button_true"
+                      android:gravity="center_horizontal"
+                android:background="@drawable/tc1">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="50dp"
+                      android:gravity="center"
+
+                      android:textSize="20sp"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/white"
+                      android:text="是"
+                    />
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:id="@+id/button_false"
+                      android:gravity="center_horizontal"
+                      android:background="@drawable/tc2">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="50dp"
+                      android:gravity="center"
+                      android:textSize="20sp"
+                      android:layout_gravity="center_vertical"
+                      android:textColor="@color/white"
+                      android:text="否"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

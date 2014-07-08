@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="own_trunks">
+        <item>我的设置</item>
+        <item>历史记录</item>
+    </string-array>
+    <string-array name="slide_menu">
+        <item>基本资料</item>
+        <item>历史货单</item>
+        <item>车辆管理</item>
+        <item>我的评价</item>
+        <item>设置</item>
+        <item>关于我们</item>
+    </string-array>
+</resources>

@@ -4,11 +4,38 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
-    <EditText android:layout_width="fill_parent"
-              android:hint="身份证"
-              android:id="@+id/edit_IDNum"
-              android:layout_height="wrap_content"/>
-    <Button android:layout_width="fill_parent"
-            android:id="@+id/btn_pic"
-            android:layout_height="wrap_content"/>
+
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                >
+            <EditText android:id="@+id/edit_IDNum"
+                      style="@style/infogroup_edit_text"
+                      android:hint="身份证"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:paddingLeft="20dp"
+                      android:orientation="horizontal">
+            <!--Button layout在代码里设置-->
+            <Button android:id="@+id/btn_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/xc"
+                    />
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      android:textSize="16sp"
+                      android:textColor="@color/sub_text_color"
+                      android:text="添加身份证照片"/>
+        </LinearLayout>
+    </LinearLayout>
+    <Button style="@style/clickable_button_with_main_color"
+            android:id="@+id/save_btn"
+            android:onClick="save"
+            android:text="保存"
+            />
 </LinearLayout>

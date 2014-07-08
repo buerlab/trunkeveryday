@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
-    <EditText android:layout_width="fill_parent"
-              android:hint="广东深圳"
-              android:id="@+id/edit_homeLocation"
-              android:layout_height="wrap_content"/>
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:background="@color/background"
+             android:orientation="vertical"
+        >
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper">
+            <EditText android:id="@+id/edit_homeLocation"
+                      style="@style/infogroup_edit_text"
+                      android:hint="常住地"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button style="@style/clickable_button_with_main_color"
+            android:id="@+id/save_btn"
+            android:onClick="save"
+            android:text="保存"
+            />
 </LinearLayout>

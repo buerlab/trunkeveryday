@@ -7,14 +7,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.*;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.driver.activities.EditDriverLicenseActivity;
-import com.buerlab.returntrunk.activities.EditIDNumActivity;
-import com.buerlab.returntrunk.activities.EditNickNameActivity;
-import com.buerlab.returntrunk.activities.EditHomeLocationActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
@@ -68,6 +67,9 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
 
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
+
+        Button person_detail_btn = (Button)mRoot.findViewById(R.id.person_detail_btn);
+        person_detail_btn.setOnClickListener(this);
     }
 
     @Override
@@ -77,6 +79,7 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
             case R.id.container_location: goToEditLocationFragment();break;
             case R.id.container_IDNum: goToEditIDNumFragment();break;
             case R.id.container_driverLicense: goToEditDriverLisenceFragment();break;
+            case R.id.person_detail_btn:goToPersonDetail();
             default:break;
         }
     }
@@ -109,6 +112,11 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
             Intent intent = new Intent(getActivity(),EditDriverLicenseActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void goToPersonDetail(){
+        Intent intent = new Intent(getActivity(),PersonDetailActivity.class);
+        startActivity(intent);
     }
 
     @Override

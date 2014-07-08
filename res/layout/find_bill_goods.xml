@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+              android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="#ffffff">
+              android:background="@color/white">
     <LinearLayout android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
@@ -70,5 +70,123 @@
             android:text="电话"
             android:textSize="30dp"
             android:layout_gravity="center"/>
+
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <com.buerlab.returntrunk.views.NickNameBarView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                </com.buerlab.returntrunk.views.NickNameBarView>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+
+                    >
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_marginLeft="20dp"
+                          android:layout_weight="1"
+                          android:orientation="vertical">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="fill_parent"
+                                android:layout_marginTop="8dp"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="广州•白云区"
+                              android:textSize="16sp"
+                            />
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_gravity="center_vertical"
+                               android:src="@drawable/qt_you1"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="深圳•南山区"
+                              android:textSize="18sp"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="fill_parent"
+                              android:layout_marginTop="8dp"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="发货时间："
+                              android:textSize="16sp"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="2014-06-16"
+                              android:textSize="16sp"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_marginTop="8dp"
+                              android:layout_height="wrap_content">
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="fill_parent"
+
+                                  android:layout_weight="1">
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="货名："
+                                  android:textSize="16sp"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="纺织品"
+                                  android:textSize="16sp"
+                                />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="fill_parent"
+
+                                  android:layout_weight="0">
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="重量："
+                                  android:textSize="16sp"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="100吨"
+                                  android:textSize="16sp"
+                                />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="fill_parent"
+                              android:layout_marginTop="8dp"
+                              android:layout_weight="0">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="期望价格："
+                              android:textSize="16sp"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_gravity="center_vertical"
+                              android:text="12,000元"
+                              android:textSize="16sp"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_weight="0"
+                       android:layout_margin="20dp"
+                       android:layout_gravity="center"
+                       android:src="@drawable/bq_dh2"
+                       android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

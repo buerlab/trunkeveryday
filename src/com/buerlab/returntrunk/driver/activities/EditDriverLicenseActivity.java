@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
@@ -33,7 +34,7 @@ import java.util.Map;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditDriverLicenseActivity extends EditProfileBaseActivity {
+public class EditDriverLicenseActivity extends BackBaseActivity {
     private static final String TAG = "EditDriverLicenseActivity" ;
     ActionBar mActionBar;
 
@@ -61,6 +62,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity {
     private void init(){
         mDriverLicenseEdit = (EditText)findViewById(R.id.edit_driverlicense);
         mDriverLicenseEdit.setText(User.getInstance().driverLicense);
+//        mDriverLicenseEdit.setSelectAllOnFocus(true);
 
         mPicBtn =(Button)findViewById(R.id.btn_pic);
         mPicBtn.setOnClickListener(new View.OnClickListener() {
@@ -141,14 +143,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
-    }
-
-    public void onOptionSave(MenuItem i)
+    public void save(View v)
     {
         final String driverLicense = mDriverLicenseEdit.getText().toString();
         if(driverLicense.length()==0){
@@ -158,6 +153,7 @@ public class EditDriverLicenseActivity extends EditProfileBaseActivity {
 
         if(mBitmap == null){
             Utils.showToast(this,"请提供驾驶证照片");
+            return;
         }
 
         String filename = mDriverLicenseEdit.getText().toString().trim()+ "_" + User.getInstance().userId;

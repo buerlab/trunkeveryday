@@ -9,6 +9,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.adapters.CommentListAdapter;
+import com.buerlab.returntrunk.events.DataEvent;
+import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -19,12 +21,13 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-6-4.
  */
-public class CommentListFragment extends BaseFragment{
+public class CommentListFragment extends BaseFragment implements EventCenter.OnEventListener{
 
     View mView;
     private TextView tips = null;
     CommentListAdapter mAdapter;
     ListView mListView;
+    NetService service;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -39,29 +42,37 @@ public class CommentListFragment extends BaseFragment{
         mAdapter =new CommentListAdapter(getActivity());
         mListView.setAdapter(mAdapter);
 
-        initComments();
+        EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
+//        initComments();
+        service = new NetService(getActivity());
     }
 
+    @Override
+    public void onEventCall(DataEvent e) {
+        initComments();
+    }
     private void initComments(){
         final CommentListAdapter adapter = mAdapter;
-        NetService service = new NetService(getActivity());
-        service.getComments(User.getInstance().getUserType(),0,-1,new NetService.CommentsCallBack() {
-            @Override
-            public void onCall(NetProtocol result, List<Comment> comments) {
-                if (result.code == NetProtocol.SUCCESS) {
-                    if (comments != null) {
-                        if(User.getInstance().getUserType()=="driver"){
-                            User.getInstance().initDriverComments(comments);
-                        }
-                        if(User.getInstance().getUserType()=="owner"){
-                            User.getInstance().initOwnerComments(comments);
-                        }
-                        adapter.setComments(comments);
 
-                        tips.setAlpha(0.0f);
+        if(service!=null){
+            service.getComments(User.getInstance().getUserType(),0,-1,new NetService.CommentsCallBack() {
+                @Override
+                public void onCall(NetProtocol result, List<Comment> comments) {
+                    if (result.code == NetProtocol.SUCCESS) {
+                        if (comments != null) {
+                            if(User.getInstance().getUserType()=="driver"){
+                                User.getInstance().initDriverComments(comments);
+                            }
+                            if(User.getInstance().getUserType()=="owner"){
+                                User.getInstance().initOwnerComments(comments);
+                            }
+                            adapter.setComments(comments);
+
+                            tips.setAlpha(0.0f);
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 }

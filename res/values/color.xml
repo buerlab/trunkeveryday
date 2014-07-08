@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="deep_sky_blue">#00A1F8</color> <!--主色调-->
+    <color name="main_blue">#00A1F8</color> <!--主色调-->
+    <!--<color name="click_main_blue">#00AFFF</color>-->
+    <color name="click_main_blue">#DF00A1F8</color>
     <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="background">#F2F2F2</color>
+    <color name="top_border">#DFDFDF</color>
+    <color name="bottom_border">#E2E2E2</color>
+    <color name="sub_text_color">#9C9C9C</color>
+    <color name="text_color">#000</color>
     <color name="bule_overlay">#660D92DD</color>
+    <color name="menu">#1A1A1A</color>
+    <color name="sub_main_green">#8DD908</color>
+    <color name="click_sub_main_green">#DF8DD908</color>
+    <color name="dialog_background">#b0000000</color>
+
+    <color name="border2">#EDE2E3</color>
+    <color name="transparent">#00000000</color>
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditHomeLocationActivity extends EditProfileBaseActivity {
+public class EditHomeLocationActivity extends BackBaseActivity {
     private static final String TAG = "EditHomeLocationActivity" ;
     ActionBar mActionBar;
 
@@ -45,17 +46,11 @@ public class EditHomeLocationActivity extends EditProfileBaseActivity {
         mLocationEdit.setText(User.getInstance().homeLocation);
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.edit_profile, menu);
-        return true;
+    public void save(View v){
+        save();
     }
 
-    public void onOptionSave(MenuItem i)
-    {
+    private void save(){
         final String location = mLocationEdit.getText().toString();
         if(location.length()==0){
             Toast toast = Toast.makeText(getApplicationContext(), "请输入你的常住地", 2);
@@ -82,8 +77,6 @@ public class EditHomeLocationActivity extends EditProfileBaseActivity {
             }
         });
     }
-
-
 
 
 

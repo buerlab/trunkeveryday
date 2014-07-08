@@ -1,5 +1,8 @@
 package com.buerlab.returntrunk.driver.activities;
 
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -9,6 +12,8 @@ import android.os.Bundle;
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
@@ -53,6 +58,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //    private ActionBarDrawerToggle mDrawerToggle = null;
 
     private SlideMenu slideMenu = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -159,8 +165,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         }, 300);
 
         // set optional header image
-        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.ic_launcher));
-
+        slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
         FragmentManager manager = getSupportFragmentManager();
         ((DriverHomeFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
         ((HistoryBillsFragment)manager.findFragmentById(R.id.main_history_frag)).init();
@@ -223,5 +228,16 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         transaction.commit();
     }
 
-
+    //按back键不退出，保留在后台
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        // menuUtils.createTwoDispatcher(event);
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            Intent intent = new Intent();
+            intent.setAction("android.intent.action.MAIN");
+            intent.addCategory("android.intent.category.HOME");
+            startActivity(intent);
+        }
+        return false;
+    }
 }

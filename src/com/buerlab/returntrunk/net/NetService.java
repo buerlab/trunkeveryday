@@ -9,11 +9,9 @@ import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
-import com.buerlab.returntrunk.models.Bill;
-import com.buerlab.returntrunk.models.Comment;
-import com.buerlab.returntrunk.models.Trunk;
-import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.models.*;
 import com.buerlab.returntrunk.utils.FormatUtils;
+import com.buerlab.returntrunk.views.NickNameBarView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -222,9 +220,9 @@ public class NetService {
         request(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                if (result.code == NetProtocol.SUCCESS && result.arrayData != null) {
                     callBack.onCall(result, extractComments(result.arrayData));
-                }else{
+                } else {
                     Utils.defaultNetProAction(mActivity, result);
                 }
             }
@@ -292,7 +290,7 @@ public class NetService {
 
     public void request(String url, String parms, String method, final NetCallBack callback){
 
-        if(mActivity != null){
+        if(mActivity != null ){
             final LoadingDialog loadingDialog = new LoadingDialog();
             loadingDialog.show(mActivity.getFragmentManager(), "loading");
             urlRequest(url, parms, method, new NetCallBack() {
@@ -673,7 +671,9 @@ public class NetService {
                         item.getString("fromUserId"),
                         item.getString("toUserId"),
                         item.getString("billId"),
-                        item.getString("text"));
+                        item.getString("text"),
+                        new NickBarData(item.getJSONObject("nickBarData"))
+                        );
                 comment.id = item.getString("commentId");
                 retComments.add(comment);
             }

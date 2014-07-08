@@ -83,7 +83,7 @@ public class TrunkPicGridAdapter extends BaseAdapter {
             index=arg0;
             int[] size = Utils.getScreenSize();
 
-            int width = (size[0] - Utils.dip2px(30))/3;
+            int width = (size[0] - Utils.dip2px(40))/4;
             holder.imageWrapper.setLayoutParams(new RelativeLayout.LayoutParams(width,width));
             arg1.setTag(holder);
             holderlist.add(arg1);
