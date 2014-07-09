@@ -30,7 +30,9 @@ import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
@@ -86,6 +88,11 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                 if(result.code == NetProtocol.SUCCESS){
                     User.getInstance().initUser(result.data);
                     User.getInstance().setUserType(User.USERTYPE_OWNER);
+
+                    Map<String, String> jpushmap = new HashMap<String, String>();
+                    jpushmap.put("ownerJPushId", JPushInterface.getRegistrationID(self.getApplicationContext()));
+                    NetService netservice = new NetService(self.getApplicationContext());
+                    netservice.setUserData(jpushmap, null);
 
                     //注册用户初始化事件，用于个人资料得以初始化数据
                     DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);

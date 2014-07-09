@@ -29,9 +29,9 @@ import java.util.List;
  */
 public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
-//    private TextView tips = null;
     private LinearLayout tips = null;
     private SendBillListAdapter mAdapter = null;
+    private boolean mHasInit = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +42,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     }
 
     public void init(){
+
         ListView listView = (ListView)getView().findViewById(R.id.send_bill_list);
 
         mAdapter = new SendBillListAdapter(getActivity());
@@ -74,13 +75,13 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
         EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
 
-        initBills();
     }
 
     @Override
     public void onStart(){
         super.onStart();
         if(mAdapter != null){
+            initBills();
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -130,9 +131,14 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         }
     }
 
+    @Override
+    public void onShow(){
+        initBills();
+    }
+
     private void initBills(){
         final SendBillListAdapter adapter = mAdapter;
-        if(User.getInstance().getBills() == null){
+        if(!mHasInit){
             NetService service = new NetService(getActivity());
             service.getBills(0, -1, new NetService.BillsCallBack() {
                 @Override
@@ -141,13 +147,13 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                     if(bills != null) {
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
+                        mHasInit = true;
 
                         if(bills.size()>0){
                             tips.setAlpha(0.0f);
                         }else {
                             tips.setAlpha(1);
                         }
-
                     }
                 }
                 }

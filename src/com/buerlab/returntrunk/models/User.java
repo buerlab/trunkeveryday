@@ -48,7 +48,7 @@ public class User {
     public String driverLicense="";
     public String driverLicenseVerified="0";
 
-    private List<Bill> mBills;
+    private List<Bill> mBills = null;
     private List<Bill> mHistoryBills;
 
     //type would be trunk or owner
@@ -180,6 +180,8 @@ public class User {
     public void initHistoryBills(List<Bill> bills){ mHistoryBills = bills; }
 
     public void extendHistoryBills(List<Bill> bills){ mHistoryBills.addAll(bills); }
+
+    public List<Bill> getHistoryBills(){ return mHistoryBills; }
 
     public void addTrunk(Trunk trunk){
         trunks.add(trunk);

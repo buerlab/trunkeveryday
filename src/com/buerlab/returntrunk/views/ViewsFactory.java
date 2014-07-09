@@ -175,6 +175,7 @@ public class ViewsFactory {
         ((TextView)bView.findViewById(R.id.new_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.new_bill_time)).setText(Utils.timestampToDisplay(bill.time));
         ((TextView)bView.findViewById(R.id.new_bill_visitedtimes)).setText(String.valueOf(bill.visitedTimes));
+        ((TextView)bView.findViewById(R.id.new_bill_comment)).setText(String.valueOf(bill.comment));
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             ((TextView)bView.findViewById(R.id.new_bill_goods)).setText(bill.material);
             ((TextView)bView.findViewById(R.id.new_bill_weight)).setText(String.valueOf(bill.weight));
@@ -182,6 +183,12 @@ public class ViewsFactory {
         }
     }
 
+    static public View createHisotryBill(LayoutInflater inflater, final Bill bill){
+        int layoutId = bill.getHistoryBillLayout();
+        View bView = inflater.inflate(layoutId, null, false);
+
+        return bView;
+    }
 
 
     static public View createBill(LayoutInflater inflater, Bill bill){

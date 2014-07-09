@@ -1,7 +1,6 @@
 package com.buerlab.returntrunk.jpush;
 
 import android.content.Context;
-import android.widget.Toast;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
@@ -44,21 +43,22 @@ public class JPushCenter {
         }
         else if(protocal.code == JPushProtocal.BILL_VISITED){
             NetService service = new NetService(mContext);
-            service.getVisitedBill(new NetService.NetCallBack() {
+            service.getVisitedBills(new NetService.NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {
-                    if(result.code == NetProtocol.SUCCESS && result.data != null){
+                    if (result.code == NetProtocol.SUCCESS && result.data != null) {
                         JSONObject billDict = result.data;
                         Iterator it = billDict.keys();
-                        while (it.hasNext()){
-                            String billid = (String)it.next();
+                        while (it.hasNext()) {
+                            String billid = (String) it.next();
                             Bill bill = User.getInstance().getBill(billid);
-                            if(bill != null){
-                                try{
+                            if (bill != null) {
+                                try {
                                     bill.visitedTimes = billDict.getInt(billid);
-                                }catch (Exception e){ }
+                                } catch (Exception e) {
+                                }
                             }
-                         }
+                        }
                         EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
                     }
                 }

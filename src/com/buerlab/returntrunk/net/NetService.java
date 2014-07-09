@@ -105,7 +105,7 @@ public class NetService {
         parmsMap.put("num", String.valueOf(num));
         parmsMap.put("count", String.valueOf(count));
 
-        request(mContext.getString(R.string.server_addr) + "api/bill", createReqParms(parmsMap), "GET", new NetCallBack() {
+        request(mContext.getString(R.string.server_addr) + "api/bill/get", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
@@ -120,8 +120,8 @@ public class NetService {
     public void sendBill(Bill bill, final NetCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billType", bill.billType);
-        parmsMap.put("from", bill.from);
-        parmsMap.put("to", bill.to);
+        parmsMap.put("fromAddr", bill.from);
+        parmsMap.put("toAddr", bill.to);
         parmsMap.put("billTime", bill.time);
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             parmsMap.put("material", bill.material);
@@ -133,14 +133,14 @@ public class NetService {
             parmsMap.put("licensePlate", bill.licensePlate);
         }
 
-        request(mContext.getString(R.string.server_addr)+"api/bill", createReqParms(parmsMap), "POST", callBack);
+        request(mContext.getString(R.string.server_addr)+"api/bill/send", createReqParms(parmsMap), "POST", callBack);
     }
 
     public void deleteBill(Bill bill, final NetCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billid", bill.id);
 
-        request(mContext.getString(R.string.server_addr)+"api/bill/delete", createReqParms(parmsMap), "POST", callBack);
+        request(mContext.getString(R.string.server_addr)+"api/bill/remove", createReqParms(parmsMap), "POST", callBack);
     }
 
     public void findBills(final BillsCallBack callback){
@@ -156,8 +156,36 @@ public class NetService {
         });
     }
 
-    public void getVisitedBill(final NetCallBack callBack){
+    public void getVisitedBills(final NetCallBack callBack){
         request(mContext.getString(R.string.server_addr)+"api/bill/visited", createReqParms(null), "POST", callBack);
+    }
+
+    public void getDefaultHistoryBills(final BillsCallBack callBack){
+        request(mContext.getString(R.string.server_addr)+"api/bill/history", createReqParms(null), "POST", new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                    callBack.onCall(result, extractBills(result.arrayData));
+                }else{
+                    Utils.defaultNetProAction(mActivity, result);
+                }
+            }
+        });
+    }
+
+    public void getHistoryBill(int fromBillsId, boolean isPrev, final BillsCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("fromBillsId", String.valueOf(fromBillsId));
+        request(mContext.getString(R.string.server_addr)+"api/bill/history", createReqParms(parmsMap), "POST", new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                    callBack.onCall(result, extractBills(result.arrayData));
+                }else{
+                    Utils.defaultNetProAction(mActivity, result);
+                }
+            }
+        });
     }
 
     public void billCall(String targetUserId, String billType, final NetCallBack callback){
