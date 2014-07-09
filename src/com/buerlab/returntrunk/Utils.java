@@ -5,16 +5,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
-import com.buerlab.returntrunk.driver.activities.LoginActivity;
-import com.buerlab.returntrunk.driver.activities.initDriverActivity;
+import com.buerlab.returntrunk.activities.LoginActivity;
+import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
-import com.buerlab.returntrunk.owner.activities.OwnerLoginActivity;
 import com.buerlab.returntrunk.owner.activities.OwnerMainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,12 +37,10 @@ public class Utils {
                 Toast toast = Toast.makeText(activity.getApplicationContext(), "请先登录", 2);
                 toast.show();
                 Intent intent = null;
-                if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK)){
+//                if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK)){
                     intent = new Intent(activity, LoginActivity.class);
-                }else{
-                    intent = new Intent(activity, OwnerLoginActivity.class);
-                }
-
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                }
                 activity.startActivity(intent);
                 activity.finish();
             }else{
@@ -53,16 +51,16 @@ public class Utils {
         }
 
     }
-
-    static public void safeSwitchToMainActivity(Activity from){
-        if(User.getInstance().nickName.isEmpty()){
-            from.startActivity(new Intent(from, initDriverActivity.class));
-            from.finish();
-        }else{
-            from.startActivity(new Intent(from, OwnerMainActivity.class));
-            from.finish();
-        }
-    }
+//
+//    static public void safeSwitchToMainActivity(Activity from){
+//        if(User.getInstance().nickName.isEmpty()){
+//            from.startActivity(new Intent(from, InitDriverActivity.class));
+//            from.finish();
+//        }else{
+//            from.startActivity(new Intent(from, OwnerMainActivity.class));
+//            from.finish();
+//        }
+//    }
 
 
     static public String timestampToDisplay(String ts){
@@ -218,5 +216,45 @@ public class Utils {
     public static int px2dip(float pxValue){
         float scale = mDisplayMetrics.density;  // 屏幕密度（0.75 / 1.0 / 1.5）
         return (int)(pxValue / scale +0.5f);
+    }
+
+    public static void setGlobalData(Context c,String key, String val){
+        SharedPreferences preferences=c.getSharedPreferences(c.getString(R.string.app_name),Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString(key, val);
+        editor.commit();
+    }
+
+    public static String getGlobalData(Context c,String key){
+        SharedPreferences preferences=c.getSharedPreferences(c.getString(R.string.app_name),Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        String val = preferences.getString(key, "");
+        return val;
+    }
+
+    public static void clearGlobalData(Context c){
+        SharedPreferences pref = c.getSharedPreferences(c.getString(R.string.app_name), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.clear();
+        editor.commit();
+    }
+
+    public static void setDriverVersion(Context c){
+        SharedPreferences preferences=c.getSharedPreferences("version_type",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString("version_type", "driver");
+        editor.commit();
+    }
+
+    public static void setOwnerVersion(Context c){
+        SharedPreferences preferences=c.getSharedPreferences("version_type",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+        editor.putString("version_type", "owner");
+        editor.commit();
+    }
+    public static String getVersionType(Context c){
+        SharedPreferences preferences=c.getSharedPreferences("version_type",Context.MODE_PRIVATE);
+        String versionType = preferences.getString("version_type", "");
+        return versionType;
     }
 }

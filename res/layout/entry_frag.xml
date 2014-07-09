@@ -4,12 +4,9 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#cccccc">
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:text="WELCOME!"
-              android:textColor="#000000"
-              android:textSize="30dp"
-              android:gravity="center"/>
-
+              android:gravity="center"
+              android:background="#EFF4F5">
+<ImageView android:layout_width="wrap_content"
+           android:src="@drawable/qidongye1"
+           android:layout_height="wrap_content"/>
 </LinearLayout>

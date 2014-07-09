@@ -2,15 +2,28 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
+             android:layout_height="fill_parent"
              android:background="@color/background"
              android:orientation="vertical"
         >
     <LinearLayout style="@style/infogroup_group_wrapper">
-        <LinearLayout style="@style/infogroup_item_wrapper">
-            <EditText android:id="@+id/edit_homeLocation"
-                      style="@style/infogroup_edit_text"
-                      android:hint="常住地"/>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/init_user_homelocation_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/init_user_homelocation_text"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:hint="常住地"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
         </LinearLayout>
     </LinearLayout>
 

@@ -84,12 +84,7 @@ public class ViewsFactory {
         int layoutId = R.layout.find_bill_goods;
         View bView = inflater.inflate(layoutId, null, false);
         if(bView != null){
-//            fillFindBill(bView, bill);
-            ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
-            ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
-            ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
-            if(bill.billType.equals(Bill.BILLTYPE_GOODS))
-                ((TextView)bView.findViewById(R.id.find_bill_mat)).setText(bill.material);
+            fillFindBill(bView, bill);
 
             ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
             phoneBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,8 +122,12 @@ public class ViewsFactory {
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
-        if(bill.billType.equals(Bill.BILLTYPE_GOODS))
+        if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             ((TextView)bView.findViewById(R.id.find_bill_mat)).setText(bill.material);
+            ((TextView)bView.findViewById(R.id.find_bill_weight)).setText(String.valueOf(bill.weight));
+            ((TextView)bView.findViewById(R.id.find_bill_price)).setText(String.valueOf(bill.price));
+        }
+
     }
 
     static public View createSendBill(LayoutInflater inflater, final Bill bill){

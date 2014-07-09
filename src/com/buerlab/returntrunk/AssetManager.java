@@ -19,7 +19,7 @@ public class AssetManager {
     private String regionStr = "";
 
     private Context mContext = null;
-    private boolean hasInit = false;
+    public boolean hasInit = false;
 
     static private AssetManager instance = null;
     static public AssetManager shared(){
@@ -39,6 +39,7 @@ public class AssetManager {
             in.close();
             regionStr = EncodingUtils.getString(buffer, "UTF-8");
             regionDict = new JSONObject(regionStr);
+            hasInit = true;
 
         }catch (Exception e){
             e.printStackTrace();

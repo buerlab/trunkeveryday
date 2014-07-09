@@ -20,6 +20,9 @@
     <color name="tab_gray">#ABAAAA</color>
     <color name="border2">#EDE2E3</color>
     <color name="transparent">#00000000</color>
+
+    <color name="light_main_blue">#69D4FF</color> <!-- 注册-->
+    <color name="clicked_light_main_blue">#DF69D4FF</color> <!-- 注册-->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

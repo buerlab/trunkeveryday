@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
+import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;
-import com.buerlab.returntrunk.driver.activities.initDriverActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,12 +23,16 @@ public class User {
     static public String USERTYPE_OWNER = "owner";
 
     static public boolean validate(Activity from){
-        if(User.getInstance().getUserType().isEmpty()){
-            from.startActivity(new Intent(from, initDriverActivity.class));
-            from.finish();
-            return false;
-        }else if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks!=null &&   User.getInstance().trunks.isEmpty()){
-            from.startActivity(new Intent(from, SetTrunkActivity.class));
+//        if(User.getInstance().getUserType().isEmpty()){
+//            from.startActivity(new Intent(from, InitDriverActivity.class));
+//            from.finish();
+//            return false;
+//        }
+        if(User.getInstance().getUserType().equals(User.USERTYPE_TRUNK) && User.getInstance().trunks!=null &&   User.getInstance().trunks.isEmpty()){
+            Intent intent = new Intent(from,AddTrunkActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("enterByLogin",true);
+            from.startActivity(intent);
             from.finish();
             return false;
         }

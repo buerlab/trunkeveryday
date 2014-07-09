@@ -68,8 +68,8 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
 
-        Button person_detail_btn = (Button)mRoot.findViewById(R.id.person_detail_btn);
-        person_detail_btn.setOnClickListener(this);
+//        Button person_detail_btn = (Button)mRoot.findViewById(R.id.person_detail_btn);
+//        person_detail_btn.setOnClickListener(this);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
             case R.id.container_location: goToEditLocationFragment();break;
             case R.id.container_IDNum: goToEditIDNumFragment();break;
             case R.id.container_driverLicense: goToEditDriverLisenceFragment();break;
-            case R.id.person_detail_btn:goToPersonDetail();
+//            case R.id.person_detail_btn:goToPersonDetail();
             default:break;
         }
     }

@@ -8,26 +8,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.Address;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by teddywu on 14-6-17.
  */
-public class EditHomeLocationActivity extends BackBaseActivity {
+public class EditHomeLocationActivity extends BackBaseActivity implements EventCenter.OnEventListener {
     private static final String TAG = "EditHomeLocationActivity" ;
     ActionBar mActionBar;
 
-    EditText mLocationEdit ;
+    private TextView homeLocationText = null;
+    private LinearLayout homeLocationBtn = null;
+    final private BaseActivity self = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +49,19 @@ public class EditHomeLocationActivity extends BackBaseActivity {
     }
 
     private void init(){
-        mLocationEdit = (EditText)findViewById(R.id.edit_homeLocation);
-        mLocationEdit.setText(User.getInstance().homeLocation);
+//        mLocationEdit = (EditText)findViewById(R.id.edit_homeLocation);
+
+        homeLocationText = (TextView)findViewById(R.id.init_user_homelocation_text);
+        homeLocationBtn = (LinearLayout)findViewById(R.id.init_user_homelocation_btn);
+        homeLocationText.setText(User.getInstance().homeLocation);
+        homeLocationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PickAddrDialog dialog2 = new PickAddrDialog(self,R.style.dialog);
+                dialog2.show();
+            }
+        });
     }
 
     public void save(View v){
@@ -51,7 +69,7 @@ public class EditHomeLocationActivity extends BackBaseActivity {
     }
 
     private void save(){
-        final String location = mLocationEdit.getText().toString();
+        final String location = homeLocationText.getText().toString();
         if(location.length()==0){
             Toast toast = Toast.makeText(getApplicationContext(), "请输入你的常住地", 2);
             toast.show();
@@ -79,5 +97,24 @@ public class EditHomeLocationActivity extends BackBaseActivity {
     }
 
 
+    @Override
+    public void onEventCall(DataEvent e) {
+        if(e.type.equals(DataEvent.ADDR_CHANGE)){
+            List<String> data = (List<String>)e.data;
+            Address addr = new Address(data);
+            homeLocationText.setText(addr.toFullString());
+        }
+    }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EventCenter.shared().addEventListener(DataEvent.ADDR_CHANGE, this);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        EventCenter.shared().removeEventListener(DataEvent.ADDR_CHANGE, this);
+    }
 }

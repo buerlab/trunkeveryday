@@ -57,6 +57,8 @@ public class AddTrunkActivity extends BackBaseActivity {
     private String verifyTrunkLicenseUrl ="http://115.29.8.74:9289/upload/trunkLicense";
     private String uploadTrunkPicUrl ="http://115.29.8.74:9288/api/user/trunk/uploadPic";
     ArrayList<String> picFileNames= new ArrayList<String>();
+
+    private boolean enterByLogin = false;
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -66,12 +68,23 @@ public class AddTrunkActivity extends BackBaseActivity {
     }
 
     private void init(){
-        setActionBarLayout("添加货车",WITH_BACK);
+
+
+
         typeText = (EditText)findViewById(R.id.set_trunk_type);
         lengthText = (EditText)findViewById(R.id.set_trunk_length);
         loadText = (EditText)findViewById(R.id.set_trunk_load);
         lisenceText = (EditText)findViewById(R.id.set_trunk_licensePlate);
         trunkLicenseText = (EditText)findViewById(R.id.set_trunk_license);
+
+        enterByLogin = getIntent().getBooleanExtra("enterByLogin",false);
+
+        if(!enterByLogin){
+            setActionBarLayout("添加货车",WITH_BACK);
+        }else {
+            setActionBarLayout("添加货车",WITH_NONE);
+        }
+
 
 
 //
@@ -96,6 +109,7 @@ public class AddTrunkActivity extends BackBaseActivity {
         });
 
         //动态设置大小，跟图片那个对齐
+
         int width = (Utils.getScreenSize()[0] - Utils.dip2px(55))/4;
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width,width);
         params.setMargins(0,10,10,10);
@@ -184,7 +198,15 @@ public class AddTrunkActivity extends BackBaseActivity {
                     //注册用户初始化事件，用于个人资料得以初始化数据
                     DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
                     EventCenter.shared().dispatch(evt);
-                    finish();
+
+                    if(enterByLogin){
+                        Intent intent = new Intent(self,MainActivity.class);
+                        intent.putExtra("without_splash",true);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }else {
+                        finish();
+                    }
                 }
             }
         });
@@ -339,4 +361,6 @@ public class AddTrunkActivity extends BackBaseActivity {
 
         }
     };
+
+
 }

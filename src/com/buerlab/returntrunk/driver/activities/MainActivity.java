@@ -19,6 +19,7 @@ import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.fragments.HistoryBillsFragment;
 import com.buerlab.returntrunk.models.User;
@@ -58,7 +59,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //    private ActionBarDrawerToggle mDrawerToggle = null;
 
     private SlideMenu slideMenu = null;
-
+    final FragmentActivity self = this;
+    boolean withoutSplash;
     /**
      * Called when the activity is first created.
      */
@@ -69,17 +71,27 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
         getActionBar().hide();
         setContentView(R.layout.main);
-
+        Utils.setDriverVersion(this);
         //启动位置上报服务
 //        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
-
+        Utils.init(this);
 //        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
-        Utils.init(this);
-        final FragmentActivity self = this;
+
+        withoutSplash = getIntent().getBooleanExtra("without_splash",false);
+
+        if(withoutSplash){
+            FragmentManager manager = getSupportFragmentManager();
+            Fragment entry = manager.findFragmentByTag("entry");
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.hide(entry);
+            transaction.commit();
+        }
+
+
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -127,6 +139,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         });
     }
 
+
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -168,6 +182,9 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
         // set optional header image
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
+//        FragmentManager manager = getSupportFragmentManager();
+//        ((DriverHomeFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
+//        ((HistoryBillsFragment)manager.findFragmentById(R.id.main_history_frag)).init();
         setFrag(0);
 
         startLocationService();
