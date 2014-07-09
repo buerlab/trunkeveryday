@@ -13,6 +13,7 @@ import android.widget.ListView;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
@@ -46,6 +47,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //    private DrawerLayout mDrawerLayout = null;
     private ListView mDrawerList;
 //    private ActionBarDrawerToggle mDrawerToggle = null;
+    final FragmentActivity self = this;
 
     private SlideMenu slideMenu = null;
     /**
@@ -58,15 +60,25 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         getActionBar().hide();
         setContentView(R.layout.main_goods);
-
+        Utils.setOwnerVersion(this);
         //启动位置上报服务
 //        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
 //        SDKInitializer.initialize(getApplicationContext());
 
+        boolean withoutSplash = getIntent().getBooleanExtra("without_splash",false);
+
+        if(withoutSplash){
+            FragmentManager manager = getSupportFragmentManager();
+            Fragment entry = manager.findFragmentByTag("entry");
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.hide(entry);
+            transaction.commit();
+        }
+
         NetService service = new NetService(this);
-        final FragmentActivity self = this;
+
         Utils.init(this);
         service.quickLogin(new NetService.NetCallBack() {
             @Override
@@ -100,13 +112,14 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                     }
                 }
                 else{
-                    Intent intent = new Intent(self, OwnerLoginActivity.class);
+                    Intent intent = new Intent(self, LoginActivity.class);
                     self.startActivity(intent);
                     self.finish();
                 }
             }
         });
     }
+
 
     @Override
     protected void onResume(){
@@ -151,7 +164,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
 
         FragmentManager manager = getSupportFragmentManager();
-        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
+//        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
         setFrag(0);
 

@@ -1,50 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+               android:layout_width="fill_parent"
+               android:orientation="vertical"
+               android:layout_height="wrap_content">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#ffffff">
-    <LinearLayout android:layout_width="300dp"
+    <EditText android:layout_width="fill_parent"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="16dp"
+              android:hint="输入手机号码"
+              android:numeric="integer"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:id="@+id/login_user_input"
+              android:background="@drawable/edit_text_with_border"
+              android:layout_height="50dp"/>
+
+    <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
-                  android:layout_centerVertical="true"
-                  android:layout_centerHorizontal="true"
-                  android:orientation="vertical"
-                  android:background="#999999">
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:padding="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="电话号码："
-                      android:textSize="20dp"
-                      android:textColor="#000000"/>
-            <EditText android:id="@+id/login_user_input"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:numeric="integer"/>
-        </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:orientation="horizontal"
-                      android:padding="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="密码："
-                      android:textSize="20dp"
-                      android:textColor="#000000"/>
-            <EditText android:id="@+id/login_psw_input"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_weight="1"
-                      android:password="true"/>
-        </LinearLayout>
-
-        <Button android:id="@+id/login_confirm_btn"
-                android:layout_width="fill_parent"
-                android:layout_height="56dp"
-                android:text="登录"
-                android:textSize="26dp"/>
+                  android:layout_marginTop="10dp"
+                  android:orientation="horizontal"
+            >
+        <EditText android:layout_width="fill_parent"
+                  android:layout_marginLeft="20dp"
+                  android:hint="输入密码"
+                  android:paddingLeft="16dp"
+                  android:paddingRight="16dp"
+                  android:password="true"
+                  android:layout_marginRight="20dp"
+                  android:layout_weight="1"
+                  android:id="@+id/login_psw_input"
+                  android:numeric="integer"
+                  android:background="@drawable/edit_text_with_border"
+                  android:layout_height="50dp"/>
     </LinearLayout>
-</RelativeLayout>
+    <Button style="@style/clickable_button_with_main_color"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            android:id="@+id/login_confirm_btn"
+            android:onClick="verifyRegCode"
+            android:text="确定"
+            />
+</LinearLayout>

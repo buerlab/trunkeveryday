@@ -12,8 +12,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.driver.DriverUtils;
-import com.buerlab.returntrunk.driver.activities.LoginActivity;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -23,121 +23,36 @@ import com.buerlab.returntrunk.net.NetService;
  * Created by zhongqiling on 14-6-4.
  */
 
-public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewTrunkDialogListener, AddCommentDialog.AddCommentDialogListener{
+public class SettingFragment extends BaseFragment{
 
-    Button addCommentBtn;
+    Button logoutBtn;
     View mView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.setting_frag, container, false);
-        init();
+//        init();
+        logoutBtn = (Button)mView.findViewById(R.id.logout_confirm_btn);
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logout(v);
+            }
+        });
         return  mView;
     }
 
-    public void init(){
+    public void logout(View v){
+        Activity activity = getActivity();
+            Utils.clearGlobalData(getActivity());
 
-        ViewGroup trunksContainer = (ViewGroup)mView.findViewById(R.id.setting_trunks);
-        for(Trunk trunk : User.getInstance().trunks){
-            TextView textView = new TextView(getActivity());
-            textView.setTextColor(Color.GRAY);
-            textView.setTextSize(20);
-            textView.setText(trunk.toString());
-            trunksContainer.addView(textView);
-        }
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
 
-        TextView userText = (TextView)mView.findViewById(R.id.setting_user);
-        userText.setText(User.getInstance().username);
-        TextView nickNameText = (TextView)mView.findViewById(R.id.setting_nickName);
-        nickNameText.setText(User.getInstance().nickName);
-
-        final SettingFragment self = this;
-        Button addTrunk = (Button)mView.findViewById(R.id.setting_frag_add);
-        addTrunk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NewTrunkDialog dialog = new NewTrunkDialog();
-                dialog.setListener(self);
-                dialog.show(getActivity().getFragmentManager(), "addtrunk");
-            }
-        });
-
-        Button removeTrunk = (Button)mView.findViewById(R.id.setting_frag_remove);
-        removeTrunk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        final Activity activity = getActivity();
-        Button unregisterBtn = (Button)mView.findViewById(R.id.setting_unregister);
-        unregisterBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences pref = activity.getSharedPreferences(activity.getString(R.string.app_name), 0);
-                SharedPreferences.Editor editor = pref.edit();
-                editor.clear();
-                editor.commit();
-
-                Intent intent = new Intent(activity, LoginActivity.class);
-                activity.startActivity(intent);
-                activity.finish();
-
-                Toast toast = Toast.makeText(activity.getApplicationContext(), "已注销", 2);
-                toast.show();
-            }
-        });
-
-        addCommentBtn = (Button)mView.findViewById(R.id.comment_add);
-        addCommentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddCommentDialog commentdialog = new AddCommentDialog();
-                commentdialog.setListener(self);
-                commentdialog.show(getActivity().getFragmentManager(), "addComment");
-            }
-        });
+            Toast toast = Toast.makeText(activity.getApplicationContext(), "已注销", 2);
+            toast.show();
     }
 
-    public void onNewTrunkDialogConfirm(final Trunk trunk){
-        NetService service = new NetService(getActivity());
-        service.addUserTrunk(trunk, new NetService.NetCallBack() {
-            @Override
-            public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS){
-                    User.getInstance().trunks.add(trunk);
-                    updateTrunks();
-                }else{
-                    DriverUtils.defaultNetProAction(getActivity(), result);
-                }
-            }
-        });
-    }
-    public void onNewTrunkDialogCancel(){
-
-    }
-
-    private void updateTrunks(){
-        ViewGroup trunksContainer = (ViewGroup)getView().findViewById(R.id.setting_trunks);
-        trunksContainer.removeAllViewsInLayout();
-        for(Trunk trunk : User.getInstance().trunks){
-            TextView textView = new TextView(getActivity());
-            textView.setTextColor(Color.GRAY);
-            textView.setTextSize(20);
-            textView.setText(trunk.toString());
-            trunksContainer.addView(textView);
-        }
-    }
-
-    @Override
-    public void onAddCommentDialogConfirm() {
-
-    }
-
-    @Override
-    public void oAddCommentDialogCancel() {
-
-    }
 }

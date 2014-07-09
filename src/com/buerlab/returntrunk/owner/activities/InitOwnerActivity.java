@@ -1,25 +1,27 @@
-package com.buerlab.returntrunk.driver.activities;
+package com.buerlab.returntrunk.owner.activities;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
+import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.jpush.JPushUtils;
-import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
-import com.buerlab.returntrunk.activities.BaseActivity;
-import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.utils.Address;
 
 import java.util.HashMap;
@@ -29,7 +31,7 @@ import java.util.Map;
 /**
  * Created by zhongqiling on 14-6-4.
  */
-public class InitDriverActivity extends BaseActivity implements EventCenter.OnEventListener {
+public class InitOwnerActivity extends BaseActivity implements EventCenter.OnEventListener {
 
     private TextView homeLocationText = null;
     private LinearLayout homeLocationBtn = null;
@@ -129,20 +131,20 @@ public class InitDriverActivity extends BaseActivity implements EventCenter.OnEv
                         @Override
                         public void onCall(NetProtocol result) {
                             if(result.code == NetProtocol.SUCCESS){
-                                User.getInstance().setUserType(User.USERTYPE_TRUNK);
+                                User.getInstance().setUserType(User.USERTYPE_OWNER);
                                 User.getInstance().nickName = nickname;
                                 User.getInstance().homeLocation = homeLocation;
 //                                startActivity(new Intent(self, MainActivity.class));
 //                                finish();
-                                DriverUtils.safeSwitchToMainActivity(self);
+                                OwnerUtils.safeSwitchToMainActivity(self);
                             }
                             else{
-                                DriverUtils.defaultNetProAction(self, result);
+                                OwnerUtils.defaultNetProAction(self, result);
                             }
                         }
                     });
                 } else {
-                    Utils.defaultNetProAction(self,result);
+                    OwnerUtils.defaultNetProAction(self,result);
                 }
             }
         });

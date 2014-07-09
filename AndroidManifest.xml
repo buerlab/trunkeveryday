@@ -26,19 +26,23 @@
             </intent-filter>
         </activity>
 
-        <!--<activity android:name=".owner.activities.OwnerMainActivity"-->
-                  <!--android:label="@string/app_name"-->
-                  <!--android:launchMode="singleInstance">-->
+        <activity android:name=".owner.activities.OwnerMainActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleInstance">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN"/>-->
                 <!--<category android:name="android.intent.category.LAUNCHER"/>-->
             <!--</intent-filter>-->
-        <!--</activity>-->
-
-        <activity android:name=".driver.activities.LoginActivity"
-                  android:label="@string/app_name">
         </activity>
-        <activity android:name=".driver.activities.initDriverActivity"/>
+        <activity android:name=".activities.LoginActivity"></activity>
+        <activity android:name=".activities.RegisterActivity"></activity>
+        <activity android:name=".owner.activities.InitOwnerActivity"></activity>
+        <activity android:name=".driver.activities.InitDriverActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".driver.activities.SetTrunkActivity"/>
 
         <activity
@@ -79,10 +83,6 @@
                        android:value=".driver.activities.MainActivity"/>
         </activity>
         <activity android:name=".activities.PickAddrActivity"/>
-
-        <activity android:name=".owner.activities.OwnerLoginActivity"
-                  android:parentActivityName=".owner.activities.OwnerMainActivity">
-                </activity>
 
         <activity android:name=".utils.MultiPicSelector.ImgFileListActivity"/>
         <activity android:name=".utils.MultiPicSelector.ImgsActivity"

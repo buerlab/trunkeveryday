@@ -189,7 +189,7 @@ public class NetService {
         parmsMap.put("num", String.valueOf(num));
         parmsMap.put("count", String.valueOf(count));
         parmsMap.put("userType",userType);
-        request(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "GET", new NetCallBack() {
+        urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if (result.code == NetProtocol.SUCCESS && result.arrayData != null) {
@@ -218,6 +218,16 @@ public class NetService {
         urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
     }
 
+    //////////////////////////
+    //验证码
+    //////////////////////////
+    public void getRegCode(String phonenum, final NetCallBack callBack){
+        urlRequest(mContext.getString(R.string.server_addr)+"api/regcode","phonenum="+phonenum,"GET",callBack);
+    }
+
+    public void verifyRegCode(String phonenum,String regcode, final NetCallBack callBack){
+        urlRequest(mContext.getString(R.string.server_addr)+"api/regcode/check","phonenum="+phonenum+"&regcode="+regcode,"GET",callBack);
+    }
 
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
@@ -244,8 +254,7 @@ public class NetService {
 
 
     private String createReqParms(Map<String, String> parmsMap){
-        SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
-        String userId = pref.getString("userId", "");
+        String userId = Utils.getGlobalData(mContext,"userId");
 
         StringBuilder builder = new StringBuilder();
         builder.append("userId=" + userId);

@@ -4,27 +4,47 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:text="怎么称呼？"
-              android:textSize="26dp"
-              android:paddingTop="20dp"/>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-                 android:paddingBottom="20dp">
-        <EditText android:id="@+id/init_user_nickname"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="26dp"/>
+    <LinearLayout
+            style="@style/infogroup_group_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
+            <EditText android:id="@+id/init_user_password"
+                      style="@style/infogroup_edit_text"
+                      android:password="true"
+                      android:maxLength="16"
+                      android:hint="设置密码"/>
+        </LinearLayout>
+
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
+            <EditText android:id="@+id/init_user_nickname"
+                      style="@style/infogroup_edit_text"
+                      android:maxLength="4"
+                      android:hint="怎么称呼？"/>
+        </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:id="@+id/init_user_homelocation_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/init_user_homelocation_text"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:hint="常住地"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_dw"
+                    />
+        </LinearLayout>
     </LinearLayout>
 
-    <Button android:id="@+id/init_user_confirm"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="确定"/>
 
+    <Button style="@style/clickable_button_with_main_color"
+            android:id="@+id/init_user_confirm"
+            android:text="确定"
+            />
     <!--<TextView android:id="@+id/pick_usertype_text"-->
               <!--android:layout_width="fill_parent"-->
               <!--android:layout_height="wrap_content"-->
