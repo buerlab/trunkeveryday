@@ -1,61 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/bill_container"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:background="#cccccc">
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:layout_weight="1">
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="wrap_content">
-            <TextView android:id="@+id/history_bill_mat"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="木材"
-                      android:textSize="24dp"
-                      android:padding="5dp"
-                      android:textColor="#000000"/>
+              android:orientation="vertical"
+              android:background="@color/background">
+
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:paddingBottom="8dp">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:paddingBottom="8dp">
+            <com.buerlab.returntrunk.views.NickNameBarView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            <ImageView android:id="@+id/history_bill_tag"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/qt_xg"
+                       android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
-                      android:orientation="horizontal">
-            <TextView android:id="@+id/history_bill_from"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="深圳"
-                      android:textSize="20dp"
-                      android:textColor="#000000"/>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="-->"
-                      android:textSize="20dp"
-                      android:padding="5dp"
-                      android:textColor="#000000"/>
-            <TextView android:id="@+id/history_bill_to"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="广州"
-                      android:textSize="20dp"
-                      android:textColor="#000000"/>
-        </LinearLayout>
-        <TextView android:id="@+id/history_bill_time"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="2:00"
-                  android:textSize="20dp"
-                  android:padding="5dp"
-                  android:textColor="#000000"/>
-        <TextView android:id="@+id/history_bill_state"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="过期取消"
-                  android:textSize="20dp"
-                  android:padding="5dp"
-                  android:textColor="#000000"/>
-    </LinearLayout>
+                      android:padding="15dp"
+                      android:orientation="vertical"
+                >
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                          android:layout_weight="1"
+                    >
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_vertical"
+                          android:id="@+id/history_bill_from"
+                          android:text="广州•白云区"
+                          android:textSize="16sp"
+                        />
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_gravity="center_vertical"
+                           android:src="@drawable/qt_you1"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/history_bill_to"
+                          android:layout_gravity="center_vertical"
+                          android:text="深圳•南山区"
+                          android:textSize="16sp"
+                        />
+            </LinearLayout>
 
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                        >
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/qt_dw"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="出发: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/history_bill_time"
+                              android:text="2014-06-16 上午9点"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                        >
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/qt_dw"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="到达: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/history_bill_visitedtimes"
+                              android:text="2014-06-16 上午9点"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp"
+                    >
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="货物名称: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:id="@+id/history_bill_mat"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="食品"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="重量: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:id="@+id/history_bill_weight"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="10t"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1">
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="价格: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:id="@+id/history_bill_price"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="100000"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp">
+            <Button android:id="@+id/history_bill_locate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bill_locate"
+                    android:drawableLeft="@drawable/qt2_dw"
+                    android:layout_weight="1"
+                    android:background="@drawable/history_btn_bg"
+                    />
+            <Button android:id="@+id/history_bill_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bill_call"
+                    android:drawableLeft="@drawable/qt2_dh"
+                    android:layout_weight="1"
+                    android:background="@drawable/history_btn_bg"
+                    />
+            <Button android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bill_judge"
+                    android:drawableLeft="@drawable/qt2_pj"
+                    android:layout_weight="1"
+                    android:background="@drawable/history_btn_bg"
+
+                    />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

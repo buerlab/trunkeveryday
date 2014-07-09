@@ -37,18 +37,14 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.send_bill_frag, container, false);
-        tips = (LinearLayout)v.findViewById(R.id.no_bill_tips);
-        return v;
-    }
 
-    public void init(){
-
-        ListView listView = (ListView)getView().findViewById(R.id.send_bill_list);
+        ListView listView = (ListView)v.findViewById(R.id.send_bill_list);
 
         mAdapter = new SendBillListAdapter(getActivity());
         listView.setAdapter(mAdapter);
+        tips = (LinearLayout)v.findViewById(R.id.no_bill_tips);
 
-        LinearLayout sendBtn = (LinearLayout)getView().findViewById(R.id.frag_send_btn);
+        LinearLayout sendBtn = (LinearLayout)v.findViewById(R.id.frag_send_btn);
         final DriverHomeFragment self = this;
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +58,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
             }
         });
 
-        LinearLayout findBillBtn = (LinearLayout)getView().findViewById(R.id.send_bill_frag_goods);
+        LinearLayout findBillBtn = (LinearLayout)v.findViewById(R.id.send_bill_frag_goods);
         findBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,15 +71,13 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
         EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
 
+        return v;
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        if(mAdapter != null){
-            initBills();
-            mAdapter.notifyDataSetChanged();
-        }
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -192,15 +186,13 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
         NetService service = new NetService(getActivity());
         final MainActivity parActivity = (MainActivity)getActivity();
-        service.sendBill(bill, new NetService.NetCallBack() {
+        service.sendBill(bill, new NetService.BillsCallBack() {
             @Override
-            public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS){
-                    addBill(bill);
-
-                    Toast toast = Toast.makeText(parActivity.getApplicationContext(), "添加成功", 2);
-                    toast.show();
-                }else{
+            public void onCall(NetProtocol result, List<Bill> bills) {
+                if (result.code == NetProtocol.SUCCESS && bills.size() > 0) {
+                    DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
+                    EventCenter.shared().dispatch(evt);
+                } else {
                     Utils.defaultNetProAction(parActivity, result);
                 }
             }

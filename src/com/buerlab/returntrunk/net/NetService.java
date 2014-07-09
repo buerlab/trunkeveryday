@@ -108,7 +108,7 @@ public class NetService {
         request(mContext.getString(R.string.server_addr) + "api/bill/get", createReqParms(parmsMap), "GET", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                if(result.code == NetProtocol.SUCCESS){
                     callBack.onCall(result, extractBills(result.arrayData));
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
@@ -117,7 +117,7 @@ public class NetService {
         });
     }
 
-    public void sendBill(Bill bill, final NetCallBack callBack){
+    public void sendBill(Bill bill, final BillsCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billType", bill.billType);
         parmsMap.put("fromAddr", bill.from);
@@ -133,7 +133,23 @@ public class NetService {
             parmsMap.put("licensePlate", bill.licensePlate);
         }
 
-        request(mContext.getString(R.string.server_addr)+"api/bill/send", createReqParms(parmsMap), "POST", callBack);
+        request(mContext.getString(R.string.server_addr)+"api/bill/send", createReqParms(parmsMap), "POST", new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS){
+                    ArrayList<Bill> bills = new ArrayList<Bill>();
+                    try{
+                        Bill bill = new Bill(result.data);
+                        bills.add(bill);
+                    }catch (Exception e){
+
+                    }
+                    callBack.onCall(result, bills);
+                }else{
+                    Utils.defaultNetProAction(mActivity, result);
+                }
+            }
+        });
     }
 
     public void deleteBill(Bill bill, final NetCallBack callBack){
@@ -147,8 +163,9 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill/recomend", createReqParms(null), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
-                    callback.onCall(result, extractBills(result.arrayData));
+                if(result.code == NetProtocol.SUCCESS ){
+                    List<Bill> bills = result.arrayData != null ? extractBills(result.arrayData) : new ArrayList<Bill>();
+                    callback.onCall(result, bills);
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -173,15 +190,16 @@ public class NetService {
         });
     }
 
-    public void getHistoryBill(int fromBillsId, boolean isPrev, final BillsCallBack callBack){
+    public void getHistoryBill(String fromBillsId, boolean isPrev, final BillsCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("fromBillsId", String.valueOf(fromBillsId));
-        request(mContext.getString(R.string.server_addr)+"api/bill/history", createReqParms(parmsMap), "POST", new NetCallBack() {
+        parmsMap.put("fromId", fromBillsId);
+        parmsMap.put("isPrev", String.valueOf(isPrev));
+        request(mContext.getString(R.string.server_addr) + "api/bill/history", createReqParms(parmsMap), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
+                if (result.code == NetProtocol.SUCCESS && result.arrayData != null) {
                     callBack.onCall(result, extractBills(result.arrayData));
-                }else{
+                } else {
                     Utils.defaultNetProAction(mActivity, result);
                 }
             }
@@ -642,21 +660,15 @@ public class NetService {
     private List<Bill> extractBills(JSONArray data){
         List<Bill> returnBills = new ArrayList<Bill>();
 
-        try{
-            for(int i = 0; i < data.length(); i++){
+
+        for(int i = 0; i < data.length(); i++){
+            try{
                 JSONObject item = data.getJSONObject(i);
                 returnBills.add(new Bill(item));
+            }catch (Exception e){
             }
-            return returnBills;
-        }catch (JSONException e){
-            Toast toast = Toast.makeText(mContext, "json parse error when extract bills", 2);
-            toast.show();
-            return null;
-        }catch (Exception e){
-            Toast toast = Toast.makeText(mContext, e.toString(), 2);
-            toast.show();
-            return null;
         }
+        return returnBills;
     }
 
     private List<Comment> extractComments(JSONArray data){

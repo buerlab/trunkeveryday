@@ -107,15 +107,15 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
 
                 NetService service = new NetService(self);
                 final Bill billToSend = bill;
-                service.sendBill(billToSend, new NetService.NetCallBack() {
+                service.sendBill(bill, new NetService.BillsCallBack() {
                     @Override
-                    public void onCall(NetProtocol result) {
-                        if(result.code == NetProtocol.SUCCESS){
-                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, billToSend);
+                    public void onCall(NetProtocol result, List<Bill> bills) {
+                        if (result.code == NetProtocol.SUCCESS && bills.size() > 0) {
+                            self.finish();
+                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
                             EventCenter.shared().dispatch(evt);
 
-                            self.finish();
-                        }else{
+                        } else {
                             Utils.defaultNetProAction(self, result);
                         }
                     }

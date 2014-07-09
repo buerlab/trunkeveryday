@@ -49,7 +49,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","车辆管理","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -115,6 +115,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         transaction.commit();
                         setActionBarLayout("天天回程车",WITH_MENU);
                         getActionBar().show();
+
                     }
                 }
                 else{
@@ -167,11 +168,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
         // set optional header image
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
-        FragmentManager manager = getSupportFragmentManager();
-        ((DriverHomeFragment)manager.findFragmentById(R.id.send_bill_frag)).init();
-        ((HistoryBillsFragment)manager.findFragmentById(R.id.main_history_frag)).init();
-        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
-
         setFrag(0);
 
         startLocationService();

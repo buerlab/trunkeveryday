@@ -5,10 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -51,7 +48,7 @@ public class ViewsFactory {
         if(bView != null){
             fillFindBill(bView, bill);
 
-            Button phoneBtn = (Button)bView.findViewById(R.id.find_bill_phone);
+            ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
             phoneBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,7 +68,8 @@ public class ViewsFactory {
                             Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
                             BaseActivity.currActivity.startActivity(intent);
                         }else{
-
+                            Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
+                            toast.show();
                         }
                     }
 
@@ -125,7 +123,7 @@ public class ViewsFactory {
     }
 
     static public void fillFindBill(View bView, Bill bill){
-        ((TextView)bView.findViewById(R.id.find_bill_name)).setText(bill.senderName);
+        ((TextView)bView.findViewById(R.id.nickname)).setText(bill.senderName);
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
@@ -184,7 +182,7 @@ public class ViewsFactory {
     }
 
     static public View createHisotryBill(LayoutInflater inflater, final Bill bill){
-        int layoutId = bill.getHistoryBillLayout();
+        int layoutId = R.layout.history_bill_returntrunk;
         View bView = inflater.inflate(layoutId, null, false);
 
         return bView;

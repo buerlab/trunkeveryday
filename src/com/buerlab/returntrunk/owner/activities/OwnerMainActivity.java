@@ -41,7 +41,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     private static final String TAG = "MainActivity";
     private int currFrag = -1;
     private int currHomeFrag = -1;
-    private List<String> fragsList = Arrays.asList("天天回程车","基本资料","历史货单","我的评价","设置","关于我们");
+    private List<String> fragsList = Arrays.asList("首页","基本资料","历史货单","我的评价","设置","关于我们");
     private List<String> homeFragsList = Arrays.asList("sendbill", "findbill");
 
     private String[] mPlanetTitles;
@@ -158,14 +158,12 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
 
         FragmentManager manager = getSupportFragmentManager();
-        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
         setFrag(0);
 
         startLocationService();
 
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

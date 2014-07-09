@@ -9,6 +9,10 @@
     <string name="debug_log">DEBUG_FROM_APP</string>
     <string name="open_drawer">打开抽屉</string>
     <string name="close_drawer">关闭抽屉</string>
+
+    <string name="bill_locate">实时定位</string>
+    <string name="bill_call">电话呼叫</string>
+    <string name="bill_judge">评价</string>
     <integer name="normal_font_size">26</integer>
 
     <string name="menu_new">12</string>

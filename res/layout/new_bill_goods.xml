@@ -9,8 +9,7 @@
 
 
     <LinearLayout style="@style/infogroup_group_wrapper"
-                  android:paddingBottom="8dp"
-            >
+                  android:paddingBottom="8dp">
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="fill_parent"
@@ -167,7 +166,8 @@
             </LinearLayout>
 
         </LinearLayout>
-        <TextView android:layout_width="wrap_content"
+        <TextView android:id="@+id/new_bill_comment"
+                  android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:paddingLeft="20dp"
                   android:paddingRight="20dp"

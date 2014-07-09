@@ -25,6 +25,7 @@ public class HistoryBillsFragment extends BaseFragment{
 
     private PullToRefreshListView mListView = null;
     private HistoryBillsAdapter mAdapter = null;
+    private boolean mHasInit = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class HistoryBillsFragment extends BaseFragment{
         View view = inflater.inflate(R.layout.history_bills_frag, container, false);
 
         mListView = (PullToRefreshListView)view.findViewById(R.id.history_bills_list);
-        mListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+        mListView.setMode(PullToRefreshBase.Mode.BOTH);
         mAdapter = new HistoryBillsAdapter(inflater.getContext());
         mListView.setAdapter(mAdapter);
 
@@ -40,20 +41,12 @@ public class HistoryBillsFragment extends BaseFragment{
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                new GetDataTask().execute();
+
+                new GetDataTask().execute(refreshView.getCurrentMode()==PullToRefreshBase.Mode.PULL_FROM_END);
             }
         });
 
         return view;
-    }
-
-    public void init(){
-        List<Bill> bills = new ArrayList<Bill>();
-        for(int i = 0; i < 5; i++){
-            bills.add(new Bill(Bill.BILLTYPE_TRUNK, "guandong", "zhongshan", "july first"));
-        }
-
-        mAdapter.setBills(bills);
     }
 
     @Override
@@ -62,13 +55,15 @@ public class HistoryBillsFragment extends BaseFragment{
     }
 
     private void initBills(){
-        if(User.getInstance().getHistoryBills() == null){
+        if(!mHasInit){
             NetService service = new NetService(getActivity());
             service.getDefaultHistoryBills(new NetService.BillsCallBack() {
                 @Override
                 public void onCall(NetProtocol result, List<Bill> bills) {
                     if (result.code == NetProtocol.SUCCESS) {
-
+                        User.getInstance().initHistoryBills(bills);
+                        mAdapter.setBills(User.getInstance().getHistoryBills());
+                        mHasInit = true;
                     }
                 }
             });
@@ -77,26 +72,48 @@ public class HistoryBillsFragment extends BaseFragment{
         }
     }
 
-    private class GetDataTask extends AsyncTask<Void, Void, Bill> {
+    private void extendBills(final boolean isPrev){
+        List<Bill> bills = User.getInstance().getHistoryBills();
+        String fromId = "";
+        if(bills.size() > 0){
+            Bill last = isPrev ? bills.get(bills.size()-1) : bills.get(0);
+            fromId = last.id;
+        }
+
+        final HistoryBillsFragment self = this;
+        NetService service = new NetService(self.getActivity().getApplicationContext());
+        service.getHistoryBill(fromId, isPrev, new NetService.BillsCallBack() {
+            @Override
+            public void onCall(NetProtocol result, List<Bill> bills) {
+                if(result.code == NetProtocol.SUCCESS && bills.size()>0){
+                    if(isPrev)
+                        User.getInstance().extendHistoryBills(bills);
+                    else
+                        User.getInstance().headExtendHistoryBills(bills);
+                    mAdapter.notifyDataSetChanged();
+                }
+                mListView.onRefreshComplete();
+            }
+        });
+    }
+
+    private class GetDataTask extends AsyncTask<Boolean, Void, Boolean> {
 
         @Override
-        protected Bill doInBackground(Void... params) {
+        protected Boolean doInBackground(Boolean... params) {
             // Simulates a background job.
             try {
-                Thread.sleep(4000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
-            return new Bill(Bill.BILLTYPE_TRUNK, "ffffff", "aaaaaaaa", "july jdfklasjf");
+            return  params[0];
         }
 
         @Override
-        protected void onPostExecute(Bill bill) {
-            mAdapter.addBill(bill);
+        protected void onPostExecute(Boolean value) {
+            extendBills(value);
 
-            // Call onRefreshComplete when the list has been refreshed.
-            mListView.onRefreshComplete();
-
-            super.onPostExecute(bill);
+            super.onPostExecute(value);
         }
     }
 }

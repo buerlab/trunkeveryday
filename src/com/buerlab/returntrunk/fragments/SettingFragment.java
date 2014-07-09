@@ -32,12 +32,6 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.setting_frag, container, false);
-        init();
-        return  mView;
-    }
-
-    public void init(){
-
         ViewGroup trunksContainer = (ViewGroup)mView.findViewById(R.id.setting_trunks);
         for(Trunk trunk : User.getInstance().trunks){
             TextView textView = new TextView(getActivity());
@@ -99,6 +93,7 @@ public class SettingFragment extends BaseFragment implements NewTrunkDialog.NewT
                 commentdialog.show(getActivity().getFragmentManager(), "addComment");
             }
         });
+        return  mView;
     }
 
     public void onNewTrunkDialogConfirm(final Trunk trunk){

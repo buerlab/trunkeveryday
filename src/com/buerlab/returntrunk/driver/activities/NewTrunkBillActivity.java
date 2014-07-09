@@ -122,11 +122,11 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                         new Address(currToContent).toFullString(), currTimeStamp);
 
                 NetService service = new NetService(self);
-                service.sendBill(bill, new NetService.NetCallBack() {
+                service.sendBill(bill, new NetService.BillsCallBack() {
                     @Override
-                    public void onCall(NetProtocol result) {
-                        if (result.code == NetProtocol.SUCCESS) {
-                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bill);
+                    public void onCall(NetProtocol result, List<Bill> bills) {
+                        if (result.code == NetProtocol.SUCCESS && bills.size() > 0) {
+                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
                             EventCenter.shared().dispatch(evt);
                             self.finish();
                         } else {

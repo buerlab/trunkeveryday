@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -44,7 +45,7 @@ public class User {
     public String driverLicenseVerified="0";
 
     private List<Bill> mBills = null;
-    private List<Bill> mHistoryBills;
+    private LinkedList<Bill> mHistoryBills;
 
     //type would be trunk or owner
     private String userType = "";
@@ -83,6 +84,7 @@ public class User {
         driverLicense="";
         driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
+        mHistoryBills = new LinkedList<Bill>();
         mDriverComments = new ArrayList<Comment>();
         mOnwerComments = new ArrayList<Comment>();
         //type would be trunk or owner
@@ -172,9 +174,18 @@ public class User {
         mBills.add(bill);
     }
 
-    public void initHistoryBills(List<Bill> bills){ mHistoryBills = bills; }
+    public void initHistoryBills(List<Bill> bills){
+        for(Bill bill : bills)
+            mHistoryBills.add(bill);
+    }
 
     public void extendHistoryBills(List<Bill> bills){ mHistoryBills.addAll(bills); }
+
+    public void headExtendHistoryBills(List<Bill> bills){
+        for(int i = bills.size()-1; i >= 0; i--){
+            mHistoryBills.addFirst(bills.get(i));
+        }
+    }
 
     public List<Bill> getHistoryBills(){ return mHistoryBills; }
 

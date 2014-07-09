@@ -16,6 +16,10 @@ public class Bill {
     static public String BILLTYPE_TRUNK = "trunk";
     static public String BILLTYPE_GOODS = "goods";
 
+    static public String HISTORY_BILLTYPE_GOODS = "history_goods";
+    static public String HISTORY_BILLTYPE_TRUNK = "history_trunk";
+    static public String HISTORY_BILLTYPE_PERSON = "history_person";
+
     public String id = "";
     public String senderName = "";
     public String senderId = "";
@@ -42,6 +46,8 @@ public class Bill {
     public float trunkLoad = 0.0f;
     public String licensePlate = "";
 
+    public String history_type = "";
+
     //to simplify the communication to server, make a list value to a single string and parse in the same way.
     static public String listToString(List<String> input){
         String result = "";
@@ -65,7 +71,7 @@ public class Bill {
             billType = item.getString("billType");
             from = item.getString("fromAddr");
             to = item.getString("toAddr");
-            time = item.getString("billTime");
+            setTime(item.getString("billTime"));
             id = item.getString("id");
             setSenderName(item.getString("senderName"));
             senderId = item.getString("sender");
@@ -109,6 +115,16 @@ public class Bill {
         this.senderName = value;
     }
 
+    public void setTime(String value){
+        int gap = 13-value.length();
+        if(gap > 0)
+            for(int i = 0; i < gap; i++)
+                value += "0";
+        else
+            value = value.substring(0, 13);
+        time = value;
+    }
+
     public void setGoodsInfo(String _material, float _price, float _weight, String _comment){
         this.price = _price;
         this.weight = _weight;
@@ -134,6 +150,6 @@ public class Bill {
     public Trunk getTrunk(){ return trunk; }
 
     public int getHistoryBillLayout(){
-        return billType == Bill.BILLTYPE_TRUNK ? R.layout.history_bill_trunk : R.layout.history_bill_goods;
+        return billType == Bill.BILLTYPE_TRUNK ? R.layout.history_bill_trunk_overdue : R.layout.history_bill_returntrunk;
     }
 }

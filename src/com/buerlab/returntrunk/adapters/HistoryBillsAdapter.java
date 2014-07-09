@@ -62,9 +62,8 @@ public class HistoryBillsAdapter extends BaseAdapter {
         Bill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
-            view = ViewsFactory.createSendBill(mInflater, bill);
+            view = ViewsFactory.createHisotryBill(mInflater, bill);
         }else{
-            ViewsFactory.fillSendBill(view, bill);
         }
 
         return view;

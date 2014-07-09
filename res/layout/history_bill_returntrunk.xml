@@ -50,6 +50,50 @@
                           android:textSize="16sp"
                         />
             </LinearLayout>
+
+            <LinearLayout android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_marginTop="8dp">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                        >
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/qt_dw"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="出发: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/history_bill_time"
+                              android:text="2014-06-16 上午9点"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_weight="1"
+                        >
+                    <ImageView android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:src="@drawable/qt_dw"/>
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:text="到达: "
+                              android:textColor="@color/sub_text_color"
+                            />
+                    <TextView android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:id="@+id/history_bill_visitedtimes"
+                              android:text="2014-06-16 上午9点"
+                              android:textColor="@color/sub_text_color"
+                            />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"

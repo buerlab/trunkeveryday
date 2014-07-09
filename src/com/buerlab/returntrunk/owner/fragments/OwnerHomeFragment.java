@@ -84,10 +84,11 @@ public class OwnerHomeFragment extends BaseFragment {
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         for(int i = 0; i < tags.size(); i++){
-            Fragment fragment = manager.findFragmentById(tags.get(i));
+            BaseFragment fragment = (BaseFragment)manager.findFragmentById(tags.get(i));
             if(fragment !=null){
                 if(i == index){
                     transaction.show(fragment);
+                    fragment.onShow();
                 }else{
                     transaction.hide(fragment);
                 }
