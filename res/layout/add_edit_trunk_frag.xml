@@ -17,11 +17,24 @@
                       android:hint="输入车牌号"/>
         </LinearLayout>
 
-        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:id="@+id/trunk_type_btn"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:id="@+id/trunk_type_text"
+                      android:layout_weight="1"
+                      android:textSize="16sp"
+                      android:hint="选择货车类型"
 
-            <EditText android:id="@+id/set_trunk_type"
-                      style="@style/infogroup_edit_text"
-                      android:hint="选择货车类型"/>
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                    />
         </LinearLayout>
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
             <EditText android:id="@+id/set_trunk_length"
