@@ -206,6 +206,23 @@ public class NetService {
         });
     }
 
+    public void pickBill(String billId, String toUserId, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        if(!billId.isEmpty()){
+            parmsMap.put("billId", billId);
+        }else if(!toUserId.isEmpty()){
+            parmsMap.put("toUserId", toUserId);
+        }
+        request(mContext.getString(R.string.server_addr) + "api/bill/pick", createReqParms(parmsMap), "POST", callBack);
+    }
+
+    public void confirmBill(String reqId, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("reqId", reqId);
+
+        request(mContext.getString(R.string.server_addr) + "api/bill/confirm", createReqParms(parmsMap), "POST", callBack);
+    }
+
     public void billCall(String targetUserId, String billType, final NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("targetId", targetUserId);

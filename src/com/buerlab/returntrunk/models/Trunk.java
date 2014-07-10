@@ -9,6 +9,11 @@ import java.util.Map;
  */
 public class Trunk {
 
+    static public final String TYPE_FLAT = "平板车";
+    static public final String TYPE_HIGH_FENCE = "高栏";
+    static public final String TYPE_CONTAINER = "集装车";
+    static public final String TYPE_VAN = "面包车";
+
 
     public String type = "";
     public float length= 0.0f;

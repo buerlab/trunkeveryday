@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.dialogs.BillConfirmDialog;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.dialogs.PhoneConfirmDialog2;
 import com.buerlab.returntrunk.driver.activities.FindBillActivity;
@@ -56,7 +57,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
                 Intent intent = new Intent(getActivity(), NewTrunkBillActivity.class);
                 getActivity().startActivity(intent);
-
             }
         });
 
@@ -64,10 +64,12 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         findBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), FindBillActivity.class);
-//                getActivity().startActivity(intent);
-                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
-                dialog2.show();
+                Intent intent = new Intent(getActivity(), FindBillActivity.class);
+                getActivity().startActivity(intent);
+//                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
+//                dialog2.show();
+//                BillConfirmDialog dialog = new BillConfirmDialog(self.getActivity(), R.style.dialog);
+//                dialog.show();
             }
         });
 
