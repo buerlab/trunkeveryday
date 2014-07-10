@@ -23,6 +23,11 @@
 
     <color name="light_main_blue">#69D4FF</color> <!-- 注册-->
     <color name="clicked_light_main_blue">#DF69D4FF</color> <!-- 注册-->
+
+
+
+    <color name="popup_comment_clicked_item">#DBEDF6</color>
+    <color name="popup_comment_clicked_star">#F5F5F5</color>
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
 
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

@@ -270,6 +270,7 @@ public class NetService {
                            String fromUserId,
                            String toUserId,
                            String billId,
+                           String userType,
                            NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("starNum",Integer.toString(starNum) );
@@ -278,6 +279,7 @@ public class NetService {
         parmsMap.put("fromUserId", fromUserId);
         parmsMap.put("toUserId", toUserId);
         parmsMap.put("billId", billId);
+        parmsMap.put("userType",userType);
         urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
     }
 
@@ -717,6 +719,7 @@ public class NetService {
             }
             return retComments;
         }catch (JSONException e){
+            Log.e("NetService",e.toString());
             Utils.showToast(mContext,"json parse error when extract comments");
             return null;
         }

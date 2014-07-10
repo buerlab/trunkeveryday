@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -45,38 +46,9 @@ public class ViewsFactory {
     static public View createFindBill(final LayoutInflater inflater, final Bill bill){
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.find_bill_goods : R.layout.find_bill_trunk;
         View bView = inflater.inflate(layoutId, null, false);
-        if(bView != null){
+        if(bView != null) {
             fillFindBill(bView, bill);
-
-//            ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
-//            phoneBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(BaseActivity.currActivity != null){
-//                        if(!bill.phoneNum.isEmpty()){
-//                            NetService service = new NetService(inflater.getContext());
-//                            service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
-//                                @Override
-//                                public void onCall(NetProtocol result) {
-//                                    if(result.code == NetProtocol.SUCCESS){
-//                                        Toast toast = Toast.makeText(inflater.getContext(), "billcall ok!", 2);
-//                                        toast.show();
-//                                    }
-//                                }
-//                            });
-//
-//                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
-//                            BaseActivity.currActivity.startActivity(intent);
-//                        }else{
-//                            Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
-//                            toast.show();
-//                        }
-//                    }
-//
-//                }
-//            });
         }
-
         return bView;
     }
 
@@ -132,6 +104,9 @@ public class ViewsFactory {
                                 }
                             }
                         });
+
+//                        PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(bill.senderName);
+//                        dialog.show(BaseActivity.currActivity, "show");
 
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
                         BaseActivity.currActivity.startActivity(intent);

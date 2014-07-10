@@ -16,6 +16,8 @@ import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.dialogs.PickAddrDialog;
+import com.buerlab.returntrunk.dialogs.PickTrunkTypeDialog;
 import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
@@ -31,14 +33,17 @@ import com.buerlab.returntrunk.views.MyGridView;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.EventListener;
 
 /**
  * Created by zhongqiling on 14-6-23.
  */
-public class AddTrunkActivity extends BackBaseActivity {
+public class AddTrunkActivity extends BackBaseActivity implements EventCenter.OnEventListener {
 
 
-    EditText typeText;
+//    EditText typeText;
+    LinearLayout typeWrapper;
+    TextView typeText;
     EditText lengthText;
     EditText loadText;
     EditText lisenceText;
@@ -71,7 +76,9 @@ public class AddTrunkActivity extends BackBaseActivity {
 
 
 
-        typeText = (EditText)findViewById(R.id.set_trunk_type);
+//        typeText = (EditText)findViewById(R.id.set_trunk_type);
+        typeWrapper = (LinearLayout)findViewById(R.id.trunk_type_btn);
+        typeText = (TextView)findViewById(R.id.trunk_type_text);
         lengthText = (EditText)findViewById(R.id.set_trunk_length);
         loadText = (EditText)findViewById(R.id.set_trunk_load);
         lisenceText = (EditText)findViewById(R.id.set_trunk_licensePlate);
@@ -85,7 +92,15 @@ public class AddTrunkActivity extends BackBaseActivity {
             setActionBarLayout("添加货车",WITH_NONE);
         }
 
-
+        //选择出发地监听事件
+        final BaseActivity self = this;
+        typeWrapper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PickTrunkTypeDialog dialog2 = new PickTrunkTypeDialog(self,R.style.dialog);
+                dialog2.show();
+            }
+        });
 
 //
 //        mPicBtn =(Button)findViewById(R.id.add_trunk_pic);
@@ -118,6 +133,18 @@ public class AddTrunkActivity extends BackBaseActivity {
         mPicGridView = (MyGridView)findViewById(R.id.pic_gridview);
         addPicToGridLayout(picFileNames);
         service = new NetService(this);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EventCenter.shared().addEventListener(DataEvent.TRUNK_TYPE_CHANGE, this);
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        EventCenter.shared().removeEventListener(DataEvent.TRUNK_TYPE_CHANGE, this);
     }
 
     private void initData(){
@@ -363,4 +390,10 @@ public class AddTrunkActivity extends BackBaseActivity {
     };
 
 
+    @Override
+    public void onEventCall(DataEvent e) {
+        if(e.type.equals(DataEvent.TRUNK_TYPE_CHANGE)){
+            typeText.setText((String)e.data);
+        }
+    }
 }

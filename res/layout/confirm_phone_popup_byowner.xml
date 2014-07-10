@@ -76,7 +76,7 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:background="@drawable/tanchuang2">
+                  android:background="@drawable/tanchuang2_full">
         <LinearLayout android:layout_width="fill_parent"
                         android:background="@drawable/popup_item_wrapper_bottom_border"
                       android:layout_height="50dp"

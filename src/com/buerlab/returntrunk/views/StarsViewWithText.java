@@ -45,7 +45,7 @@ public class StarsViewWithText extends LinearLayout {
         }else if(num <1){
             star1.setImageResource(R.drawable.xingxing1);
             star2.setImageResource(R.drawable.xingxing1);
-            star2.setImageResource(R.drawable.xingxing1);
+            star3.setImageResource(R.drawable.xingxing1);
         }else if(num < 2){
             star1.setImageResource(R.drawable.xingxing2);
             star2.setImageResource(R.drawable.xingxing1);

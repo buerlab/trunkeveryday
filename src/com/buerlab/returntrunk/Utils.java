@@ -16,12 +16,15 @@ import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.owner.activities.OwnerMainActivity;
+import com.buerlab.returntrunk.views.StarsView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,24 +65,48 @@ public class Utils {
 //        }
 //    }
 
-
-    static public String timestampToDisplay(String ts){
+    public final static int FULL_TIME_STRING = 1;
+    public final static int YEAR_MONTH_DAY = 2;
+    static public String timestampToDisplay(long ts, int format){
         try {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(Long.parseLong(ts));
+            calendar.setTimeInMillis(ts);
             int hours = calendar.get(Calendar.HOUR_OF_DAY);
             String period = "上午";
             if(hours > 12){
                 period = "下午";
                 hours -= 12;
             }
-            return calendar.get(Calendar.YEAR)+" "+(calendar.get(Calendar.MONTH)+1)+"月"+
-                    calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
+            String ret ;
+
+            if(format == FULL_TIME_STRING){
+                ret = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"月"+
+                        calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
+            }else if(format ==YEAR_MONTH_DAY){
+                Date date = new Date(ts);
+                java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd");
+                ret = format1.format(date);
+            }else {
+                //默认
+                ret = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"月"+
+                        calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
+            }
+            return ret;
+
         }catch (Exception e){
-            return ts;
+            return String.valueOf(ts) ;
         }
     }
 
+    public static  String timestampToDisplay(long ts){
+        return timestampToDisplay(ts,FULL_TIME_STRING);
+    }
+    static public String timestampToDisplay(String ts){
+        return timestampToDisplay(Long.parseLong(ts));
+    }
+    static public String timestampToDisplay(String ts,int format){
+        return timestampToDisplay(Long.parseLong(ts,format));
+    }
 
     static public List<JSONObject> extractArray(JSONObject data){
         List<JSONObject> result = new ArrayList<JSONObject>();

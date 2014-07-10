@@ -10,6 +10,7 @@ public class DataEvent {
     static public final String DELETE_BILL = "delete_bill";
     static public final String ADDR_CHANGE = "address_change";
     static public final String TIME_CHANGE = "time_change";
+    static public final String TRUNK_TYPE_CHANGE = "trunk_type_change";
     static public final String TIME_SETTLE = "time_settle";
     static public final String JPUSH_INFORM = "jpush_inform";
 

@@ -51,7 +51,7 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"
-                  android:background="@drawable/tanchuang2">
+                  android:background="@drawable/tanchuang2_full">
         <LinearLayout style="@style/infogroup_item_wrapper"
                       android:id="@+id/new_bill_from_btn"
                       android:background="@drawable/popup_item_wrapper_bottom_border"

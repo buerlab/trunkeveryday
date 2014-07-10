@@ -10,6 +10,7 @@ import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.views.NickNameBarView;
 import com.buerlab.returntrunk.views.StarsView;
 
@@ -75,8 +76,8 @@ public class CommentListAdapter extends BaseAdapter {
 //        holder.nickname.setText(comment.fromUserName);
         holder.star.setStar(comment.starNum);
 
-        holder.time.setText(comment.commentTime);
-        holder.commentText.setText(Utils.timestampToDisplay(comment.text));
+        holder.time.setText(Utils.timestampToDisplay( (long)Float.parseFloat(comment.commentTime)* 1000,Utils.YEAR_MONTH_DAY ) );
+        holder.commentText.setText(comment.text);
         return convertView;
     }
 
