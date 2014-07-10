@@ -51,6 +51,7 @@ public class AddCommentDialog extends DialogFragment implements View.OnClickList
 
     int currentStarNum;
     String currentText;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -194,11 +195,11 @@ public class AddCommentDialog extends DialogFragment implements View.OnClickList
 //                        if(mListener != null)
 //                            mListener.onAddCommentDialogConfirm(new Trunk(type, length, load, lisence));
 
-                        service.addComment(1,"nice","李大爷",
-                                User.getInstance().userId,
-                                User.getInstance().userId,
-                                "5399818a7938ee399731c688",
-                                null);
+//                        service.addComment(1,"nice","李大爷",
+//                                User.getInstance().userId,
+//                                User.getInstance().userId,
+//                                "5399818a7938ee399731c688",
+//                                null);
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {

@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               style="@style/infogroup_group_wrapper"
+              android:paddingBottom="10dp"
         >
     <com.buerlab.returntrunk.views.NickNameBarView
             android:layout_width="fill_parent"
@@ -29,6 +30,8 @@
                     />
             <com.buerlab.returntrunk.views.StarsView
                     android:id="@+id/star"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="-1dp"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content">

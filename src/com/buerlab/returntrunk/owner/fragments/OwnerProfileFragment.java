@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
@@ -38,6 +39,7 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
     View mRoot;
     User mUser;
 
+    ImageView IDNumVerifyIcon;
 
     public final static int EDIT_NICKNAME = 0;
     @Override
@@ -69,6 +71,8 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
         driverLicenseTextView = (TextView)mRoot.findViewById(R.id.textview_driverLicense);
 
         driverLicenseContainer.setVisibility(View.GONE);
+
+        IDNumVerifyIcon = (ImageView)mRoot.findViewById(R.id.idnum_verify);
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
 
@@ -130,10 +134,18 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
         locationTextView.setText(mUser.homeLocation);
         int IDNumVerified =  Integer.parseInt(mUser.IDNumVerified);
         switch (IDNumVerified){
-            case 0: IDNumTextView.setText("未审核");break;
-            case 1:IDNumTextView.setText("审核中");break;
-            case 2:IDNumTextView.setText("通过审核");break;
-            case 3:IDNumTextView.setText("审核失败");break;
+            case 0: IDNumTextView.setText("未审核");
+                IDNumVerifyIcon.setImageResource(R.drawable.qt2_wsh);
+                break;
+            case 1:IDNumTextView.setText("审核中");
+                IDNumVerifyIcon.setImageResource(R.drawable.qt_dd);
+                break;
+            case 2:IDNumTextView.setText("通过审核");
+                IDNumVerifyIcon.setImageResource(R.drawable.verified);
+                break;
+            case 3:IDNumTextView.setText("审核失败");
+                IDNumVerifyIcon.setImageResource(R.drawable.qt2_wtg);
+                break;
             default:break;
         }
 

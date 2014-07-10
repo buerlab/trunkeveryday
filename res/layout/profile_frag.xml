@@ -54,6 +54,7 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
+                           android:id="@+id/idnum_verify"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -78,6 +79,7 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
+                           android:id="@+id/driver_license_verify"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"

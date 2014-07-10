@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
-import com.buerlab.returntrunk.dialogs.PhoneConfirmDialog2;
+import com.buerlab.returntrunk.dialogs.*;
+import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.driver.activities.FindBillActivity;
 import com.buerlab.returntrunk.driver.activities.NewTrunkBillActivity;
 import com.buerlab.returntrunk.adapters.SendBillListAdapter;
@@ -66,7 +66,8 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
             public void onClick(View v) {
 //                Intent intent = new Intent(getActivity(), FindBillActivity.class);
 //                getActivity().startActivity(intent);
-                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
+//                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
+                com.buerlab.returntrunk.dialogs.AddCommentDialog dialog2 = new AddCommentDialog(self.getActivity(),R.style.dialog);
                 dialog2.show();
             }
         });

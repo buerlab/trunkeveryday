@@ -15,6 +15,7 @@
                   android:text="你还没有得到评价"
                   android:textSize="26dp"
                   android:layout_gravity="center"
+                  android:textColor="@color/sub_text_color"
                   android:gravity="center"/>
 
         <ListView android:id="@+id/comments_list"
