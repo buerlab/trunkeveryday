@@ -1,10 +1,13 @@
 package com.buerlab.returntrunk.jpush;
 
 import android.content.Context;
+import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.dialogs.BillConfirmDialog;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.jpush.models.BillRequest;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -37,8 +40,17 @@ public class JPushCenter {
         if(protocal.code == JPushProtocal.JPUSH_PHONE_CALL){
             BaseActivity curr = BaseActivity.currActivity;
             if(curr != null){
-                PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
-                dialog.show(curr.getFragmentManager(), "phonecall");
+                try{
+                    BillRequest req = new BillRequest(new JSONObject(protocal.msg));
+
+                }catch (Exception e){
+
+                }
+                if(BaseActivity.currActivity != null){
+                    BillConfirmDialog dialog = new BillConfirmDialog(BaseActivity.currActivity, R.style.dialog);
+                    dialog.show();
+                }
+
             }
         }
         else if(protocal.code == JPushProtocal.BILL_VISITED){

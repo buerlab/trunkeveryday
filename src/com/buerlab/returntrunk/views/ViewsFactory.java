@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -45,38 +46,9 @@ public class ViewsFactory {
     static public View createFindBill(final LayoutInflater inflater, final Bill bill){
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.find_bill_goods : R.layout.find_bill_trunk;
         View bView = inflater.inflate(layoutId, null, false);
-        if(bView != null){
+        if(bView != null) {
             fillFindBill(bView, bill);
-
-            ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
-            phoneBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(BaseActivity.currActivity != null){
-                        if(!bill.phoneNum.isEmpty()){
-                            NetService service = new NetService(inflater.getContext());
-                            service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
-                                @Override
-                                public void onCall(NetProtocol result) {
-                                    if(result.code == NetProtocol.SUCCESS){
-                                        Toast toast = Toast.makeText(inflater.getContext(), "billcall ok!", 2);
-                                        toast.show();
-                                    }
-                                }
-                            });
-
-                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
-                            BaseActivity.currActivity.startActivity(intent);
-                        }else{
-                            Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
-                            toast.show();
-                        }
-                    }
-
-                }
-            });
         }
-
         return bView;
     }
 
@@ -86,38 +58,12 @@ public class ViewsFactory {
         if(bView != null){
             fillFindBill(bView, bill);
 
-            ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
-            phoneBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(BaseActivity.currActivity != null){
-                        if(!bill.phoneNum.isEmpty()){
-                            NetService service = new NetService(inflater.getContext());
-                            service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
-                                @Override
-                                public void onCall(NetProtocol result) {
-                                    if(result.code == NetProtocol.SUCCESS){
-                                        Toast toast = Toast.makeText(inflater.getContext(), "billcall ok!", 2);
-                                        toast.show();
-                                    }
-                                }
-                            });
-
-                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
-                            BaseActivity.currActivity.startActivity(intent);
-                        }else{
-
-                        }
-                    }
-
-                }
-            });
         }
 
         return bView;
     }
 
-    static public void fillFindBill(View bView, Bill bill){
+    static public void fillFindBill(final View bView, final Bill bill){
         ((TextView)bView.findViewById(R.id.nickname)).setText(bill.senderName);
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
@@ -127,6 +73,51 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.find_bill_weight)).setText(String.valueOf(bill.weight));
             ((TextView)bView.findViewById(R.id.find_bill_price)).setText(String.valueOf(bill.price));
         }
+        else if(bill.billType.equals(Bill.BILLTYPE_TRUNK)){
+
+            ((TextView)bView.findViewById(R.id.find_bill_load)).setText(String.valueOf(bill.trunkLoad));
+            ((TextView)bView.findViewById(R.id.find_bill_length)).setText(String.valueOf(bill.trunkLength));
+        }
+
+        ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
+        phoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(BaseActivity.currActivity != null){
+                    if(!bill.phoneNum.isEmpty()){
+                        NetService service = new NetService(bView.getContext());
+                        service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
+                            @Override
+                            public void onCall(NetProtocol result) {
+                                if(result.code == NetProtocol.SUCCESS){
+                                    Toast toast = Toast.makeText(bView.getContext(), "billcall ok!", 2);
+                                    toast.show();
+                                }
+                            }
+                        });
+
+                        service.pickBill(bill.id, "", new NetService.NetCallBack() {
+                            @Override
+                            public void onCall(NetProtocol result) {
+                                if (result.code == NetProtocol.SUCCESS){
+
+                                }
+                            }
+                        });
+
+//                        PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(bill.senderName);
+//                        dialog.show(BaseActivity.currActivity, "show");
+
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
+                        BaseActivity.currActivity.startActivity(intent);
+                    }else{
+                            Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
+                            toast.show();
+                    }
+                }
+
+            }
+        });
 
     }
 
@@ -134,35 +125,6 @@ public class ViewsFactory {
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.new_bill_goods : R.layout.new_bill_trunk;
         View bView = inflater.inflate(layoutId, null, false);
         fillSendBill(bView, bill);
-
-        if(bView != null)
-            bView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    BillViewContxtMenu menu = new BillViewContxtMenu();
-                    menu.setListener(new BillViewContxtMenu.OnBillContextListener() {
-                        @Override
-                        public void onDelete() {
-                            NetService service = new NetService(BaseActivity.currActivity);
-                            service.deleteBill(bill, new NetService.NetCallBack() {
-                                @Override
-                                public void onCall(NetProtocol result) {
-                                    if(result.code == NetProtocol.SUCCESS){
-                                        EventCenter.shared().dispatch(new DataEvent(DataEvent.DELETE_BILL, bill));
-                                    }else{
-                                        Utils.defaultNetProAction(BaseActivity.currActivity, result);
-                                    }
-
-                                }
-                            });
-
-                        }
-                    });
-                    menu.show(BaseActivity.currActivity.getFragmentManager(), "menu");
-
-                    return true;
-                }
-            });
 
         return bView;
     }
@@ -178,6 +140,34 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.new_bill_weight)).setText(String.valueOf(bill.weight));
             ((TextView)bView.findViewById(R.id.new_bill_price)).setText(String.valueOf(bill.price));
         }
+
+        bView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                BillViewContxtMenu menu = new BillViewContxtMenu();
+                menu.setListener(new BillViewContxtMenu.OnBillContextListener() {
+                    @Override
+                    public void onDelete() {
+                        NetService service = new NetService(BaseActivity.currActivity);
+                        service.deleteBill(bill, new NetService.NetCallBack() {
+                            @Override
+                            public void onCall(NetProtocol result) {
+                                if(result.code == NetProtocol.SUCCESS){
+                                    EventCenter.shared().dispatch(new DataEvent(DataEvent.DELETE_BILL, bill));
+                                }else{
+                                    Utils.defaultNetProAction(BaseActivity.currActivity, result);
+                                }
+
+                            }
+                        });
+
+                    }
+                });
+                menu.show(BaseActivity.currActivity.getFragmentManager(), "menu");
+
+                return true;
+            }
+        });
     }
 
     static public View createHisotryBill(LayoutInflater inflater, final Bill bill){

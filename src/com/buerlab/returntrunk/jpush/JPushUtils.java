@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import org.json.JSONObject;
 
 import java.util.Set;
 
@@ -23,6 +24,10 @@ public class JPushUtils {
                 }
             }
         });
+    }
+
+    static public void parseBillReqData(JSONObject data){
+
     }
 
 }

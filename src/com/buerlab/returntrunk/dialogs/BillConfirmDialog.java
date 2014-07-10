@@ -6,8 +6,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.jpush.models.BillRequest;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
 
 /**
  * Created by teddywu on 14-7-7.
@@ -15,6 +19,8 @@ import com.buerlab.returntrunk.Utils;
 public class BillConfirmDialog extends Dialog{
 
     private Context mConext;
+    private BillRequest mRequest;
+
     public BillConfirmDialog(Context context) {
         super(context);
         mConext = context;
@@ -25,6 +31,13 @@ public class BillConfirmDialog extends Dialog{
     public BillConfirmDialog(Context context, int theme) {
         super(context, theme);
         mConext = context;
+        init();
+    }
+
+    public BillConfirmDialog(Context context, int theme, BillRequest request) {
+        super(context, theme);
+        mConext = context;
+        mRequest = request;
         init();
     }
 
@@ -52,13 +65,27 @@ public class BillConfirmDialog extends Dialog{
 //                dismiss();
 //            }
 //        });
+
+        TextView nickName = (TextView)diaView.findViewById(R.id.nickname);
+        nickName.setText(mRequest.senderName);
+
         final BillConfirmDialog self = this;
         LinearLayout submitBtn = (LinearLayout)findViewById(R.id.button_true);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 self.dismiss();
 
+                NetService service = new NetService(getContext());
+                service.confirmBill(mRequest.reqId, new NetService.NetCallBack() {
+                    @Override
+                    public void onCall(NetProtocol result) {
+                        if(result.code == NetProtocol.SUCCESS){
+
+                        }
+                    }
+                });
             }
         });
 

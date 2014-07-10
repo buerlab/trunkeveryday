@@ -56,7 +56,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
 
                 Intent intent = new Intent(getActivity(), NewTrunkBillActivity.class);
                 getActivity().startActivity(intent);
-
             }
         });
 
@@ -64,11 +63,17 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         findBillBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), FindBillActivity.class);
+                getActivity().startActivity(intent);
+//                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
+//                dialog2.show();
+//                BillConfirmDialog dialog = new BillConfirmDialog(self.getActivity(), R.style.dialog);
+//                dialog.show();
 //                Intent intent = new Intent(getActivity(), FindBillActivity.class);
 //                getActivity().startActivity(intent);
 //                PhoneConfirmDialog2 dialog2 = new PhoneConfirmDialog2(self.getActivity());
-                com.buerlab.returntrunk.dialogs.AddCommentDialog dialog2 = new AddCommentDialog(self.getActivity(),R.style.dialog);
-                dialog2.show();
+//                com.buerlab.returntrunk.dialogs.AddCommentDialog dialog2 = new AddCommentDialog(self.getActivity(),R.style.dialog);
+//                dialog2.show();
             }
         });
 
