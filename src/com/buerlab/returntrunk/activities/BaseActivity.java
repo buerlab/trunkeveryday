@@ -19,6 +19,7 @@ public class BaseActivity extends FragmentActivity {
     public final static int WITH_MENU = 2;
     public final static int WITH_NONE = 0;
 
+    final BaseActivity self = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

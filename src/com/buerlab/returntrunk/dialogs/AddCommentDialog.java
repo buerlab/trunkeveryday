@@ -185,18 +185,10 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
                     return;
                 }else {
 
-                    //如果我是货车司机，那么我是对货主进行评价，对方的userType应该为owner;
-                    String userType ;
-                    if(User.getInstance().getUserType() == "driver"){
-                        userType = "owner";
-                    }else {
-                        userType = "dirver";
-                    }
                     service.addComment(currentStarNum,currentText,User.getInstance().nickName,
                             User.getInstance().userId,
                             toUserId,
                             billId,
-                            userType,
                             new NetService.NetCallBack() {
                                 @Override
                                 public void onCall(NetProtocol result) {

@@ -253,7 +253,6 @@ public class NetService {
                            String fromUserId,
                            String toUserId,
                            String billId,
-                           String userType,
                            NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("starNum",Integer.toString(starNum) );
@@ -262,7 +261,6 @@ public class NetService {
         parmsMap.put("fromUserId", fromUserId);
         parmsMap.put("toUserId", toUserId);
         parmsMap.put("billId", billId);
-        parmsMap.put("userType",userType);
         urlRequest(mContext.getString(R.string.server_addr) + "api/comment", createReqParms(parmsMap), "POST", callback);
     }
 
@@ -277,6 +275,16 @@ public class NetService {
         urlRequest(mContext.getString(R.string.server_addr)+"api/regcode/check","phonenum="+phonenum+"&regcode="+regcode,"GET",callBack);
     }
 
+    //////////////////////////
+    //获取完整资料
+    //////////////////////////
+
+    public void getUserCompleteData(String userId,String getType, final NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("userId",userId );
+        parmsMap.put("getType", getType);
+        urlRequest(mContext.getString(R.string.server_addr)+"api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
+    }
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("latitude", Double.toString(latitude) );
@@ -682,7 +690,7 @@ public class NetService {
         return returnBills;
     }
 
-    private List<Comment> extractComments(JSONArray data){
+    public static List<Comment> extractComments(JSONArray data){
         List<Comment> retComments = new ArrayList<Comment>();
         try{
             for(int i = 0; i < data.length(); i++){
@@ -703,7 +711,7 @@ public class NetService {
             return retComments;
         }catch (JSONException e){
             Log.e("NetService",e.toString());
-            Utils.showToast(mContext,"json parse error when extract comments");
+//            Utils.showToast(mContext,"json parse error when extract comments");
             return null;
         }
     }
