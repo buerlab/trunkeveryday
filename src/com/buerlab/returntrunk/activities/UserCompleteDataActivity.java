@@ -1,17 +1,21 @@
 package com.buerlab.returntrunk.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.UserCompleteData;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.views.StarsViewWithText;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by teddywu on 14-6-17.
@@ -29,7 +33,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
 
     TextView textview_nickname;
     StarsViewWithText stars_view;
-    TextView total_comment_count;
+    TextView count_textview;
     TextView average_star_num;
     TextView textview_phoneNum;
     TextView home_location;
@@ -71,10 +75,11 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         starsViewWithText.setSize(30);
 
         container = (LinearLayout)findViewById(R.id.container);
-        container.setVisibility(View.GONE);
+//        container.setVisibility(View.GONE);
         textview_nickname = (TextView)findViewById(R.id.textview_nickname);
         stars_view = (StarsViewWithText)findViewById(R.id.stars_view);
-        total_comment_count = (TextView)findViewById(R.id.total_comment_count);
+
+        count_textview = (TextView)findViewById(R.id.comment_count2);
         average_star_num = (TextView)findViewById(R.id.average_star_num);
         textview_phoneNum = (TextView)findViewById(R.id.textview_phoneNum);
         home_location = (TextView)findViewById(R.id.home_location);
@@ -126,7 +131,9 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         average_star_num.setText(String.valueOf(data.stars));
 
         if(data.comments !=null){
-            total_comment_count.setText(data.comments.size());
+            count_textview.setText(String.valueOf(data.comments.size()) );
+        }else {
+            count_textview.setText("0");
         }
 
         textview_phoneNum.setText(getFormatPhoneNum(data.phoneNum));
@@ -147,6 +154,13 @@ public class UserCompleteDataActivity extends BackBaseActivity {
                 IDNumVerifyIcon.setImageResource(R.drawable.qt2_wtg);
                 break;
             default:break;
+        }
+
+        if(getType.equals("owner")){
+            findViewById(R.id.driver_license_wrapper).setVisibility(View.GONE);
+            findViewById(R.id.trunk_license_wrapper).setVisibility(View.GONE);
+            findViewById(R.id.support_location_wrapper).setVisibility(View.GONE);
+            findViewById(R.id.IDNum_wrapper).setBackgroundResource(R.color.white);
         }
 
         int driverLisenceVerified =  Integer.parseInt(data.driverLicenseVerified);
@@ -182,13 +196,129 @@ public class UserCompleteDataActivity extends BackBaseActivity {
                 break;
             default:break;
         }
-        
-         View v = LayoutInflater.from(this).inflate(R.layout.trunk_item, null);
-        ImageView set_current_trunk_btn = (ImageView)v.findViewById(R.id.set_current_trunk_btn);
-        set_current_trunk_btn.setVisibility(View.GONE);
-        tab_trunk_wrapper.addView(v);
+
+        renderTrunk();
+
+        renderComment();
     }
 
+
+    private void renderTrunk(){
+        View convertView = LayoutInflater.from(this).inflate(R.layout.trunk_item, null);
+        ImageView set_current_trunk_btn = (ImageView)convertView.findViewById(R.id.set_current_trunk_btn);
+        set_current_trunk_btn.setVisibility(View.GONE);
+        tab_trunk_wrapper.addView(convertView);
+
+        Trunk trunk = data.trunk;
+
+        if(trunk ==null){
+            tab_trunk_wrapper.setVisibility(View.GONE);
+            return;
+        }
+
+        ViewHolder holder = new ViewHolder();
+        /*得到各个控件的对象*/
+        holder.licensePlateTxtView = (TextView) convertView.findViewById(R.id.licensePlate);
+        holder.typeTxtView = (TextView) convertView.findViewById(R.id.type);
+        holder.loadTxtView = (TextView) convertView.findViewById(R.id.load);
+        holder.lengthTxtView = (TextView) convertView.findViewById(R.id.length);
+        holder.picGridLayout = (GridLayout)convertView.findViewById(R.id.pic_gridview);
+        holder.verifyIcon = (ImageView)convertView.findViewById(R.id.verify_icon);
+        holder.verifyText = (TextView)convertView.findViewById(R.id.verify_text);
+
+        holder.isVerified =Integer.parseInt(trunk.trunkLicenseVerified);
+        holder.isUsedImageView = (ImageView) convertView.findViewById(R.id.set_current_trunk_btn);
+        convertView.setTag(holder); //绑定ViewHolder对象
+
+        holder.licensePlateTxtView.setText(trunk.lisencePlate);
+        holder.typeTxtView.setText(trunk.type);
+        holder.loadTxtView.setText(String.valueOf(trunk.load));
+        holder.lengthTxtView.setText(String.valueOf(trunk.length));
+
+        int trunkLisenceVerified2 =  Integer.parseInt(trunk.trunkLicenseVerified);
+        switch (trunkLisenceVerified2){
+            case 0: holder.verifyIcon.setImageResource(R.drawable.qt2_zy);
+                holder.verifyText.setText("未审核");break;
+            case 1: holder.verifyIcon.setImageResource(R.drawable.qt_dd);
+                holder.verifyText.setText("审核中");break;
+            case 2: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
+                holder.verifyText.setText("通过审核");break;
+            case 3: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
+                holder.verifyText.setText("审核失败");break;
+            default:break;
+        }
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        holder.picGridLayout.removeAllViews();
+        int width = (Utils.getScreenSize()[0] - 40)/3;
+        if(trunk.trunkPicFilePaths!=null){
+            for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
+                ImageView iv = new ImageView(this);
+                iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                params.setMargins(0,0,5,5);
+                params.width = width;
+                params.height = width;
+                holder.picGridLayout.addView(iv,params);
+                imageLoader.displayImage(this.getString(R.string.server_addr2)+ trunk.trunkPicFilePaths.get(i), iv);
+                iv.setOnClickListener(new OnPhotoClick(i,trunk));
+            }
+
+        }
+    }
+
+    class OnPhotoClick implements View.OnClickListener {
+        int position;
+        Trunk trunk;
+        public OnPhotoClick(int position,Trunk trunk) {
+            this.position=position;
+            this.trunk = trunk;
+        }
+
+        @Override
+        public void onClick(View v) {
+            String[] urls = new String[trunk.trunkPicFilePaths.size()];
+            try {
+                for (int i=0;i<urls.length;i++){
+                    String[] path = trunk.trunkPicFilePaths.get(i).split("/");
+                    urls[i] = getString(R.string.server_addr2);
+                    for(int j =0;j<path.length;j++){
+                        if(!path[j].isEmpty()){
+                            urls[i] += "/"+ java.net.URLEncoder.encode(path[j],"utf-8");
+                        }
+                    }
+                }
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", position);
+                bundle.putStringArray("urls",urls);
+                Intent intent = new Intent(self,GalleryUrlActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }catch (UnsupportedEncodingException e){
+                Log.e(TAG, e.toString());
+            }
+        }
+    }
+
+    /*存放控件 的ViewHolder*/
+    private final class ViewHolder {
+        public TextView licensePlateTxtView;
+        public TextView typeTxtView;
+        public TextView loadTxtView;
+        public TextView lengthTxtView;
+        public ImageView verifyIcon;
+        public TextView verifyText;
+        public GridLayout picGridLayout;
+        public ImageView isUsedImageView;
+        public int position;
+        public int isVerified;
+    }
+
+
+    private void renderComment(){
+
+    }
     private String getFormatPhoneNum(String phonenum){
         if (phonenum.isEmpty())
             return phonenum;

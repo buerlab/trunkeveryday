@@ -231,6 +231,7 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                         intent.putExtra("without_splash",true);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
+                        finish();
                     }else {
                         finish();
                     }

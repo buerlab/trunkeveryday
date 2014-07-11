@@ -14,7 +14,7 @@
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder">
             <EditText android:id="@+id/set_trunk_licensePlate"
                       style="@style/infogroup_edit_text"
-                      android:hint="输入车牌号"/>
+                      android:hint="输入车牌号(必填)"/>
         </LinearLayout>
 
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
@@ -27,7 +27,7 @@
                       android:id="@+id/trunk_type_text"
                       android:layout_weight="1"
                       android:textSize="16sp"
-                      android:hint="选择货车类型"
+                      android:hint="选择货车类型(必填)"
 
                       android:layout_height="wrap_content"/>
             <ImageView android:layout_width="wrap_content"
@@ -40,7 +40,7 @@
             <EditText android:id="@+id/set_trunk_length"
                       style="@style/infogroup_edit_text"
                       android:layout_weight="1"
-                      android:hint="输入车长"
+                      android:hint="输入车长(必填)"
                       android:numeric="decimal"/>
             <TextView style="@style/infogroup_sub_text"
                       android:layout_weight="0"
@@ -51,7 +51,7 @@
             <EditText android:id="@+id/set_trunk_load"
                       style="@style/infogroup_edit_text"
                       android:layout_weight="1"
-                      android:hint="输入载重"
+                      android:hint="输入载重(必填)"
                       android:numeric="decimal"/>
             <TextView style="@style/infogroup_sub_text"
                       android:layout_weight="0"
@@ -65,7 +65,7 @@
                       >
             <EditText android:id="@+id/set_trunk_license"
                       style="@style/infogroup_edit_text"
-                      android:hint="行驶证"
+                      android:hint="行驶证(选填)"
                       android:numeric="decimal"/>
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
@@ -83,13 +83,13 @@
                       android:layout_gravity="center_vertical"
                       android:textSize="16sp"
                       android:textColor="@color/sub_text_color"
-                      android:text="添加行驶证照片"/>
+                      android:text="添加行驶证照片(选填)"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
                   android:orientation="vertical">
         <LinearLayout style="@style/infogroup_item_wrapper">
-            <TextView android:text="添加货车照片"
+            <TextView android:text="添加货车照片(选填)"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textSize="16sp"

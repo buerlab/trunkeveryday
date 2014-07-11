@@ -466,11 +466,11 @@ public class NetService {
                 @Override
                 public void onCall(NetProtocol result) {
                     try {
-                        if(loadingDialog!=null){
+                        if (loadingDialog != null) {
                             loadingDialog.dismiss();
                         }
-                    }catch (Exception e){
-                        Log.e("NetService","loading tips null");
+                    } catch (Exception e) {
+                        Log.e("NetService", "loading tips null");
                     }
 
                     callback.onCall(result);
@@ -727,7 +727,11 @@ public class NetService {
         List<Comment> retComments = new ArrayList<Comment>();
         try{
             for(int i = 0; i < data.length(); i++){
-                JSONObject item = data.getJSONObject(i);
+                JSONObject item = (JSONObject)data.get(i);
+                NickBarData nickBarData = null;
+                if(item.has("nickBarData")){
+                    nickBarData = new NickBarData(item.getJSONObject("nickBarData"));
+                }
                 Comment comment = new Comment(item.getInt("starNum"),
                         item.getString("userType"),
                         item.getString("commentTime"),
@@ -736,7 +740,7 @@ public class NetService {
                         item.getString("toUserId"),
                         item.getString("billId"),
                         item.getString("text"),
-                        new NickBarData(item.getJSONObject("nickBarData"))
+                        nickBarData
                         );
                 comment.id = item.getString("commentId");
                 retComments.add(comment);
