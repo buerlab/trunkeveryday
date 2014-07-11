@@ -139,7 +139,8 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         container.setVisibility(View.VISIBLE);
         textview_nickname.setText(data.nickName);
         stars_view.setStar(data.stars);
-        average_star_num.setText(String.valueOf(data.stars));
+        double num1 = ((int)(data.stars*10))/10.0;
+        average_star_num.setText(String.valueOf(num1));
 
         if(data.comments !=null){
             count_textview.setText(String.valueOf(data.comments.size()) );

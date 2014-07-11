@@ -36,18 +36,31 @@ public class StarsView extends LinearLayout {
     public void setStar(double num){
         if(num<0){
             return;
-        }else if(num <1){
+        }else if(num <0.5){
             star1.setImageResource(R.drawable.xingxing1);
+            star2.setImageResource(R.drawable.xingxing1);
+            star3.setImageResource(R.drawable.xingxing1);
+        }
+        else if(num <1){
+            star1.setImageResource(R.drawable.xingxing3);
+            star2.setImageResource(R.drawable.xingxing1);
+            star3.setImageResource(R.drawable.xingxing1);
+        }else if(num < 1.5){
+            star1.setImageResource(R.drawable.xingxing2);
             star2.setImageResource(R.drawable.xingxing1);
             star3.setImageResource(R.drawable.xingxing1);
         }else if(num < 2){
             star1.setImageResource(R.drawable.xingxing2);
-            star2.setImageResource(R.drawable.xingxing1);
+            star2.setImageResource(R.drawable.xingxing3);
+            star3.setImageResource(R.drawable.xingxing1);
+        }else if(num<2.5){
+            star1.setImageResource(R.drawable.xingxing2);
+            star2.setImageResource(R.drawable.xingxing2);
             star3.setImageResource(R.drawable.xingxing1);
         }else if(num<3){
             star1.setImageResource(R.drawable.xingxing2);
             star2.setImageResource(R.drawable.xingxing2);
-            star3.setImageResource(R.drawable.xingxing1);
+            star3.setImageResource(R.drawable.xingxing3);
         }else if(num==3){
             star1.setImageResource(R.drawable.xingxing2);
             star2.setImageResource(R.drawable.xingxing2);
