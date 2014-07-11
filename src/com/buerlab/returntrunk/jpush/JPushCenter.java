@@ -42,13 +42,12 @@ public class JPushCenter {
             if(curr != null){
                 try{
                     BillRequest req = new BillRequest(new JSONObject(protocal.msg));
-
+                    if(BaseActivity.currActivity != null){
+                        BillConfirmDialog dialog = new BillConfirmDialog(BaseActivity.currActivity, R.style.dialog, req);
+                        dialog.show();
+                    }
                 }catch (Exception e){
 
-                }
-                if(BaseActivity.currActivity != null){
-                    BillConfirmDialog dialog = new BillConfirmDialog(BaseActivity.currActivity, R.style.dialog);
-                    dialog.show();
                 }
 
             }

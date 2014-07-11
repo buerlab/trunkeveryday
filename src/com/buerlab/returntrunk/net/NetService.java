@@ -33,6 +33,8 @@ public class NetService {
 
     public interface BillsCallBack{ public void onCall(NetProtocol result, List<Bill> bills); }
 
+    public interface HistoryBillsCallBack{ public void onCall(NetProtocol result, List<HistoryBill> bills); }
+
     public interface CommentsCallBack{ public void onCall(NetProtocol result, List<Comment> comments); }
 
     private Activity mActivity = null;
@@ -177,12 +179,12 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill/visited", createReqParms(null), "POST", callBack);
     }
 
-    public void getDefaultHistoryBills(final BillsCallBack callBack){
+    public void getDefaultHistoryBills(final HistoryBillsCallBack callBack){
         request(mContext.getString(R.string.server_addr)+"api/bill/history", createReqParms(null), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS  && result.arrayData != null){
-                    callBack.onCall(result, extractBills(result.arrayData));
+                    callBack.onCall(result, extractHistoryBills(result.arrayData));
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -190,7 +192,7 @@ public class NetService {
         });
     }
 
-    public void getHistoryBill(String fromBillsId, boolean isPrev, final BillsCallBack callBack){
+    public void getHistoryBill(String fromBillsId, boolean isPrev, final HistoryBillsCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("fromId", fromBillsId);
         parmsMap.put("isPrev", String.valueOf(isPrev));
@@ -198,7 +200,7 @@ public class NetService {
             @Override
             public void onCall(NetProtocol result) {
                 if (result.code == NetProtocol.SUCCESS && result.arrayData != null) {
-                    callBack.onCall(result, extractBills(result.arrayData));
+                    callBack.onCall(result, extractHistoryBills(result.arrayData));
                 } else {
                     Utils.defaultNetProAction(mActivity, result);
                 }
@@ -701,6 +703,20 @@ public class NetService {
             try{
                 JSONObject item = data.getJSONObject(i);
                 returnBills.add(new Bill(item));
+            }catch (Exception e){
+            }
+        }
+        return returnBills;
+    }
+
+    private List<HistoryBill> extractHistoryBills(JSONArray data){
+        List<HistoryBill> returnBills = new ArrayList<HistoryBill>();
+
+
+        for(int i = 0; i < data.length(); i++){
+            try{
+                JSONObject item = data.getJSONObject(i);
+                returnBills.add(new HistoryBill(item));
             }catch (Exception e){
             }
         }

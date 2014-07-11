@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
+import com.buerlab.returntrunk.dialogs.RequestBillDialog;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
@@ -14,9 +15,15 @@ import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.BillViewContxtMenu;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.HistoryBill;
+import com.buerlab.returntrunk.models.NickBarData;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
+import org.apache.http.client.UserTokenHandler;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -105,8 +112,8 @@ public class ViewsFactory {
                             }
                         });
 
-//                        PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(bill.senderName);
-//                        dialog.show(BaseActivity.currActivity, "show");
+//                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog);
+//                        dialog.show();
 
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
                         BaseActivity.currActivity.startActivity(intent);
@@ -170,11 +177,23 @@ public class ViewsFactory {
         });
     }
 
-    static public View createHisotryBill(LayoutInflater inflater, final Bill bill){
+    static public View createHisotryBill(LayoutInflater inflater, final HistoryBill bill){
         int layoutId = R.layout.history_bill_returntrunk;
         View bView = inflater.inflate(layoutId, null, false);
-
+        fillHistoryBill(bView, bill);
         return bView;
+    }
+
+    static public void fillHistoryBill(final View bView,final HistoryBill bill){
+
+        try{
+            NickNameBarView view = (NickNameBarView)bView.findViewById(R.id.history_bill_nickName);
+            view.setUser(new NickBarData(new JSONObject("{'nickName':'"+bill.nickName+"'}")), User.USERTYPE_OWNER);
+        }catch (JSONException e){
+
+        }
+        ((TextView)bView.findViewById(R.id.history_bill_from)).setText(bill.fromAddr);
+        ((TextView)bView.findViewById(R.id.history_bill_to)).setText(bill.toAddr);
     }
 
 

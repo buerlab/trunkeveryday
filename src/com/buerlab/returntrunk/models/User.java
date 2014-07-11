@@ -50,7 +50,7 @@ public class User {
     public String driverLicenseVerified="0";
 
     private List<Bill> mBills = null;
-    private LinkedList<Bill> mHistoryBills;
+    private LinkedList<HistoryBill> mHistoryBills;
 
     //type would be trunk or owner
     private String userType = "";
@@ -89,7 +89,7 @@ public class User {
         driverLicense="";
         driverLicenseVerified="0";
         mBills = new ArrayList<Bill>();
-        mHistoryBills = new LinkedList<Bill>();
+        mHistoryBills = new LinkedList<HistoryBill>();
         mDriverComments = new ArrayList<Comment>();
         mOnwerComments = new ArrayList<Comment>();
         //type would be trunk or owner
@@ -179,20 +179,20 @@ public class User {
         mBills.add(bill);
     }
 
-    public void initHistoryBills(List<Bill> bills){
-        for(Bill bill : bills)
+    public void initHistoryBills(List<HistoryBill> bills){
+        for(HistoryBill bill : bills)
             mHistoryBills.add(bill);
     }
 
-    public void extendHistoryBills(List<Bill> bills){ mHistoryBills.addAll(bills); }
+    public void extendHistoryBills(List<HistoryBill> bills){ mHistoryBills.addAll(bills); }
 
-    public void headExtendHistoryBills(List<Bill> bills){
+    public void headExtendHistoryBills(List<HistoryBill> bills){
         for(int i = bills.size()-1; i >= 0; i--){
             mHistoryBills.addFirst(bills.get(i));
         }
     }
 
-    public List<Bill> getHistoryBills(){ return mHistoryBills; }
+    public List<HistoryBill> getHistoryBills(){ return mHistoryBills; }
 
     public void addTrunk(Trunk trunk){
         trunks.add(trunk);
