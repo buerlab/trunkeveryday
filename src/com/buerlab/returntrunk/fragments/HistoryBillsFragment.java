@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.adapters.HistoryBillsAdapter;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.HistoryBill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
@@ -55,11 +56,11 @@ public class HistoryBillsFragment extends BaseFragment{
     }
 
     private void initBills(){
-        if(!mHasInit){
+        if(true){
             NetService service = new NetService(getActivity());
-            service.getDefaultHistoryBills(new NetService.BillsCallBack() {
+            service.getDefaultHistoryBills(new NetService.HistoryBillsCallBack() {
                 @Override
-                public void onCall(NetProtocol result, List<Bill> bills) {
+                public void onCall(NetProtocol result, List<HistoryBill> bills) {
                     if (result.code == NetProtocol.SUCCESS) {
                         User.getInstance().initHistoryBills(bills);
                         mAdapter.setBills(User.getInstance().getHistoryBills());
@@ -73,18 +74,18 @@ public class HistoryBillsFragment extends BaseFragment{
     }
 
     private void extendBills(final boolean isPrev){
-        List<Bill> bills = User.getInstance().getHistoryBills();
+        List<HistoryBill> bills = User.getInstance().getHistoryBills();
         String fromId = "";
         if(bills.size() > 0){
-            Bill last = isPrev ? bills.get(bills.size()-1) : bills.get(0);
+            HistoryBill last = isPrev ? bills.get(bills.size()-1) : bills.get(0);
             fromId = last.id;
         }
 
         final HistoryBillsFragment self = this;
         NetService service = new NetService(self.getActivity().getApplicationContext());
-        service.getHistoryBill(fromId, isPrev, new NetService.BillsCallBack() {
+        service.getHistoryBill(fromId, isPrev, new NetService.HistoryBillsCallBack() {
             @Override
-            public void onCall(NetProtocol result, List<Bill> bills) {
+            public void onCall(NetProtocol result, List<HistoryBill> bills) {
                 if(result.code == NetProtocol.SUCCESS && bills.size()>0){
                     if(isPrev)
                         User.getInstance().extendHistoryBills(bills);

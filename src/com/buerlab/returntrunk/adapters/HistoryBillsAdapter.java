@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ViewSwitcher;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.HistoryBill;
 import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;
@@ -17,29 +19,29 @@ import java.util.List;
  */
 public class HistoryBillsAdapter extends BaseAdapter {
 
-    private List<Bill> mBills = null;
+    private List<HistoryBill> mBills = null;
     private LayoutInflater mInflater = null;
 
     public HistoryBillsAdapter(Context context){
         mInflater = LayoutInflater.from(context);
-        mBills = new LinkedList<Bill>();
+        mBills = new LinkedList<HistoryBill>();
     }
 
-    public void setBills(List<Bill> bills){
+    public void setBills(List<HistoryBill> bills){
         mBills = bills;
         notifyDataSetChanged();
     }
 
-    public void addBill(Bill bill){
+    public void addBill(HistoryBill bill){
         mBills.add(bill);
         notifyDataSetChanged();
     }
 
-    public List<Bill> getBills(){
+    public List<HistoryBill> getBills(){
         return mBills;
     }
 
-    public void removeBill(Bill bill){
+    public void removeBill(HistoryBill bill){
         mBills.remove(bill);
         notifyDataSetChanged();
     }
@@ -59,11 +61,12 @@ public class HistoryBillsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup){
-        Bill bill = mBills.get(position);
+        HistoryBill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
             view = ViewsFactory.createHisotryBill(mInflater, bill);
         }else{
+            ViewsFactory.fillHistoryBill(view, bill);
         }
 
         return view;

@@ -23,9 +23,8 @@ public class RequestBillDialog extends Dialog {
 
 
     private void init(){
-        View diaView=View.inflate(mConext, R.layout.confirm_phone_popup2, null);
+        View diaView=View.inflate(mConext, R.layout.request_bill_dialog, null);
 
-//        Dialog dialog=new Dialog(mConext, R.style.dialog);
         setContentView(diaView);
 
         WindowManager.LayoutParams lp = getWindow().getAttributes();
