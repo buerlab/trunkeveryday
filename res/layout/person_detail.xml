@@ -8,6 +8,7 @@
             android:scrollbars="vertical">
 <LinearLayout android:layout_width="wrap_content"
               android:orientation="vertical"
+              android:id="@+id/container"
         android:layout_height="wrap_content">
 
     <RelativeLayout android:layout_width="fill_parent"
@@ -39,6 +40,7 @@
                         />
                 <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
+                      android:id="@+id/total_comment_count"
                       android:text="258"
                     />
             <TextView android:layout_width="wrap_content"
@@ -48,6 +50,7 @@
                     />
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
+                      android:id="@+id/average_star_num"
                       android:text="2.7"
                     />
         </LinearLayout>
@@ -59,6 +62,7 @@
                       android:text="手机号码"
                     />
             <TextView style="@style/infogroup_main_text"
+                      android:id="@+id/textview_phoneNum"
                       android:text="158 1180 *****"
                     />
         </LinearLayout>
@@ -83,6 +87,7 @@
                       android:layout_marginRight="16dp"
                       android:textSize="16dp"
                       android:text="广东 深圳"
+                      android:id="@+id/home_location"
                     />
         </LinearLayout>
       </LinearLayout>
@@ -99,6 +104,7 @@
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="50dp"
                       android:orientation="horizontal"
+                      android:id="@+id/IDNum_wrapper"
                       android:layout_marginLeft="20dp"
                       android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
@@ -124,12 +130,14 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
+                           android:id="@+id/idnum_verify"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_gravity="center_vertical"
                           android:textColor="@color/text_color"
                           android:layout_marginRight="16dp"
+                          android:id="@+id/textview_IDNum"
                           android:textSize="16dp"
                           android:text="已认证" />
              </LinearLayout>
@@ -163,12 +171,14 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
+                           android:id="@+id/driver_license_verify"
                            android:layout_weight="1"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_gravity="center_vertical"
                           android:textColor="@color/text_color"
+                          android:id="@+id/textview_driverLicense"
                           android:layout_marginRight="16dp"
                           android:textSize="16dp"
                           android:text="已认证" />
@@ -202,6 +212,8 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
+
+                           android:id="@+id/trunk_license_verify"
                            android:layout_weight="1"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
@@ -209,6 +221,8 @@
                           android:layout_gravity="center_vertical"
                           android:textColor="@color/text_color"
                           android:layout_marginRight="16dp"
+
+                          android:id="@+id/textview_trunk_license"
                           android:textSize="16dp"
                           android:text="已认证" />
             </LinearLayout>
@@ -231,6 +245,7 @@
                           android:layout_gravity="center_vertical"
                           android:textColor="@color/sub_text_color"
                           android:textSize="16dp"
+
                           android:text="实时定位"
                         />
             </LinearLayout>
@@ -242,6 +257,7 @@
                            android:layout_height="wrap_content"
                            android:src="@drawable/qt2_wsh"
                            android:layout_weight="1"
+                           android:id="@+id/support_location_verify"
                            android:layout_gravity="center_vertical"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -249,11 +265,18 @@
                           android:textColor="@color/text_color"
                           android:layout_marginRight="16dp"
                           android:textSize="16dp"
+                          android:id="@+id/textview_support_location"
                           android:text="支持" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+    <FrameLayout android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="10dp"
+                  android:id="@+id/tab_trunk_wrapper">
+
+    </FrameLayout>
     <LinearLayout android:layout_width="fill_parent"
                   android:layout_height="wrap_content"
                   android:orientation="vertical"

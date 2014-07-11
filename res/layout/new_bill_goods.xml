@@ -50,7 +50,7 @@
                     >
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:src="@drawable/xingxing1"/>
+                           android:src="@drawable/sj"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="回程时间: "
@@ -71,7 +71,7 @@
                     >
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:src="@drawable/xingxing1"/>
+                           android:src="@drawable/ll"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="浏览: "
@@ -93,7 +93,7 @@
                 >
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:src="@drawable/xingxing1"/>
+                       android:src="@drawable/yxq"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="有效期: "

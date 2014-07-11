@@ -20,19 +20,19 @@
         <activity android:name=".driver.activities.MainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
 
         <activity android:name=".owner.activities.OwnerMainActivity"
                   android:label="@string/app_name"
                   android:launchMode="singleInstance">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.RegisterActivity"></activity>
@@ -88,7 +88,7 @@
         <activity android:name=".utils.MultiPicSelector.ImgsActivity"
                   android:theme="@style/custom_theme"/>
 
-        <activity android:name=".activities.PersonDetailActivity">
+        <activity android:name=".activities.UserCompleteDataActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN"/>-->
                 <!--<category android:name="android.intent.category.LAUNCHER"/>-->

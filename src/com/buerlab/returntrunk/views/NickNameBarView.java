@@ -9,12 +9,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
-import com.buerlab.returntrunk.activities.PersonDetailActivity;
-import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
 import com.buerlab.returntrunk.models.NickBarData;
-import com.buerlab.returntrunk.models.User;
 
 /**
  * Created by teddywu on 14-7-3.
@@ -28,6 +25,9 @@ public class NickNameBarView extends LinearLayout {
     TextView mNickName;
     StarsViewWithText mStar;
     Context mContext;
+
+    NickBarData user;
+    String getType;
     public NickNameBarView(Context context) {
         super(context);
         mContext = context;
@@ -56,7 +56,9 @@ public class NickNameBarView extends LinearLayout {
             public void onClick(View v) {
                 if(mContext!=null){
                     if(mContext instanceof BaseActivity){
-                        Intent intent = new Intent(mContext, PersonDetailActivity.class);
+                        Intent intent = new Intent(mContext, UserCompleteDataActivity.class);
+                        intent.putExtra("userId",user.userId);
+                        intent.putExtra("getType",getType);
                         (mContext).startActivity(intent);
                     }
                 }
@@ -65,6 +67,7 @@ public class NickNameBarView extends LinearLayout {
     }
 
     public void  setUser(NickBarData user,String myUserType){
+        this.user =user;
         mNickName.setText(user.nickName);
 
         //如果我是司机，那么我要看的是货主信息
@@ -80,11 +83,13 @@ public class NickNameBarView extends LinearLayout {
             if(false){
                 mLocationIcon.setVisibility(GONE);
             }
+            getType = "driver";
         }else {
             mStar.setStar(user.ownerStars);
             mDriverLicenseIcon.setVisibility(GONE);
             mTrunkLicenseIcon.setVisibility(GONE);
             mLocationIcon.setVisibility(GONE);
+            getType = "owner";
         }
 
         if(!user.IDNumVerified.equals("2")){

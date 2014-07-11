@@ -118,7 +118,7 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
     }
 
     private void goToPersonDetail(){
-        Intent intent = new Intent(getActivity(),PersonDetailActivity.class);
+        Intent intent = new Intent(getActivity(),UserCompleteDataActivity.class);
         startActivity(intent);
     }
 
