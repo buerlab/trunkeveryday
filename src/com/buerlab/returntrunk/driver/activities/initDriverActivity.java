@@ -15,6 +15,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.jpush.JPushUtils;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.Global;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.driver.DriverUtils;
@@ -50,6 +51,11 @@ public class InitDriverActivity extends BaseActivity implements EventCenter.OnEv
         phonenum = getIntent().getStringExtra("phonenum");
 
         homeLocationText = (TextView)findViewById(R.id.init_user_homelocation_text);
+        if(Global.getInstance().getCurrentLocation()!=null){
+            homeLocationText.setText(Global.getInstance().getCurrentLocation()) ;
+        }else {
+            Utils.showToast(this,"无法定位");
+        }
         homeLocationBtn = (LinearLayout)findViewById(R.id.init_user_homelocation_btn);
         Button trunkBtn = (Button)findViewById(R.id.init_user_confirm);
         trunkBtn.setOnClickListener(new View.OnClickListener() {

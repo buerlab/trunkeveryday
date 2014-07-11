@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.LoginActivity;
@@ -73,11 +74,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         setContentView(R.layout.main);
         Utils.setDriverVersion(this);
         //启动位置上报服务
-//        startService(new Intent(this, BaiduMapService.class));
+        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         Utils.init(this);
-//        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());
 
         NetService service = new NetService(this);
 
