@@ -59,6 +59,7 @@ public class NickNameBarView extends LinearLayout {
                         Intent intent = new Intent(mContext, UserCompleteDataActivity.class);
                         intent.putExtra("userId",user.userId);
                         intent.putExtra("getType",getType);
+                        intent.putExtra("nickname",user.nickName);
                         (mContext).startActivity(intent);
                     }
                 }

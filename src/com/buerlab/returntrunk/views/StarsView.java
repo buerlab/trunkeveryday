@@ -33,7 +33,7 @@ public class StarsView extends LinearLayout {
         star2 = (ImageView)findViewById(R.id.star2);
         star3 = (ImageView)findViewById(R.id.star3);
     }
-    public void setStar(float num){
+    public void setStar(double num){
         if(num<0){
             return;
         }else if(num <1){

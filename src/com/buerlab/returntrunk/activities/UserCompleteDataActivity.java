@@ -7,11 +7,15 @@ import android.view.*;
 import android.widget.*;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.adapters.CommentListAdapter;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.adapters.UserCompleteDataCommentListAdapter;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.UserCompleteData;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.views.MyListView;
+import com.buerlab.returntrunk.views.StarsView;
 import com.buerlab.returntrunk.views.StarsViewWithText;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -24,15 +28,15 @@ public class UserCompleteDataActivity extends BackBaseActivity {
     private static final String TAG = "UserCompleteDataActivity" ;
 
     StarsViewWithText starsViewWithText;
-    StarsViewWithText starsViewWithText2;
     String userId;
     String getType;
+    String nickname;
     NetService netService;
 
     UserCompleteData data;
 
     TextView textview_nickname;
-    StarsViewWithText stars_view;
+    StarsView stars_view;
     TextView count_textview;
     TextView average_star_num;
     TextView textview_phoneNum;
@@ -53,14 +57,21 @@ public class UserCompleteDataActivity extends BackBaseActivity {
     FrameLayout tab_trunk_wrapper;
 
     LinearLayout container;
+
+    MyListView comments_list;
+    UserCompleteDataCommentListAdapter mAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person_detail);
-        setActionBarLayout("个人资料" );
+
         init();
         initData();
-
+        if(nickname!=null){
+            setActionBarLayout(nickname+"的个人资料");
+        }else {
+            setActionBarLayout("个人资料" );
+        }
     }
 
     @Override
@@ -70,14 +81,11 @@ public class UserCompleteDataActivity extends BackBaseActivity {
 
     private void init(){
         Utils.init(this);
-        starsViewWithText = (StarsViewWithText)findViewById(R.id.stars_view);
-        starsViewWithText.setStar(2.8f);
-        starsViewWithText.setSize(30);
 
         container = (LinearLayout)findViewById(R.id.container);
-//        container.setVisibility(View.GONE);
+        container.setVisibility(View.GONE);
         textview_nickname = (TextView)findViewById(R.id.textview_nickname);
-        stars_view = (StarsViewWithText)findViewById(R.id.stars_view);
+        stars_view = (StarsView)findViewById(R.id.stars_view);
 
         count_textview = (TextView)findViewById(R.id.comment_count2);
         average_star_num = (TextView)findViewById(R.id.average_star_num);
@@ -97,12 +105,15 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         textview_support_location = (TextView)findViewById(R.id.textview_support_location);
 
         tab_trunk_wrapper = (FrameLayout)findViewById(R.id.tab_trunk_wrapper);
-
+        comments_list =(MyListView)findViewById(R.id.comment_list_view);
+        mAdapter =new UserCompleteDataCommentListAdapter(this);
+        comments_list.setAdapter(mAdapter);
     }
 
     private void initData(){
         userId = getIntent().getStringExtra("userId");
         getType = getIntent().getStringExtra("getType");
+        nickname = getIntent().getStringExtra("nickname");
         if(userId.isEmpty() || getType.isEmpty()){
             Utils.showToast(this,"无法获取个人资料");
             return;
@@ -317,7 +328,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
 
 
     private void renderComment(){
-
+        mAdapter.setComments(data.comments);
     }
     private String getFormatPhoneNum(String phonenum){
         if (phonenum.isEmpty())
