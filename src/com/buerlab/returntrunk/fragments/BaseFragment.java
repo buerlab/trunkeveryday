@@ -12,6 +12,7 @@ import com.buerlab.returntrunk.R;
  */
 public class BaseFragment extends Fragment {
 
+    protected BaseFragment self = this;
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);

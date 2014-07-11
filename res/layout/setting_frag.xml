@@ -7,6 +7,7 @@
               android:background="@color/background"
         >
     <LinearLayout android:layout_width="fill_parent"
+                  android:orientation="vertical"
                   android:layout_height="wrap_content">
         <Button style="@style/clickable_button_with_main_color"
                 android:layout_marginLeft="20dp"
@@ -16,6 +17,24 @@
                 android:textSize="18sp"
                 android:id="@+id/logout_confirm_btn"
                 android:text="注销"
+                />
+        <Button style="@style/clickable_button_with_main_color"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/see_my_complete_data"
+                android:text="查看自己的个人资料"
+                />
+        <Button style="@style/clickable_button_with_main_color"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/commment_myself"
+                android:text="给自己写评价(货主评司机、司机评货主)"
                 />
      </LinearLayout>
 
