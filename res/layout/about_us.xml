@@ -61,6 +61,7 @@
         </LinearLayout>
     </LinearLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/user_feedback_wrapper"
                   android:background="@drawable/clickable_infogroup_group_wrapper"
             >
         <LinearLayout style="@style/infogroup_item_wrapper">

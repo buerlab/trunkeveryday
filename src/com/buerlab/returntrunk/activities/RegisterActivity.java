@@ -3,6 +3,8 @@ package com.buerlab.returntrunk.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +17,9 @@ import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 /**
@@ -30,6 +35,30 @@ public class RegisterActivity extends BaseActivity {
     final BaseActivity self = this;
 
 //    TODO 1分钟之后再验证
+    int second = 60;
+    private Timer timer = new Timer();
+    private TimerTask task;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            //要做的事情
+            if(second<=0){
+                timer.cancel();
+                second = 60;
+                sendRegCodeBtn.setEnabled(true);
+                sendRegCodeBtn.setText("获取验证码");
+
+            }else {
+
+                sendRegCodeBtn.setText(String.valueOf(second--) );
+                sendRegCodeBtn.setEnabled(false);
+            }
+            super.handleMessage(msg);
+        }
+    };
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +90,18 @@ public class RegisterActivity extends BaseActivity {
             Utils.showToast(this,"手机号码格式错误，请重新输入");
             return;
         }
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(task, 1000, 1000);
 
         mService.getRegCode(phonenum,new NetService.NetCallBack() {
             @Override

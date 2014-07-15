@@ -79,7 +79,7 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
     }
     public void getUserDataWithoutLoading(NetCallBack callback){
-        urlRequest(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/user", createReqParms(null), "GET", callback);
     }
 
     //////////////////////////
@@ -311,6 +311,16 @@ public class NetService {
         parmsMap.put("getType", getType);
         urlRequest(mContext.getString(R.string.server_addr)+"api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
     }
+
+    //////////////////////////
+    //用户反馈
+    /////////////////////////
+    public void addFeedBack(String feedbackString, final NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("feedbackString",feedbackString );
+        urlRequest(mContext.getString(R.string.server_addr3) + "userFeedback", createReqParms(parmsMap), "POST", callback);
+    }
+
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("latitude", Double.toString(latitude) );

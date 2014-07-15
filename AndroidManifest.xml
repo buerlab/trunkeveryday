@@ -96,6 +96,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.GalleryUrlActivity"></activity>
+        <activity android:name=".activities.FeedbackActivity"></activity>
         <service android:name=".service.BaiduMapService">
             <intent-filter>
                 <action android:name="com.buerlab.returntrunk.service.BadiMapService"/>
