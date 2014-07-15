@@ -24,13 +24,16 @@ public class TrunkListAdapter extends BaseAdapter {
     private Context mContext;
     OnPhotoClickClass onPhotoClickClass;
     OnSetTrunkClickClass onSetTrunkClickClass;
+    OnEditTrunkClickClass onEditTrunkClickClass;
     public TrunkListAdapter(Context context,
                             View.OnLongClickListener onLongClickListener,
                             OnPhotoClickClass onPhotoClickClass,
-                            OnSetTrunkClickClass onSetTrunkClickClass){
+                            OnSetTrunkClickClass onSetTrunkClickClass,
+                            OnEditTrunkClickClass onEditTrunkClickClass){
         mInflater = LayoutInflater.from(context);
         this.onPhotoClickClass = onPhotoClickClass;
         this.onSetTrunkClickClass = onSetTrunkClickClass;
+        this.onEditTrunkClickClass = onEditTrunkClickClass;
         mContext = context;
         mOnLongClickListener = onLongClickListener;
     }
@@ -85,6 +88,8 @@ public class TrunkListAdapter extends BaseAdapter {
             convertView.setOnLongClickListener(mOnLongClickListener);
             holder.isUsedImageView.setOnClickListener(new OnSetTrunkClick(position,trunk));
 
+            holder.typeIcon = (ImageView)convertView.findViewById(R.id.type_icon);
+
 
         }else{
             holder = (ViewHolder) convertView.getTag(); //取出ViewHolder对象
@@ -92,8 +97,10 @@ public class TrunkListAdapter extends BaseAdapter {
 
         holder.licensePlateTxtView.setText(trunk.lisencePlate);
         holder.typeTxtView.setText(trunk.type);
-        holder.loadTxtView.setText(String.valueOf(trunk.load));
-        holder.lengthTxtView.setText(String.valueOf(trunk.length));
+        double num1 = ((int)(trunk.load*10))/10.0;
+        holder.loadTxtView.setText(num1+"吨");
+        num1 =  ((int)(trunk.length)*10)/10.0;
+        holder.lengthTxtView.setText(num1+ "米");
         holder.position = position;
 
         int trunkLisenceVerified =  Integer.parseInt(trunk.trunkLicenseVerified);
@@ -114,9 +121,24 @@ public class TrunkListAdapter extends BaseAdapter {
             holder.isUsedImageView.setImageResource(R.drawable.sdqc1);
         }
 
+        if(trunk.type.equals("厢车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_xc);
+        }else if(trunk.type.equals("低栏车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_dlc);
+        }else if(trunk.type.equals("高栏车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_glc);
+        }else if(trunk.type.equals("集装车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_jzxc);
+        }else if(trunk.type.equals("面包车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_mbc);
+        }else if(trunk.type.equals("平板车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_cbc);
+        }
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         holder.picGridLayout.removeAllViews();
-        int width = (Utils.getScreenSize()[0] - 40)/3;
+        int width = (Utils.getScreenSize()[0] - 40)/4;
+
         if(trunk.trunkPicFilePaths!=null){
             for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
                 ImageView iv = new ImageView(mContext);
@@ -131,6 +153,9 @@ public class TrunkListAdapter extends BaseAdapter {
             }
 
         }
+
+        convertView.setOnClickListener(new OnEditTrunkClick(position,trunk));
+
         return convertView;
     }
 
@@ -168,7 +193,24 @@ public class TrunkListAdapter extends BaseAdapter {
         public void onClick(View v) {
             onSetTrunkClickClass.OnItemClick(v, position,mTrunk);
         }
+    }
 
+    public interface OnEditTrunkClickClass {
+        public void OnItemClick(View v, int Position,Trunk trunk);
+    }
+
+    class OnEditTrunkClick implements View.OnClickListener {
+        int position;
+        Trunk mTrunk;
+
+        public OnEditTrunkClick(int position,Trunk trunk) {
+            this.position=position;
+            this.mTrunk = trunk;
+        }
+        @Override
+        public void onClick(View v) {
+            onEditTrunkClickClass.OnItemClick(v, position,mTrunk);
+        }
     }
 
     /*存放控件 的ViewHolder*/
@@ -181,6 +223,7 @@ public class TrunkListAdapter extends BaseAdapter {
         public TextView verifyText;
         public GridLayout picGridLayout;
         public ImageView isUsedImageView;
+        public ImageView typeIcon;
         public int position;
         public int isVerified;
     }

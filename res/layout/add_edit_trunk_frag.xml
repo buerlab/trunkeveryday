@@ -6,7 +6,7 @@
             android:layout_height="fill_parent"
             android:background="@color/background"
             android:scrollbars="vertical">
-<LinearLayout android:layout_width="wrap_content"
+<LinearLayout android:layout_width="fill_parent"
               android:orientation="vertical"
               android:layout_height="wrap_content">
     <LinearLayout
@@ -60,7 +60,38 @@
         </LinearLayout>
 
     </LinearLayout>
-    <LinearLayout style="@style/infogroup_group_wrapper">
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:visibility="gone"
+            android:id="@+id/trunk_license_wrapper">
+        <LinearLayout style="@style/infogroup_item_wrapper"
+                      android:background="@drawable/clickable_infogroup_item_wrapper"
+
+                      android:id="@+id/container_trunkLicense">
+            <TextView style="@style/infogroup_sub_text"
+                      android:text="行驶证"
+                    />
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="fill_parent"
+                          android:layout_weight="0">
+                <ImageView android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:src="@drawable/qt2_wsh"
+                           android:id="@+id/trunk_license_verify"
+                           android:layout_gravity="center_vertical"/>
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_gravity="center_vertical"
+                          android:textColor="@color/text_color"
+                          android:id="@+id/textview_trunkLicense"
+                          android:textSize="16dp"
+                          android:text="已认证" />
+            </LinearLayout>
+            </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/upload_trunk_license_wrapper"
+            >
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
                       >
             <EditText android:id="@+id/set_trunk_license"
@@ -84,9 +115,11 @@
                       android:textSize="16sp"
                       android:textColor="@color/sub_text_color"
                       android:text="添加行驶证照片(选填)"/>
+
         </LinearLayout>
     </LinearLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/trunk_pic_wrapper"
                   android:orientation="vertical">
         <LinearLayout style="@style/infogroup_item_wrapper">
             <TextView android:text="添加货车照片(选填)"

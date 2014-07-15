@@ -51,6 +51,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
     public void onEventCall(DataEvent e) {
         initComments();
     }
+
     private void initComments(){
         final CommentListAdapter adapter = mAdapter;
 
@@ -74,5 +75,11 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
                 }
             });
         }
+    }
+
+    @Override
+    public void onShow(){
+        initComments();
+
     }
 }

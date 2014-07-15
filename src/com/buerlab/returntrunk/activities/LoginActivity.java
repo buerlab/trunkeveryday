@@ -115,8 +115,10 @@ public class LoginActivity extends BaseActivity {
                     String versionType = Utils.getVersionType(self);
                     if(versionType.equals( "driver")){
                         DriverUtils.safeSwitchToMainActivity(self);
+                        finish();
                     }else if(versionType.equals( "owner")) {
                         OwnerUtils.safeSwitchToMainActivity(self);
+                        finish();
                     }else {
                         Utils.showToast(self,"versonType error");
                         return;
