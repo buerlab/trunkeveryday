@@ -25,7 +25,7 @@ import java.util.List;
 public class SendGoodsBillFragment extends BaseFragment implements EventCenter.OnEventListener{
 
     private SendBillListAdapter mAdapter = null;
-    private boolean mInit = false;
+    private boolean mBillsInit = false;
     private LinearLayout tips;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -47,30 +47,51 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
 
         EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
 
+
         return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        EventCenter.shared().addEventListener(DataEvent.BILL_OVERDUE, this);
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        EventCenter.shared().removeEventListener(DataEvent.BILL_OVERDUE, this);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
+
     }
 
     public void onEventCall(DataEvent event){
         if(event.type.equals(DataEvent.NEW_BILL)){
-            final Bill bill = (Bill)event.data;
-            addBill(bill);
+            mAdapter.notifyDataSetChanged();
 
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
             toast.show();
+        }else if(event.type.equals(DataEvent.BILL_OVERDUE)){
+            List<Bill> billsToRemove = (List<Bill>)event.data;
+            if(billsToRemove != null && billsToRemove.size()>0){
+                Toast toast = Toast.makeText(this.getActivity(), "你有"+billsToRemove.size()+"个过期单子被删除", 2);
+                toast.show();
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden){
-        if(!hidden && !mInit){
+    public void onShow(){
+        if(!mBillsInit)
             initBills();
-        }
+        else
+            mAdapter.notifyDataSetChanged();
     }
 
     private void initBills(){
@@ -94,12 +115,4 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
         });
     }
 
-    private void addBill(Bill bill){
-        mAdapter.addBill(bill);
-        if(mAdapter.getCount()>0){
-            tips.setAlpha(0.0f);
-        }else {
-            tips.setAlpha(1);
-        }
-    }
 }

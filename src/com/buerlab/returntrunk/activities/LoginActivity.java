@@ -10,9 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.jpush.JPushUtils;
@@ -21,6 +23,8 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -104,7 +108,14 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
-                    User.getInstance().initUser(result.data);
+                    JSONObject data = result.data;
+                    try{
+                        User.getInstance().initUser(data.getJSONObject("user"));
+                        MainController.shared().sync(data.getJSONObject("control"));
+                    }catch (JSONException e){
+                        Toast toast = Toast.makeText(self, "userdata init fail!!", 2);
+                        toast.show();
+                    }
 //                    SharedPreferences pref = self.getSharedPreferences(self.getString(R.string.app_name), 0);
 //                    SharedPreferences.Editor editor = pref.edit();
 //                    editor.putString("userId", User.getInstance().userId);

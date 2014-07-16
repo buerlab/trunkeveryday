@@ -42,6 +42,5 @@ public class NickBarData {
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
         }
-
     }
 }

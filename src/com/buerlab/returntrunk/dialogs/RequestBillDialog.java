@@ -5,8 +5,12 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
 
 /**
  * Created by zhongqiling on 14-7-10.
@@ -14,10 +18,12 @@ import com.buerlab.returntrunk.Utils;
 public class RequestBillDialog extends Dialog {
 
     private Context mConext;
+    private Bill mBill;
 
-    public RequestBillDialog(Context context, int theme) {
+    public RequestBillDialog(Context context, int theme, Bill bill) {
         super(context, theme);
         mConext = context;
+        mBill = bill;
         init();
     }
 
@@ -37,13 +43,29 @@ public class RequestBillDialog extends Dialog {
 //        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
 //        pickAddrView.setListener(this);
 
-//        Button b = (Button)findViewById(R.id.btn_ok);
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dismiss();
-//            }
-//        });
+        View b = (View)findViewById(R.id.button_true);
+        final Dialog self = this;
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetService service= new NetService(self.getContext());
+                service.pickBill(mBill.id, "", new NetService.NetCallBack() {
+                    @Override
+                    public void onCall(NetProtocol result) {
+                        if (result.code == NetProtocol.SUCCESS){
+                        }
+                    }
+                });
+                dismiss();
+            }
+        });
+
+        findViewById(R.id.button_false).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                self.dismiss();
+            }
+        });
 
     }
 }

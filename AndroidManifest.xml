@@ -18,7 +18,7 @@
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
         <activity android:name=".driver.activities.MainActivity"
-                  android:label="@string/app_name"
+                  android:label="首页"
                   android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,7 +27,7 @@
         </activity>
 
         <activity android:name=".owner.activities.OwnerMainActivity"
-                  android:label="@string/app_name"
+                  android:label="首页"
                   android:launchMode="singleInstance">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN"/>-->
@@ -69,6 +69,7 @@
                   />
 
         <activity android:name=".driver.activities.NewTrunkBillActivity"
+                  android:label="@string/new_trunk_bill"
                   android:parentActivityName=".driver.activities.MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY"
                        android:value=".driver.activities.MainActivity"/>

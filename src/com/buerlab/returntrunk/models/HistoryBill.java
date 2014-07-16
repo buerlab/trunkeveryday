@@ -8,15 +8,19 @@ import org.json.JSONObject;
 public class HistoryBill {
 
     static public final String TYPE_GOODS = "goods";
-    static public final String TYPE_OWNER = "owener";
-    static public final String TYPE_LOCAL = "local";
+    static public final String TYPE_TRUNK = "trunk";
+    static public final String  TYPE_USER = "user";
 
     public String id = "";
     public String billType = "";
-    public NickBarData userData = null;
+
     public String nickName = "";
     public String sender = "";
+    public String senderType = "";
+    public NickBarData senderData = null;
     public String sendTime = "";
+    public String senderPhoneNum = "";
+
 
     public String fromAddr = "";
     public String toAddr = "";
@@ -28,12 +32,15 @@ public class HistoryBill {
     public float weight = 0;
     public String material = "";
 
-    public HistoryBill(JSONObject item) throws Exception{
+    public HistoryBill(JSONObject data) throws Exception{
         try{
+            JSONObject item = data.getJSONObject("bill");
             id = item.getString("id");
             billType = item.getString("billType");
             nickName = item.getString("nickName");
-            sender = item.getString("sender");
+            sender = item.getString("senderId");
+            senderType = item.getString("senderType");
+
             sendTime = item.getString("sendTime");
 
             if(item.has("fromAddr"))
@@ -50,8 +57,12 @@ public class HistoryBill {
                 weight = Float.valueOf(item.getString("weight"));
             if(item.has("material"))
                 material = item.getString("material");
-            if(item.has("userData"))
-                userData = new NickBarData(item.getJSONObject("userData"));
+
+            JSONObject senderJSONData = data.getJSONObject("senderData");
+            senderData = new NickBarData(senderJSONData);
+            if(senderJSONData.has("phoneNum"))
+                senderPhoneNum = senderJSONData.getString("phoneNum");
+
         }catch (Exception e){
             throw new Exception("bill init from jsonobject error");
         }
