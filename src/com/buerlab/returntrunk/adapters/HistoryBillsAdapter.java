@@ -68,7 +68,6 @@ public class HistoryBillsAdapter extends BaseAdapter {
         }else{
             ViewsFactory.fillHistoryBill(view, bill);
         }
-
         return view;
     }
 }

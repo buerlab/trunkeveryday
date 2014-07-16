@@ -38,7 +38,6 @@ public class HistoryBillsFragment extends BaseFragment{
         mAdapter = new HistoryBillsAdapter(inflater.getContext());
         mListView.setAdapter(mAdapter);
 
-
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
@@ -56,8 +55,8 @@ public class HistoryBillsFragment extends BaseFragment{
     }
 
     private void initBills(){
-        if(true){
-            NetService service = new NetService(getActivity());
+        NetService service = new NetService(getActivity());
+        if(!mHasInit){
             service.getDefaultHistoryBills(new NetService.HistoryBillsCallBack() {
                 @Override
                 public void onCall(NetProtocol result, List<HistoryBill> bills) {
@@ -69,6 +68,12 @@ public class HistoryBillsFragment extends BaseFragment{
                 }
             });
         }else{
+            service.getHistoryBill(User.getInstance().getHistoryBills().get(0).id, false, new NetService.HistoryBillsCallBack() {
+                @Override
+                public void onCall(NetProtocol result, List<HistoryBill> bills) {
+
+                }
+            });
             mAdapter.setBills(User.getInstance().getHistoryBills());
         }
     }

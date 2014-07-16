@@ -112,14 +112,14 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     public void onEventCall(DataEvent e) {
         if(e.type.equals(DataEvent.NEW_BILL)){
             final Bill bill = (Bill)e.data;
-            addBill(bill);
+            User.getInstance().addBill(bill);
 
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
             toast.show();
         }else if(e.type.equals(DataEvent.DELETE_BILL)){
             Bill bill = (Bill)e.data;
             if(bill != null){
-                removeBill(bill);
+                User.getInstance().removeBill(bill);
             }
         }else if(e.type.equals(DataEvent.JPUSH_INFORM)){
             if(((JPushProtocal)e.data).code == JPushProtocal.BILL_VISITED){
@@ -168,7 +168,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     }
 
     private void addBill(Bill bill){
-        mAdapter.addBill(bill);
+//        mAdapter.addBill(bill);
         if(mAdapter.getCount()>0){
             tips.setAlpha(0.0f);
         }else {
@@ -177,7 +177,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     }
 
     private void removeBill(Bill bill){
-        mAdapter.removeBill(bill);
+//        mAdapter.removeBill(bill);
         if(mAdapter.getCount()>0){
             tips.setAlpha(0.0f);
         }else {

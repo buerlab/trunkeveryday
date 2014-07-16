@@ -10,15 +10,20 @@ import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
+import com.buerlab.returntrunk.dialogs.PickPeriodDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.views.PickPeriodView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhongqiling on 14-6-27.
@@ -33,11 +38,13 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
     private TextView toText = null;
     private TextView timeText = null;
     private TextView currEditView = null;
+    private TextView validTimeText = null;
 
     private List<String> currFromContent = null;
     private List<String> currToContent = null;
     private List<String> currTimeContent = null;
     private String currTimeStamp = "";
+    private int currValidTimeSec = 24*60*60;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -49,10 +56,12 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         goodsText = (EditText)findViewById(R.id.new_bill_goods);
         weightText = (EditText)findViewById(R.id.new_bill_weight);
         priceText = (EditText)findViewById(R.id.new_bill_price);
+
         commentText = (EditText)findViewById(R.id.new_bill_comment);
         fromText = (TextView)findViewById(R.id.new_bill_from_text);
         toText = (TextView)findViewById(R.id.new_bill_to_text);
         timeText = (TextView)findViewById(R.id.new_bill_time_text);
+        validTimeText = (TextView)findViewById(R.id.new_bill_valid_time_text);
 
         //选择出发地监听事件
         LinearLayout pickFromBtn = (LinearLayout)findViewById(R.id.new_bill_from_btn);
@@ -89,6 +98,15 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             }
         });
 
+        LinearLayout validTimeBtn = (LinearLayout)findViewById(R.id.new_bill_valid_time);
+        validTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PickPeriodDialog dialog = new PickPeriodDialog(self, R.style.dialog);
+                dialog.show();
+            }
+        });
+
         Button submitBtn = (Button)findViewById(R.id.new_bill_activity_submit);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +119,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
                 }
                 Bill bill = new Bill(Bill.BILLTYPE_GOODS, new Address(currFromContent).toFullString(),
                         new Address(currToContent).toFullString(), currTimeStamp);
-
+                bill.validTimeSec = currValidTimeSec;
                 bill.setGoodsInfo(goodsText.getText().toString(), Float.valueOf(priceText.getText().toString()),
                         Float.valueOf(weightText.getText().toString()), commentText.getText().toString());
 
@@ -110,10 +128,14 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
                 service.sendBill(bill, new NetService.BillsCallBack() {
                     @Override
                     public void onCall(NetProtocol result, List<Bill> bills) {
-                        if (result.code == NetProtocol.SUCCESS && bills.size() > 0) {
+                        if (result.code == NetProtocol.SUCCESS) {
                             self.finish();
-                            DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
-                            EventCenter.shared().dispatch(evt);
+                            if(bills.size()>0){
+                                User.getInstance().addBill(bills.get(0));
+
+                                DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
+                                EventCenter.shared().dispatch(evt);
+                            }
 
                         } else {
                             Utils.defaultNetProAction(self, result);
@@ -129,6 +151,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onStart();
         EventCenter.shared().addEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().addEventListener(DataEvent.TIME_CHANGE, this);
+        EventCenter.shared().addEventListener(DataEvent.PERIOD_CHANGE, this);
 //        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
     }
 
@@ -137,6 +160,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         super.onStop();
         EventCenter.shared().removeEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().removeEventListener(DataEvent.TIME_CHANGE, this);
+        EventCenter.shared().removeEventListener(DataEvent.PERIOD_CHANGE, this);
 //        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
     }
 
@@ -176,6 +200,10 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             currEditView.setText(Bill.listToString(data));
             currTimeStamp = d.getString("timestamp");
             currTimeContent = data;
+        }else if(e.type.equals(DataEvent.PERIOD_CHANGE)){
+            List data = (ArrayList)e.data;
+            currValidTimeSec = (Integer)data.get(1);
+            validTimeText.setText((String)data.get(0));
         }
     }
     @Override

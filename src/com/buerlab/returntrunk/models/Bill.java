@@ -3,10 +3,7 @@ package com.buerlab.returntrunk.models;
 import com.buerlab.returntrunk.R;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by zhongqiling on 14-5-30.
@@ -27,9 +24,10 @@ public class Bill {
     public String billType = "";
     public String from = "";
     public String to = "";
-    //It must be a timestamp
+    //It must be a timestamp, (ms)
     public String time;
     public int visitedTimes = 0;
+    public int validTimeSec = 0;
 
     public String state = "";
     public List<String> inviteTo = new ArrayList<String>();
@@ -75,6 +73,8 @@ public class Bill {
             id = item.getString("id");
             setSenderName(item.getString("senderName"));
             senderId = item.getString("sender");
+            if(item.has("validTimeSec"))
+                validTimeSec = Integer.valueOf(item.getString("validTimeSec"));
 
             if(item.has("visitedTimes"))
                 visitedTimes = item.getInt("visitedTimes");
@@ -90,7 +90,7 @@ public class Bill {
             if(item.has("price"))
                 price = Float.valueOf(item.getString("price"));
         }catch (Exception e){
-            throw new Exception("bill init from jsonobject error");
+            throw new Exception("bill init from jsonobject error:"+e.getMessage());
         }
     }
 
@@ -150,6 +150,14 @@ public class Bill {
     public Trunk getTrunk(){ return trunk; }
 
     public int getHistoryBillLayout(){
-        return billType == Bill.BILLTYPE_TRUNK ? R.layout.history_bill_trunk_overdue : R.layout.history_bill_returntrunk;
+        return billType == Bill.BILLTYPE_TRUNK ? R.layout.history_bill_trunk : R.layout.history_bill_goods;
+    }
+
+    //return a time delta in second.
+    public long getValidLeftTime(){
+        if(new Date().after(new Date(Long.valueOf(time))))
+            return (Long.valueOf(time)+validTimeSec*1000-(new Date().getTime()))/1000;
+        else
+            return validTimeSec;
     }
 }

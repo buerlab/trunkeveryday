@@ -102,7 +102,7 @@
                     />
         </LinearLayout>
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
-                      android:id="@+id/new_bill_time_btn"
+                      android:id="@+id/new_bill_valid_time"
                       android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
                 >
             <TextView android:layout_width="wrap_content"
@@ -110,7 +110,6 @@
                       android:layout_gravity="center_vertical"
                       android:layout_weight="1"
                       android:textSize="16sp"
-                      android:id="@+id/new_bill_time_text"
                       android:hint="有效期"
                       android:layout_height="wrap_content"/>
             <TextView android:layout_width="wrap_content"
@@ -118,7 +117,7 @@
                       android:layout_gravity="center_vertical"
                       android:layout_weight="0"
                       android:textSize="16sp"
-                      android:id="@+id/new_bill_time_text"
+                      android:id="@+id/new_bill_valid_time_text"
                       android:text="1天"
                       android:layout_height="wrap_content"/>
         </LinearLayout>

@@ -10,10 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.Toast;
 import cn.jpush.android.api.JPushInterface;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.LoginActivity;
+import com.buerlab.returntrunk.controls.BillOverDueCheckJob;
+import com.buerlab.returntrunk.controls.MainController;
+import com.buerlab.returntrunk.controls.Scheduler;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
@@ -28,6 +33,8 @@ import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,6 +74,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
+        MainController.shared().init(getApplicationContext());
 //        SDKInitializer.initialize(getApplicationContext());
 
         boolean withoutSplash = getIntent().getBooleanExtra("without_splash",false);
@@ -86,7 +94,15 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
-                    User.getInstance().initUser(result.data);
+                    JSONObject data = result.data;
+                    try{
+                        User.getInstance().initUser(data.getJSONObject("user"));
+                        MainController.shared().sync(data.getJSONObject("control"));
+                    }catch (JSONException e){
+                        Toast toast = Toast.makeText(self, "userdata init fail!!", 2);
+                        toast.show();
+                    }
+
                     User.getInstance().setUserType(User.USERTYPE_OWNER);
 
                     Map<String, String> jpushmap = new HashMap<String, String>();
@@ -170,11 +186,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         // set optional header image
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
 
-        FragmentManager manager = getSupportFragmentManager();
-//        ((SettingFragment)manager.findFragmentById(R.id.main_setting_frag)).init();
 
         setFrag(0);
-
         startLocationService();
 
     }
@@ -224,10 +237,11 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         for(int i = 0; i < tags.size(); i++){
-            Fragment fragment = manager.findFragmentByTag(tags.get(i));
+            BaseFragment fragment = (BaseFragment)manager.findFragmentByTag(tags.get(i));
             if(fragment !=null){
                 if(i == index){
                     transaction.show(fragment);
+                    fragment.onShow();
                 }else{
                     transaction.hide(fragment);
                 }

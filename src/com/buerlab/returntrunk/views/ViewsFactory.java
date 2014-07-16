@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.buerlab.returntrunk.dialogs.PhoneCallNotifyDialog;
 import com.buerlab.returntrunk.dialogs.RequestBillDialog;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.R;
@@ -21,7 +20,6 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
-import org.apache.http.client.UserTokenHandler;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,20 +101,11 @@ public class ViewsFactory {
                             }
                         });
 
-                        service.pickBill(bill.id, "", new NetService.NetCallBack() {
-                            @Override
-                            public void onCall(NetProtocol result) {
-                                if (result.code == NetProtocol.SUCCESS){
-
-                                }
-                            }
-                        });
-
-//                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog);
-//                        dialog.show();
-
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
                         BaseActivity.currActivity.startActivity(intent);
+
+                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog, bill);
+                        dialog.show();
                     }else{
                             Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
                             toast.show();
@@ -178,9 +167,12 @@ public class ViewsFactory {
     }
 
     static public View createHisotryBill(LayoutInflater inflater, final HistoryBill bill){
-        int layoutId = R.layout.history_bill_returntrunk;
+
+        int layoutId = getHistoryBillLayout(bill.billType);
         View bView = inflater.inflate(layoutId, null, false);
-        fillHistoryBill(bView, bill);
+        if(bView != null){
+            fillHistoryBill(bView, bill);
+        }
         return bView;
     }
 
@@ -192,8 +184,29 @@ public class ViewsFactory {
         }catch (JSONException e){
 
         }
-        ((TextView)bView.findViewById(R.id.history_bill_from)).setText(bill.fromAddr);
-        ((TextView)bView.findViewById(R.id.history_bill_to)).setText(bill.toAddr);
+        ((NickNameBarView)bView.findViewById(R.id.history_bill_nickName)).setUser(bill.senderData, bill.senderType);
+        ((TextView)bView.findViewById(R.id.nickname)).setText(bill.nickName);
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_from), bill.fromAddr);
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_to), bill.toAddr);
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_mat), bill.material);
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_price), String.valueOf(bill.price));
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_weight), String.valueOf(bill.weight));
+        Button callBtn = (Button)bView.findViewById(R.id.history_bill_call);
+        if(callBtn != null)
+            callBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!bill.senderPhoneNum.isEmpty()){
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.senderPhoneNum));
+                        BaseActivity.currActivity.startActivity(intent);
+                    }else{
+                        Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有留下手机号", 2);
+                        toast.show();
+                    }
+                }
+            });
+
+
     }
 
 
@@ -210,6 +223,15 @@ public class ViewsFactory {
                 ((TextView)bView.findViewById(R.id.simple_bill_mat)).setText(bill.material);
         }
         return bView;
+    }
+
+    static private int getHistoryBillLayout(String billType){
+        if(billType.equals(HistoryBill.TYPE_GOODS))
+            return R.layout.history_bill_goods;
+        else if(billType.equals(HistoryBill.TYPE_TRUNK))
+                return R.layout.history_bill_trunk;
+        else
+            return R.layout.history_bill_user;
     }
 
 }

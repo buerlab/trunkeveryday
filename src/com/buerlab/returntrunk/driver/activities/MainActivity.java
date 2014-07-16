@@ -113,10 +113,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("userId", User.getInstance().userId);
                         editor.commit();
-//                        String alias = User.getInstance().userId+User.USERTYPE_TRUNK;
-//                        JPushUtils.registerAlias(self, alias);
-                        JPushUtils.registerAlias(self, "zql");
-//                        JPushUtils.registerAlias();
 
                         init();
                         FragmentManager manager = self.getSupportFragmentManager();
@@ -127,7 +123,6 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         transaction.commit();
                         setActionBarLayout("天天回程车",WITH_MENU);
                         getActionBar().show();
-
                     }
                 }
                 else{

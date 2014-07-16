@@ -178,8 +178,10 @@ public class User {
     public void addBill(Bill bill){
         mBills.add(bill);
     }
+    public void removeBill(Bill bill){ mBills.remove(bill); }
 
     public void initHistoryBills(List<HistoryBill> bills){
+        mHistoryBills.clear();
         for(HistoryBill bill : bills)
             mHistoryBills.add(bill);
     }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.views.SendBillView;
 import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;
@@ -17,28 +18,14 @@ import java.util.List;
 public class SendBillListAdapter extends BaseAdapter {
 
     private List<Bill> mBills = new ArrayList<Bill>();
-    private LayoutInflater mInflater = null;
+    private Context mContxt = null;
 
     public SendBillListAdapter(Context context){
-        mInflater = LayoutInflater.from(context);
+        mContxt = context;
     }
 
     public void setBills(List<Bill> bills){
         mBills = bills;
-        notifyDataSetChanged();
-    }
-
-    public void addBill(Bill bill){
-        mBills.add(bill);
-        notifyDataSetChanged();
-    }
-
-    public List<Bill> getBills(){
-        return mBills;
-    }
-
-    public void removeBill(Bill bill){
-        mBills.remove(bill);
         notifyDataSetChanged();
     }
 
@@ -60,9 +47,9 @@ public class SendBillListAdapter extends BaseAdapter {
         Bill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
-            view = ViewsFactory.createSendBill(mInflater, bill);
+            view = new SendBillView(mContxt, bill);
         }else{
-            ViewsFactory.fillSendBill(view, bill);
+            ((SendBillView)view).update(bill);
         }
 
         return view;

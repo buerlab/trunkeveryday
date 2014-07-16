@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name_cn">天天回程车</string>
-    <string name="app_name">returntrunkdriver</string>
+    <string name="app_name">天天回程车</string>
     <string name="version">V 1.0</string>
     <string name="server_addr">http://115.29.8.74:9288/</string>
     <string name="server_addr2">http://115.29.8.74:9288</string>
@@ -10,10 +10,14 @@
     <string name="open_drawer">打开抽屉</string>
     <string name="close_drawer">关闭抽屉</string>
 
+    <string name="recomend_good_bill">推荐货源</string>
+    <string name="new_trunk_bill">发布回程车</string>
+
     <string name="bill_locate">实时定位</string>
     <string name="bill_call">电话呼叫</string>
     <string name="bill_judge">评价</string>
     <integer name="normal_font_size">26</integer>
 
     <string name="menu_new">12</string>
+
 </resources>

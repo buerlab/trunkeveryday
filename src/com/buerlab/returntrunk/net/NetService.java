@@ -125,6 +125,7 @@ public class NetService {
         parmsMap.put("fromAddr", bill.from);
         parmsMap.put("toAddr", bill.to);
         parmsMap.put("billTime", bill.time);
+        parmsMap.put("validTimeSec", String.valueOf(bill.validTimeSec));
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             parmsMap.put("material", bill.material);
             parmsMap.put("price", String.valueOf(bill.price));
@@ -225,6 +226,16 @@ public class NetService {
         request(mContext.getString(R.string.server_addr) + "api/bill/confirm", createReqParms(parmsMap), "POST", callBack);
     }
 
+    public void overdueBills(List<String> billIds, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        JSONArray array = new JSONArray();
+        for(String id : billIds){
+            array.put(id);
+        }
+        parmsMap.put("bills", array.toString());
+        request(mContext.getString(R.string.server_addr) + "api/bill/overdue", createReqParms(parmsMap), "POST", callBack);
+    }
+
     public void billCall(String targetUserId, String billType, final NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("targetId", targetUserId);
@@ -302,7 +313,7 @@ public class NetService {
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("userId",userId );
         parmsMap.put("getType", getType);
-        urlRequest(mContext.getString(R.string.server_addr)+"api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
     }
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
@@ -377,13 +388,14 @@ public class NetService {
                 HttpURLConnection conn = null;
 
                 String method = args[2];
-                String urlString = method == "GET" ? args[0]+"?"+args[1] : args[0];
+                String urlString = method.equals("GET") ? args[0]+"?"+args[1] : args[0];
 
                 try{
 
                     url = new URL(urlString);
 
                     conn = (HttpURLConnection)url.openConnection();
+                    conn.setConnectTimeout(20*1000);
                     conn.setRequestMethod(method);
                     conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
 
@@ -394,7 +406,7 @@ public class NetService {
                     }
                     conn.setDoInput(true);
 
-                    if(method != "GET"){
+                    if(!method.equals("GET")){
                         conn.setDoOutput(true);
                         OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
                         out.write(args[1]);
@@ -541,7 +553,6 @@ public class NetService {
                 String twoHyphens ="--";
                 String boundary ="*****";
                 HttpURLConnection con = null;
-
 
                 try
                 {

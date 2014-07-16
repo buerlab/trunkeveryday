@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.DisplayMetrics;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
@@ -108,6 +109,18 @@ public class Utils {
         return timestampToDisplay(Long.parseLong(ts,format));
     }
 
+    static public int[] secTransform(long second){
+        int h = 0;
+        int d = 0;
+        int s = 0;
+        int temp = (int)second%(24*3600);
+        d = (int)second/(24*3600);
+        h = temp/3600;
+        int[] result = {d, h};
+        return result;
+    }
+
+
     static public List<JSONObject> extractArray(JSONObject data){
         List<JSONObject> result = new ArrayList<JSONObject>();
 
@@ -123,6 +136,11 @@ public class Utils {
             return null;
         }
 
+    }
+
+    public static void safeSetText(TextView view, String value){
+        if(view != null)
+            view.setText(value);
     }
 
     public static boolean hasSDCard() {
