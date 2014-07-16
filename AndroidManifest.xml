@@ -20,19 +20,19 @@
         <activity android:name=".driver.activities.MainActivity"
                   android:label="首页"
                   android:launchMode="singleInstance">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <activity android:name=".owner.activities.OwnerMainActivity"
                   android:label="首页"
                   android:launchMode="singleInstance">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.LoginActivity"></activity>
         <activity android:name=".activities.RegisterActivity"></activity>
@@ -45,6 +45,7 @@
         </activity>
         <activity android:name=".driver.activities.SetTrunkActivity"/>
 
+        <activity android:name=".driver.activities.EditTrunkActivity"></activity>
         <activity
                 android:name=".BaiduMapActivity"
                 android:configChanges="orientation|keyboardHidden"
@@ -96,16 +97,16 @@
             <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.GalleryUrlActivity"></activity>
-        <!--<service android:name=".service.BaiduMapService">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="com.buerlab.returntrunk.service.BadiMapService"/>-->
-            <!--</intent-filter>-->
-        <!--</service>-->
-        <!--<service-->
-                <!--android:name="com.baidu.location.f"-->
-                <!--android:enabled="true"-->
-                <!--android:process=":remote" >-->
-        <!--</service>-->
+        <service android:name=".service.BaiduMapService">
+            <intent-filter>
+                <action android:name="com.buerlab.returntrunk.service.BadiMapService"/>
+            </intent-filter>
+        </service>
+        <service
+                android:name="com.baidu.location.f"
+                android:enabled="true"
+                android:process=":remote" >
+        </service>
 
         <!--极光推送-->
         <!-- Required  SDK核心功能-->

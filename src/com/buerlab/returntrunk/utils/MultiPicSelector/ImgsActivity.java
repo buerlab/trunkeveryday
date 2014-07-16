@@ -27,11 +27,12 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 
-public class ImgsActivity extends BaseActivity {
+public class ImgsActivity extends BackBaseActivity {
 
     Bundle bundle;
     FileTraversal fileTraversal;
@@ -44,7 +45,7 @@ public class ImgsActivity extends BaseActivity {
     Button choise_button;
     ArrayList<String> filelist;
 
-    public final static int MAX_NUM = 9;
+    public final static int MAX_NUM = 8;
     final ImgsActivity self =this;
     int hasSelected;
     @Override
@@ -52,12 +53,7 @@ public class ImgsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multi_pic_selector);
 
-        ActionBar actionBar = getActionBar();
-        if( null != actionBar ){
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("照片");
-        }
+        setActionBarLayout("选择照片");
 
         imgGridView=(GridView) findViewById(R.id.gridView1);
         bundle= getIntent().getExtras();

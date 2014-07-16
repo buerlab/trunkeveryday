@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.driver.DriverUtils;
@@ -34,7 +35,7 @@ public class LoginActivity extends BaseActivity {
     NetService service;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.login_activity);
         userText = (EditText)findViewById(R.id.login_user_input);
         pswText = (EditText)findViewById(R.id.login_psw_input);
@@ -114,8 +115,10 @@ public class LoginActivity extends BaseActivity {
                     String versionType = Utils.getVersionType(self);
                     if(versionType.equals( "driver")){
                         DriverUtils.safeSwitchToMainActivity(self);
+                        finish();
                     }else if(versionType.equals( "owner")) {
                         OwnerUtils.safeSwitchToMainActivity(self);
+                        finish();
                     }else {
                         Utils.showToast(self,"versonType error");
                         return;

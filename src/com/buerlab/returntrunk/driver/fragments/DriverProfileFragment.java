@@ -10,11 +10,14 @@ import android.view.ViewGroup;
 import android.widget.*;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.*;
+import com.buerlab.returntrunk.driver.activities.MainActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.driver.activities.EditDriverLicenseActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
 
 /**
  * Created by zhongqiling on 14-6-17.
@@ -85,6 +88,23 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
 //            case R.id.person_detail_btn:goToPersonDetail();
             default:break;
         }
+    }
+
+    @Override
+    public void onShow(){
+        NetService service = new NetService(this.getActivity());
+        service.getUserDataWithoutLoading(new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS && result.data !=null){
+                    User.getInstance().initUser(result.data);
+                    //注册用户初始化事件，用于个人资料得以初始化数据
+                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+                    EventCenter.shared().dispatch(evt);
+                }
+            }
+        });
+
     }
 
     private void goToEditNickNameFragment(){

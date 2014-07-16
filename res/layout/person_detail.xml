@@ -23,35 +23,40 @@
                  android:layout_alignParentLeft="true"
                  android:layout_marginTop="30dp"
                 android:text="刘大海"/>
-        <com.buerlab.returntrunk.views.StarsViewWithText
+        <com.buerlab.returntrunk.views.StarsView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/textview_nickname"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/stars_view">
-        </com.buerlab.returntrunk.views.StarsViewWithText>
+        </com.buerlab.returntrunk.views.StarsView>
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="40dp"
                       android:layout_marginTop="70dp">
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
+                          android:textSize="16dp"
                           android:text="总评价数量："
                         />
                 <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:id="@+id/total_comment_count"
+                      android:id="@+id/comment_count2"
+                      android:textSize="16dp"
                       android:text="258"
                     />
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginLeft="20dp"
+                      android:textSize="16dp"
                       android:text="平均评星："
                     />
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:id="@+id/average_star_num"
-                      android:text="2.7"
+                      android:textSize="16dp"
+                      android:text="0.0"
                     />
         </LinearLayout>
     </RelativeLayout>
@@ -146,6 +151,7 @@
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="50dp"
                       android:orientation="horizontal"
+                      android:id="@+id/driver_license_wrapper"
                       android:layout_marginLeft="20dp"
                       android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
@@ -188,6 +194,7 @@
                       android:layout_height="50dp"
                       android:orientation="horizontal"
                       android:layout_marginLeft="20dp"
+                      android:id="@+id/trunk_license_wrapper"
                       android:background="@drawable/infogroup_item_sub_border">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="fill_parent"
@@ -229,6 +236,7 @@
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="50dp"
+                      android:id="@+id/support_location_wrapper"
                       android:orientation="horizontal"
                       android:layout_marginLeft="20dp"
                 >
@@ -255,7 +263,7 @@
                           android:layout_weight="0">
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
-                           android:src="@drawable/qt2_wsh"
+                           android:src="@drawable/verified"
                            android:layout_weight="1"
                            android:id="@+id/support_location_verify"
                            android:layout_gravity="center_vertical"/>
@@ -277,64 +285,19 @@
                   android:id="@+id/tab_trunk_wrapper">
 
     </FrameLayout>
-    <LinearLayout android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical"
-                  android:background="@drawable/infogroup_group_border"
-                  android:paddingTop="1dp"
-                  android:paddingBottom="1dp"
-                  android:layout_marginTop="@dimen/layout_group_margin"
-                  android:layout_marginBottom="@dimen/layout_group_margin"
 
-            >
-        <com.buerlab.returntrunk.views.NickNameBarView
+    <FrameLayout android:layout_width="fill_parent"
+                 android:layout_height="wrap_content">
+        <com.buerlab.returntrunk.views.MyListView
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/nickname_bar"
-                >
-                </com.buerlab.returntrunk.views.NickNameBarView>
-        <LinearLayout android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/comment_list_view"
+              android:divider="@color/background"
+              android:layout_marginTop="10dp"
+              android:dividerHeight="10dp">
 
-                      android:layout_height="40dp"
-                      android:orientation="horizontal"
-                      android:layout_marginLeft="20dp">
+              </com.buerlab.returntrunk.views.MyListView>
 
-            <LinearLayout android:layout_width="wrap_content"
-                          android:layout_height="fill_parent"
-                          android:layout_weight="1">
-                <TextView android:layout_width="wrap_content"
-                          android:layout_height="wrap_content"
-                          android:layout_gravity="center_vertical"
-                          android:textColor="@color/sub_text_color"
-
-                          android:textSize="16sp"
-                          android:text="给我评星"
-                        />
-                <com.buerlab.returntrunk.views.StarsView
-                android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_height="wrap_content">
-
-                </com.buerlab.returntrunk.views.StarsView>
-
-            </LinearLayout>
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_gravity="center_vertical"
-                      android:textColor="@color/sub_text_color"
-                      android:layout_marginRight="20dp"
-                      android:layout_weight="0"
-                      android:textSize="16sp"
-                      android:text="2014-12-12" />
-        </LinearLayout>
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginRight="20dp"
-                  android:textSize="16sp"
-                android:textColor="@color/text_color"
-                android:text="吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!吴师傅活很好!"
-                />
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
     </ScrollView>

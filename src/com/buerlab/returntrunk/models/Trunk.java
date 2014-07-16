@@ -1,13 +1,17 @@
 package com.buerlab.returntrunk.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * Created by zhongqiling on 14-6-11.
  */
-public class Trunk {
+public class Trunk implements Parcelable {
 
     static public final String TYPE_FLAT = "平板车";
     static public final String TYPE_HIGH_FENCE = "高栏";
@@ -35,6 +39,28 @@ public class Trunk {
         lisencePlate = _licensePlate;
     }
 
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(type);
+        dest.writeFloat(length);
+        dest.writeFloat(load);
+        dest.writeString(lisencePlate);
+        dest.writeString(trunkLicense);
+        dest.writeString(trunkLicenseVerified);
+        dest.writeStringList(trunkPicFilePaths);
+    }
+
+    public Trunk(Parcel parcel){
+        type = parcel.readString();
+        length = parcel.readFloat();
+        load = parcel.readFloat();
+        lisencePlate = parcel.readString();
+        trunkLicense = parcel.readString();
+        trunkLicenseVerified = parcel.readString();
+        trunkPicFilePaths = new ArrayList<String>();
+        parcel.readStringList(trunkPicFilePaths);
+
+    }
     public Map<String, String> toParmsMap(){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("type", type);
@@ -65,4 +91,26 @@ public class Trunk {
     public String toString(){
         return lisencePlate+"-"+type+"-"+String.valueOf(length)+"m-"+String.valueOf(load)+"kg";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+
+    public static final Parcelable.Creator<Trunk> CREATOR = new Creator<Trunk>() {
+
+        @Override
+        public Trunk[] newArray(int size) {
+            return new Trunk[size];
+        }
+
+        //将Parcel对象反序列化为ParcelableDate
+        @Override
+        public Trunk createFromParcel(Parcel source) {
+            return new Trunk(source);
+        }
+    };
+
 }

@@ -26,7 +26,7 @@
                       android:numeric="decimal"/>
             <TextView style="@style/infogroup_sub_text"
                       android:layout_weight="0"
-                      android:text="千克"
+                      android:text="吨"
                     />
         </LinearLayout>
         <LinearLayout style="@style/infogroup_item_wrapper">
@@ -37,7 +37,7 @@
                       android:numeric="decimal"/>
             <TextView style="@style/infogroup_sub_text"
                       android:layout_weight="0"
-                      android:text="米"
+                      android:text="元"
                     />
         </LinearLayout>
 
@@ -53,7 +53,7 @@
                       android:id="@+id/new_bill_from_text"
                       android:layout_weight="1"
                       android:textSize="16sp"
-                      android:hint="选择回程出发地"
+                      android:hint="出发地"
 
                       android:layout_height="wrap_content"/>
             <ImageView android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                       android:id="@+id/new_bill_to_text"
                       android:layout_weight="1"
                       android:textSize="16sp"
-                      android:hint="选择回程目的地"
+                      android:hint="目的地"
                       android:layout_height="wrap_content"/>
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -93,7 +93,7 @@
                       android:layout_weight="1"
                       android:textSize="16sp"
                       android:id="@+id/new_bill_time_text"
-                      android:hint="选择回程时间"
+                      android:hint="可发货时间"
                       android:layout_height="wrap_content"/>
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -302,4 +303,7 @@ public class Utils {
         String versionType = preferences.getString("version_type", "");
         return versionType;
     }
+
+
+
 }

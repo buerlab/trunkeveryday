@@ -13,6 +13,9 @@ import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.SearchResult;
 import com.baidu.mapapi.search.geocode.*;
+import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.models.Global;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetService;
 
 import  java.util.Date;
@@ -36,7 +39,7 @@ public class BaiduMapService extends Service implements
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     MyLocationData locData;
     final  static int PERIOD = 1000 * 60 * 15;  //15分钟报一次
-//    final  static int PERIOD = 1000 * 5;  //test
+//    final  static int PERIOD = 1000 * 10;  //test
     @Override
     public IBinder onBind(Intent intent) {
         Log.v(TAG, "ServiceDemo onBind");
@@ -73,7 +76,7 @@ public class BaiduMapService extends Service implements
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true);// 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(PERIOD);
         mLocClient.setLocOption(option);
         mLocClient.start();
         mLocClient.requestLocation();
@@ -99,13 +102,19 @@ public class BaiduMapService extends Service implements
                     null,null);
 
         }else{
+
+            ReverseGeoCodeResult.AddressComponent addressComponent = result.getAddressDetail();
             service.uploadLocation(result.getLocation().latitude,
                     result.getLocation().longitude,
-                    result.getAddressDetail().province,
-                    result.getAddressDetail().city,
-                    result.getAddressDetail().district,
+                    addressComponent.province,
+                    addressComponent.city,
+                    addressComponent.district,
                     null);
-            Log.v(TAG, result.getAddress()+";"+result.getAddressDetail().province+result.getAddressDetail().city+result.getAddressDetail().district);
+            Global.getInstance().currentDistrict = addressComponent.district;
+            Global.getInstance().currentCity =addressComponent.city;
+            Global.getInstance().currentProvice = addressComponent.province;
+
+            Log.v(TAG, result.getAddress()+";"+addressComponent.province+addressComponent.city+addressComponent.district);
         }
     }
 
@@ -117,9 +126,9 @@ public class BaiduMapService extends Service implements
         @Override
         public void onReceiveLocation(BDLocation location) {
 
-            currentDate = new Date();
-            if(currentDate.getTime() - date.getTime() > PERIOD){
-                date = currentDate;
+//            currentDate = new Date();
+//            if(currentDate.getTime() - date.getTime() > PERIOD){
+//                date = currentDate;
                 locData = new MyLocationData.Builder()
                         .accuracy(location.getRadius())
                                 // 此处设置开发者获取到的方向信息，顺时针0-360
@@ -134,7 +143,7 @@ public class BaiduMapService extends Service implements
                 Log.v(TAG, "("+location.getLatitude()+","+ location.getLongitude()+")");
 
 //                service.uploadLocation(locData,null);
-            }
+//            }
 
 //            String s=HttpRequest.sendGet("http://115.29.8.74:9288/api/location", "latitude="+location.getLatitude()+"&longitude="+ location.getLatitude());
 //            System.out.println(s);

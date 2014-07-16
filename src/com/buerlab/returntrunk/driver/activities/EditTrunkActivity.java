@@ -8,37 +8,34 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
-import com.buerlab.returntrunk.dialogs.PickAddrDialog;
-import com.buerlab.returntrunk.dialogs.PickTrunkTypeDialog;
-import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
-import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
-import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
 import com.buerlab.returntrunk.adapters.TrunkPicGridAdapter;
+import com.buerlab.returntrunk.dialogs.PickTrunkTypeDialog;
+import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.views.MyGridView;
+import com.buerlab.returntrunk.views.StarsView;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.EventListener;
 
 /**
  * Created by zhongqiling on 14-6-23.
  */
-public class AddTrunkActivity extends BackBaseActivity implements EventCenter.OnEventListener {
+public class EditTrunkActivity extends BackBaseActivity implements EventCenter.OnEventListener {
 
 
 //    EditText typeText;
@@ -57,13 +54,13 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
     MyGridView mPicGridView;
     TrunkPicGridAdapter mTrunkPicGridAdapter;
     Button mBtnSave;
-    final AddTrunkActivity self = this;
+    final EditTrunkActivity self = this;
+    Trunk trunk;
     private String uploadFile = null;
     private String verifyTrunkLicenseUrl ="http://115.29.8.74:9289/upload/trunkLicense";
     private String uploadTrunkPicUrl ="http://115.29.8.74:9288/api/user/trunk/uploadPic";
     ArrayList<String> picFileNames= new ArrayList<String>();
 
-    private boolean enterByLogin = false;
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
@@ -76,6 +73,9 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
 
 
 
+
+
+
 //        typeText = (EditText)findViewById(R.id.set_trunk_type);
         typeWrapper = (LinearLayout)findViewById(R.id.trunk_type_btn);
         typeText = (TextView)findViewById(R.id.trunk_type_text);
@@ -84,13 +84,7 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
         lisenceText = (EditText)findViewById(R.id.set_trunk_licensePlate);
         trunkLicenseText = (EditText)findViewById(R.id.set_trunk_license);
 
-        enterByLogin = getIntent().getBooleanExtra("enterByLogin",false);
-
-        if(!enterByLogin){
-            setActionBarLayout("添加货车",WITH_BACK);
-        }else {
-            setActionBarLayout("添加货车",WITH_NONE);
-        }
+        setActionBarLayout("编辑货车",WITH_BACK);
 
         //选择出发地监听事件
         final BaseActivity self = this;
@@ -131,8 +125,10 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
         mTrunkLicensePicBtn.setLayoutParams(params);
 
         mPicGridView = (MyGridView)findViewById(R.id.pic_gridview);
-        addPicToGridLayout(picFileNames);
+//        addPicToGridLayout(picFileNames);
         service = new NetService(this);
+
+
     }
 
     @Override
@@ -147,9 +143,6 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
         EventCenter.shared().removeEventListener(DataEvent.TRUNK_TYPE_CHANGE, this);
     }
 
-    private void initData(){
-        isEdited = getIntent().getBooleanExtra("isEdited",false);
-    }
 
     public void saveTrunkData(View v){
         if(isEdited){
@@ -163,50 +156,54 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                 final String license = lisenceText.getText().toString();
                 final String trunkLicense =trunkLicenseText.getText().toString();
                 Trunk trunk = new Trunk(type,len,load,license);
-                service.addUserTrunk(trunk, new NetService.NetCallBack() {
+                service.setUserTrunk(trunk, new NetService.NetCallBack() {
                     @Override
                     public void onCall(NetProtocol result) {
-                        if(result.code == NetProtocol.SUCCESS){
+                        if (result.code == NetProtocol.SUCCESS) {
                             //验证行驶证
                             boolean uploadTrunkLicense = false;
                             boolean uploadPic = false;
-                            if(!trunkLicense.isEmpty() && mTrunkLicenseBitmap!=null){
+                            if (!trunkLicense.isEmpty() && mTrunkLicenseBitmap != null) {
                                 uploadTrunkLicense = true;
-                                String filename = license+ "_"+ User.getInstance().userId + "_"+ trunkLicense;
+                                String filename = license + "_" + User.getInstance().userId + "_" + trunkLicense;
 
-                                service.uploadPic(verifyTrunkLicenseUrl,mTrunkLicenseBitmap,filename, new NetService.NetCallBack(){
+                                service.uploadPic(verifyTrunkLicenseUrl, mTrunkLicenseBitmap, filename, new NetService.NetCallBack() {
 
                                     @Override
                                     public void onCall(NetProtocol result) {
-                                        if(result.code == NetProtocol.SUCCESS){
-                                                updateData();
+                                        if (result.code == NetProtocol.SUCCESS) {
+                                            updateData();
+                                        } else {
+                                            DriverUtils.defaultNetProAction(self,result);
                                         }
                                     }
                                 });
                             }
                             //上传图片
-                            if(picFileNames.size()>0){
+                            if (picFileNames.size() > 0) {
                                 uploadPic = true;
                                 String[] filenames = new String[picFileNames.size()];
-                                for(int i =0;i<picFileNames.size();i++){
+                                for (int i = 0; i < picFileNames.size(); i++) {
                                     Date d = new Date();
 
-                                    filenames[i] = license+ "_"+ User.getInstance().userId + "_"+ d.getTime()+i;
+                                    filenames[i] = license + "_" + User.getInstance().userId + "_" + d.getTime() + i;
                                 }
                                 service.uploadPics(uploadTrunkPicUrl, picFileNames, filenames, new NetService.NetCallBack() {
                                     @Override
                                     public void onCall(NetProtocol result) {
-                                        if(result.code ==NetProtocol.SUCCESS){
+                                        if (result.code == NetProtocol.SUCCESS) {
                                             updateData();
+                                        }else {
+                                            DriverUtils.defaultNetProAction(self, result);
                                         }
                                     }
                                 });
                             }
 
-                            if(!uploadPic && !uploadTrunkLicense){
+                            if (!uploadPic && !uploadTrunkLicense) {
                                 updateData();
                             }
-                        }else {
+                        } else {
                             Utils.defaultNetProAction(self, result);
                         }
                     }
@@ -226,15 +223,7 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                     DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
                     EventCenter.shared().dispatch(evt);
 
-                    if(enterByLogin){
-                        Intent intent = new Intent(self,MainActivity.class);
-                        intent.putExtra("without_splash",true);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-                    }else {
-                        finish();
-                    }
+                    finish();
                 }
             }
         });
@@ -266,7 +255,8 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                         if(resultCode == Util.HAS_VALUE){
                             ArrayList<String> _fileNames = data.getStringArrayListExtra("files");
                             picFileNames.addAll(_fileNames);
-                            addPicToGridLayout(picFileNames);
+                            mTrunkPicGridAdapter.setData(picFileNames);
+//                            addPicToGridLayout(picFileNames);
 //                            for(int i=0;i<fileNames.size();i++){
 //                                Utils.showToast(self,fileNames.get(i));
 //                            }
@@ -383,7 +373,8 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                 startActivityForResult(intent, Util.REQUEST);
             }else {
                 picFileNames.remove(Position);
-                addPicToGridLayout(picFileNames);
+//                addPicToGridLayout(picFileNames);
+                mTrunkPicGridAdapter.setData(picFileNames);
 //                Utils.showToast(self,"delete it");
             }
 
@@ -396,5 +387,55 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
         if(e.type.equals(DataEvent.TRUNK_TYPE_CHANGE)){
             typeText.setText((String)e.data);
         }
+    }
+
+    private void initData(){
+        trunk = getIntent().getParcelableExtra("trunk");
+
+//        for (int i =0;i<trunk.trunkPicFilePaths.size();i++){
+//            picFileNames.add(getString(R.string.server_addr2) + trunk.trunkPicFilePaths.get(i));
+//        }
+        picFileNames = trunk.trunkPicFilePaths;
+        addPicToGridLayout(picFileNames);
+        typeText.setText(trunk.type);
+        lengthText.setText(String.valueOf(trunk.length));
+        loadText.setText(String.valueOf(trunk.load));
+        lisenceText.setText(trunk.lisencePlate);
+        lisenceText.setEnabled(false);
+        trunkLicenseText = (EditText)findViewById(R.id.set_trunk_license);
+
+        TextView textview_trunkLicense = (TextView)findViewById(R.id.textview_trunkLicense);
+        ImageView trunk_license_verify = (ImageView)findViewById(R.id.trunk_license_verify);
+        LinearLayout trunk_license_wrapper = (LinearLayout)findViewById(R.id.trunk_license_wrapper);
+        LinearLayout upload_trunk_license_wrapper = (LinearLayout)findViewById(R.id.upload_trunk_license_wrapper);
+        int trunkLicenseVerified =  Integer.parseInt(trunk.trunkLicenseVerified);
+        switch (trunkLicenseVerified){
+            case 0: textview_trunkLicense.setText("未审核");
+                trunk_license_verify.setImageResource(R.drawable.qt2_wsh);
+                trunk_license_wrapper.setVisibility(View.GONE);
+                upload_trunk_license_wrapper.setVisibility(View.VISIBLE);
+                break;
+            case 1:textview_trunkLicense.setText("审核中");
+                trunk_license_verify.setImageResource(R.drawable.qt_dd);
+                trunk_license_wrapper.setVisibility(View.VISIBLE);
+                upload_trunk_license_wrapper.setVisibility(View.GONE);
+                break;
+            case 2:textview_trunkLicense.setText("通过审核");
+                trunk_license_verify.setImageResource(R.drawable.verified);
+               trunk_license_wrapper.setVisibility(View.VISIBLE);
+                upload_trunk_license_wrapper.setVisibility(View.GONE);
+                break;
+            case 3:textview_trunkLicense.setText("审核失败");
+                trunk_license_verify.setImageResource(R.drawable.qt2_wsh);
+                trunk_license_wrapper.setVisibility(View.GONE);
+                upload_trunk_license_wrapper.setVisibility(View.VISIBLE);
+                break;
+            default:break;
+
+
+        }
+
+//        findViewById(R.id.trunk_pic_wrapper).setVisibility(View.GONE);
+
     }
 }

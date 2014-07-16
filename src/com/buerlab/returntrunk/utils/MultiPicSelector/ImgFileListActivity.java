@@ -14,9 +14,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
 
-public class ImgFileListActivity extends BaseActivity implements OnItemClickListener{
+public class ImgFileListActivity extends BackBaseActivity implements OnItemClickListener{
 
     ListView listView;
     Util util;
@@ -28,12 +29,8 @@ public class ImgFileListActivity extends BaseActivity implements OnItemClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.multi_pic_selector_file_list);
         hasSelected = getIntent().getIntExtra("hasSelected",0);
-        ActionBar actionBar = getActionBar();
-        if( null != actionBar ){
-            actionBar.setHomeButtonEnabled(true);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("照片库");
-        }
+
+        setActionBarLayout("选择照片");
         listView=(ListView) findViewById(R.id.listView1);
         util=new Util(this);
         locallist=util.LocalImgFileList();

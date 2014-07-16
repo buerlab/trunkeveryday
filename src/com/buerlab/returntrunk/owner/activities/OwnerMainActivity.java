@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 import cn.jpush.android.api.JPushInterface;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.LoginActivity;
@@ -71,11 +72,11 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         setContentView(R.layout.main_goods);
         Utils.setOwnerVersion(this);
         //启动位置上报服务
-//        startService(new Intent(this, BaiduMapService.class));
+        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         MainController.shared().init(getApplicationContext());
-//        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());
 
         boolean withoutSplash = getIntent().getBooleanExtra("without_splash",false);
 

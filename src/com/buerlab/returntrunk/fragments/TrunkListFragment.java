@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.activities.EditIDNumActivity;
 import com.buerlab.returntrunk.activities.GalleryUrlActivity;
 import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
+import com.buerlab.returntrunk.driver.activities.EditTrunkActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Trunk;
@@ -55,7 +56,8 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
         mAdapter =new TrunkListAdapter(getActivity(),
                 new ItemOnLongClickListener(),
                 new OnPhotoClickClass(),
-                new OnSetTrunkClickClass()
+                new OnSetTrunkClickClass(),
+                new OnEditTrunkClickClass()
         );
         mListView.setAdapter(mAdapter);
 
@@ -75,6 +77,22 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     }
 
 
+    @Override
+    public void onShow(){
+        NetService service = new NetService(this.getActivity());
+        service.getUserDataWithoutLoading(new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS && result.data !=null){
+                    User.getInstance().initUser(result.data);
+                    //注册用户初始化事件，用于个人资料得以初始化数据
+                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+                    EventCenter.shared().dispatch(evt);
+                }
+            }
+        });
+
+    }
 
     @Override
     public void onEventCall(DataEvent e) {
@@ -130,6 +148,19 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
             useTrunk(trunk.lisencePlate,Position);
         }
     }
+
+
+    class OnEditTrunkClickClass implements TrunkListAdapter.OnEditTrunkClickClass{
+
+        @Override
+        public void OnItemClick(View v, int Position, Trunk trunk) {
+//            Utils.showToast(self.getActivity(),"OnEditTrunkClickClass");
+            Intent intent = new Intent(self.getActivity(), EditTrunkActivity.class);
+            intent.putExtra("trunk",trunk);
+            startActivity(intent);
+        }
+    }
+
     private void showOpSelectDialog(final Activity c, final View v) {
 
         TrunkListAdapter.ViewHolder vh = (TrunkListAdapter.ViewHolder)v.getTag();

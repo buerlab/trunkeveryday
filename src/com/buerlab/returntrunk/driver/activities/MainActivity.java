@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
 import cn.jpush.android.api.JPushInterface;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.LoginActivity;
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        SDKInitializer.initialize(getApplicationContext());
         getActionBar().hide();
         setContentView(R.layout.main);
         Utils.setDriverVersion(this);
@@ -77,7 +78,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         Utils.init(this);
-//        SDKInitializer.initialize(getApplicationContext());
+
 
         NetService service = new NetService(this);
 

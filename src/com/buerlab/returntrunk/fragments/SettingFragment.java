@@ -13,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.LoginActivity;
+import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
+import com.buerlab.returntrunk.dialogs.*;
+import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
@@ -28,6 +31,7 @@ public class SettingFragment extends BaseFragment{
     Button logoutBtn;
     View mView;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -38,6 +42,21 @@ public class SettingFragment extends BaseFragment{
             @Override
             public void onClick(View v) {
                 logout(v);
+            }
+        });
+
+        mView.findViewById(R.id.see_my_complete_data).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seeMyCompleteData(v);
+            }
+        });
+
+        mView.findViewById(R.id.commment_myself).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                com.buerlab.returntrunk.dialogs.AddCommentDialog dialog = new AddCommentDialog(self.getActivity(),R.style.dialog);
+                dialog.show();
             }
         });
         return  mView;
@@ -53,6 +72,13 @@ public class SettingFragment extends BaseFragment{
 
             Toast toast = Toast.makeText(activity.getApplicationContext(), "已注销", 2);
             toast.show();
+    }
+
+    public void seeMyCompleteData(View v){
+        Intent intent = new Intent(getActivity(), UserCompleteDataActivity.class);
+        intent.putExtra("userId",User.getInstance().userId);
+        intent.putExtra("getType",User.getInstance().getUserType());
+        startActivity(intent);
     }
 
 }

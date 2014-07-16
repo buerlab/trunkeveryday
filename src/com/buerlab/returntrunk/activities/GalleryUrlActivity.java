@@ -56,7 +56,7 @@ public class GalleryUrlActivity extends BaseActivity {
 			@Override
 			public void onItemChange(int currentPosition)
 			{
-				Toast.makeText(GalleryUrlActivity.this, "Current item is " + currentPosition, Toast.LENGTH_SHORT).show();
+//				Toast.makeText(GalleryUrlActivity.this, "Current item is " + currentPosition, Toast.LENGTH_SHORT).show();
 			}
 		});
 

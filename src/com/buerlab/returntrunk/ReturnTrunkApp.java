@@ -28,7 +28,7 @@ public class ReturnTrunkApp extends Application {
         JPushCenter.shared().init(getApplicationContext());
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .showImageOnLoading(R.drawable.ic_launcher) // resource or drawable
+                .showImageOnLoading(R.drawable.imgbg) // resource or drawable
                 .showImageForEmptyUri(R.drawable.imgbg) // resource or drawable
                 .showImageOnFail(R.drawable.imgbg) // resource or drawable
                 .resetViewBeforeLoading(false)  // default

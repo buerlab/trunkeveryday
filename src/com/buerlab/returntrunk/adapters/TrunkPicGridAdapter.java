@@ -14,6 +14,7 @@ import com.buerlab.returntrunk.utils.MultiPicSelector.ImgsActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,11 @@ public class TrunkPicGridAdapter extends BaseAdapter {
 		util=new Util(context);
 		holderlist=new ArrayList<View>();
 	}
+
+    public void setData(List<String> _data){
+        this.data =  _data;
+        notifyDataSetChanged();
+    }
 	
 	@Override
 	public int getCount() {
@@ -84,9 +90,20 @@ public class TrunkPicGridAdapter extends BaseAdapter {
             int[] size = Utils.getScreenSize();
 
             int width = (size[0] - Utils.dip2px(40))/4;
+
             holder.imageWrapper.setLayoutParams(new RelativeLayout.LayoutParams(width,width));
             arg1.setTag(holder);
             holderlist.add(arg1);
+//            if(getItem(arg0)!="add"){
+//                ImageLoader imageLoader = ImageLoader.getInstance();
+//                if(data.get(arg0).indexOf("upload")>0){
+//                    imageLoader.displayImage(context.getString(R.string.server_addr2) + data.get(arg0), holder.image);
+//                }else {
+//                    imageLoader.displayImage("file://"+data.get(arg0), holder.image);
+//                }
+
+//                imageLoader.displayImage(data.get(arg0), holder.image);
+//            }
 
 		}else {
 			holder= (Holder)holderlist.get(arg0).getTag();
@@ -97,15 +114,22 @@ public class TrunkPicGridAdapter extends BaseAdapter {
             holder.image.setVisibility(View.GONE);
             holder.imageAdd.setVisibility(View.VISIBLE);
         }else {
-            if (bitmaps[arg0] == null) {
-                util.imgExcute(holder.image,new ImgClallBackLisner(arg0), data.get(arg0));
-            }
-            else {
-                holder.image.setImageBitmap(bitmaps[arg0]);
-            }
+//            if (bitmaps[arg0] == null) {
+//                util.imgExcute(holder.image,new ImgClallBackLisner(arg0), data.get(arg0));
+//            }
+//            else {
+//                holder.image.setImageBitmap(bitmaps[arg0]);
+//            }
             holder.image.setVisibility(View.VISIBLE);
             holder.imageAdd.setVisibility(View.GONE);
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            if(data.get(arg0).indexOf("upload")>0){
+                imageLoader.displayImage(context.getString(R.string.server_addr2) + data.get(arg0), holder.image);
+            }else {
+                imageLoader.displayImage("file://"+data.get(arg0), holder.image);
+            }
         }
+
 
 		arg1.setOnClickListener(new OnPhotoClick(arg0));
 		return arg1;

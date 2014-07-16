@@ -107,6 +107,7 @@
                     >
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
+                           android:layout_marginTop="2dp"
                            android:src="@drawable/sj"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -128,6 +129,7 @@
                     >
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
+                           android:layout_marginTop="2dp"
                            android:src="@drawable/ll"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
@@ -150,6 +152,7 @@
                 >
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
+                       android:layout_marginTop="2dp"
                        android:src="@drawable/yxq"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"

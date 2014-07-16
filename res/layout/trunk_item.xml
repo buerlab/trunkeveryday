@@ -102,7 +102,7 @@
     <GridLayout android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:columnCount="3"
+                android:columnCount="4"
                 android:padding="10dp"
                 android:id="@+id/pic_gridview"
                 android:orientation="horizontal" >

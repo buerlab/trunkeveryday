@@ -12,6 +12,7 @@ import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import com.buerlab.returntrunk.models.*;
 import com.buerlab.returntrunk.utils.FormatUtils;
 import com.buerlab.returntrunk.views.NickNameBarView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,7 +78,9 @@ public class NetService {
     public void getUserData(NetCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
     }
-
+    public void getUserDataWithoutLoading(NetCallBack callback){
+        urlRequest(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
+    }
 
     //////////////////////////
     //TRUNK
@@ -90,6 +93,10 @@ public class NetService {
 
     public void addUserTrunk(Trunk trunk, NetCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "POST", callback);
+    }
+
+    public void setUserTrunk(Trunk trunk, NetCallBack callback){
+        request(mContext.getString(R.string.server_addr)+"api/user/trunk", createReqParms(trunk.toParmsMap()), "PUT", callback);
     }
 
     public  void useTrunk(String licensePlate,NetCallBack callback){
@@ -478,11 +485,11 @@ public class NetService {
                 @Override
                 public void onCall(NetProtocol result) {
                     try {
-                        if(loadingDialog!=null){
+                        if (loadingDialog != null) {
                             loadingDialog.dismiss();
                         }
-                    }catch (Exception e){
-                        Log.e("NetService","loading tips null");
+                    } catch (Exception e) {
+                        Log.e("NetService", "loading tips null");
                     }
 
                     callback.onCall(result);
@@ -519,8 +526,17 @@ public class NetService {
     }
     public void _uploadPic(String url,String filePath,String filename, final NetCallBack callBack){
         try {
-            FileInputStream fStream =new FileInputStream(filePath);
-            InputStream[] fstreams = {fStream};
+            InputStream[] fstreams = new InputStream[1];
+
+
+            if(filePath.indexOf("upload")>=0){
+                Bitmap b = ImageLoader.getInstance().loadImageSync(mContext.getString(R.string.server_addr2)+ filePath);
+                fstreams[0] =FormatUtils.getInstance().Bitmap2InputStream(b);
+            }else {
+                FileInputStream fStream =null;
+                fStream =new FileInputStream(filePath);
+                fstreams[0] = fStream;
+            }
             String[] filenames = {filename};
             _uploadPics(url, fstreams, filenames, callBack);
         }catch (FileNotFoundException e){
@@ -532,8 +548,16 @@ public class NetService {
         try {
             InputStream[] fstreams = new InputStream[filePaths.size()];
             for(int i=0;i<filePaths.size();i++){
-                FileInputStream fStream =new FileInputStream(filePaths.get(i));
-                fstreams[i] = fStream;
+//                FileInputStream fStream =new FileInputStream(filePaths.get(i));
+//                fstreams[i] = fStream;
+
+                if(filePaths.get(i).indexOf("upload")>=0){
+                    Bitmap b = ImageLoader.getInstance().loadImageSync(mContext.getString(R.string.server_addr2)+ filePaths.get(i));
+                    fstreams[i] =FormatUtils.getInstance().Bitmap2InputStream(b);
+                }else {
+                    FileInputStream fStream =new FileInputStream(filePaths.get(i));
+                    fstreams[i] = fStream;
+                }
             }
             _uploadPics(url, fstreams, filenames, callBack);
         }catch (FileNotFoundException e){
@@ -738,7 +762,11 @@ public class NetService {
         List<Comment> retComments = new ArrayList<Comment>();
         try{
             for(int i = 0; i < data.length(); i++){
-                JSONObject item = data.getJSONObject(i);
+                JSONObject item = (JSONObject)data.get(i);
+                NickBarData nickBarData = null;
+                if(item.has("nickBarData")){
+                    nickBarData = new NickBarData(item.getJSONObject("nickBarData"));
+                }
                 Comment comment = new Comment(item.getInt("starNum"),
                         item.getString("userType"),
                         item.getString("commentTime"),
@@ -747,7 +775,7 @@ public class NetService {
                         item.getString("toUserId"),
                         item.getString("billId"),
                         item.getString("text"),
-                        new NickBarData(item.getJSONObject("nickBarData"))
+                        nickBarData
                         );
                 comment.id = item.getString("commentId");
                 retComments.add(comment);

@@ -61,15 +61,16 @@ public class UserCompleteData {
                 this.trunkLicenseVerified = obj.getString("trunkLicenseVerified");
 
             if(obj.has("stars")){
-                this.stars = obj.getDouble("tars");
+                this.stars = obj.getDouble("stars");
             }
 
-            if(obj.has("commments")){
+            if(obj.has("comments")){
                 comments = NetService.extractComments(obj.getJSONArray("comments"));
             }
             if(obj.has("regtime")){
                 String timeStr = obj.getString("regtime");
-                regTime = Utils.timestampToDisplay(timeStr,Utils.YEAR_MONTH_DAY);
+                float f = Float.valueOf(timeStr);
+                regTime = Utils.timestampToDisplay((long)f*1000,Utils.YEAR_MONTH_DAY);
             }
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
@@ -105,6 +106,8 @@ public class UserCompleteData {
                 }
                 t.trunkPicFilePaths = picArrayList;
             }
+
+
             return t;
         }catch (JSONException e){
             Log.e("UserCompleteData","UserCompleteData Prase error");
