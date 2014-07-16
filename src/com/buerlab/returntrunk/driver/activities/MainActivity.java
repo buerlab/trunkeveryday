@@ -21,6 +21,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.LoginActivity;
+import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.fragments.HistoryBillsFragment;
 import com.buerlab.returntrunk.models.User;
@@ -40,6 +41,8 @@ import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,7 +100,14 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
-                    User.getInstance().initUser(result.data);
+                    JSONObject data = result.data;
+                    try{
+                        User.getInstance().initUser(data.getJSONObject("user"));
+                        MainController.shared().sync(data.getJSONObject("control"));
+                    }catch (JSONException e){
+                        Toast toast = Toast.makeText(self, "userdata init fail!!", 2);
+                        toast.show();
+                    }
                     User.getInstance().setUserType(User.USERTYPE_TRUNK);
 
                     Map<String, String> jpushmap = new HashMap<String, String>();
