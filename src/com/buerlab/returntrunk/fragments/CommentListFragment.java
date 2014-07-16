@@ -15,6 +15,7 @@ import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -23,11 +24,14 @@ import java.util.List;
  */
 public class CommentListFragment extends BaseFragment implements EventCenter.OnEventListener{
 
+    private static final String TAG = "CommentListFragment";
     View mView;
     private TextView tips = null;
     CommentListAdapter mAdapter;
     ListView mListView;
     NetService service;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

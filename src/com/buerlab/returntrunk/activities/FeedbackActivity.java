@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,7 +26,7 @@ import java.util.TimerTask;
 /**
  * Created by zhongqiling on 14-5-28.
  */
-public class FeedbackActivity extends BaseActivity {
+public class FeedbackActivity extends BackBaseActivity {
     private static final String TAG = "FeedbackActivity";
     EditText feedback_str;
     Button feedback_btn;
@@ -39,8 +40,22 @@ public class FeedbackActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+
     private void init(){
-        setActionBarLayout("注册", WITH_NONE);
+        setActionBarLayout("用户反馈");
         feedback_str = (EditText)findViewById(R.id.feedback_str);
         feedback_btn = (Button)findViewById(R.id.feedback_btn);
 

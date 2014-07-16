@@ -23,8 +23,12 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+
 
 
 /**
@@ -32,6 +36,7 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends BaseActivity {
 
+    private static final String TAG = "LoginActivity";
     EditText userText;
     EditText pswText;
     Button loginbtn;
@@ -58,6 +63,19 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

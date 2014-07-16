@@ -25,6 +25,7 @@ import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -41,6 +42,8 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     NetService service;
     LinearLayout mAddTrunkBtn;
     final TrunkListFragment self = this;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -83,10 +86,10 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
         service.getUserDataWithoutLoading(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
-                if(result.code == NetProtocol.SUCCESS && result.data !=null){
+                if (result.code == NetProtocol.SUCCESS && result.data != null) {
                     User.getInstance().initUser(result.data);
                     //注册用户初始化事件，用于个人资料得以初始化数据
-                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE,null);
+                    DataEvent evt = new DataEvent(DataEvent.USER_UPDATE, null);
                     EventCenter.shared().dispatch(evt);
                 }
             }

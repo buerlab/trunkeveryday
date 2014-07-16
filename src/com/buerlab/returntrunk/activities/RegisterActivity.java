@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,7 +35,6 @@ public class RegisterActivity extends BaseActivity {
     NetService mService;
     final BaseActivity self = this;
 
-//    TODO 1分钟之后再验证
     int second = 60;
     private Timer timer = new Timer();
     private TimerTask task;
@@ -59,7 +59,19 @@ public class RegisterActivity extends BaseActivity {
     };
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

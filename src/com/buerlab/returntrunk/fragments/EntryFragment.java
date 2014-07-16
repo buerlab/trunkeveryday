@@ -6,11 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.buerlab.returntrunk.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-6-17.
  */
 public class EntryFragment extends BaseFragment {
+
+    private static final String TAG = "EntryFragment";
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

@@ -15,6 +15,7 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +25,15 @@ import java.util.List;
  */
 public class HistoryBillsFragment extends BaseFragment{
 
+
+    private static final String TAG = "HistoryBillsFragment";
+
+
     private PullToRefreshListView mListView = null;
     private HistoryBillsAdapter mAdapter = null;
     private boolean mHasInit = false;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

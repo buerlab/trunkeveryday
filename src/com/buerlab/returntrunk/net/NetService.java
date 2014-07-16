@@ -332,6 +332,14 @@ public class NetService {
         urlRequest(mContext.getString(R.string.server_addr3) + "userFeedback", createReqParms(parmsMap), "POST", callback);
     }
 
+    //////////////////////////
+    //地理位置
+    /////////////////////////
+    public void getUserLocation(String getUserId, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("getUserId",getUserId );
+        urlRequest(mContext.getString(R.string.server_addr) + "api/location", createReqParms(parmsMap), "GET", callBack);
+    }
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("latitude", Double.toString(latitude) );

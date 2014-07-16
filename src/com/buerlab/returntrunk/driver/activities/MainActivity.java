@@ -12,6 +12,7 @@ import android.os.Bundle;
 //import android.support.v4.app.ActionBarDrawerToggle;
 //import android.support.v4.widget.DrawerLayout;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,8 +42,12 @@ import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -77,10 +82,18 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         setContentView(R.layout.main);
         Utils.setDriverVersion(this);
         //启动位置上报服务
-//        startService(new Intent(this, BaiduMapService.class));
+        startService(new Intent(this, BaiduMapService.class));
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         Utils.init(this);
+//        Log.e(TAG, Utils.getDeviceInfo(this));
+
+
+        //http://dev.umeng.com/analytics/android/quick-start#1
+        //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
+        MobclickAgent.updateOnlineConfig(this);
+        //禁止默认的页面统计方式，这样将不会再自动统计Activity
+        MobclickAgent.openActivityDurationTrack(false);
 
 
         NetService service = new NetService(this);
@@ -150,12 +163,16 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     @Override
     protected void onResume(){
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+        MobclickAgent.onPause(this);
         JPushInterface.onPause(this);
     }
 

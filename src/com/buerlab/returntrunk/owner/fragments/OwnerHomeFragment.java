@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,12 +22,16 @@ import java.util.List;
  */
 public class OwnerHomeFragment extends BaseFragment {
 
+    private static final String TAG = "OwnerHomeFragment";
+
     TextView tabTextTrunk;
     TextView tabTextGoods;
     ImageView logoTrunk;
     ImageView logoGoods;
 
     private  List<Integer> fragtaglist = Arrays.asList(R.id.owner_home_find_trunk_frag, R.id.owner_home_send_goods_frag);
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

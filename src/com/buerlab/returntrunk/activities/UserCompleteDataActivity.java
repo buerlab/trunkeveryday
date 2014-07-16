@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.views.MyListView;
 import com.buerlab.returntrunk.views.StarsView;
 import com.buerlab.returntrunk.views.StarsViewWithText;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 
@@ -74,6 +75,19 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

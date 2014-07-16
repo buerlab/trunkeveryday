@@ -109,7 +109,7 @@ public class TrunkListAdapter extends BaseAdapter {
                     holder.verifyText.setText("未审核");break;
             case 1: holder.verifyIcon.setImageResource(R.drawable.qt_dd);
                     holder.verifyText.setText("审核中");break;
-            case 2: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
+            case 2: holder.verifyIcon.setImageResource(R.drawable.verified);
                     holder.verifyText.setText("通过审核");break;
             case 3: holder.verifyIcon.setImageResource(R.drawable.qt2_wtg);
                     holder.verifyText.setText("审核失败");break;

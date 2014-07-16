@@ -22,6 +22,7 @@ import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,11 +33,28 @@ import java.util.Map;
  */
 public class InitDriverActivity extends BaseActivity implements EventCenter.OnEventListener {
 
+    private static final String TAG = "InitDriverActivity";
+
     private TextView homeLocationText = null;
     private LinearLayout homeLocationBtn = null;
 //    final private InitDriverActivity self = this;
 
     private String phonenum;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

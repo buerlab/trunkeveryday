@@ -1,6 +1,8 @@
 package com.buerlab.returntrunk;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -10,7 +12,14 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
+import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.models.Location;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by teddywu on 14-6-17.
@@ -20,7 +29,9 @@ import com.buerlab.returntrunk.activities.BaseActivity;
  * 此demo用来展示如何结合定位SDK实现定位，并使用MyLocationOverlay绘制定位位置 同时展示如何使用自定义图标绘制并点击时弹出泡泡
  *
  */
-public class BaiduMapActivity extends BaseActivity {
+public class BaiduMapActivity extends BackBaseActivity {
+
+    private static final String TAG = "BaiduMapActivity";
 
     // 定位相关
     LocationClient mLocClient;
@@ -35,14 +46,31 @@ public class BaiduMapActivity extends BaseActivity {
     RadioGroup.OnCheckedChangeListener radioButtonListener;
     Button requestLocButton;
     boolean isFirstLoc = true;// 是否首次定位
+    NetService service;
 
+    private Timer timer = new Timer();
+    private TimerTask task;
+    private final  static int MAX_TIME = 15 * 60 * 1000;
+//    private final  static int MAX_TIME = 5* 1000;
+//    private int time = 0;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO Auto-generated method stub
+            //要做的事情
+            getData();
+            super.handleMessage(msg);
+        }
+    };
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+        setActionBarLayout("查看司机位置");
         requestLocButton = (Button) findViewById(R.id.button1);
         mCurrentMode = MyLocationConfigeration.LocationMode.NORMAL;
         requestLocButton.setText("普通");
+        service = new NetService(this);
         View.OnClickListener btnClickListener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (mCurrentMode) {
@@ -71,6 +99,8 @@ public class BaiduMapActivity extends BaseActivity {
             }
         };
         requestLocButton.setOnClickListener(btnClickListener);
+
+
 
 //        RadioGroup group = (RadioGroup) this.findViewById(R.id.radioGroup);
 //        radioButtonListener = new RadioGroup.OnCheckedChangeListener() {
@@ -101,16 +131,57 @@ public class BaiduMapActivity extends BaseActivity {
         // 开启定位图层
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
-        mLocClient = new LocationClient(this);
-        mLocClient.registerLocationListener(myListener);
-        LocationClientOption option = new LocationClientOption();
-        option.setOpenGps(true);// 打开gps
-        option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
-        mLocClient.setLocOption(option);
-        mLocClient.start();
+//        mLocClient = new LocationClient(this);
+//        mLocClient.registerLocationListener(myListener);
+//        LocationClientOption option = new LocationClientOption();
+//        option.setOpenGps(true);// 打开gps
+//        option.setCoorType("bd09ll"); // 设置坐标类型
+//        option.setScanSpan(1000);
+//        mLocClient.setLocOption(option);
+//        mLocClient.start();
+
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                Message message = new Message();
+                message.what = 1;
+                handler.sendMessage(message);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(task, 0, MAX_TIME);
     }
 
+
+    private void getData(){
+        service.getUserLocation("53c38b347938ee65f08ef387",new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS && result.data!=null){
+                    Location location = new Location(result.data);
+                    MyLocationData locData = new MyLocationData.Builder()
+                            // 此处设置开发者获取到的方向信息，顺时针0-360
+                            .direction(100).latitude(Double.valueOf(location.latitude))
+                            .longitude(Double.valueOf(location.longitude)).build();
+
+//
+//            String s=HttpRequest.sendGet("http://115.29.8.74:9288/api/location", "latitude="+location.getLatitude()+"&longitude="+ location.getLatitude());
+//            System.out.println(s);
+                    mBaiduMap.setMyLocationData(locData);
+                    if (isFirstLoc) {
+                        isFirstLoc = false;
+                        LatLng ll = new LatLng(Double.valueOf(location.latitude),
+                                Double.valueOf(location.longitude));
+                        MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+                        mBaiduMap.animateMapStatus(u);
+                    }
+                }else {
+                    Utils.defaultNetProAction(self,result);
+                }
+            }
+        });
+    }
     /**
      * 定位SDK监听函数
      */
@@ -148,6 +219,7 @@ public class BaiduMapActivity extends BaseActivity {
     protected void onPause() {
         mMapView.onPause();
         super.onPause();
+
     }
 
     @Override
@@ -159,8 +231,9 @@ public class BaiduMapActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         // 退出时销毁定位
-        mLocClient.stop();
+//        mLocClient.stop();
         // 关闭定位图层
+        timer.cancel();
         mBaiduMap.setMyLocationEnabled(false);
         mMapView.onDestroy();
         mMapView = null;

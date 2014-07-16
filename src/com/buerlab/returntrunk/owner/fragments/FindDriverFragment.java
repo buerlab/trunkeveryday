@@ -19,8 +19,10 @@ import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+
 
 import java.util.List;
 
@@ -28,11 +30,17 @@ import java.util.List;
  * Created by zhongqiling on 14-6-4.
  */
 public class FindDriverFragment extends BaseFragment implements EventCenter.OnEventListener {
+
+    private static final String TAG = "FindDriverFragment";
     private PullToRefreshListView mListView = null;
     private boolean billInited = false;
     private List<Bill> mBills = null;
+
+
+
     private FindBillListAdapter2 findBillListAdapter = null;
     private LinearLayout noBillTips = null;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

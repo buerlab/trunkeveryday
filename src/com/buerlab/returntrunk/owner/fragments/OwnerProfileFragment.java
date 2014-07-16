@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.driver.activities.EditDriverLicenseActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-6-17.
@@ -41,6 +42,8 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
     ImageView IDNumVerifyIcon;
 
     public final static int EDIT_NICKNAME = 0;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mRoot =  inflater.inflate(R.layout.profile_frag, container, false);

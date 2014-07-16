@@ -12,6 +12,7 @@ import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.BillInvitationListAdapter;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.models.User;
+import com.umeng.analytics.MobclickAgent;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -25,12 +26,15 @@ import java.util.List;
  */
 public class BillFragment extends BaseFragment {
 
+    private static final String TAG = "BillFragment";
+
     private Bill mBill;
     private BillInvitationListAdapter inivtationAdapter = null;
 
     public BillFragment(Bill bill){
         mBill = bill;
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import java.util.List;
  */
 public class FindBillActivity extends BackBaseActivity implements EventCenter.OnEventListener{
 
+    private static final String TAG = "FindBillActivity";
     private FindBillListAdapter findBillListAdapter = null;
     private LinearLayout tips = null;
 
@@ -44,6 +46,20 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
 
 
         refresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
     }
 
     @Override

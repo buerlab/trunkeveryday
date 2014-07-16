@@ -34,8 +34,12 @@ import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,6 +64,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     final FragmentActivity self = this;
 
     private SlideMenu slideMenu = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -91,6 +96,13 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         NetService service = new NetService(this);
 
         Utils.init(this);
+
+        //http://dev.umeng.com/analytics/android/quick-start#1
+        //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
+        MobclickAgent.updateOnlineConfig(this);
+        //禁止默认的页面统计方式，这样将不会再自动统计Activity
+        MobclickAgent.openActivityDurationTrack(false);
+
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -148,12 +160,16 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     @Override
     protected void onResume(){
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+        MobclickAgent.onPause(this);
         JPushInterface.onPause(this);
     }
 

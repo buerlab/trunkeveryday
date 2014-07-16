@@ -19,7 +19,8 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
-import com.buerlab.returntrunk.views.PickPeriodView;
+
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,8 @@ import java.util.Map;
  * Created by zhongqiling on 14-6-27.
  */
 public class NewGoodsBillActivity extends BaseActivity implements EventCenter.OnEventListener{
+
+    private static final String TAG = "NewGoodsBillActivity";
 
     private EditText goodsText = null;
     private EditText weightText = null;
@@ -45,6 +48,20 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
     private List<String> currTimeContent = null;
     private String currTimeStamp = "";
     private int currValidTimeSec = 24*60*60;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
 
     public void onCreate(Bundle savedInstanceState) {
 

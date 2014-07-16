@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.*;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by teddywu on 14-6-19.
@@ -19,7 +20,7 @@ public class BaseActivity extends FragmentActivity {
     public final static int WITH_MENU = 2;
     public final static int WITH_NONE = 0;
 
-    final BaseActivity self = this;
+    public final BaseActivity self = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,6 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         currActivity = this;
     }
 

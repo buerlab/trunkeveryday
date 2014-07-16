@@ -36,6 +36,15 @@
                 android:id="@+id/commment_myself"
                 android:text="给自己写评价(货主评司机、司机评货主)"
                 />
+        <Button style="@style/clickable_button_with_main_color"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:id="@+id/get_location"
+                android:text="获取某人的地理位置"
+                />
      </LinearLayout>
 
 </LinearLayout>
