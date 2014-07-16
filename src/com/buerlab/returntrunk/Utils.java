@@ -306,6 +306,8 @@ public class Utils {
     }
 
 
+
+    //用于友盟的集成测试
     public static String getDeviceInfo(Context context) {
         try{
             org.json.JSONObject json = new org.json.JSONObject();
@@ -335,6 +337,8 @@ public class Utils {
         }
         return null;
     }
+
+
 
 
 

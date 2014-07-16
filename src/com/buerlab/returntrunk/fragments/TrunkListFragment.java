@@ -25,6 +25,7 @@ import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
@@ -80,6 +81,8 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     }
 
 
+
+
     @Override
     public void onShow(){
         NetService service = new NetService(this.getActivity());
@@ -94,6 +97,12 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
                 }
             }
         });
+
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_trunkList_enterFragment);
+        }else {
+            //TODO 货主版
+        }
 
     }
 

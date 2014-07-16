@@ -22,6 +22,7 @@ import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -143,6 +144,8 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     @Override
     public void onShow(){
         initBills();
+
+        EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_home_enterFragment);
     }
 
     private void initBills(){

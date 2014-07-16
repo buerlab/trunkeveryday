@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,10 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Timer;
@@ -51,7 +54,7 @@ public class RegisterActivity extends BaseActivity {
 
             }else {
 
-                sendRegCodeBtn.setText(String.valueOf(second--) );
+                sendRegCodeBtn.setText("重新发送(" +  String.valueOf(second--) + ")" );
                 sendRegCodeBtn.setEnabled(false);
             }
             super.handleMessage(msg);
@@ -91,6 +94,13 @@ public class RegisterActivity extends BaseActivity {
     }
 
     public void sendRegCode(View v){
+
+        if(Utils.getVersionType(self).equals("driver")){
+            EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_getRegCode);
+        }else {
+            //TODO 货主版
+        }
+
         String phonenum = phoneNumEdit.getText().toString();
         if(phonenum.length()<=0){
             Utils.showToast(this,"请输入手机号码");
@@ -148,6 +158,12 @@ public class RegisterActivity extends BaseActivity {
 
     public void verifyRegCode(View v){
 
+        if(Utils.getVersionType(self).equals("driver")){
+            EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_register_btn);
+        }else {
+            //TODO 货主版
+        }
+
         String phonenum = phoneNumEdit.getText().toString();
         String regCode = regCodeEdit.getText().toString();
 
@@ -157,10 +173,10 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-//        if(regCode.length()<=0){
-//            Utils.showToast(this,"请输入验证码");
-//            return;
-//        }
+        if(regCode.length()<=0){
+            Utils.showToast(this,"请输入验证码");
+            return;
+        }
         if(phonenum.length()!=11){
             //TODO 删掉手机号码，聚焦
             Utils.showToast(this,"手机号码格式错误，请重新输入");
@@ -183,35 +199,49 @@ public class RegisterActivity extends BaseActivity {
 
 
 
-//        if(regCode.length()!=6){
-//            //TODO 删掉验证码，聚焦
-//            Utils.showToast(this,"手机号码格式错误，请重新输入");
-//            return;
-//        }
-//
-//        mService.verifyRegCode(phonenum, regCode, new NetService.NetCallBack() {
-//            @Override
-//            public void onCall(NetProtocol result) {
-//                if (result.code == NetProtocol.SUCCESS) {
-//                    if (result.data.has("ret")) {
-//                        try {
-//                            if (result.data.getBoolean("ret")) {
-//                                Utils.showToast(self,"验证成功");
-//                                Intent intent = new Intent(self,InitDriverActivity.class);
-//                                startActivity(intent);
-//
-//                            }else {
-//                                Utils.showToast(self,"验证失败");
-//                            }
-//                        }catch (Exception e){
-//                            Log.e("TAG",e.toString());
-//                        }
-//                    }
-//                }else {
-//                    DriverUtils.defaultNetProAction(self,result);
-//                }
-//            }
-//            });
+        if(regCode.length()!=6){
+            //TODO 删掉验证码，聚焦
+            Utils.showToast(this,"手机号码格式错误，请重新输入");
+            return;
+        }
+
+        mService.verifyRegCode(phonenum, regCode, new NetService.NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if (result.code == NetProtocol.SUCCESS) {
+                    if (result.data.has("ret")) {
+                        try {
+                            if (result.data.getBoolean("ret")) {
+                                String phonenum = phoneNumEdit.getText().toString();
+                                String regCode = regCodeEdit.getText().toString();
+                                String versionType = Utils.getVersionType(self);
+                                if(versionType.equals( "driver")){
+                                    EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_register_btn_success);
+                                    Intent intent = new Intent(self,InitDriverActivity.class);
+                                    intent.putExtra("phonenum",phonenum);
+                                    startActivity(intent);
+                                }else if(versionType.equals( "owner")) {
+                                    //TODO 货主版
+                                    Intent intent = new Intent(self,InitOwnerActivity.class);
+                                    intent.putExtra("phonenum",phonenum);
+                                    startActivity(intent);
+                                }else {
+                                    Utils.showToast(self,"versonType error");
+                                    return;
+                                }
+
+                            }else {
+                                Utils.showToast(self,"验证失败");
+                            }
+                        }catch (Exception e){
+                            Log.e("TAG", e.toString());
+                        }
+                    }
+                }else {
+                    DriverUtils.defaultNetProAction(self, result);
+                }
+            }
+            });
         }
 
 

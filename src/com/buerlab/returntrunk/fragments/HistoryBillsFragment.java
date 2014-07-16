@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.adapters.HistoryBillsAdapter;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.HistoryBill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.umeng.analytics.MobclickAgent;
@@ -59,6 +61,12 @@ public class HistoryBillsFragment extends BaseFragment{
     @Override
     public void onShow(){
         initBills();
+        if(Utils.getVersionType(self.getActivity()).equals("dirver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_historyBill_enterFragment);
+        }else{
+            //TODO
+
+        }
     }
 
     private void initBills(){

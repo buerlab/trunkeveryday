@@ -11,6 +11,7 @@ import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -70,5 +71,10 @@ public class RequestBillDialog extends Dialog {
             }
         });
 
+        if(Utils.getVersionType(mConext).equals("driver")){
+            EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_requestBillDialog);
+        }else {
+            //TODO 货主版
+        }
     }
 }

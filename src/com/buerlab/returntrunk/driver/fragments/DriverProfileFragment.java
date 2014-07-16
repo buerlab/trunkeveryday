@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -106,7 +107,7 @@ public class DriverProfileFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
-
+        EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_profile_enterFragment);
     }
 
     private void goToEditNickNameFragment(){

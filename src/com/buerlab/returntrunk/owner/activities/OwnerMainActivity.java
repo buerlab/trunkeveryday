@@ -35,6 +35,7 @@ import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
+import com.umeng.analytics.AnalyticsConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,6 +99,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         Utils.init(this);
 
         //http://dev.umeng.com/analytics/android/quick-start#1
+        //货车段 友盟appkeky
+        AnalyticsConfig.setAppkey("53c6190c56240b202f084a4c");
         //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
         MobclickAgent.updateOnlineConfig(this);
         //禁止默认的页面统计方式，这样将不会再自动统计Activity

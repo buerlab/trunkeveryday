@@ -15,6 +15,7 @@ import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
@@ -84,6 +85,12 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
     @Override
     public void onShow(){
         initComments();
-
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_commentList_enterFragment);
+        }else {
+            //TODO 货主版
+        }
     }
+
+
 }

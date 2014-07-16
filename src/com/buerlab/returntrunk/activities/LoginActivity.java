@@ -18,12 +18,14 @@ import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.jpush.JPushUtils;
+import com.buerlab.returntrunk.models.Global;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
 
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,6 +107,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(){
+
+        if(Utils.getVersionType(this).equals("driver")){
+            EventLogUtils.EventLog(this,EventLogUtils.tthcc_driver_login_btn);
+        }else {
+            //TODO 货主版
+        }
+
         String userTextStr = userText.getText().toString();
         String pswTextStr = pswText.getText().toString();
 
@@ -122,10 +131,18 @@ public class LoginActivity extends BaseActivity {
             Utils.showToast(this,"请输入密码");
             return;
         }
+
+
+
         service.login(userTextStr, pswTextStr, new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
+                    if(Utils.getVersionType(self).equals("driver")){
+                        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_login_btn_success);
+                    }else {
+                        //TODO 货主版
+                    }
                     JSONObject data = result.data;
                     try{
                         User.getInstance().initUser(data.getJSONObject("user"));

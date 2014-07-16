@@ -19,6 +19,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onResume();
         MobclickAgent.onPageStart(TAG); //统计页面
         MobclickAgent.onResume(this);          //统计时长
+
+        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_enterActivity);
     }
 
     @Override
@@ -130,11 +133,17 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn);
+
                 if(currFromContent == null || currToContent == null || currTimeStamp == ""){
                     Toast toast = Toast.makeText(self, "请填写完整车单", 2);
                     toast.show();
                     return;
                 }
+
+
+
                 final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, new Address(currFromContent).toFullString(),
                         new Address(currToContent).toFullString(), currTimeStamp);
 
@@ -146,6 +155,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                             if(bills.size() > 0){
                                 DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
                                 EventCenter.shared().dispatch(evt);
+                                EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn_success);
                             }
                             self.finish();
                         } else {

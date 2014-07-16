@@ -12,9 +12,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.BillInvitationListAdapter;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.FeedbackActivity;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.RequestType;
@@ -74,5 +76,15 @@ public class AboutusFragment extends BaseFragment {
                 mController.openShare(self.getActivity(), false);
             }
         });
+    }
+
+
+    @Override
+    public void onShow(){
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_aboutus_enterFragment);
+        }else {
+            //TODO 货主版
+        }
     }
 }

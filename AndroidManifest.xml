@@ -19,10 +19,11 @@
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="oPV2UsGPfFGqhCeSFkrn9V3T" />
-        <meta-data
-                android:name="UMENG_APPKEY"
-                android:value="53c5184156240bb4720f0f39" >
-        <meta-data android:value="Naked" android:name="UMENG_CHANNEL"/>
+        <!--在MainActivity中定义-->
+        <!--<meta-data-->
+                <!--android:name="UMENG_APPKEY"-->
+                <!--android:value="53c5184156240bb4720f0f39" >-->
+        <meta-data android:value="Naked" android:name="UMENG_CHANNEL">
         </meta-data>
 
         <!-- ###################注册SDK使用的Activity###################### -->

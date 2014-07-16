@@ -22,6 +22,7 @@ import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -95,6 +96,11 @@ public class InitDriverActivity extends BaseActivity implements EventCenter.OnEv
     }
 
     public void pick(){
+
+
+        EventLogUtils.EventLog(self, EventLogUtils.tthcc_driver_InitDriver_btn);
+
+
         EditText nicknameText = (EditText)findViewById(R.id.init_user_nickname);
         EditText passWordText = (EditText)findViewById(R.id.init_user_password);
 
@@ -159,6 +165,8 @@ public class InitDriverActivity extends BaseActivity implements EventCenter.OnEv
 //                                startActivity(new Intent(self, MainActivity.class));
 //                                finish();
                                 DriverUtils.safeSwitchToMainActivity(self);
+                                EventLogUtils.EventLog(self, EventLogUtils.tthcc_driver_InitDriver_btn_success);
+
                             }
                             else{
                                 DriverUtils.defaultNetProAction(self, result);

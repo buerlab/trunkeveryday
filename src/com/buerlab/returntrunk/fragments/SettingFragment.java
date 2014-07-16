@@ -13,6 +13,7 @@ import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.models.User;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 
 /**
@@ -85,4 +86,12 @@ public class SettingFragment extends BaseFragment{
         startActivity(intent);
     }
 
+    @Override
+    public void onShow(){
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_setting_enterFragment);
+        }else {
+            //TODO 货主版
+        }
+    }
 }
