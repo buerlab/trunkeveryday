@@ -162,9 +162,9 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         mHasInit = true;
 
                         if(bills.size()>0){
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }else {
-                            tips.setAlpha(1);
+                            tips.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -178,18 +178,18 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     private void addBill(Bill bill){
 //        mAdapter.addBill(bill);
         if(mAdapter.getCount()>0){
-            tips.setAlpha(0.0f);
+            tips.setVisibility(View.GONE);
         }else {
-            tips.setAlpha(1);
+            tips.setVisibility(View.VISIBLE);
         }
     }
 
     private void removeBill(Bill bill){
 //        mAdapter.removeBill(bill);
         if(mAdapter.getCount()>0){
-            tips.setAlpha(0.0f);
+            tips.setVisibility(View.GONE);
         }else {
-            tips.setAlpha(1);
+            tips.setVisibility(View.VISIBLE);
         }
     }
 

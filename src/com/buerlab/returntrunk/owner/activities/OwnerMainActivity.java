@@ -36,6 +36,7 @@ import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.update.UmengUpdateAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -105,6 +106,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         MobclickAgent.updateOnlineConfig(this);
         //禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
+        //友盟自动更新
+        UmengUpdateAgent.update(this);
 
         service.quickLogin(new NetService.NetCallBack() {
             @Override
@@ -225,7 +228,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
     public void onJPushCall(JPushProtocal protocal) {
         PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
-        dialog.show(getFragmentManager(), "phonecall");
+        dialog.show(getSupportFragmentManager(), "phonecall");
     }
 
 

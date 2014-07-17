@@ -23,6 +23,7 @@ import com.umeng.socialize.controller.RequestType;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
 import com.umeng.socialize.media.UMImage;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -39,7 +40,7 @@ public class AboutusFragment extends BaseFragment {
     private static final String TAG = "AboutusFragment";
     View mRoot;
 
-
+    TextView version;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -57,6 +58,17 @@ public class AboutusFragment extends BaseFragment {
                startActivity(intent);
            }
        });
+
+        version = (TextView)mRoot.findViewById(R.id.version);
+        version.setText(Utils.getVersion(getActivity()));
+
+        mRoot.findViewById(R.id.update_version).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UmengUpdateAgent.forceUpdate(getActivity());
+            }
+        });
+
 
         // 首先在您的Activity中添加如下成员变量
         final UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share",

@@ -74,7 +74,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
                             }
                             adapter.setComments(comments);
 
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }
                     }
                 }

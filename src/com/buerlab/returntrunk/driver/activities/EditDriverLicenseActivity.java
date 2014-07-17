@@ -10,9 +10,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +18,6 @@ import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
-import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -152,14 +148,14 @@ public class EditDriverLicenseActivity extends BackBaseActivity {
         Bundle extras = data.getExtras();
         if (extras != null) {
             mBitmap = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(mBitmap);
+            Drawable drawable = new BitmapDrawable(getResources(),mBitmap);
             mPicBtn.setBackgroundDrawable(drawable);
         }
     }
 
     public void save(View v)
     {
-        final String driverLicense = mDriverLicenseEdit.getText().toString();
+        final String driverLicense = mDriverLicenseEdit.getText()==null? "":mDriverLicenseEdit.getText().toString();
         if(driverLicense.length()==0){
             Utils.showToast(this,"请输入你的驾驶证号");
             return;

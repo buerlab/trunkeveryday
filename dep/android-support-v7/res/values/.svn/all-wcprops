@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values
+END
+colors.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/colors.xml
+END
+styles.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/styles.xml
+END
+config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/config.xml
+END
+themes.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/themes.xml
+END
+strings.xml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/strings.xml
+END
+attrs.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/attrs.xml
+END
+styles_base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/styles_base.xml
+END
+bools.xml
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/bools.xml
+END
+dimens.xml
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/dimens.xml
+END
+ids.xml
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/ids.xml
+END
+themes_base.xml
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/res/values/themes_base.xml
+END

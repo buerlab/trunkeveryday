@@ -44,6 +44,7 @@ import com.coboltforge.slidemenu.SlideMenuInterface;
 import com.buerlab.returntrunk.service.BaiduMapService;
 
 import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.update.UmengUpdateAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -79,7 +80,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
         super.onCreate(savedInstanceState);
         SDKInitializer.initialize(getApplicationContext());
-        getActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.main);
         Utils.setDriverVersion(this);
         //启动位置上报服务
@@ -98,7 +99,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         MobclickAgent.updateOnlineConfig(this);
         //禁止默认的页面统计方式，这样将不会再自动统计Activity
         MobclickAgent.openActivityDurationTrack(false);
-
+        //友盟自动更新
+        UmengUpdateAgent.update(this);
 
         NetService service = new NetService(this);
 
@@ -150,7 +152,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                         transaction.hide(entry);
                         transaction.commit();
                         setActionBarLayout("天天回程车",WITH_MENU);
-                        getActionBar().show();
+                        getSupportActionBar().show();
                     }
                 }
                 else{
@@ -187,8 +189,8 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
 
     private void init(){
-        if(getActionBar() != null)
-            getActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setHomeButtonEnabled(true);
 
         slideMenu = (SlideMenu)findViewById(R.id.main_slideMenu);
         slideMenu.init(this, R.menu.slide_menu, new SlideMenuInterface.OnSlideMenuItemClickListener() {
@@ -231,7 +233,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
     public void onJPushCall(JPushProtocal protocal) {
         PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
-        dialog.show(getFragmentManager(), "phonecall");
+        dialog.show(getSupportFragmentManager(), "phonecall");
     }
 
 

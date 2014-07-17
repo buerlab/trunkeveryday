@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/background"
+        android:layout_height="fill_parent">
+
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:background="@color/background"
               android:layout_height="match_parent">
 
     <ImageView android:layout_width="wrap_content"
@@ -24,6 +28,7 @@
               android:layout_height="wrap_content"
               android:text="@string/version"
               android:textSize="16sp"
+              android:id="@+id/version"
               android:layout_marginTop="5dp"
               android:layout_gravity="center_horizontal"
             />
@@ -84,7 +89,25 @@
         <LinearLayout style="@style/infogroup_item_wrapper">
             <TextView style="@style/infogroup_main_text"
                       android:layout_weight="1"
-                      android:text="分享"
+                      android:text="分享给朋友"
+                    />
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                       android:layout_weight="0"
+                    />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/update_version"
+
+                  android:background="@drawable/clickable_infogroup_group_wrapper"
+            >
+        <LinearLayout style="@style/infogroup_item_wrapper">
+            <TextView style="@style/infogroup_main_text"
+                      android:layout_weight="1"
+                      android:text="更新软件"
                     />
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -112,3 +135,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

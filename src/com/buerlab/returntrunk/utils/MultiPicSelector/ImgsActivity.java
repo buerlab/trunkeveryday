@@ -90,8 +90,6 @@ public class ImgsActivity extends BackBaseActivity {
         ImageView imageView=new ImageView(this);
         imageView.setLayoutParams(params);
         imageView.setBackgroundResource(R.drawable.imgbg);
-        float alpha=100;
-        imageView.setAlpha(alpha);
         util.imgExcute(imageView, imgCallBack, filepath);
         imageView.setOnClickListener(new ImgOnclick(filepath,checkBox));
         return imageView;

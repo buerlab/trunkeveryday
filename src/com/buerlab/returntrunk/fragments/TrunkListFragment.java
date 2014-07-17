@@ -110,7 +110,7 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     public void onEventCall(DataEvent e) {
         if(User.getInstance().trunks!=null && !User.getInstance().trunks.isEmpty()){
             mAdapter.setTrunks(User.getInstance().trunks);
-            tips.setAlpha(0.0f);
+            tips.setVisibility(View.GONE);
         }
     }
 

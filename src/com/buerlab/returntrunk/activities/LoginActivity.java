@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
 
 import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.AnalyticsConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,6 +54,12 @@ public class LoginActivity extends BaseActivity {
         userText = (EditText)findViewById(R.id.login_user_input);
         pswText = (EditText)findViewById(R.id.login_psw_input);
         loginbtn = (Button)findViewById(R.id.login_confirm_btn);
+
+        if(Utils.getVersionType(this).equals("driver")){
+            AnalyticsConfig.setAppkey("53c5184156240bb4720f0f39");
+        }else {
+            //TODO 货主版
+        }
 
         service = new NetService(this);
         setActionBarLayout("登录",WITH_NONE);
@@ -80,10 +89,14 @@ public class LoginActivity extends BaseActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.login, menu);
         return true;
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -52,7 +52,7 @@ public class GalleryUrlActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery);
-        getActionBar().hide();
+        getSupportActionBar().hide();
 
         String[] urls = getIntent().getStringArrayExtra("urls");
         int pos = getIntent().getIntExtra("position",0);

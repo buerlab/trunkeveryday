@@ -110,9 +110,9 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
                         if(bills.size()>0){
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }else {
-                            tips.setAlpha(1);
+                            tips.setVisibility(View.VISIBLE);
                         }
                     }
                 }

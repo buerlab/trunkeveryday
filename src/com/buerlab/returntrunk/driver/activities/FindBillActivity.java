@@ -87,7 +87,7 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
                 if(bills != null){
                     findBillListAdapter.setBills(bills);
                     if(bills.size()>0){
-                         tips.setAlpha(0.0f);
+                         tips.setVisibility(View.GONE);
                     }
                 }
             }
