@@ -18,6 +18,9 @@ public class DataEvent {
     static public final String BILL_TO_OVERDUE = "bill_to_overdue";
     static public final String BILL_OVERDUE = "bill_overdue";
 
+    static public final String BILL_DUE_UPDATE = "bill_due_update";
+    static public final String BILL_VISIT_UPDATE = "bill_visit_update";
+
     static public String USER_UPDATE = "user_update";
 
 

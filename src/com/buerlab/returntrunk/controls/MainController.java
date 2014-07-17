@@ -33,7 +33,6 @@ public class MainController implements EventCenter.OnEventListener{
 
     public void sync(JSONObject data){
         try{
-
             long serverTime = Long.valueOf(data.getString("serverTimeMills"));
             serverAdjustMills = serverTime-Calendar.getInstance().getTimeInMillis();
         }catch (JSONException e){

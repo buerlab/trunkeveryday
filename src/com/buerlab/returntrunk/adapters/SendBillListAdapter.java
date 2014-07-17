@@ -10,7 +10,9 @@ import com.buerlab.returntrunk.views.SendBillView;
 import com.buerlab.returntrunk.views.ViewsFactory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by zhongqiling on 14-6-18.
@@ -18,6 +20,7 @@ import java.util.List;
 public class SendBillListAdapter extends BaseAdapter {
 
     private List<Bill> mBills = new ArrayList<Bill>();
+    private Map<String, View> billViewMap = new HashMap<String, View>();
     private Context mContxt = null;
 
     public SendBillListAdapter(Context context){
@@ -51,8 +54,15 @@ public class SendBillListAdapter extends BaseAdapter {
         }else{
             ((SendBillView)view).update(bill);
         }
-
+        billViewMap.put(bill.id, view);
         return view;
+    }
+
+    public View getViewOfBill(String billId){
+        if(billViewMap.containsKey(billId))
+            return billViewMap.get(billId);
+        else
+            return null;
     }
 
 

@@ -13,13 +13,10 @@ import com.buerlab.returntrunk.dialogs.BillViewContxtMenu;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.Address;
-
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by zhongqiling on 14-7-15.
@@ -57,6 +54,7 @@ public class SendBillView extends LinearLayout {
                             @Override
                             public void onCall(NetProtocol result) {
                                 if(result.code == NetProtocol.SUCCESS){
+                                    User.getInstance().removeBill(mBill);
                                     EventCenter.shared().dispatch(new DataEvent(DataEvent.DELETE_BILL, mBill));
                                 }else{
                                     Utils.defaultNetProAction(BaseActivity.currActivity, result);
@@ -78,9 +76,9 @@ public class SendBillView extends LinearLayout {
         ((TextView)mContainer.findViewById(R.id.new_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)mContainer.findViewById(R.id.new_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)mContainer.findViewById(R.id.new_bill_time)).setText(Utils.timestampToDisplay(bill.time));
-        ((TextView)mContainer.findViewById(R.id.new_bill_visitedtimes)).setText(String.valueOf(bill.visitedTimes));
         ((TextView)mContainer.findViewById(R.id.new_bill_comment)).setText(String.valueOf(bill.comment));
         updateValidTime();
+        updateVisitTimes();
 
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             ((TextView)mContainer.findViewById(R.id.new_bill_goods)).setText(bill.material);
@@ -92,12 +90,18 @@ public class SendBillView extends LinearLayout {
     public void updateValidTime(){
 
         String validTimeStr = "";
-        int[] validTime = Utils.secTransform(mBill.getValidLeftTime());
+        int[] validTime = Utils.secTransform(mBill.getValidLeftSec());
         if(validTime[0] > 0)
             validTimeStr = validTime[0]+"天";
-        else
+        else if(validTime[1] > 0)
             validTimeStr = validTime[1]+"小时";
+        else
+            validTimeStr = "即将结束";
 
         ((TextView)mContainer.findViewById(R.id.new_bill_valid_time)).setText(validTimeStr);
+    }
+
+    public void updateVisitTimes(){
+        ((TextView)mContainer.findViewById(R.id.new_bill_visitedtimes)).setText(String.valueOf(mBill.visitedTimes));
     }
 }

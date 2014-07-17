@@ -1,6 +1,8 @@
 package com.buerlab.returntrunk.models;
 
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -154,9 +156,9 @@ public class Bill {
     }
 
     //return a time delta in second.
-    public long getValidLeftTime(){
+    public long getValidLeftSec(){
         if(new Date().after(new Date(Long.valueOf(time))))
-            return (Long.valueOf(time)+validTimeSec*1000-(new Date().getTime()))/1000;
+            return (Long.valueOf(time)+validTimeSec*1000-Utils.getCurrTimeStamp())/1000;
         else
             return validTimeSec;
     }

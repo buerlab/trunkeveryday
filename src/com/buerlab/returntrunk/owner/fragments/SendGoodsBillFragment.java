@@ -16,6 +16,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.NewGoodsBillActivity;
+import com.buerlab.returntrunk.views.SendBillView;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
         });
 
         EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
-
+        EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
 
         return view;
     }
@@ -55,19 +56,23 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
     public void onStart(){
         super.onStart();
         EventCenter.shared().addEventListener(DataEvent.BILL_OVERDUE, this);
+        EventCenter.shared().addEventListener(DataEvent.BILL_DUE_UPDATE, this);
+        EventCenter.shared().addEventListener(DataEvent.BILL_VISIT_UPDATE, this);
     }
 
     @Override
     public void onStop(){
         super.onStop();
         EventCenter.shared().removeEventListener(DataEvent.BILL_OVERDUE, this);
+        EventCenter.shared().removeEventListener(DataEvent.BILL_DUE_UPDATE, this);
+        EventCenter.shared().removeEventListener(DataEvent.BILL_VISIT_UPDATE, this);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
-
+        EventCenter.shared().removeEventListener(DataEvent.DELETE_BILL, this);
     }
 
     public void onEventCall(DataEvent event){
@@ -76,12 +81,28 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
 
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
             toast.show();
+        }else if(event.type.equals(DataEvent.DELETE_BILL)){
+            mAdapter.notifyDataSetChanged();
+
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "已删除", 2);
+            toast.show();
         }else if(event.type.equals(DataEvent.BILL_OVERDUE)){
             List<Bill> billsToRemove = (List<Bill>)event.data;
             if(billsToRemove != null && billsToRemove.size()>0){
                 Toast toast = Toast.makeText(this.getActivity(), "你有"+billsToRemove.size()+"个过期单子被删除", 2);
                 toast.show();
                 mAdapter.notifyDataSetChanged();
+            }
+        }else if(event.type.equals(DataEvent.BILL_DUE_UPDATE)){
+            for(String billid : (List<String>)event.data){
+                if(mAdapter.getViewOfBill(billid) != null)
+                    ((SendBillView)mAdapter.getViewOfBill(billid)).updateValidTime();
+            }
+
+        }else if(event.type.equals(DataEvent.BILL_VISIT_UPDATE)){
+            for(String billid : (List<String>)event.data){
+                if(mAdapter.getViewOfBill(billid) != null)
+                    ((SendBillView)mAdapter.getViewOfBill(billid)).updateVisitTimes();
             }
         }
     }

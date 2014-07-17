@@ -14,6 +14,7 @@ import android.util.DisplayMetrics;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.activities.LoginActivity;
+import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
@@ -122,6 +123,7 @@ public class Utils {
     }
 
 
+
     static public List<JSONObject> extractArray(JSONObject data){
         List<JSONObject> result = new ArrayList<JSONObject>();
 
@@ -147,6 +149,10 @@ public class Utils {
     public static boolean hasSDCard() {
         String status = Environment.getExternalStorageState();
         return status.equals(Environment.MEDIA_MOUNTED);
+    }
+
+    public static long getCurrTimeStamp(){
+        return new Date().getTime()+ MainController.shared().serverAdjustMills;
     }
 
     //是负责身份证规则的字符串

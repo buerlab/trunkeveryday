@@ -12,6 +12,8 @@ import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.*;
 
@@ -60,17 +62,21 @@ public class JPushCenter {
                     if (result.code == NetProtocol.SUCCESS && result.data != null) {
                         JSONObject billDict = result.data;
                         Iterator it = billDict.keys();
+                        List<String> billsToUpdate = new ArrayList<String>();
                         while (it.hasNext()) {
                             String billid = (String) it.next();
                             Bill bill = User.getInstance().getBill(billid);
                             if (bill != null) {
                                 try {
                                     bill.visitedTimes = billDict.getInt(billid);
+                                    billsToUpdate.add(billid);
                                 } catch (Exception e) {
                                 }
                             }
                         }
-                        EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
+                        if(billsToUpdate.size() > 0)
+                            EventCenter.shared().dispatch(new DataEvent(DataEvent.BILL_VISIT_UPDATE, billsToUpdate));
+//                        EventCenter.shared().dispatch(new DataEvent(DataEvent.JPUSH_INFORM, protocal));
                     }
                 }
             });
