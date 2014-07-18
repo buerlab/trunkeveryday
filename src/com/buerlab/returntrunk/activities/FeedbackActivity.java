@@ -1,26 +1,15 @@
 package com.buerlab.returntrunk.activities;
 
-import android.app.Service;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
-import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
 import com.umeng.analytics.MobclickAgent;
 
-import java.util.Timer;
-import java.util.TimerTask;
 
 
 /**
@@ -70,6 +59,9 @@ public class FeedbackActivity extends BackBaseActivity {
     }
 
     private void sendFeeback(){
+        if(feedback_str.getText()==null){
+            return;
+        }
         if (feedback_str.getText().length()==0){
             Utils.showToast(this,"请填写反馈信息");
             return;

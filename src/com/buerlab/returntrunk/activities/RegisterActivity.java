@@ -101,6 +101,9 @@ public class RegisterActivity extends BaseActivity {
             //TODO 货主版
         }
 
+        if (phoneNumEdit.getText()==null)
+            return;
+
         String phonenum = phoneNumEdit.getText().toString();
         if(phonenum.length()<=0){
             Utils.showToast(this,"请输入手机号码");
@@ -163,6 +166,9 @@ public class RegisterActivity extends BaseActivity {
         }else {
             //TODO 货主版
         }
+
+        if(phoneNumEdit.getText()==null || regCodeEdit.getText() ==null)
+            return;
 
         String phonenum = phoneNumEdit.getText().toString();
         String regCode = regCodeEdit.getText().toString();
@@ -227,7 +233,7 @@ public class RegisterActivity extends BaseActivity {
                                     startActivity(intent);
                                 }else {
                                     Utils.showToast(self,"versonType error");
-                                    return;
+
                                 }
 
                             }else {

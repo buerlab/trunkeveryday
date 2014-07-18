@@ -9,13 +9,6 @@
                  android:layout_width="fill_parent"
                  android:layout_height="fill_parent"
                  android:layout_weight="1">
-        <!--<TextView android:id="@+id/send_bill_frag_tips"-->
-                  <!--android:layout_width="fill_parent"-->
-                  <!--android:layout_height="wrap_content"-->
-                  <!--android:text="你还没有发单"-->
-                  <!--android:textSize="26dp"-->
-                  <!--android:layout_gravity="center"-->
-                  <!--android:gravity="center"/>-->
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="fill_parent"
                       android:orientation="vertical"
@@ -48,21 +41,18 @@
 
         </ListView>
 
-        <!--<android.support.v4.view.ViewPager-->
-                <!--android:id="@+id/send_bill_frag_pager"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"/>-->
 
     </FrameLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
                   android:layout_marginTop="0dp"
                   android:layout_height="65dp"
+                  android:baselineAligned="false"
                   android:background="@drawable/dbtab"
                   android:paddingTop="5dp"
                   android:gravity="center_vertical"
                   android:orientation="horizontal">
         <LinearLayout android:id="@+id/frag_send_btn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
@@ -73,6 +63,7 @@
                 <ImageView android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:src="@drawable/fabu"
+                           android:contentDescription="发布回程车"
                            android:layout_gravity="center_vertical"
                         />
                 <TextView android:layout_width="wrap_content"
@@ -94,7 +85,7 @@
                       android:layout_height="wrap_content"
                       android:text="推荐"
 
-                      android:textSize="18dp"
+                      android:textSize="18sp"
                       android:layout_gravity="center_vertical"
                       android:textColor="@color/white"
                     />

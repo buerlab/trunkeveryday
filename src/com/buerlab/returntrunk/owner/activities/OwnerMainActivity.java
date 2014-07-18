@@ -75,7 +75,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         super.onCreate(savedInstanceState);
 
-        getActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.main_goods);
         Utils.setOwnerVersion(this);
         //启动位置上报服务
@@ -186,8 +186,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
 
     private void init(){
-        if(getActionBar() != null)
-            getActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setHomeButtonEnabled(true);
         slideMenu = (SlideMenu)findViewById(R.id.main_slideMenu);
 
         slideMenu.init(this, R.menu.slide_menu_goods, new SlideMenuInterface.OnSlideMenuItemClickListener() {

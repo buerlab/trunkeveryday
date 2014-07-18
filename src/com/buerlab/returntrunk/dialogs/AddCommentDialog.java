@@ -182,7 +182,7 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
             public void onClick(View v) {
                 if(currentText == null || currentText.isEmpty()){
                     Utils.showToast(mConext,"请选择评价");
-                    return;
+
                 }else {
 
                     service.addComment(currentStarNum,currentText,User.getInstance().nickName,
@@ -339,6 +339,7 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
             resetItems();
             v.setBackgroundResource(R.color.popup_comment_clicked_item);
             currentText = ((TextView)v).getText().toString().substring(2); //去掉数字1. 2.
+
         }
     }
 }

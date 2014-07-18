@@ -3,6 +3,7 @@ package com.buerlab.returntrunk.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -84,10 +85,10 @@ public class EditHomeLocationActivity extends BackBaseActivity implements EventC
     }
 
     private void save(){
-        final String location = homeLocationText.getText().toString();
+        final String location = homeLocationText.getText() ==null? "":  homeLocationText.getText().toString();
         if(location.length()==0){
-            Toast toast = Toast.makeText(getApplicationContext(), "请输入你的常住地", 2);
-            toast.show();
+            Utils.showToast(this,"请输入你的常住地");
+
             return;
         }
 
@@ -115,9 +116,15 @@ public class EditHomeLocationActivity extends BackBaseActivity implements EventC
     @Override
     public void onEventCall(DataEvent e) {
         if(e.type.equals(DataEvent.ADDR_CHANGE)){
-            List<String> data = (List<String>)e.data;
-            Address addr = new Address(data);
-            homeLocationText.setText(addr.toFullString());
+            try{
+                if(e.data !=null){
+                    List<String> data = (List<String>)e.data;
+                    Address addr = new Address(data);
+                    homeLocationText.setText(addr.toFullString());
+                }
+            }catch (Exception ex){
+                Log.e(TAG,ex.toString());
+            }
         }
     }
 

@@ -10,7 +10,6 @@ import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.models.User;
-import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.views.NickNameBarView;
 import com.buerlab.returntrunk.views.StarsView;
 

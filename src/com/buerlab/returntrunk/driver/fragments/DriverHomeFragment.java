@@ -119,7 +119,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         if(e.type.equals(DataEvent.NEW_BILL)){
             final Bill bill = (Bill)e.data;
             User.getInstance().addBill(bill);
-
+            changeTipsState();
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
             toast.show();
         }else if(e.type.equals(DataEvent.DELETE_BILL)){
@@ -161,36 +161,32 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         adapter.setBills(bills);
                         mHasInit = true;
 
-                        if(bills.size()>0){
-                            tips.setVisibility(View.GONE);
-                        }else {
-                            tips.setVisibility(View.VISIBLE);
-                        }
+                        changeTipsState();
                     }
                 }
                 }
             });
         }else{
             adapter.setBills(User.getInstance().getBills());
+            changeTipsState();
         }
     }
 
     private void addBill(Bill bill){
 //        mAdapter.addBill(bill);
+        changeTipsState();
+    }
+
+    private void changeTipsState(){
         if(mAdapter.getCount()>0){
             tips.setVisibility(View.GONE);
         }else {
             tips.setVisibility(View.VISIBLE);
         }
     }
-
     private void removeBill(Bill bill){
 //        mAdapter.removeBill(bill);
-        if(mAdapter.getCount()>0){
-            tips.setVisibility(View.GONE);
-        }else {
-            tips.setVisibility(View.VISIBLE);
-        }
+        changeTipsState();
     }
 
     public void updateBill(Bill bill){

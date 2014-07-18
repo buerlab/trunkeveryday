@@ -256,7 +256,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         holder.verifyText = (TextView)convertView.findViewById(R.id.verify_text);
 
         holder.isVerified =Integer.parseInt(trunk.trunkLicenseVerified);
-        holder.isUsedImageView = (ImageView) convertView.findViewById(R.id.set_current_trunk_btn);
+        holder.isUsedImageView = set_current_trunk_btn;
         convertView.setTag(holder); //绑定ViewHolder对象
 
         holder.licensePlateTxtView.setText(trunk.lisencePlate);
