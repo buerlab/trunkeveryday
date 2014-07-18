@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.view.MenuCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,13 +20,20 @@ import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.jpush.JPushUtils;
+import com.buerlab.returntrunk.models.Global;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
 import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
+
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.AnalyticsConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+
 
 
 /**
@@ -32,6 +41,7 @@ import org.json.JSONObject;
  */
 public class LoginActivity extends BaseActivity {
 
+    private static final String TAG = "LoginActivity";
     EditText userText;
     EditText pswText;
     Button loginbtn;
@@ -44,6 +54,12 @@ public class LoginActivity extends BaseActivity {
         userText = (EditText)findViewById(R.id.login_user_input);
         pswText = (EditText)findViewById(R.id.login_psw_input);
         loginbtn = (Button)findViewById(R.id.login_confirm_btn);
+
+        if(Utils.getVersionType(this).equals("driver")){
+            AnalyticsConfig.setAppkey("53c5184156240bb4720f0f39");
+        }else {
+            //TODO 货主版
+        }
 
         service = new NetService(this);
         setActionBarLayout("登录",WITH_NONE);
@@ -59,11 +75,28 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.login, menu);
         return true;
     }
+
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,6 +120,13 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void login(){
+
+        if(Utils.getVersionType(this).equals("driver")){
+            EventLogUtils.EventLog(this,EventLogUtils.tthcc_driver_login_btn);
+        }else {
+            //TODO 货主版
+        }
+
         String userTextStr = userText.getText().toString();
         String pswTextStr = pswText.getText().toString();
 
@@ -104,10 +144,18 @@ public class LoginActivity extends BaseActivity {
             Utils.showToast(this,"请输入密码");
             return;
         }
+
+
+
         service.login(userTextStr, pswTextStr, new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS){
+                    if(Utils.getVersionType(self).equals("driver")){
+                        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_login_btn_success);
+                    }else {
+                        //TODO 货主版
+                    }
                     JSONObject data = result.data;
                     try{
                         User.getInstance().initUser(data.getJSONObject("user"));

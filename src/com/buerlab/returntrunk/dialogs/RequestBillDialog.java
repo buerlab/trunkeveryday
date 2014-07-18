@@ -11,14 +11,19 @@ import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-7-10.
  */
 public class RequestBillDialog extends Dialog {
 
+    private static final String TAG = "RequestBillDialog";
+
     private Context mConext;
     private Bill mBill;
+
 
     public RequestBillDialog(Context context, int theme, Bill bill) {
         super(context, theme);
@@ -26,7 +31,6 @@ public class RequestBillDialog extends Dialog {
         mBill = bill;
         init();
     }
-
 
     private void init(){
         View diaView=View.inflate(mConext, R.layout.request_bill_dialog, null);
@@ -67,5 +71,10 @@ public class RequestBillDialog extends Dialog {
             }
         });
 
+        if(Utils.getVersionType(mConext).equals("driver")){
+            EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_requestBillDialog);
+        }else {
+            //TODO 货主版
+        }
     }
 }

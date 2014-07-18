@@ -15,6 +15,8 @@ import com.buerlab.returntrunk.models.Comment;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -23,11 +25,14 @@ import java.util.List;
  */
 public class CommentListFragment extends BaseFragment implements EventCenter.OnEventListener{
 
+    private static final String TAG = "CommentListFragment";
     View mView;
     private TextView tips = null;
     CommentListAdapter mAdapter;
     ListView mListView;
     NetService service;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -69,7 +74,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
                             }
                             adapter.setComments(comments);
 
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -80,6 +85,12 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
     @Override
     public void onShow(){
         initComments();
-
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_commentList_enterFragment);
+        }else {
+            //TODO 货主版
+        }
     }
+
+
 }

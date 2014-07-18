@@ -1,6 +1,5 @@
 package com.buerlab.returntrunk.net;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -8,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.LoadingDialog;
 import com.buerlab.returntrunk.models.*;
 import com.buerlab.returntrunk.utils.FormatUtils;
@@ -38,10 +38,10 @@ public class NetService {
 
     public interface CommentsCallBack{ public void onCall(NetProtocol result, List<Comment> comments); }
 
-    private Activity mActivity = null;
+    private BaseActivity mActivity = null;
     private Context mContext = null;
 
-    public NetService(Activity activity){
+    public NetService(BaseActivity activity){
         mActivity = activity;
         mContext = mActivity.getApplicationContext();
     }
@@ -79,7 +79,7 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
     }
     public void getUserDataWithoutLoading(NetCallBack callback){
-        urlRequest(mContext.getString(R.string.server_addr)+"api/user", createReqParms(null), "GET", callback);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/user", createReqParms(null), "GET", callback);
     }
 
     //////////////////////////
@@ -322,6 +322,24 @@ public class NetService {
         parmsMap.put("getType", getType);
         urlRequest(mContext.getString(R.string.server_addr) + "api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
     }
+
+    //////////////////////////
+    //用户反馈
+    /////////////////////////
+    public void addFeedBack(String feedbackString, final NetCallBack callback){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("feedbackString",feedbackString );
+        urlRequest(mContext.getString(R.string.server_addr3) + "userFeedback", createReqParms(parmsMap), "POST", callback);
+    }
+
+    //////////////////////////
+    //地理位置
+    /////////////////////////
+    public void getUserLocation(String getUserId, final NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("getUserId",getUserId );
+        urlRequest(mContext.getString(R.string.server_addr) + "api/location", createReqParms(parmsMap), "GET", callBack);
+    }
     public void uploadLocation(double latitude,double longitude, String prov,String city,String district, NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("latitude", Double.toString(latitude) );
@@ -366,7 +384,7 @@ public class NetService {
 
         if(mActivity != null ){
             final LoadingDialog loadingDialog = new LoadingDialog();
-            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            loadingDialog.show(mActivity.getSupportFragmentManager(), "loading");
             urlRequest(url, parms, method, new NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {
@@ -480,7 +498,7 @@ public class NetService {
 
         if(mActivity != null){
             final LoadingDialog loadingDialog = new LoadingDialog();
-            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            loadingDialog.show(mActivity.getSupportFragmentManager(), "loading");
             _uploadPic(url, bitmap, filename, new NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {
@@ -505,7 +523,7 @@ public class NetService {
 
         if(mActivity != null){
             final LoadingDialog loadingDialog = new LoadingDialog();
-            loadingDialog.show(mActivity.getFragmentManager(), "loading");
+            loadingDialog.show(mActivity.getSupportFragmentManager(), "loading");
             _uploadPics(url, filePaths, filenames, new NetCallBack() {
                 @Override
                 public void onCall(NetProtocol result) {

@@ -13,11 +13,29 @@ import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.driver.DriverUtils;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-6-11.
  */
 public class SetTrunkActivity extends BaseActivity {
+
+    private static final String TAG = "SetTrunkActivity";
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);

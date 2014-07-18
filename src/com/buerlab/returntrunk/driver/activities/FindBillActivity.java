@@ -8,6 +8,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.view.*;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.dialogs.BillConfirmDialog;
 import com.buerlab.returntrunk.models.Bill;
@@ -17,7 +18,11 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.umeng.analytics.MobclickAgent;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,6 +30,7 @@ import java.util.List;
  */
 public class FindBillActivity extends BackBaseActivity implements EventCenter.OnEventListener{
 
+    private static final String TAG = "FindBillActivity";
     private FindBillListAdapter findBillListAdapter = null;
     private LinearLayout tips = null;
 
@@ -35,7 +41,7 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
         setContentView(R.layout.find_good_frag);
         setActionBarLayout("推荐货源");
 
-        ListView list = (ListView)findViewById(R.id.find_bill_list);
+        PullToRefreshListView list = (PullToRefreshListView)findViewById(R.id.find_bill_list);
         findBillListAdapter = new FindBillListAdapter(this);
         list.setAdapter(findBillListAdapter);
 
@@ -44,6 +50,25 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
 
 
         refresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+
+        HashMap<String, String> param = new  HashMap<String,String>();
+        param.put("test","1");
+        param.put("test2","2");
+        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_findBill_enterActivity,param);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -62,7 +87,7 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
                 if(bills != null){
                     findBillListAdapter.setBills(bills);
                     if(bills.size()>0){
-                         tips.setAlpha(0.0f);
+                         tips.setVisibility(View.GONE);
                     }
                 }
             }

@@ -1,22 +1,18 @@
 package com.buerlab.returntrunk.activities;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.Utils;
@@ -24,17 +20,15 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by teddywu on 14-6-17.
- */
 public class EditIDNumActivity extends BackBaseActivity{
     private static final String TAG = "EditIDNumActivity" ;
-    ActionBar mActionBar;
+//    ActionBar mActionBar;
 
     EditText mIDNumEdit ;
     Button mPicBtn;
@@ -55,6 +49,20 @@ public class EditIDNumActivity extends BackBaseActivity{
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
     }
 
     private void init(){
@@ -81,6 +89,9 @@ public class EditIDNumActivity extends BackBaseActivity{
         if (resultCode != RESULT_CANCELED) {
             switch (requestCode) {
                 case Utils.IMAGE_REQUEST_CODE:
+                    if(data == null){
+                        return;
+                    }
                     startPhotoZoom(data.getData());
                     break;
                 case Utils.CAMERA_REQUEST_CODE:
@@ -88,8 +99,8 @@ public class EditIDNumActivity extends BackBaseActivity{
                         File tempFile = new File(Environment.getExternalStorageDirectory(),Utils.IMAGE_FILE_NAME);
                         startPhotoZoom(Uri.fromFile(tempFile));
                     } else {
-                        Toast toast = Toast.makeText(this, "未找到存储卡，无法存储照片！", 2);
-                        toast.show();
+                        Utils.showToast(this,"未找到存储卡，无法存储照片！");
+
                     }
 
                     break;
@@ -135,7 +146,9 @@ public class EditIDNumActivity extends BackBaseActivity{
         Bundle extras = data.getExtras();
         if (extras != null) {
             mBitmap = extras.getParcelable("data");
-            Drawable drawable = new BitmapDrawable(mBitmap);
+            Drawable drawable = new BitmapDrawable(getResources(),mBitmap);
+
+            //http://stackoverflow.com/questions/18633059/build-version-sdk-int-has-illegal-value
             mPicBtn.setBackgroundDrawable(drawable);
         }
     }
@@ -143,7 +156,7 @@ public class EditIDNumActivity extends BackBaseActivity{
 
     public void save(View i)
     {
-        final String idNum = mIDNumEdit.getText().toString();
+        final String idNum =  mIDNumEdit.getText() ==null? "" : mIDNumEdit.getText().toString();
         if(idNum.length()==0){
             Utils.showToast(this,"请输入你的身份证");
             return;

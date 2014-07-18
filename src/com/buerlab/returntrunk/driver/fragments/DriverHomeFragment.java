@@ -22,6 +22,8 @@ import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -31,9 +33,13 @@ import java.util.List;
  */
 public class DriverHomeFragment extends BaseFragment implements NewBillDialog.NewBillDialogListener, EventCenter.OnEventListener {
 
+    private static final String TAG = "DriverHomeFragment";
     private LinearLayout tips = null;
     private SendBillListAdapter mAdapter = null;
     private boolean mHasInit = false;
+
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,6 +144,8 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     @Override
     public void onShow(){
         initBills();
+
+        EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_home_enterFragment);
     }
 
     private void initBills(){
@@ -154,9 +162,9 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                         mHasInit = true;
 
                         if(bills.size()>0){
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }else {
-                            tips.setAlpha(1);
+                            tips.setVisibility(View.VISIBLE);
                         }
                     }
                 }
@@ -170,18 +178,18 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     private void addBill(Bill bill){
 //        mAdapter.addBill(bill);
         if(mAdapter.getCount()>0){
-            tips.setAlpha(0.0f);
+            tips.setVisibility(View.GONE);
         }else {
-            tips.setAlpha(1);
+            tips.setVisibility(View.VISIBLE);
         }
     }
 
     private void removeBill(Bill bill){
 //        mAdapter.removeBill(bill);
         if(mAdapter.getCount()>0){
-            tips.setAlpha(0.0f);
+            tips.setVisibility(View.GONE);
         }else {
-            tips.setAlpha(1);
+            tips.setVisibility(View.VISIBLE);
         }
     }
 

@@ -17,7 +17,8 @@ import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.models.Address;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 
 import java.util.List;
 
@@ -145,7 +146,11 @@ public class PublishConfirmDialog extends Dialog implements EventCenter.OnEventL
             }
         });
 
-
+        if(Utils.getVersionType(mConext).equals("driver")){
+            EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_PublishConfirmDialog);
+        }else {
+            //TODO 货主版
+        }
 
     }
 

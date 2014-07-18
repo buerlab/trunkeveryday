@@ -18,7 +18,9 @@ import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.models.Address;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ import java.util.List;
  * Created by zhongqiling on 14-6-23.
  */
 public class NewTrunkBillActivity extends BaseActivity implements EventCenter.OnEventListener{
+
+    private static final String TAG = "NewTrunkBillActivity";
 
     LinearLayout mExtraContainer = null;
 
@@ -40,6 +44,22 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
     private List<String> currTimeContent = null;
 
     private String currTimeStamp = "";
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+
+        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_enterActivity);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -113,11 +133,17 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn);
+
                 if(currFromContent == null || currToContent == null || currTimeStamp == ""){
                     Toast toast = Toast.makeText(self, "请填写完整车单", 2);
                     toast.show();
                     return;
                 }
+
+
+
                 final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, new Address(currFromContent).toFullString(),
                         new Address(currToContent).toFullString(), currTimeStamp);
 
@@ -129,6 +155,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                             if(bills.size() > 0){
                                 DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
                                 EventCenter.shared().dispatch(evt);
+                                EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn_success);
                             }
                             self.finish();
                         } else {

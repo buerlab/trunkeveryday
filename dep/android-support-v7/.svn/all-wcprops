@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/sp/sp_group_rep/!svn/ver/1130/android_group_proj/trunk/dep/android-support-v7
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/.classpath
+END
+project.properties
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/project.properties
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/.project
+END
+android-support-v7.iml
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/sp/sp_group_rep/!svn/ver/1130/android_group_proj/trunk/dep/android-support-v7/android-support-v7.iml
+END
+AndroidManifest.xml
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/AndroidManifest.xml
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/README.txt
+END
+ant.properties
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/ant.properties
+END
+build.xml
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/sp/sp_group_rep/!svn/ver/1099/android_group_proj/trunk/dep/android-support-v7/build.xml
+END

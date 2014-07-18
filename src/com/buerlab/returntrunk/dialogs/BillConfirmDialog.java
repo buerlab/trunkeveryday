@@ -12,6 +12,7 @@ import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.jpush.models.BillRequest;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 
 /**
  * Created by teddywu on 14-7-7.
@@ -97,7 +98,11 @@ public class BillConfirmDialog extends Dialog{
             }
         });
 
-
+        if(Utils.getVersionType(mConext).equals("driver")){
+            EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_billConfirmDialog);
+        }else {
+            //TODO 货主版
+        }
     }
 
 

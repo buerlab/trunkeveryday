@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 
 /**
  * Created by teddywu on 14-7-7.
@@ -41,6 +42,11 @@ public class PhoneConfirmDialog2 extends Dialog{
         getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL;
         setCanceledOnTouchOutside(true);
 
+        if(Utils.getVersionType(mConext).equals("driver")){
+            EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_phoneConfirmDialog);
+        }else {
+            //TODO 货主版
+        }
 //        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
 //        pickAddrView.setListener(this);
 

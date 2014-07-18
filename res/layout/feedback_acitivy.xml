@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="20dp"
+              android:text="您的建议或者投诉，"
+              android:textSize="16sp"
+              android:textColor="@color/sub_text_color"
+            />
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="5dp"
+              android:text="我们都会在第一时间跟进。"
+              android:textSize="16sp"
+              android:textColor="@color/sub_text_color"
+            />
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="5dp"
+              android:text="感谢您对天天回程车的支持，"
+              android:textSize="16sp"
+              android:textColor="@color/sub_text_color"
+            />
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="5dp"
+              android:text="我们会一直努力,让您更满意！"
+              android:textSize="16sp"
+              android:textColor="@color/sub_text_color"
+            />
+    <EditText android:layout_width="fill_parent"
+              android:layout_marginLeft="20dp"
+              android:layout_marginRight="20dp"
+              android:layout_marginTop="16dp"
+              android:hint="请输入您的反馈意见"
+              android:minHeight="50dp"
+              android:gravity="top"
+              android:paddingTop="12dp"
+              android:paddingLeft="16dp"
+              android:paddingRight="16dp"
+              android:id="@+id/feedback_str"
+              android:background="@drawable/edit_text_with_border"
+              android:layout_height="200dp"/>
+
+
+    <Button style="@style/clickable_button_with_main_color"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:textSize="16sp"
+            android:id="@+id/feedback_btn"
+            android:text="确定"
+            />
+</LinearLayout>
+

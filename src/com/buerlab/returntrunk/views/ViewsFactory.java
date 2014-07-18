@@ -19,7 +19,7 @@ import com.buerlab.returntrunk.models.NickBarData;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.models.Address;
 import org.json.JSONException;
 import org.json.JSONObject;
 

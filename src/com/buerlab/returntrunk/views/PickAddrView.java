@@ -7,12 +7,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.buerlab.returntrunk.AssetManager;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.models.Address;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,6 +38,7 @@ public class PickAddrView extends LinearLayout {
     private boolean provScrolling = false;
     private boolean cityScroling = false;
     private boolean regScrolling = false;
+    private Address mAddr = null;
 
     public PickAddrView(final Context context){
         super(context);
@@ -45,6 +48,34 @@ public class PickAddrView extends LinearLayout {
     public PickAddrView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
+    }
+
+    public void setAddr(String addrString){
+        mAddr = new Address(addrString);
+        List<String> addrList = mAddr.getAddrList();
+        if(addrList.size() >= 2){
+            List<String> provs = Arrays.asList(AssetManager.shared().getProvinces());
+            String provName = addrList.get(0);
+            int index = provs.indexOf(provName);
+            if(index >= 0)
+                provWheel.setCurrentItem(index);
+
+            List<String> cities = Arrays.asList(AssetManager.shared().getCities(provName));
+            String cityName = addrList.get(1);
+            index = cities.indexOf(cityName);
+            if(index >= 0)
+                cityWheel.setCurrentItem(index);
+
+            if(addrList.size() > 2){
+                List<String> regions = Arrays.asList(AssetManager.shared().getRegions(provName, cityName));
+                String regionName = addrList.get(2);
+                index = regions.indexOf(regionName);
+                if(index >= 0){
+                    regionWheel.setCurrentItem(index);
+                    regionWheel.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
     private  void init(Context context){

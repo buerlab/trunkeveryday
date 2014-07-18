@@ -16,7 +16,7 @@ import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.utils.Address;
+import com.buerlab.returntrunk.models.Address;
 
 /**
  * Created by zhongqiling on 14-7-15.

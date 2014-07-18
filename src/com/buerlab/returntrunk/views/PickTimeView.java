@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.models.AppTime;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
@@ -28,14 +29,7 @@ public class PickTimeView extends LinearLayout {
 
     private OnTimeLisener mLisener = null;
 
-    private int mYear = -1;
-    private int mMonth = -1;
-    private int[] mDays = null;
-    private int[] mHours = null;
-
-    String[] daysDesc = null;
-    String[] periodItems = {"上午", "下午"};
-    String[] timeDesc = null;
+    private AppTime mTime = null;
 
     WheelView dayWheel = null;
     WheelView periodWheel = null;
@@ -53,35 +47,22 @@ public class PickTimeView extends LinearLayout {
 
     public PickTimeView(Context context){
         super(context);
-
         init(context);
-
     }
 
+    public void setTime(String timestamp){
+        int[] indexs = mTime.fromTimeStamp(timestamp);
+        dayWheel.setCurrentItem(indexs[0]);
+        periodWheel.setCurrentItem(indexs[1]);
+        timeWheel.setCurrentItem(indexs[2]);
+    }
 
     private void init(Context context){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.pick_time_view, this);
+        mTime = new AppTime();
 
-        Calendar calendar = Calendar.getInstance();
-        mYear = calendar.get(Calendar.YEAR);
-        mMonth = calendar.get(Calendar.MONTH);
-        daysDesc = new String[10];
-        mDays = new int[10];
-        for(int i = 0; i < daysDesc.length; i++){
-            mDays[i] = calendar.get(Calendar.DAY_OF_MONTH);
-            daysDesc[i] = (calendar.get(Calendar.MONTH)+1)+"月"+mDays[i]+"日";
-            if(i == 0)
-                daysDesc[i] += "(今天)";
-            else if(i == 1)
-                daysDesc[i] += "(明天)";
-            else if(i == 2)
-                daysDesc[i] += "(后天)";
-
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-        ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(context, daysDesc);
+        ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(context, mTime.getDaysDesc());
 
         dayWheel = (WheelView)view.findViewById(R.id.pick_time_day);
         dayWheel.setVisibleItems(6);
@@ -111,7 +92,7 @@ public class PickTimeView extends LinearLayout {
 
         periodWheel = (WheelView)view.findViewById(R.id.pick_time_period);
         periodWheel.setVisibleItems(6);
-        periodWheel.setViewAdapter(new ArrayWheelAdapter<String>(context, periodItems));
+        periodWheel.setViewAdapter(new ArrayWheelAdapter<String>(context, mTime.getPeriodDesc()));
         periodWheel.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
@@ -133,15 +114,9 @@ public class PickTimeView extends LinearLayout {
             }
         });
 
-        timeDesc = new String[12];
-        mHours = new int[12];
-        for(int j = 0; j < 12; j++) {
-            timeDesc[j] = (j + 1) + "点";
-            mHours[j] = j+1;
-        }
         timeWheel = (WheelView)view.findViewById(R.id.pick_time_time);
         timeWheel.setVisibleItems(6);
-        timeWheel.setViewAdapter(new ArrayWheelAdapter<String>(context, timeDesc));
+        timeWheel.setViewAdapter(new ArrayWheelAdapter<String>(context, mTime.getTimeDesc()));
         timeWheel.addChangingListener(new OnWheelChangedListener() {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
@@ -175,19 +150,14 @@ public class PickTimeView extends LinearLayout {
     public List<String> getTimeList(){
         List<String> result = new ArrayList<String>();
 
-        result.add(daysDesc[dayWheel.getCurrentItem()]);
-        result.add(periodItems[periodWheel.getCurrentItem()]);
-        result.add(timeDesc[timeWheel.getCurrentItem()]);
+        result.add(mTime.getDaysDesc()[dayWheel.getCurrentItem()]);
+        result.add(mTime.getPeriodDesc()[periodWheel.getCurrentItem()]);
+        result.add(mTime.getTimeDesc()[timeWheel.getCurrentItem()]);
         return result;
     }
 
     public String getTimeStamp(){
-        int hourValue = mHours[timeWheel.getCurrentItem()];
-        int currHours = periodWheel.getCurrentItem()==0 ? hourValue : hourValue+12;
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(mYear, mMonth, mDays[dayWheel.getCurrentItem()], currHours, 0);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return String.valueOf(Timestamp.valueOf(sdf.format(calendar.getTime())).getTime());
+        return mTime.toTimeStamp(dayWheel.getCurrentItem(), periodWheel.getCurrentItem(), timeWheel.getCurrentItem());
     }
 
 }

@@ -22,6 +22,8 @@ import java.util.List;
 public class PickTimeDialog extends Dialog implements PickTimeView.OnTimeLisener {
 
     private Context mConext;
+    private PickTimeView mPickTimeView = null;
+
     public PickTimeDialog(Context context) {
         super(context);
         mConext = context;
@@ -48,8 +50,8 @@ public class PickTimeDialog extends Dialog implements PickTimeView.OnTimeLisener
         getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL | Gravity.BOTTOM;
         setCanceledOnTouchOutside(true);
 
-        PickTimeView pickTimeView = (PickTimeView)findViewById(R.id.pick_time_view);
-        pickTimeView.setLisener(this);
+        mPickTimeView = (PickTimeView)findViewById(R.id.pick_time_view);
+        mPickTimeView.setLisener(this);
 
 //        Button b = (Button)findViewById(R.id.btn_ok);
 //        b.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +61,10 @@ public class PickTimeDialog extends Dialog implements PickTimeView.OnTimeLisener
 //            }
 //        });
 
+    }
+
+    public void setTime(String timestamp){
+        mPickTimeView.setTime(timestamp);
     }
 
     @Override

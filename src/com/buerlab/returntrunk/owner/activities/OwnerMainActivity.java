@@ -34,8 +34,14 @@ import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
+
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.update.UmengUpdateAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.umeng.analytics.MobclickAgent;
+
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -60,6 +66,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     final FragmentActivity self = this;
 
     private SlideMenu slideMenu = null;
+
     /**
      * Called when the activity is first created.
      */
@@ -68,7 +75,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         super.onCreate(savedInstanceState);
 
-        getActionBar().hide();
+        getSupportActionBar().hide();
         setContentView(R.layout.main_goods);
         Utils.setOwnerVersion(this);
         //启动位置上报服务
@@ -91,6 +98,17 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         NetService service = new NetService(this);
 
         Utils.init(this);
+
+        //http://dev.umeng.com/analytics/android/quick-start#1
+        //货车段 友盟appkeky
+        AnalyticsConfig.setAppkey("53c6190c56240b202f084a4c");
+        //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
+        MobclickAgent.updateOnlineConfig(this);
+        //禁止默认的页面统计方式，这样将不会再自动统计Activity
+        MobclickAgent.openActivityDurationTrack(false);
+        //友盟自动更新
+        UmengUpdateAgent.update(this);
+
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -148,12 +166,16 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     @Override
     protected void onResume(){
         super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
     }
 
     @Override
     protected void onPause(){
         super.onPause();
+        MobclickAgent.onPageEnd(TAG);
+        MobclickAgent.onPause(this);
         JPushInterface.onPause(this);
     }
 
@@ -206,7 +228,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
     public void onJPushCall(JPushProtocal protocal) {
         PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
-        dialog.show(getFragmentManager(), "phonecall");
+        dialog.show(getSupportFragmentManager(), "phonecall");
     }
 
 

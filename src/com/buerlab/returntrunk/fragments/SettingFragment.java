@@ -2,25 +2,19 @@ package com.buerlab.returntrunk.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
-import com.buerlab.returntrunk.dialogs.*;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
-import com.buerlab.returntrunk.driver.DriverUtils;
-import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
-import com.buerlab.returntrunk.net.NetProtocol;
-import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-6-4.
@@ -28,8 +22,11 @@ import com.buerlab.returntrunk.net.NetService;
 
 public class SettingFragment extends BaseFragment{
 
+    private static final String TAG = "SettingFragment";
+
     Button logoutBtn;
     View mView;
+
 
 
     @Override
@@ -59,6 +56,14 @@ public class SettingFragment extends BaseFragment{
                 dialog.show();
             }
         });
+
+        mView.findViewById(R.id.get_location).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(self.getActivity(),BaiduMapActivity.class);
+                startActivity(i);
+            }
+        });
         return  mView;
     }
 
@@ -81,4 +86,12 @@ public class SettingFragment extends BaseFragment{
         startActivity(intent);
     }
 
+    @Override
+    public void onShow(){
+        if(Utils.getVersionType(self.getActivity()).equals("driver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_setting_enterFragment);
+        }else {
+            //TODO 货主版
+        }
+    }
 }

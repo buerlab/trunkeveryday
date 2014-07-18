@@ -31,6 +31,11 @@ public class PickAddrDialog extends Dialog implements PickAddrView.OnAddrListene
         init();
     }
 
+    public void setAddr(String addr){
+        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
+        pickAddrView.setAddr(addr);
+    }
+
 
     private void init(){
         View diaView=View.inflate(mConext, R.layout.pick_addr_view_wrapper, null);

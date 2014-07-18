@@ -2,13 +2,16 @@ package com.buerlab.returntrunk.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayout;
 import android.util.Log;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
-import com.buerlab.returntrunk.adapters.CommentListAdapter;
-import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 import com.buerlab.returntrunk.adapters.UserCompleteDataCommentListAdapter;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.UserCompleteData;
@@ -18,6 +21,7 @@ import com.buerlab.returntrunk.views.MyListView;
 import com.buerlab.returntrunk.views.StarsView;
 import com.buerlab.returntrunk.views.StarsViewWithText;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 
@@ -75,6 +79,19 @@ public class UserCompleteDataActivity extends BackBaseActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+    @Override
     public void onDestroy() {
         super.onDestroy();
     }
@@ -114,7 +131,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         userId = getIntent().getStringExtra("userId");
         getType = getIntent().getStringExtra("getType");
         nickname = getIntent().getStringExtra("nickname");
-        if(userId.isEmpty() || getType.isEmpty()){
+        if(userId==null || userId.length()==0 || getType==null ||  getType.length()==0){
             Utils.showToast(this,"无法获取个人资料");
             return;
         }
@@ -295,7 +312,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
                     String[] path = trunk.trunkPicFilePaths.get(i).split("/");
                     urls[i] = getString(R.string.server_addr2);
                     for(int j =0;j<path.length;j++){
-                        if(!path[j].isEmpty()){
+                        if(path[j] !=null && path[j].length()>0){
                             urls[i] += "/"+ java.net.URLEncoder.encode(path[j],"utf-8");
                         }
                     }
@@ -332,7 +349,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         mAdapter.setComments(data.comments);
     }
     private String getFormatPhoneNum(String phonenum){
-        if (phonenum.isEmpty())
+        if (phonenum == null || phonenum.length()==0)
             return phonenum;
 
         String str1 = phonenum.substring(0,3);

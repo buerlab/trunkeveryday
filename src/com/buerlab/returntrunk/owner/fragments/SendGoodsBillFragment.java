@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.activities.NewGoodsBillActivity;
 import com.buerlab.returntrunk.views.SendBillView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.List;
 
@@ -25,9 +26,13 @@ import java.util.List;
  */
 public class SendGoodsBillFragment extends BaseFragment implements EventCenter.OnEventListener{
 
+    private static final String TAG = "SendGoodsBillFragment";
+
     private SendBillListAdapter mAdapter = null;
     private boolean mBillsInit = false;
     private LinearLayout tips;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.send_goods_bill_frag, container, false);
@@ -126,9 +131,9 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
                         if(bills.size()>0){
-                            tips.setAlpha(0.0f);
+                            tips.setVisibility(View.GONE);
                         }else {
-                            tips.setAlpha(1);
+                            tips.setVisibility(View.VISIBLE);
                         }
                     }
                 }

@@ -99,7 +99,7 @@
                      android:layout_height="wrap_content"/>
     </RelativeLayout>
 
-    <GridLayout android:layout_width="fill_parent"
+    <android.support.v7.widget.GridLayout android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:columnCount="4"
@@ -136,6 +136,6 @@
                 <!--android:layout_width="100dp"-->
                 <!--android:background="#666"-->
                 <!--android:layout_height="100dp"/>-->
-        </GridLayout>
+        </android.support.v7.widget.GridLayout>
 
 </LinearLayout>

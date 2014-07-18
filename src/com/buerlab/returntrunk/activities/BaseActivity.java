@@ -1,25 +1,24 @@
 package com.buerlab.returntrunk.activities;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
-
 /**
  * Created by teddywu on 14-6-19.
  */
-public class BaseActivity extends FragmentActivity {
+public class BaseActivity extends ActionBarActivity {
 
     public static BaseActivity currActivity = null;
     public final static int WITH_BACK = 1;
     public final static int WITH_MENU = 2;
     public final static int WITH_NONE = 0;
 
-    final BaseActivity self = this;
+    public final BaseActivity self = this;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,6 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         currActivity = this;
     }
 
@@ -47,7 +45,7 @@ public class BaseActivity extends FragmentActivity {
     }
 
     private void clearReference(){
-        if(currActivity != null && currActivity.equals(this)){
+        if(currActivity != null && currActivity.equals(self)){
             currActivity = null;
         }
     }
@@ -66,7 +64,7 @@ public class BaseActivity extends FragmentActivity {
 
 
     public void setActionBarLayout(String title,int type){
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar =getSupportActionBar();
         if( null != actionBar ){
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(false);
@@ -79,6 +77,7 @@ public class BaseActivity extends FragmentActivity {
                 actionBar.setHomeButtonEnabled(true);
             }else if(type == WITH_NONE){
                 actionBar.setLogo(R.drawable.empty);
+
                 actionBar.setHomeButtonEnabled(false);
             }else if(type == WITH_MENU){
                 actionBar.setLogo(R.drawable.list);
@@ -99,4 +98,7 @@ public class BaseActivity extends FragmentActivity {
     public void setActionBarLayout(int type){
         setActionBarLayout(this.getString(R.string.app_name_cn) ,type);
     }
+
+
+
 }

@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
 import com.buerlab.returntrunk.R;
+import com.umeng.analytics.MobclickAgent;
 import ru.truba.touchgallery.GalleryWidget.BasePagerAdapter.OnItemChangeListener;
 import ru.truba.touchgallery.GalleryWidget.GalleryViewPager;
 import ru.truba.touchgallery.GalleryWidget.UrlPagerAdapter;
@@ -31,11 +32,27 @@ import java.util.List;
 
 public class GalleryUrlActivity extends BaseActivity {
 
+    private static final String TAG = "GalleryUrlActivity";
     private GalleryViewPager mViewPager;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gallery);
-        getActionBar().hide();
+        getSupportActionBar().hide();
 
         String[] urls = getIntent().getStringArrayExtra("urls");
         int pos = getIntent().getIntExtra("position",0);

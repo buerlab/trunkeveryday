@@ -6,10 +6,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +41,7 @@ import java.util.regex.Pattern;
 public class Utils {
 
     static public void defaultNetProAction(Activity activity, NetProtocol result){
-        if(activity.getApplicationContext() != null){
+        if(activity != null && activity.getApplicationContext() != null){
             if(result.code == NetProtocol.AUTH_ERROR){
                 Toast toast = Toast.makeText(activity.getApplicationContext(), "请先登录", 2);
                 toast.show();
@@ -312,4 +315,61 @@ public class Utils {
 
 
 
-}
+    //用于友盟的集成测试
+    public static String getDeviceInfo(Context context) {
+        try{
+            org.json.JSONObject json = new org.json.JSONObject();
+            android.telephony.TelephonyManager tm = (android.telephony.TelephonyManager) context
+                    .getSystemService(Context.TELEPHONY_SERVICE);
+
+            String device_id = tm.getDeviceId();
+
+            android.net.wifi.WifiManager wifi = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+
+            String mac = wifi.getConnectionInfo().getMacAddress();
+            json.put("mac", mac);
+
+            if( TextUtils.isEmpty(device_id) ){
+                device_id = mac;
+            }
+
+            if( TextUtils.isEmpty(device_id) ){
+                device_id = android.provider.Settings.Secure.getString(context.getContentResolver(),android.provider.Settings.Secure.ANDROID_ID);
+            }
+
+            json.put("device_id", device_id);
+
+            return json.toString();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getVersion(Context context)//获取版本号
+    {
+        try {
+            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static int getVersionCode(Context context)//获取版本号(内部识别号)
+    {
+        try {
+            PackageInfo pi=context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pi.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+
+
+    }

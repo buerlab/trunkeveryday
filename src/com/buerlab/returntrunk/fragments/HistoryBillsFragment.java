@@ -7,14 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.adapters.HistoryBillsAdapter;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.HistoryBill;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +27,15 @@ import java.util.List;
  */
 public class HistoryBillsFragment extends BaseFragment{
 
+
+    private static final String TAG = "HistoryBillsFragment";
+
+
     private PullToRefreshListView mListView = null;
     private HistoryBillsAdapter mAdapter = null;
     private boolean mHasInit = false;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +61,12 @@ public class HistoryBillsFragment extends BaseFragment{
     @Override
     public void onShow(){
         initBills();
+        if(Utils.getVersionType(self.getActivity()).equals("dirver")){
+            EventLogUtils.EventLog(self.getActivity(), EventLogUtils.tthcc_driver_historyBill_enterFragment);
+        }else{
+            //TODO
+
+        }
     }
 
     private void initBills(){

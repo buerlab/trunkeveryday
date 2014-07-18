@@ -18,6 +18,7 @@ import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.dialogs.PickTrunkTypeDialog;
+import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.activities.EditProfileBaseActivity;
@@ -29,6 +30,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.views.MyGridView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ import java.util.EventListener;
  */
 public class AddTrunkActivity extends BackBaseActivity implements EventCenter.OnEventListener {
 
-
+    private static final String TAG = "AddTrunkActivity";
 //    EditText typeText;
     LinearLayout typeWrapper;
     TextView typeText;
@@ -72,6 +74,21 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
+
     private void init(){
 
 
@@ -88,8 +105,10 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
 
         if(!enterByLogin){
             setActionBarLayout("添加货车",WITH_BACK);
+            EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_addTrunk_btn);
         }else {
             setActionBarLayout("添加货车",WITH_NONE);
+            EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_InitDriver_addTrunk_btn);
         }
 
         //选择出发地监听事件
@@ -227,12 +246,15 @@ public class AddTrunkActivity extends BackBaseActivity implements EventCenter.On
                     EventCenter.shared().dispatch(evt);
 
                     if(enterByLogin){
+                        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_InitDriver_addTrunk_btn_success);
                         Intent intent = new Intent(self,MainActivity.class);
                         intent.putExtra("without_splash",true);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
                     }else {
+                        EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_addTrunk_btn_success);
+
                         finish();
                     }
                 }

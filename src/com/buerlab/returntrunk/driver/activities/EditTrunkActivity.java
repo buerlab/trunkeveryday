@@ -27,6 +27,7 @@ import com.buerlab.returntrunk.utils.MultiPicSelector.ImgFileListActivity;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import com.buerlab.returntrunk.views.MyGridView;
 import com.buerlab.returntrunk.views.StarsView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ import java.util.Date;
  */
 public class EditTrunkActivity extends BackBaseActivity implements EventCenter.OnEventListener {
 
-
+    private static final String TAG = "EditTrunkActivity";
 //    EditText typeText;
     LinearLayout typeWrapper;
     TextView typeText;
@@ -69,12 +70,20 @@ public class EditTrunkActivity extends BackBaseActivity implements EventCenter.O
         initData();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(TAG); //统计页面
+        MobclickAgent.onResume(this);          //统计时长
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(TAG); // 保证 onPageEnd 在onPause 之前调用,因为 onPause 中会保存信息
+        MobclickAgent.onPause(this);
+    }
     private void init(){
-
-
-
-
-
 
 //        typeText = (EditText)findViewById(R.id.set_trunk_type);
         typeWrapper = (LinearLayout)findViewById(R.id.trunk_type_btn);
