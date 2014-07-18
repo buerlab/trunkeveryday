@@ -134,7 +134,7 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
                     String[] path = trunk.trunkPicFilePaths.get(i).split("/");
                     urls[i] = getString(R.string.server_addr2);
                     for(int j =0;j<path.length;j++){
-                        if(!path[j].isEmpty()){
+                        if(path[j]!=null && path[j].length()>0){
                             urls[i] += "/"+ java.net.URLEncoder.encode(path[j],"utf-8");
                         }
                     }

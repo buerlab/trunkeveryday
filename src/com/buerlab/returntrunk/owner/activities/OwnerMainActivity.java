@@ -186,8 +186,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
 
     private void init(){
-        if(getActionBar() != null)
-            getActionBar().setHomeButtonEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setHomeButtonEnabled(true);
         slideMenu = (SlideMenu)findViewById(R.id.main_slideMenu);
 
         slideMenu.init(this, R.menu.slide_menu_goods, new SlideMenuInterface.OnSlideMenuItemClickListener() {

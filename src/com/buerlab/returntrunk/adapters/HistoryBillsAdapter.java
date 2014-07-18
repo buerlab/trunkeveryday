@@ -5,12 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ViewSwitcher;
-import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.HistoryBill;
 import com.buerlab.returntrunk.views.ViewsFactory;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

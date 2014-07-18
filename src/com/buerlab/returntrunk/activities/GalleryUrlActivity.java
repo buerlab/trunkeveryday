@@ -17,9 +17,7 @@
  */
 package com.buerlab.returntrunk.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.widget.Toast;
 import com.buerlab.returntrunk.R;
 import com.umeng.analytics.MobclickAgent;
 import ru.truba.touchgallery.GalleryWidget.BasePagerAdapter.OnItemChangeListener;

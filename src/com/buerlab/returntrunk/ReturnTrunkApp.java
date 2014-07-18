@@ -9,6 +9,9 @@ import com.buerlab.returntrunk.jpush.JPushCenter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.umeng.analytics.AnalyticsConfig;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import java.util.Set;
 
@@ -41,5 +44,22 @@ public class ReturnTrunkApp extends Application {
                 .defaultDisplayImageOptions(defaultOptions)
                 .build();
         ImageLoader.getInstance().init(config);
+
+        initUmeng();
+        AssetManager.shared().init(this); //初始化资源
+    }
+
+    //初始化友盟
+    private void initUmeng(){
+        //http://dev.umeng.com/analytics/android/quick-start#1
+        //货车段 友盟appkeky
+//        AnalyticsConfig.setAppkey("53c5184156240bb4720f0f39");
+        //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
+        MobclickAgent.updateOnlineConfig(this);
+        //禁止默认的页面统计方式，这样将不会再自动统计Activity
+        MobclickAgent.openActivityDurationTrack(false);
+        //友盟自动更新
+        UmengUpdateAgent.update(this);
+        MobclickAgent.updateOnlineConfig( this );
     }
 }

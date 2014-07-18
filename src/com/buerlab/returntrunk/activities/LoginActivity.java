@@ -2,10 +2,7 @@ package com.buerlab.returntrunk.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.view.MenuCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,19 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.controls.MainController;
 import com.buerlab.returntrunk.driver.DriverUtils;
-import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
 import com.buerlab.returntrunk.jpush.JPushUtils;
-import com.buerlab.returntrunk.models.Global;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.owner.OwnerUtils;
-import com.buerlab.returntrunk.owner.activities.InitOwnerActivity;
 
 import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.AnalyticsConfig;
@@ -126,7 +119,9 @@ public class LoginActivity extends BaseActivity {
         }else {
             //TODO 货主版
         }
-
+        if(userText.getText()==null || pswText.getText()==null){
+            return;
+        }
         String userTextStr = userText.getText().toString();
         String pswTextStr = pswText.getText().toString();
 
@@ -180,7 +175,7 @@ public class LoginActivity extends BaseActivity {
                         finish();
                     }else {
                         Utils.showToast(self,"versonType error");
-                        return;
+
                     }
 //                    DriverUtils.safeSwitchToMainActivity(self);
                 }else{

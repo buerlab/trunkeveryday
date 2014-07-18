@@ -63,10 +63,10 @@ public class EditNickNameActivity extends BackBaseActivity {
 
     public void save(View i)
     {
-        final String nickname = mNickEdit.getText().toString();
+        final String nickname = mNickEdit.getText()==null? "":mNickEdit.getText().toString();
         if(nickname.length()==0){
-            Toast toast = Toast.makeText(getApplicationContext(), "请输入你的称呼", 2);
-            toast.show();
+            Utils.showToast(this,"请输入你的称呼");
+
             return;
         }
 

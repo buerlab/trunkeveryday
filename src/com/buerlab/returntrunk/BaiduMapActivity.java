@@ -155,7 +155,10 @@ public class BaiduMapActivity extends BackBaseActivity {
 
 
     private void getData(){
-        service.getUserLocation("53c38b347938ee65f08ef387",new NetService.NetCallBack() {
+
+        String lily = "53c4b2407938ee1089520738";
+        String a15507507418 = "53c38b347938ee65f08ef387";
+        service.getUserLocation(lily,new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS && result.data!=null){
