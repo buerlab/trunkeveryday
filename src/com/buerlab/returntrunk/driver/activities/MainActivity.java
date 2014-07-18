@@ -157,10 +157,14 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 
     //初始化百度地图
     private void initBaiduService(){
-        //百度sdk inital
-        SDKInitializer.initialize(getApplicationContext());
-        //启动位置上报服务
-        startService(new Intent(this, BaiduMapService.class));
+
+        if (Utils.getSDKVersionNumber()>7){
+            //百度sdk inital
+            SDKInitializer.initialize(getApplicationContext());
+            //启动位置上报服务
+            startService(new Intent(this, BaiduMapService.class));
+        }
+
     }
 
 

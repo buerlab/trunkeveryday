@@ -65,7 +65,7 @@
         <activity android:name=".driver.activities.SetTrunkActivity"/>
 
         <activity android:name=".driver.activities.EditTrunkActivity"/>
-        <activity android:configChanges="orientation|keyboardHidden" android:name=".BaiduMapActivity" android:screenOrientation="sensor">
+        <activity android:configChanges="orientation|keyboardHidden" android:name=".activities.BaiduMapActivity" android:screenOrientation="sensor">
         </activity>
 
         <activity android:name=".activities.EditNickNameActivity"/>

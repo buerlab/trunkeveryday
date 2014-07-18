@@ -9,7 +9,7 @@
     <LinearLayout style="@style/infogroup_item_wrapper">
         <EditText android:id="@+id/edit_nickname"
                   style="@style/infogroup_edit_text"
-                  android:hint="吴师傅"/>
+                  android:hint="怎么称呼您？"/>
     </LinearLayout>
 </LinearLayout>
 

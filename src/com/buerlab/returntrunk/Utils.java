@@ -371,5 +371,30 @@ public class Utils {
     }
 
 
+//    平台版本 API级别
+//    Android 3.0 11
+//    Android 2.3.3 10
+//    Android 2.3  9
+//    Android 2.2  8
+//    Android 2.1  7
+//    Android 2.0.1  6
+//    Android 2.0   5
+//    Android 1.6    4
+//    Android 1.5   3
+//    Android 1.1   2
+//    Android 1.0    1
 
+    //获取sdk 号
+    public static int getSDKVersionNumber() {
+
+        int sdkVersion;
+        try {
+            sdkVersion = Integer.valueOf(android.os.Build.VERSION.SDK);
+
+        } catch (NumberFormatException e) {
+
+            sdkVersion = 0;
+        }
+        return sdkVersion;
     }
+}

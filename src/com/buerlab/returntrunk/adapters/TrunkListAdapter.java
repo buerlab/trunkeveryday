@@ -141,7 +141,7 @@ public class TrunkListAdapter extends BaseAdapter {
         ImageLoader imageLoader = ImageLoader.getInstance();
         holder.picGridLayout.removeAllViews();
         int width = (Utils.getScreenSize()[0] - 40)/4;
-
+        holder.picGridLayout.setColumnCount(4);
         if(trunk.trunkPicFilePaths!=null){
             for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
                 ImageView iv = new ImageView(mContext);
@@ -151,6 +151,7 @@ public class TrunkListAdapter extends BaseAdapter {
                 params.width = width;
                 params.height = width;
                 holder.picGridLayout.addView(iv,params);
+
                 imageLoader.displayImage(mContext.getString(R.string.server_addr2)+ trunk.trunkPicFilePaths.get(i), iv);
                 iv.setOnClickListener(new OnPhotoClick(i,trunk));
             }

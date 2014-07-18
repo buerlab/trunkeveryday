@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk.fragments;
+package com.buerlab.returntrunk.driver.fragments;
 
 //import android.app.Activity;
 
@@ -9,24 +9,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
-import com.buerlab.returntrunk.activities.EditIDNumActivity;
 import com.buerlab.returntrunk.activities.GalleryUrlActivity;
 import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
 import com.buerlab.returntrunk.adapters.TrunkListAdapter;
 import com.buerlab.returntrunk.driver.activities.EditTrunkActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.EventLogUtils;
-import com.umeng.analytics.MobclickAgent;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

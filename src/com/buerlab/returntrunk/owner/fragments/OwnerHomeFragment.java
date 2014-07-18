@@ -29,6 +29,7 @@ public class OwnerHomeFragment extends BaseFragment {
     ImageView logoTrunk;
     ImageView logoGoods;
 
+
     private  List<Integer> fragtaglist = Arrays.asList(R.id.owner_home_find_trunk_frag, R.id.owner_home_send_goods_frag);
 
 
@@ -61,6 +62,8 @@ public class OwnerHomeFragment extends BaseFragment {
         tabTextGoods =(TextView)view.findViewById(R.id.tab_text_goods);
         logoGoods =(ImageView)view.findViewById(R.id.tab_logo_goods);
         logoTrunk =(ImageView)view.findViewById(R.id.tab_logo_trunk);
+
+
         setHomeFrag(0);
 
         showTrunkTab();

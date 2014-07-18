@@ -27,7 +27,7 @@
                       android:layout_height="fill_parent"
                       tools:layout="@layout/home_frag"
                       android:tag="基本资料"/>
-            <fragment android:name="com.buerlab.returntrunk.fragments.TrunkListFragment"
+            <fragment android:name="com.buerlab.returntrunk.driver.fragments.TrunkListFragment"
                       android:id="@+id/slide_menu_trunk"
                       android:layout_width="fill_parent"
                       android:layout_height="fill_parent"

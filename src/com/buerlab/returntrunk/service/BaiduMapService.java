@@ -95,12 +95,13 @@ public class BaiduMapService extends Service implements
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
         if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
             Log.v(TAG, "抱歉，未能找到结果");
+            if(result!=null && result.getLocation()!=null){
             service.uploadLocation(result.getLocation().latitude,
                     result.getLocation().longitude,
                     null,
                     null,
                     null,null);
-
+            }
         }else{
 
             ReverseGeoCodeResult.AddressComponent addressComponent = result.getAddressDetail();

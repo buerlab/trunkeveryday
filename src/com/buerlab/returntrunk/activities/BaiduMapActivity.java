@@ -1,4 +1,4 @@
-package com.buerlab.returntrunk;
+package com.buerlab.returntrunk.activities;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,11 +12,14 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.*;
 import com.baidu.mapapi.model.LatLng;
+import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BackBaseActivity;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.models.Location;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,7 +47,7 @@ public class BaiduMapActivity extends BackBaseActivity {
 
     // UI相关
     RadioGroup.OnCheckedChangeListener radioButtonListener;
-    Button requestLocButton;
+
     boolean isFirstLoc = true;// 是否首次定位
     NetService service;
 
@@ -66,64 +69,16 @@ public class BaiduMapActivity extends BackBaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
+
+
         setActionBarLayout("查看司机位置");
-        requestLocButton = (Button) findViewById(R.id.button1);
-        mCurrentMode = MyLocationConfigeration.LocationMode.NORMAL;
-        requestLocButton.setText("普通");
+
+        if (Utils.getSDKVersionNumber()<=7){
+            Utils.showToast(this,"抱歉，系统版本过低，不支持地图功能。");
+            finish();
+        }
         service = new NetService(this);
-        View.OnClickListener btnClickListener = new View.OnClickListener() {
-            public void onClick(View v) {
-                switch (mCurrentMode) {
-                    case NORMAL:
-                        requestLocButton.setText("跟随");
-                        mCurrentMode = MyLocationConfigeration.LocationMode.FOLLOWING;
-                        mBaiduMap
-                                .setMyLocationConfigeration(new MyLocationConfigeration(
-                                        mCurrentMode, true, mCurrentMarker));
-                        break;
-                    case COMPASS:
-                        requestLocButton.setText("普通");
-                        mCurrentMode = MyLocationConfigeration.LocationMode.NORMAL;
-                        mBaiduMap
-                                .setMyLocationConfigeration(new MyLocationConfigeration(
-                                        mCurrentMode, true, mCurrentMarker));
-                        break;
-                    case FOLLOWING:
-                        requestLocButton.setText("罗盘");
-                        mCurrentMode = MyLocationConfigeration.LocationMode.COMPASS;
-                        mBaiduMap
-                                .setMyLocationConfigeration(new MyLocationConfigeration(
-                                        mCurrentMode, true, mCurrentMarker));
-                        break;
-                }
-            }
-        };
-        requestLocButton.setOnClickListener(btnClickListener);
 
-
-
-//        RadioGroup group = (RadioGroup) this.findViewById(R.id.radioGroup);
-//        radioButtonListener = new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                if (checkedId == R.id.defaulticon) {
-//                    // 传入null则，恢复默认图标
-//                    mCurrentMarker = null;
-//                    mBaiduMap
-//                            .setMyLocationConfigeration(new MyLocationConfigeration(
-//                                    mCurrentMode, true, null));
-//                }
-//                if (checkedId == R.id.customicon) {
-//                    // 修改为自定义marker
-//                    mCurrentMarker = BitmapDescriptorFactory
-//                            .fromResource(R.drawable.icon_geo);
-//                    mBaiduMap
-//                            .setMyLocationConfigeration(new MyLocationConfigeration(
-//                                    mCurrentMode, true, mCurrentMarker));
-//                }
-//            }
-//        };
-//        group.setOnCheckedChangeListener(radioButtonListener);
 
         // 地图初始化
         mMapView = (MapView) findViewById(R.id.bmapView);
@@ -167,10 +122,6 @@ public class BaiduMapActivity extends BackBaseActivity {
                             // 此处设置开发者获取到的方向信息，顺时针0-360
                             .direction(100).latitude(Double.valueOf(location.latitude))
                             .longitude(Double.valueOf(location.longitude)).build();
-
-//
-//            String s=HttpRequest.sendGet("http://115.29.8.74:9288/api/location", "latitude="+location.getLatitude()+"&longitude="+ location.getLatitude());
-//            System.out.println(s);
                     mBaiduMap.setMyLocationData(locData);
                     if (isFirstLoc) {
                         isFirstLoc = false;
@@ -201,9 +152,6 @@ public class BaiduMapActivity extends BackBaseActivity {
                     .direction(100).latitude(location.getLatitude())
                     .longitude(location.getLongitude()).build();
 
-//
-//            String s=HttpRequest.sendGet("http://115.29.8.74:9288/api/location", "latitude="+location.getLatitude()+"&longitude="+ location.getLatitude());
-//            System.out.println(s);
             mBaiduMap.setMyLocationData(locData);
             if (isFirstLoc) {
                 isFirstLoc = false;
