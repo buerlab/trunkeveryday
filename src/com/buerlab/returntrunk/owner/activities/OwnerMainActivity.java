@@ -1,12 +1,14 @@
 package com.buerlab.returntrunk.owner.activities;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -35,6 +37,7 @@ import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
+import com.testin.agent.TestinAgent;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.update.UmengUpdateAgent;
 import org.json.JSONException;
@@ -63,14 +66,14 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //    private DrawerLayout mDrawerLayout = null;
     private ListView mDrawerList;
 //    private ActionBarDrawerToggle mDrawerToggle = null;
-    final FragmentActivity self = this;
+    final BaseActivity self = this;
 
     private SlideMenu slideMenu = null;
 
     boolean withoutSplash;
 
     private final static String WITHOUT_SPLASH = "splash_shown";
-
+    NetService service;
     /**
      * Called when the activity is first created.
      */
@@ -85,9 +88,10 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         getSupportActionBar().hide();
         setContentView(R.layout.main_goods);
-        NetService service = new NetService(this);
+        service = new NetService(this);
         Utils.setOwnerVersion(this);
         Utils.init(this);
+        initTestin();//初始化Testin质量分析
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         MainController.shared().init(getApplicationContext());
@@ -99,8 +103,42 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
             hideEntryFragment();
         }
 
+        //无网络下
+        if(!Utils.isNetworkConnected(this)){
+            hideEntryFragment();
+            getSupportActionBar().show();
+            init();
+            withoutSplash = true;
+            Utils.setGlobalData(this,"hasLogined", "false");
+        }else {
+            fastLogin();
+        }
 
+        registerConnectionReceiver();
+    }
 
+    private void registerConnectionReceiver(){
+        BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Utils.isNetworkConnected(self)){
+
+                    if(Utils.getGlobalData(self,"hasLogined").equals("false")){
+                        if(self.hasStop){
+                            Utils.setGlobalData(self,"needToQuickLogin","true");
+                        }else {
+                            fastLogin();
+                        }
+                    }
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectionReceiver, intentFilter);
+    }
+    private void fastLogin(){
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -130,8 +168,9 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //                        JPushUtils.registerAlias(self, User.getInstance().userId+User.USERTYPE_OWNER);
 //                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
-
+                        Utils.setGlobalData(self,"hasLogined", "true");
                         init();
+
                         hideEntryFragment();
                         getSupportActionBar().show();
                         setActionBarLayout("天天回程车",WITH_MENU);
@@ -158,6 +197,10 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     @Override
     protected void onResume(){
         super.onResume();
+        if(Utils.getGlobalData(self,"needToQuickLogin").equals("true")){
+            fastLogin();
+            Utils.setGlobalData(self,"needToQuickLogin","false");
+        }
         MobclickAgent.onPageStart(TAG); //统计页面
         MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
@@ -176,6 +219,9 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         super.onDestroy();
     }
 
+    private void initTestin(){
+        TestinAgent.init(this, "13a21c8c3de0163680c2defe2015b610");
+    }
 
     private void init(){
         if(getSupportActionBar() != null)
@@ -223,7 +269,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         Fragment entry = manager.findFragmentByTag("entry");
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.hide(entry);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     @Override

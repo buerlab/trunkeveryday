@@ -106,7 +106,7 @@
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:textColor="@color/sub_text_color_2"
-                      android:text="注意:"
+                      android:text="温馨提示:"
                       android:textSize="20sp"
                     />
         </LinearLayout>
@@ -117,7 +117,7 @@
                   android:layout_marginRight="40dp"
                   android:textColor="@color/sub_text_color_2"
                   android:layout_height="wrap_content"
-                  android:text="1. 您的手机号码、身份证、驾驶证等信息不会公开。"
+                  android:text="您的身份证、驾驶证等信息将会严格保密。"
                 />
         <TextView android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                   android:layout_marginRight="40dp"
                   android:layout_marginTop="8dp"
                   android:textColor="@color/sub_text_color_2"
-                  android:text="2. 审核通过后，您将得到更多的推荐货源和更多的交易机会。"
+                  android:text="信息审核通过后，您将得到更多的推荐货源和更多的交易机会。"
                 />
     </LinearLayout>
 

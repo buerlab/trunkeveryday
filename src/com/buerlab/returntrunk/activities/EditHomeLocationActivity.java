@@ -3,17 +3,11 @@ package com.buerlab.returntrunk.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
+
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
->>>>>>> c257370e6f70c73e79aa75d20ae20d4e5f1e649a
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
 import com.buerlab.returntrunk.models.User;

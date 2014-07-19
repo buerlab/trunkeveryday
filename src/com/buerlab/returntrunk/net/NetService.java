@@ -382,7 +382,11 @@ public class NetService {
 
     public void request(String url, String parms, String method, final NetCallBack callback){
 
-        if(mActivity != null ){
+        if(!Utils.isNetworkConnected(mContext)){
+            Utils.showToast(mContext,"当前网络不可用，请稍后再试");
+            return;
+        }
+        if(mActivity != null && !mActivity.hasStop){
             final LoadingDialog loadingDialog = new LoadingDialog();
             loadingDialog.show(mActivity.getSupportFragmentManager(), "loading");
             urlRequest(url, parms, method, new NetCallBack() {
@@ -406,6 +410,11 @@ public class NetService {
     }
 
     public void urlRequest(String url, String parms, String method, final NetCallBack callback){
+        if(!Utils.isNetworkConnected(mContext)){
+            Utils.showToast(mContext,"当前网络不可用，请稍后再试");
+            return;
+        }
+
         new AsyncTask<String, Integer, NetProtocol>(){
             protected NetProtocol doInBackground(String... args){
 
@@ -543,6 +552,7 @@ public class NetService {
         _uploadPics(url, fstreams, filenames, callBack);
     }
     public void _uploadPic(String url,String filePath,String filename, final NetCallBack callBack){
+
         try {
             InputStream[] fstreams = new InputStream[1];
 
@@ -584,6 +594,10 @@ public class NetService {
     }
 
     public void _uploadPics(String url,final InputStream[] inputStreams,String[] filenames, final NetCallBack callBack){
+        if(!Utils.isNetworkConnected(mContext)){
+            Utils.showToast(mContext,"当前网络不可用，请稍后再试");
+            return;
+        }
         if(inputStreams.length != filenames.length){
             Log.e("NetService","inputStreams.length != filenames.length");
             return;

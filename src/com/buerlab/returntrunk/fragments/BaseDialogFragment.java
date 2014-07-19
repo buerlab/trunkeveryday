@@ -1,6 +1,7 @@
 package com.buerlab.returntrunk.fragments;
 
-import android.app.DialogFragment;
+
+import android.support.v4.app.DialogFragment;
 
 /**
  * Created by teddywu on 14-6-19.

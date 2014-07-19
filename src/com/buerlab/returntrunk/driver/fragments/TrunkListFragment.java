@@ -35,7 +35,7 @@ import java.util.List;
 public class TrunkListFragment extends BaseFragment implements EventCenter.OnEventListener{
     private static final String TAG =  "TrunkListFragment";
     View mView;
-    private TextView tips = null;
+    private LinearLayout tips = null;
     TrunkListAdapter mAdapter;
     ListView mListView;
     NetService service;
@@ -53,7 +53,7 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
     }
 
     public void init(){
-        tips = (TextView)mView.findViewById(R.id.trunks_frag_tips);
+        tips = (LinearLayout)mView.findViewById(R.id.tips);
         mListView = (ListView)mView.findViewById(R.id.trunks_list);
         mAdapter =new TrunkListAdapter(getActivity(),
                 new ItemOnLongClickListener(),
@@ -61,6 +61,9 @@ public class TrunkListFragment extends BaseFragment implements EventCenter.OnEve
                 new OnSetTrunkClickClass(),
                 new OnEditTrunkClickClass()
         );
+        View convertView = LayoutInflater.from(getActivity()).inflate(R.layout.list_footer_view, null);
+
+        mListView.addFooterView(convertView);
         mListView.setAdapter(mAdapter);
 
         mAddTrunkBtn = (LinearLayout)mView.findViewById(R.id.add_trunk_btn);

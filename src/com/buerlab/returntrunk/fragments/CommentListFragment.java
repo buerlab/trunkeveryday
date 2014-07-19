@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import com.buerlab.returntrunk.*;
@@ -27,22 +28,28 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
 
     private static final String TAG = "CommentListFragment";
     View mView;
-    private TextView tips = null;
+    private LinearLayout tips = null;
     CommentListAdapter mAdapter;
     ListView mListView;
     NetService service;
 
 
+    TextView reminderText;
+    TextView reminderText2;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.comments, container, false);
-        tips = (TextView)mView.findViewById(R.id.comments_frag_tips);
         init();
         return  mView;
     }
 
+
     public void init(){
+        tips = (LinearLayout)mView.findViewById(R.id.tips);
+        reminderText = (TextView)mView.findViewById(R.id.reminder_text);
+        reminderText2= (TextView)mView.findViewById(R.id.reminder_text2);
         mListView = (ListView)mView.findViewById(R.id.comments_list);
         mAdapter =new CommentListAdapter(getActivity());
         mListView.setAdapter(mAdapter);
@@ -50,6 +57,10 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);
 //        initComments();
         service = new NetService(getActivity());
+
+        if(User.getInstance().getUserType().equals("owner")){
+            reminderText2.setText("每当您达成一笔交易，将会得到货车司机对您的评分和评价，更高的评分将会给您带来更多的交易机会噢");
+        }
     }
 
     @Override
@@ -65,7 +76,7 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
                 @Override
                 public void onCall(NetProtocol result, List<Comment> comments) {
                     if (result.code == NetProtocol.SUCCESS) {
-                        if (comments != null) {
+                        if (comments != null && comments.size()>0) {
                             if(User.getInstance().getUserType()=="driver"){
                                 User.getInstance().initDriverComments(comments);
                             }
@@ -73,8 +84,8 @@ public class CommentListFragment extends BaseFragment implements EventCenter.OnE
                                 User.getInstance().initOwnerComments(comments);
                             }
                             adapter.setComments(comments);
-
                             tips.setVisibility(View.GONE);
+
                         }
                     }
                 }

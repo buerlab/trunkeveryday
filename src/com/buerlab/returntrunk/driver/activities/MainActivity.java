@@ -1,5 +1,9 @@
 package com.buerlab.returntrunk.driver.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -34,6 +38,7 @@ import com.coboltforge.slidemenu.SlideMenuInterface;
 
 import com.buerlab.returntrunk.service.BaiduMapService;
 
+import com.testin.agent.TestinAgent;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.onlineconfig.UmengOnlineConfigureListener;
 import com.umeng.update.UmengUpdateAgent;
@@ -62,7 +67,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
 //    private ActionBarDrawerToggle mDrawerToggle = null;
 
     private SlideMenu slideMenu = null;
-    final FragmentActivity self = this;
+    final BaseActivity self = this;
     boolean withoutSplash;
 
     private final static String WITHOUT_SPLASH = "splash_shown";
@@ -81,10 +86,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
             performRestoreInstanceState(savedInstanceState);
         }
 
+
         initBaiduService(); //初始化百度地图
         Utils.setDriverVersion(this); //设置为司机version
         Utils.init(this); //初始化Utils
-
+        initTestin(); //
         service = new NetService(this);
         setActionBarLayout("天天回程车",WITH_MENU);
         getSupportActionBar().hide();
@@ -101,6 +107,45 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         }
 
 
+        //如果没网络就先打开
+        if(!Utils.isNetworkConnected(this)){
+            hideEntryFragment();
+            getSupportActionBar().show();
+            init();
+            withoutSplash = true;
+        }else {
+            fastLogin();
+        }
+
+
+
+        registerConnectionReceiver();
+
+    }
+
+    private void registerConnectionReceiver(){
+        BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Utils.isNetworkConnected(self)){
+
+                    if(Utils.getGlobalData(self,"hasLogined").equals("false")){
+                        if(self.hasStop){
+                            Utils.setGlobalData(self,"needToQuickLogin","true");
+                        }else {
+                            fastLogin();
+                        }
+                    }
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectionReceiver, intentFilter);
+    }
+
+    private void fastLogin(){
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -136,9 +181,11 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
                 }
             }
         });
-
     }
 
+    private void initTestin(){
+        TestinAgent.init(this, "13a21c8c3de0163680c2defe2015b610");
+    }
     private void toLoginUI() {
         Intent intent = new Intent(self, LoginActivity.class);
         self.startActivity(intent);
@@ -152,7 +199,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         Fragment entry = manager.findFragmentByTag("entry");
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.hide(entry);
-        transaction.commit();
+        transaction.commitAllowingStateLoss();
     }
 
     //初始化百度地图
@@ -171,6 +218,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     @Override
     protected void onResume(){
         super.onResume();
+
         MobclickAgent.onPageStart(TAG); //统计页面
         MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
@@ -184,6 +232,10 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         JPushInterface.onPause(this);
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+    }
     @Override
     protected void onDestroy(){
         super.onDestroy();

@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
+import com.testin.agent.TestinAgent;
+
 /**
  * Created by teddywu on 14-6-19.
  */
@@ -19,17 +21,29 @@ public class BaseActivity extends ActionBarActivity {
     public final static int WITH_NONE = 0;
 
     public final BaseActivity self = this;
+
+    public boolean hasStop = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionBarLayout(WITH_NONE);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        TestinAgent.onResume(this);
         currActivity = this;
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        hasStop = false;
+    }
+
 
     @Override
     protected void onPause() {
@@ -41,7 +55,13 @@ public class BaseActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         clearReference();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        TestinAgent.onStop(this);
+        hasStop = true;
     }
 
     private void clearReference(){

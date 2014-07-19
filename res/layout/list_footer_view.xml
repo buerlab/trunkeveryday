@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:id="@+id/trunk_list_footer"
+              android:layout_height="match_parent">
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="20dp"
+                  android:paddingBottom="20dp"
+                  android:orientation="vertical"
+                  android:paddingLeft="12dp"
+            >
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_marginTop="2dp"
+                       android:src="@drawable/qt2_zy"
+                       android:layout_height="wrap_content"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/sub_text_color_2"
+                      android:text="温馨提示:"
+                      android:textSize="20sp"
+                    />
+        </LinearLayout>
+        <TextView android:layout_width="wrap_content"
+                  android:layout_marginLeft="12dp"
+                  android:id="@+id/reminder_text"
+                  android:layout_marginTop="8dp"
+                  android:layout_marginRight="12dp"
+                  android:textColor="@color/sub_text_color_2"
+                  android:layout_height="wrap_content"
+                  android:text="审核行驶证后，您会得到更多的交易机会。"
+                />
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginLeft="12dp"
+                  android:id="@+id/reminder_text2"
+                  android:layout_marginRight="12dp"
+                  android:layout_marginTop="8dp"
+                  android:textColor="@color/sub_text_color_2"
+                  android:text="添加真实的货车图片会更有吸引力。"
+                />
+    </LinearLayout>
+</LinearLayout>

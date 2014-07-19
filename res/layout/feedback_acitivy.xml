@@ -11,7 +11,7 @@
               android:layout_marginTop="20dp"
               android:text="您的建议或者投诉，"
               android:textSize="16sp"
-              android:textColor="@color/sub_text_color"
+              android:textColor="@color/sub_text_color_2"
             />
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
               android:layout_marginTop="5dp"
               android:text="我们都会在第一时间跟进。"
               android:textSize="16sp"
-              android:textColor="@color/sub_text_color"
+              android:textColor="@color/sub_text_color_2"
             />
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
               android:layout_marginTop="5dp"
               android:text="感谢您对天天回程车的支持，"
               android:textSize="16sp"
-              android:textColor="@color/sub_text_color"
+              android:textColor="@color/sub_text_color_2"
             />
     <TextView android:layout_width="wrap_content"
               android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
               android:layout_marginTop="5dp"
               android:text="我们会一直努力,让您更满意！"
               android:textSize="16sp"
-              android:textColor="@color/sub_text_color"
+              android:textColor="@color/sub_text_color_2"
             />
     <EditText android:layout_width="fill_parent"
               android:layout_marginLeft="20dp"
