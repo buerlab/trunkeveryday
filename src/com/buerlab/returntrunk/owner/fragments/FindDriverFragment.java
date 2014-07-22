@@ -45,7 +45,7 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.find_good_frag, container, false);
+        View view = inflater.inflate(R.layout.find_driver_frag, container, false);
 
         noBillTips = (LinearLayout)view.findViewById(R.id.no_bill_tips);
         mListView = (PullToRefreshListView)view.findViewById(R.id.find_bill_list);

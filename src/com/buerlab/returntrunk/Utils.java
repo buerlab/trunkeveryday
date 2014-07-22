@@ -75,6 +75,7 @@ public class Utils {
 
     public final static int FULL_TIME_STRING = 1;
     public final static int YEAR_MONTH_DAY = 2;
+    public final static int YEAR_MONTH_DAY_TIME = 3;
     static public String timestampToDisplay(long ts, int format){
         try {
             Calendar calendar = Calendar.getInstance();
@@ -88,15 +89,18 @@ public class Utils {
             String ret ;
 
             if(format == FULL_TIME_STRING){
-                ret = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"月"+
+                ret = calendar.get(Calendar.YEAR)+"年"+(calendar.get(Calendar.MONTH)+1)+"月"+
                         calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
             }else if(format ==YEAR_MONTH_DAY){
                 Date date = new Date(ts);
                 java.text.DateFormat format1 = new java.text.SimpleDateFormat("yyyy-MM-dd");
                 ret = format1.format(date);
+            }else if(format ==YEAR_MONTH_DAY_TIME){
+                ret=(calendar.get(Calendar.MONTH)+1)+"月"+
+                    calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点左右";
             }else {
                 //默认
-                ret = calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"月"+
+                ret = calendar.get(Calendar.YEAR)+"年"+(calendar.get(Calendar.MONTH)+1)+"月"+
                         calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
             }
             return ret;
@@ -107,7 +111,7 @@ public class Utils {
     }
 
     public static  String timestampToDisplay(long ts){
-        return timestampToDisplay(ts,FULL_TIME_STRING);
+        return timestampToDisplay(ts,YEAR_MONTH_DAY_TIME);
     }
     static public String timestampToDisplay(String ts){
         return timestampToDisplay(Long.parseLong(ts));

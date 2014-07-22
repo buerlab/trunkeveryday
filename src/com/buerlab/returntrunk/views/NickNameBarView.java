@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
 import com.buerlab.returntrunk.models.NickBarData;
@@ -56,11 +57,14 @@ public class NickNameBarView extends LinearLayout {
             public void onClick(View v) {
                 if(mContext!=null){
                     if(mContext instanceof BaseActivity){
-                        Intent intent = new Intent(mContext, UserCompleteDataActivity.class);
-                        intent.putExtra("userId",user.userId);
-                        intent.putExtra("getType",getType);
-                        intent.putExtra("nickname",user.nickName);
-                        (mContext).startActivity(intent);
+                        if(user!=null){
+                            Intent intent = new Intent(mContext, UserCompleteDataActivity.class);
+                            intent.putExtra("userId",user.userId);
+                            intent.putExtra("getType",getType);
+                            intent.putExtra("nickname",user.nickName);
+                            (mContext).startActivity(intent);
+                        }else {
+                        }
                     }
                 }
             }
@@ -72,7 +76,7 @@ public class NickNameBarView extends LinearLayout {
         mNickName.setText(user.nickName);
 
         //如果我是司机，那么我要看的是货主信息
-        if(myUserType != "driver"){
+        if(!myUserType.equals("driver") ){
 
             mStar.setStar(user.driverStars);
             if(!user.driverLicenseVerified.equals("2")){

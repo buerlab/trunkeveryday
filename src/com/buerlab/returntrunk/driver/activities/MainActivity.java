@@ -71,7 +71,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     boolean withoutSplash;
 
     private final static String WITHOUT_SPLASH = "splash_shown";
-
+    BroadcastReceiver connectionReceiver;
     NetService service;
     /**
      * Called when the activity is first created.
@@ -124,7 +124,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     }
 
     private void registerConnectionReceiver(){
-        BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
+         connectionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Utils.isNetworkConnected(self)){
@@ -239,6 +239,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        unregisterReceiver(connectionReceiver);
     }
 
 

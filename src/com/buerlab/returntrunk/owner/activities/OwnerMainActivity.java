@@ -74,6 +74,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
     private final static String WITHOUT_SPLASH = "splash_shown";
     NetService service;
+    BroadcastReceiver connectionReceiver;
     /**
      * Called when the activity is first created.
      */
@@ -118,7 +119,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     }
 
     private void registerConnectionReceiver(){
-        BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
+        connectionReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 if (Utils.isNetworkConnected(self)){
@@ -217,6 +218,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     @Override
     protected void onDestroy(){
         super.onDestroy();
+        unregisterReceiver(connectionReceiver);
     }
 
     private void initTestin(){

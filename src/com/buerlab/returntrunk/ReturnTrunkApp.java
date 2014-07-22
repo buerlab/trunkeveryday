@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
+import com.baidu.mapapi.SDKInitializer;
 import com.buerlab.returntrunk.jpush.JPushCenter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -47,6 +48,9 @@ public class ReturnTrunkApp extends Application {
 
         initUmeng();
         AssetManager.shared().init(this); //初始化资源
+
+        //百度sdk inital
+        SDKInitializer.initialize(getApplicationContext());
     }
 
     //初始化友盟
