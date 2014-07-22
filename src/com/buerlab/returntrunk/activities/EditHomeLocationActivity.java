@@ -3,7 +3,6 @@ package com.buerlab.returntrunk.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;

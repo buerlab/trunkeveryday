@@ -84,12 +84,17 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
         if(event.type.equals(DataEvent.NEW_BILL)){
             mAdapter.notifyDataSetChanged();
 
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功!", 2);
             toast.show();
         }else if(event.type.equals(DataEvent.DELETE_BILL)){
             mAdapter.notifyDataSetChanged();
 
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "已删除", 2);
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "已删除!", 2);
+            toast.show();
+        }else if(event.type.equals(DataEvent.UPDATE_BILL)){
+            mAdapter.notifyDataSetChanged();
+
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "修改成功！", 2);
             toast.show();
         }else if(event.type.equals(DataEvent.BILL_OVERDUE)){
             List<Bill> billsToRemove = (List<Bill>)event.data;

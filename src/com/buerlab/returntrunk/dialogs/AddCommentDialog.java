@@ -69,9 +69,11 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
     String toUserId = User.getInstance().userId;  //DEBUG
 
     Dialog self = this;
-    public AddCommentDialog(Context context) {
-        super(context);
+    public AddCommentDialog(Context context, int theme, String _toUserId, String _billId) {
+        super(context, theme);
         mConext = context;
+        toUserId = _toUserId;
+        billId = _billId;
         init();
     }
 
@@ -82,7 +84,7 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
         init();
     }
 
-    public AddCommentDialog(Context context, int theme,String billId) {
+    public AddCommentDialog(Context context, int theme, String billId) {
         super(context, theme);
         mConext = context;
         this.billId = billId;
@@ -112,7 +114,6 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
         setCanceledOnTouchOutside(true);
         onItemClassListener = new OnItemClassListener();
         initData();
-
     }
 
     private void initData(){
@@ -180,7 +181,7 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentText == null || currentText.isEmpty()){
+                if(currentText == null || currentText.length() == 0){
                     Utils.showToast(mConext,"请选择评价");
 
                 }else {

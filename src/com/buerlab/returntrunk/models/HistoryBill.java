@@ -15,12 +15,12 @@ public class HistoryBill {
     public String billType = "";
 
     public String nickName = "";
+    //交易单据对方的id
     public String sender = "";
     public String senderType = "";
     public NickBarData senderData = null;
     public String sendTime = "";
     public String senderPhoneNum = "";
-
 
     public String fromAddr = "";
     public String toAddr = "";

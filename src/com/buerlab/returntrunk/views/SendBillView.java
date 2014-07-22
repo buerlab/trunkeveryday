@@ -1,15 +1,19 @@
 package com.buerlab.returntrunk.views;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.BillViewContxtMenu;
+import com.buerlab.returntrunk.driver.activities.NewTrunkBillActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.models.Bill;
@@ -17,6 +21,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.models.Address;
+import com.buerlab.returntrunk.owner.activities.NewGoodsBillActivity;
 
 /**
  * Created by zhongqiling on 14-7-15.
@@ -63,9 +68,22 @@ public class SendBillView extends LinearLayout {
                         });
                     }
                 });
-                menu.show(BaseActivity.currActivity.getFragmentManager(), "menu");
+                menu.show(BaseActivity.currActivity.getSupportFragmentManager(), "menu");
 
                 return true;
+            }
+        });
+
+        ImageView updateBtn = (ImageView)mContainer.findViewById(R.id.new_bill_update);
+        updateBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(BaseActivity.currActivity != null){
+                    Class jumpTo = mBill.billType == Bill.BILLTYPE_GOODS ? NewGoodsBillActivity.class : NewTrunkBillActivity.class;
+                    Intent intent = new Intent(BaseActivity.currActivity, jumpTo);
+                    intent.putExtra("billid", mBill.id);
+                    BaseActivity.currActivity.startActivity(intent);
+                }
             }
         });
     }

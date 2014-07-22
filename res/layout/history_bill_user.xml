@@ -12,7 +12,7 @@
         <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
                       android:paddingBottom="8dp">
             <com.buerlab.returntrunk.views.NickNameBarView
-                    android:id="@+id/history_bill_nickName"
+                    android:id="@+id/history_bill_nickName_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>

@@ -27,8 +27,6 @@ public class SettingFragment extends BaseFragment{
     Button logoutBtn;
     View mView;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

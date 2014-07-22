@@ -17,6 +17,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.RecommendBill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -34,7 +35,7 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
     private static final String TAG = "FindDriverFragment";
     private PullToRefreshListView mListView = null;
     private boolean billInited = false;
-    private List<Bill> mBills = null;
+    private List<RecommendBill> mBills = null;
 
 
 
@@ -85,9 +86,9 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
 
     public void refresh(){
         NetService service = new NetService(getActivity());
-        service.findBills(new NetService.BillsCallBack() {
+        service.findBills(new NetService.RecomendBillsCallBack() {
             @Override
-            public void onCall(NetProtocol result, List<Bill> bills) {
+            public void onCall(NetProtocol result, List<RecommendBill> bills) {
                 if(bills != null){
                     mBills = bills;
                     findBillListAdapter.setBills(mBills);

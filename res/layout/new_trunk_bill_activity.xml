@@ -64,6 +64,24 @@
                        android:src="@drawable/qt_you2"
                     />
         </LinearLayout>
+        <LinearLayout style="@style/infogroup_item_wrapper_with_subborder"
+                      android:id="@+id/new_bill_valid_time"
+                      android:background="@drawable/clickable_infogroup_item_wrapper_with_sub_border"
+                >
+            <TextView android:layout_width="wrap_content"
+                      android:textColor="@color/text_color"
+                      android:layout_gravity="center_vertical"
+                      android:layout_weight="1"
+                      android:textSize="18sp"
+                      android:id="@+id/new_bill_valid_time_text"
+                      android:hint="选择有效时间"
+                      android:layout_height="wrap_content"/>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_vertical"
+                       android:src="@drawable/qt_you2"
+                    />
+        </LinearLayout>
         <LinearLayout style="@style/infogroup_item_wrapper"
                       android:id="@+id/span_wrapper"
                       android:paddingLeft="12dp"
@@ -83,7 +101,8 @@
     </LinearLayout>
     <LinearLayout style="@style/infogroup_group_wrapper"
             >
-        <EditText android:layout_width="fill_parent"
+        <EditText android:id="@+id/new_bill_comment"
+                  android:layout_width="fill_parent"
                   android:background="@color/white"
                   android:padding="20dp"
                   android:maxLines="4"

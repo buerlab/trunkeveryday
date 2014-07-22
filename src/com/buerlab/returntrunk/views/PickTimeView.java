@@ -6,16 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.buerlab.returntrunk.R;
-import com.buerlab.returntrunk.models.AppTime;
+import com.buerlab.returntrunk.models.PickTime;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.ArrayWheelAdapter;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -29,7 +26,7 @@ public class PickTimeView extends LinearLayout {
 
     private OnTimeLisener mLisener = null;
 
-    private AppTime mTime = null;
+    private PickTime mTime = null;
 
     WheelView dayWheel = null;
     WheelView periodWheel = null;
@@ -60,7 +57,7 @@ public class PickTimeView extends LinearLayout {
     private void init(Context context){
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.pick_time_view, this);
-        mTime = new AppTime();
+        mTime = new PickTime();
 
         ArrayWheelAdapter<String> dayAdapter = new ArrayWheelAdapter<String>(context, mTime.getDaysDesc());
 

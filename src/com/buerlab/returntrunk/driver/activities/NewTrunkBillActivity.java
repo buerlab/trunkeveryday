@@ -10,6 +10,7 @@ import android.widget.*;
 import com.buerlab.returntrunk.*;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.PickAddrDialog;
+import com.buerlab.returntrunk.dialogs.PickPeriodDialog;
 import com.buerlab.returntrunk.dialogs.PickTimeDialog;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
@@ -20,6 +21,7 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.models.Address;
 import com.buerlab.returntrunk.utils.EventLogUtils;
+import com.buerlab.returntrunk.utils.PeriodTimeUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -34,16 +36,20 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
 
     LinearLayout mExtraContainer = null;
 
+    private boolean mUpdateMode = false;
+    private String title =  "发布回程车";
+    private String confirmBtnText = "马上发布";
+    private Bill mBill = null;
+
     private TextView fromText = null;
     private TextView toText = null;
     private TextView timeText = null;
+    private TextView commentText = null;
     private TextView currEditView = null;
-
-    private List<String> currFromContent = null;
-    private List<String> currToContent = null;
-    private List<String> currTimeContent = null;
+    private TextView validTimeText = null;
 
     private String currTimeStamp = "";
+    private int currValidTimeSec = 5*3600;
 
     @Override
     public void onResume() {
@@ -65,12 +71,25 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
 
         super.onCreate(savedInstanceState);
 
+        if(getIntent().hasExtra("billid")){
+            mUpdateMode = true;
+            title = "修改车单";
+            confirmBtnText = "确认修改";
+
+            String billid = getIntent().getStringExtra("billid");
+            mBill = User.getInstance().getBill(billid);
+        }
+
         setContentView(R.layout.new_trunk_bill_activity);
-        setActionBarLayout("发布回程车",WITH_BACK);
+        setActionBarLayout(title, WITH_BACK);
 
         fromText = (TextView)findViewById(R.id.new_bill_from_text);
         toText = (TextView)findViewById(R.id.new_bill_to_text);
         timeText = (TextView)findViewById(R.id.new_bill_time_text);
+        validTimeText = (TextView)findViewById(R.id.new_bill_valid_time_text);
+        commentText = (EditText)findViewById(R.id.new_bill_comment);
+
+        toText.setText(User.getInstance().homeLocation);
 //        mExtraContainer = (LinearLayout)findViewById(R.id.new_bill_extra_container);
 
         Spinner trunkSpinner = (Spinner)findViewById(R.id.new_bill_trunk_spinner);
@@ -96,9 +115,11 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
             @Override
             public void onClick(View v) {
                 currEditView = fromText;
-//                PickAddrDialog dialog = new PickAddrDialog();
-//                dialog.show(getFragmentManager(), "pickaddr");
                 PickAddrDialog dialog2 = new PickAddrDialog(self,R.style.dialog);
+                if(currEditView != null && currEditView.length() > 0)
+                    dialog2.setAddr(currEditView.getText().toString());
+                else if(currEditView != null && currEditView.length() == 0)
+                    dialog2.setAddr(User.getInstance().homeLocation);
                 dialog2.show();
             }
         });
@@ -112,6 +133,8 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
 //                PickAddrDialog dialog = new PickAddrDialog();
 //                dialog.show(getFragmentManager(), "pickaddr");
                 PickAddrDialog dialog2 = new PickAddrDialog(self,R.style.dialog);
+                if(currEditView != null && currEditView.length() > 0)
+                    dialog2.setAddr(currEditView.getText().toString());
                 dialog2.show();
             }
         });
@@ -123,50 +146,93 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
             public void onClick(View v) {
                 currEditView = timeText;
                 PickTimeDialog dialog2 = new PickTimeDialog(self,R.style.dialog);
+                if(currTimeStamp.length()>0)
+                    dialog2.setTime(currTimeStamp);
                 dialog2.show();
-//                PickTimeDialog dialog = new PickTimeDialog();
-//                dialog.show(getFragmentManager(), "picktime");
+            }
+        });
+
+        LinearLayout pickValidTimeBtn = (LinearLayout)findViewById(R.id.new_bill_valid_time);
+        pickValidTimeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PickPeriodDialog dialog = new PickPeriodDialog(self, R.style.dialog);
+                dialog.setPeriodSec(currValidTimeSec);
+                dialog.show();
             }
         });
 
         Button submitBtn = (Button)findViewById(R.id.new_bill_activity_submit);
+        submitBtn.setText(confirmBtnText);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn);
 
-                if(currFromContent == null || currToContent == null || currTimeStamp == ""){
+                if(fromText.length() == 0 || toText.length() == 0 || currTimeStamp == ""){
                     Toast toast = Toast.makeText(self, "请填写完整车单", 2);
                     toast.show();
                     return;
                 }
-
-
-
-                final Bill bill = new Bill(Bill.BILLTYPE_TRUNK, new Address(currFromContent).toFullString(),
-                        new Address(currToContent).toFullString(), currTimeStamp);
-
+                Bill bill = mBill == null ? new Bill(Bill.BILLTYPE_TRUNK) : mBill;
+                bill.from = fromText.getText().toString();
+                bill.to = toText.getText().toString();
+                bill.time = currTimeStamp;
+                bill.comment = commentText.getText().toString();
+                bill.validTimeSec = currValidTimeSec;
                 NetService service = new NetService(self);
-                service.sendBill(bill, new NetService.BillsCallBack() {
-                    @Override
-                    public void onCall(NetProtocol result, List<Bill> bills) {
-                        if (result.code == NetProtocol.SUCCESS) {
-                            if(bills.size() > 0){
-                                DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
-                                EventCenter.shared().dispatch(evt);
-                                EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn_success);
+                if(!mUpdateMode){
+                    final Bill billToSend = bill;
+                    service.sendBill(bill, new NetService.BillsCallBack() {
+                        @Override
+                        public void onCall(NetProtocol result, List<Bill> bills) {
+                            if (result.code == NetProtocol.SUCCESS) {
+                                self.finish();
+                                if(bills.size()>0){
+                                    User.getInstance().addBill(bills.get(0));
+
+                                    DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
+                                    EventCenter.shared().dispatch(evt);
+                                    EventLogUtils.EventLog(self,EventLogUtils.tthcc_driver_NewTrunkBill_btn_success);
+                                }
+
+                            } else {
+                                Utils.defaultNetProAction(self, result);
                             }
-                            self.finish();
-                        } else {
-                            Utils.defaultNetProAction(self, result);
                         }
-                    }
-                });
+                    });
+                }else{
+                    service.updateBill(bill, new NetService.BillsCallBack() {
+                        @Override
+                        public void onCall(NetProtocol result, List<Bill> bills) {
+                            if (result.code == NetProtocol.SUCCESS) {
+                                self.finish();
+                                if(bills.size()>0){
+                                    User.getInstance().updateBill(bills.get(0));
+                                    DataEvent evt = new DataEvent(DataEvent.UPDATE_BILL, bills.get(0));
+                                    EventCenter.shared().dispatch(evt);
+                                }
+                            } else {
+                                Utils.defaultNetProAction(self, result);
+                            }
+                        }
+                    });
+                }
 
             }
         });
 
+        if(mBill != null)
+            initBill(mBill);
+    }
+
+    public void initBill(Bill bill){
+
+        fromText.setText(bill.from);
+        toText.setText(bill.to);
+        timeText.setText(Utils.timestampToDisplay(bill.time));
+        commentText.setText(bill.comment);
     }
 
     @Override
@@ -174,6 +240,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onStart();
         EventCenter.shared().addEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().addEventListener(DataEvent.TIME_CHANGE, this);
+        EventCenter.shared().addEventListener(DataEvent.PERIOD_CHANGE, this);
 //        EventCenter.shared().addEventListener(DataEvent.TIME_SETTLE, this);
     }
 
@@ -182,6 +249,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         super.onStop();
         EventCenter.shared().removeEventListener(DataEvent.ADDR_CHANGE, this);
         EventCenter.shared().removeEventListener(DataEvent.TIME_CHANGE, this);
+        EventCenter.shared().removeEventListener(DataEvent.PERIOD_CHANGE, this);
 //        EventCenter.shared().removeEventListener(DataEvent.TIME_SETTLE, this);
     }
 
@@ -193,17 +261,16 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
             List<String> data = (List<String>)e.data;
             Address addr = new Address(data);
             currEditView.setText(addr.toFullString());
-            if(currEditView == fromText)
-                currFromContent = data;
-            else if(currEditView == toText)
-                currToContent = data;
         }else if(e.type.equals(DataEvent.TIME_CHANGE)){
             Bundle d = (Bundle)e.data;
 
             List<String> data = d.getStringArrayList("timeList");
             currEditView.setText(Bill.listToString(data));
             currTimeStamp = d.getString("timestamp");
-            currTimeContent = data;
+        }else if(e.type.equals(DataEvent.PERIOD_CHANGE)){
+            List data = (ArrayList)e.data;
+            currValidTimeSec = (Integer)data.get(0);
+            validTimeText.setText(PeriodTimeUtils.getPeriodDesc(currValidTimeSec));
         }
     }
 

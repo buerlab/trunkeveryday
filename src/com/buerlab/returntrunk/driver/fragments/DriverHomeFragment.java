@@ -86,7 +86,7 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         EventCenter.shared().addEventListener(DataEvent.NEW_BILL, this);
         EventCenter.shared().addEventListener(DataEvent.DELETE_BILL, this);
         EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
-
+        EventCenter.shared().addEventListener(DataEvent.BILL_OVERDUE, this);
         return v;
     }
 
@@ -101,7 +101,8 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
         super.onDestroy();
         EventCenter.shared().removeEventListener(DataEvent.NEW_BILL, this);
         EventCenter.shared().removeEventListener(DataEvent.DELETE_BILL, this);
-        EventCenter.shared().addEventListener(DataEvent.JPUSH_INFORM, this);
+        EventCenter.shared().removeEventListener(DataEvent.JPUSH_INFORM, this);
+        EventCenter.shared().removeEventListener(DataEvent.BILL_OVERDUE, this);
     }
 
     @Override
@@ -131,6 +132,8 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
             if(((JPushProtocal)e.data).code == JPushProtocal.BILL_VISITED){
                 mAdapter.notifyDataSetChanged();
             }
+        }else if(e.type.equals(DataEvent.BILL_OVERDUE)){
+            mAdapter.notifyDataSetChanged();
         }
     }
 

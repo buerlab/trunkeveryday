@@ -6,20 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.dialogs.RequestBillDialog;
-import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.models.*;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
 import com.buerlab.returntrunk.dialogs.BillViewContxtMenu;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
-import com.buerlab.returntrunk.models.HistoryBill;
-import com.buerlab.returntrunk.models.NickBarData;
-import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
-import com.buerlab.returntrunk.models.Address;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,28 +45,30 @@ public class ViewsFactory {
         return inviteBill;
     }
 
-    static public View createFindBill(final LayoutInflater inflater, final Bill bill){
+    static public View createFindBill(final LayoutInflater inflater, final RecommendBill recommendBill){
+        Bill bill = recommendBill.bill;
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.find_bill_goods : R.layout.find_bill_trunk;
         View bView = inflater.inflate(layoutId, null, false);
         if(bView != null) {
-            fillFindBill(bView, bill);
+            fillFindBill(bView, recommendBill);
         }
         return bView;
     }
 
-    static public View createFindGoodBill(final LayoutInflater inflater, final Bill bill){
+    static public View createFindGoodBill(final LayoutInflater inflater, final RecommendBill recommendBill){
         int layoutId = R.layout.find_bill_goods;
         View bView = inflater.inflate(layoutId, null, false);
         if(bView != null){
-            fillFindBill(bView, bill);
+            fillFindBill(bView, recommendBill);
 
         }
 
         return bView;
     }
 
-    static public void fillFindBill(final View bView, final Bill bill){
-        ((TextView)bView.findViewById(R.id.nickname)).setText(bill.senderName);
+    static public void fillFindBill(final View bView, final RecommendBill recommendBill){
+        final Bill bill = recommendBill.bill;
+        ((NickNameBarView)bView.findViewById(R.id.find_bill_user_bar)).setUser(recommendBill.userData);
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
@@ -89,7 +88,7 @@ public class ViewsFactory {
             @Override
             public void onClick(View v) {
                 if(BaseActivity.currActivity != null){
-                    if(!bill.phoneNum.isEmpty()){
+                    if(bill.phoneNum.length() > 0){
                         NetService service = new NetService(bView.getContext());
                         service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
                             @Override
@@ -159,7 +158,7 @@ public class ViewsFactory {
 
                     }
                 });
-                menu.show(BaseActivity.currActivity.getFragmentManager(), "menu");
+                menu.show(BaseActivity.currActivity.getSupportFragmentManager(), "menu");
 
                 return true;
             }
@@ -178,13 +177,7 @@ public class ViewsFactory {
 
     static public void fillHistoryBill(final View bView,final HistoryBill bill){
 
-        try{
-            NickNameBarView view = (NickNameBarView)bView.findViewById(R.id.history_bill_nickName);
-            view.setUser(new NickBarData(new JSONObject("{'nickName':'"+bill.nickName+"'}")), User.USERTYPE_OWNER);
-        }catch (JSONException e){
-
-        }
-        ((NickNameBarView)bView.findViewById(R.id.history_bill_nickName)).setUser(bill.senderData, bill.senderType);
+        ((NickNameBarView)bView.findViewById(R.id.history_bill_nickName_bar)).setUser(bill.senderData, bill.senderType);
         ((TextView)bView.findViewById(R.id.nickname)).setText(bill.nickName);
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_from), bill.fromAddr);
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_to), bill.toAddr);
@@ -192,11 +185,12 @@ public class ViewsFactory {
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_price), String.valueOf(bill.price));
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_weight), String.valueOf(bill.weight));
         Button callBtn = (Button)bView.findViewById(R.id.history_bill_call);
+        Button commentBtn = (Button)bView.findViewById(R.id.history_bill_comment);
         if(callBtn != null)
             callBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!bill.senderPhoneNum.isEmpty()){
+                    if(bill.senderPhoneNum.length() > 0){
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.senderPhoneNum));
                         BaseActivity.currActivity.startActivity(intent);
                     }else{
@@ -205,7 +199,14 @@ public class ViewsFactory {
                     }
                 }
             });
-
+        if(commentBtn != null)
+            commentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AddCommentDialog dialog = new AddCommentDialog(bView.getContext(), R.style.dialog, bill.sender, bill.id);
+                    dialog.show();
+                }
+            });
 
     }
 

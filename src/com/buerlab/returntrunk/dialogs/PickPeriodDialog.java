@@ -10,6 +10,7 @@ import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.utils.PeriodTimeUtils;
 import com.buerlab.returntrunk.views.PickPeriodView;
 import com.buerlab.returntrunk.views.PickTimeView;
 
@@ -25,6 +26,8 @@ import java.util.Map;
 public class PickPeriodDialog extends Dialog implements PickPeriodView.OnPeriodLisener{
 
     private Context mConext;
+    private PickPeriodView pickView;
+
     public PickPeriodDialog(Context context) {
         super(context);
         mConext = context;
@@ -45,7 +48,7 @@ public class PickPeriodDialog extends Dialog implements PickPeriodView.OnPeriodL
 //        Dialog dialog=new Dialog(mConext, R.style.dialog);
         setContentView(diaView);
 
-        PickPeriodView pickView = (PickPeriodView)diaView.findViewById(R.id.pick_period_view);
+        pickView = (PickPeriodView)diaView.findViewById(R.id.pick_period_view);
         pickView.setLisener(this);
 
         WindowManager.LayoutParams lp = getWindow().getAttributes();
@@ -53,12 +56,14 @@ public class PickPeriodDialog extends Dialog implements PickPeriodView.OnPeriodL
         getWindow().setAttributes(lp);
         getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL | Gravity.BOTTOM;
         setCanceledOnTouchOutside(true);
-
     }
 
-    public void onPeriodChange(String periodStr, int periodSec){
+    public void setPeriodSec(int periodSec){
+        pickView.setPeriodSec(periodSec);
+    }
+
+    public void onPeriodChange(int periodSec){
         List data = new ArrayList();
-        data.add(periodStr);
         data.add(periodSec);
         EventCenter.shared().dispatch(new DataEvent(DataEvent.PERIOD_CHANGE, data));
     }

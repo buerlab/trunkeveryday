@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.utils.PeriodTimeUtils;
 import kankan.wheel.widget.OnWheelChangedListener;
 import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 public class PickPeriodView extends LinearLayout {
 
     public interface OnPeriodLisener{
-        public void onPeriodChange(String periodStr, int periodSec);
+        public void onPeriodChange(int periodSec);
     }
 
     private int validDayRange = 7;
@@ -61,7 +62,7 @@ public class PickPeriodView extends LinearLayout {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 if(!mScrolling && mLisener != null)
-                    mLisener.onPeriodChange(periodDesc[periodWheel.getCurrentItem()], periodSec[periodWheel.getCurrentItem()]);
+                    mLisener.onPeriodChange(periodSec[periodWheel.getCurrentItem()]);
             }
         });
 
@@ -75,13 +76,14 @@ public class PickPeriodView extends LinearLayout {
             public void onScrollingFinished(WheelView wheel) {
                 mScrolling = false;
                 if(mLisener != null)
-                    mLisener.onPeriodChange(periodDesc[periodWheel.getCurrentItem()], periodSec[periodWheel.getCurrentItem()]);
+                    mLisener.onPeriodChange(periodSec[periodWheel.getCurrentItem()]);
             }
         });
 
         for(int j = 0; j < 24; j++){
             hoursDesc[j] = j+"小时";
         }
+
         ArrayWheelAdapter<String> hoursItems = new ArrayWheelAdapter<String>(context, hoursDesc);
         hoursWheel = (WheelView)view.findViewById(R.id.pick_period_hour);
         hoursWheel.setViewAdapter(hoursItems);
@@ -90,7 +92,7 @@ public class PickPeriodView extends LinearLayout {
             @Override
             public void onChanged(WheelView wheel, int oldValue, int newValue) {
                 if(!mScrolling && mLisener != null)
-                    mLisener.onPeriodChange(getCurrDesc(), getCurrSec());
+                    mLisener.onPeriodChange(getCurrSec());
             }
         });
 
@@ -104,7 +106,7 @@ public class PickPeriodView extends LinearLayout {
             public void onScrollingFinished(WheelView wheel) {
                 mScrolling = false;
                 if(mLisener != null)
-                    mLisener.onPeriodChange(getCurrDesc(), getCurrSec());
+                    mLisener.onPeriodChange(getCurrSec());
             }
         });
     }
@@ -114,7 +116,15 @@ public class PickPeriodView extends LinearLayout {
         mLisener = lisener;
         //第一次读地址
         if(mLisener != null){
-            mLisener.onPeriodChange(getCurrDesc(), getCurrSec());
+            mLisener.onPeriodChange(getCurrSec());
+        }
+    }
+
+    public void setPeriodSec(int sec){
+        int[] period = PeriodTimeUtils.parsePeriodSec(sec);
+        if(period[0] < validDayRange){
+            periodWheel.setCurrentItem(period[0]);
+            hoursWheel.setCurrentItem(period[1]);
         }
     }
 
