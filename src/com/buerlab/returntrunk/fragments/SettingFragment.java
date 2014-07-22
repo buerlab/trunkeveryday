@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 import com.buerlab.returntrunk.*;
+import com.buerlab.returntrunk.activities.BaiduMapActivity;
 import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.utils.EventLogUtils;
-import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by zhongqiling on 14-6-4.

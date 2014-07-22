@@ -1,12 +1,14 @@
 package com.buerlab.returntrunk.owner.activities;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -35,6 +37,7 @@ import com.buerlab.returntrunk.service.BaiduMapService;
 import com.coboltforge.slidemenu.SlideMenu;
 import com.coboltforge.slidemenu.SlideMenuInterface;
 
+import com.testin.agent.TestinAgent;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.update.UmengUpdateAgent;
 import org.json.JSONException;
@@ -63,10 +66,14 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //    private DrawerLayout mDrawerLayout = null;
     private ListView mDrawerList;
 //    private ActionBarDrawerToggle mDrawerToggle = null;
-    final FragmentActivity self = this;
+    final BaseActivity self = this;
 
     private SlideMenu slideMenu = null;
 
+    boolean withoutSplash;
+
+    private final static String WITHOUT_SPLASH = "splash_shown";
+    NetService service;
     /**
      * Called when the activity is first created.
      */
@@ -75,40 +82,63 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState != null) {
+            performRestoreInstanceState(savedInstanceState);
+        }
+
         getSupportActionBar().hide();
         setContentView(R.layout.main_goods);
+        service = new NetService(this);
         Utils.setOwnerVersion(this);
-        //启动位置上报服务
-        startService(new Intent(this, BaiduMapService.class));
+        Utils.init(this);
+        initTestin();//初始化Testin质量分析
 //        JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
         AssetManager.shared().init(this);
         MainController.shared().init(getApplicationContext());
-        SDKInitializer.initialize(getApplicationContext());
+        initBaiduService();
 
-        boolean withoutSplash = getIntent().getBooleanExtra("without_splash",false);
-
+        //是否展示闪屏页
+        withoutSplash = getIntent().getBooleanExtra("without_splash",false);
         if(withoutSplash){
-            FragmentManager manager = getSupportFragmentManager();
-            Fragment entry = manager.findFragmentByTag("entry");
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.hide(entry);
-            transaction.commit();
+            hideEntryFragment();
         }
 
-        NetService service = new NetService(this);
+        //无网络下
+        if(!Utils.isNetworkConnected(this)){
+            hideEntryFragment();
+            getSupportActionBar().show();
+            init();
+            withoutSplash = true;
+            Utils.setGlobalData(this,"hasLogined", "false");
+        }else {
+            fastLogin();
+        }
 
-        Utils.init(this);
+        registerConnectionReceiver();
+    }
 
-        //http://dev.umeng.com/analytics/android/quick-start#1
-        //货车段 友盟appkeky
-        AnalyticsConfig.setAppkey("53c6190c56240b202f084a4c");
-        //友盟统计 发送策略定义了用户由统计分析SDK产生的数据发送回友盟服务器的频率。
-        MobclickAgent.updateOnlineConfig(this);
-        //禁止默认的页面统计方式，这样将不会再自动统计Activity
-        MobclickAgent.openActivityDurationTrack(false);
-        //友盟自动更新
-        UmengUpdateAgent.update(this);
+    private void registerConnectionReceiver(){
+        BroadcastReceiver connectionReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Utils.isNetworkConnected(self)){
 
+                    if(Utils.getGlobalData(self,"hasLogined").equals("false")){
+                        if(self.hasStop){
+                            Utils.setGlobalData(self,"needToQuickLogin","true");
+                        }else {
+                            fastLogin();
+                        }
+                    }
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        registerReceiver(connectionReceiver, intentFilter);
+    }
+    private void fastLogin(){
         service.quickLogin(new NetService.NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -134,38 +164,52 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                     EventCenter.shared().dispatch(evt);
 
                     if(User.validate(self)){
-                        SharedPreferences pref = self.getSharedPreferences(self.getString(R.string.app_name), 0);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("userId", User.getInstance().userId);
-                        editor.commit();
+                        Utils.setGlobalData(self,"userId",User.getInstance().userId);
 //                        JPushUtils.registerAlias(self, User.getInstance().userId+User.USERTYPE_OWNER);
 //                        JPushUtils.registerAlias(self, "zql");
 //                        JPushUtils.registerAlias();
-
+                        Utils.setGlobalData(self,"hasLogined", "true");
                         init();
+<<<<<<< HEAD
                         FragmentManager manager = self.getSupportFragmentManager();
 //                        FragmentManager manager = self.getFragmentManager();
                         Fragment entry = manager.findFragmentByTag("entry");
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
+=======
+
+                        hideEntryFragment();
+>>>>>>> 87983fc25df29733005ecd05059c466e5ba43f34
                         getSupportActionBar().show();
                         setActionBarLayout("天天回程车",WITH_MENU);
                     }
                 }
                 else{
-                    Intent intent = new Intent(self, LoginActivity.class);
-                    self.startActivity(intent);
-                    self.finish();
+                    toLoginUI();
                 }
             }
         });
+    }
+
+    private void performRestoreInstanceState(Bundle savedInstanceState) {
+        withoutSplash = savedInstanceState.getBoolean(WITHOUT_SPLASH, withoutSplash);
+    }
+
+    private void toLoginUI() {
+        Intent intent = new Intent(self, LoginActivity.class);
+        self.startActivity(intent);
+        self.finish();
     }
 
 
     @Override
     protected void onResume(){
         super.onResume();
+        if(Utils.getGlobalData(self,"needToQuickLogin").equals("true")){
+            fastLogin();
+            Utils.setGlobalData(self,"needToQuickLogin","false");
+        }
         MobclickAgent.onPageStart(TAG); //统计页面
         MobclickAgent.onResume(this);       //统计时长
         JPushInterface.onResume(this);
@@ -184,6 +228,9 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         super.onDestroy();
     }
 
+    private void initTestin(){
+        TestinAgent.init(this, "13a21c8c3de0163680c2defe2015b610");
+    }
 
     private void init(){
         if(getSupportActionBar() != null)
@@ -211,8 +258,27 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
 
         setFrag(0);
-        startLocationService();
+    }
 
+    //初始化百度地图
+    private void initBaiduService(){
+
+        if (Utils.getSDKVersionNumber()>7){
+            //百度sdk inital
+            SDKInitializer.initialize(getApplicationContext());
+            //启动位置上报服务
+            startService(new Intent(this, BaiduMapService.class));
+        }
+
+    }
+
+    //隐藏闪屏页
+    private void hideEntryFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment entry = manager.findFragmentByTag("entry");
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.hide(entry);
+        transaction.commitAllowingStateLoss();
     }
 
     @Override
@@ -229,15 +295,6 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     public void onJPushCall(JPushProtocal protocal) {
         PhoneCallNotifyDialog dialog = new PhoneCallNotifyDialog(protocal.msg);
         dialog.show(getSupportFragmentManager(), "phonecall");
-    }
-
-
-    private  void startLocationService(){
-
-//        if(User.getInstance().getUserType() == "driver"){
-            //启动位置上报服务
-            startService(new Intent(this, BaiduMapService.class));
-//        }
     }
 
     private void switchToFrag(String tag){

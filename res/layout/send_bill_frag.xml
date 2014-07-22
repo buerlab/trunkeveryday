@@ -21,8 +21,8 @@
                         />
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="正在等待本地货主呼叫..."
-                          android:textSize="18sp"
+                          android:text="正在等待货主呼叫..."
+                          android:textSize="22sp"
                           android:layout_marginTop="20dp"
                           android:textColor="@color/text_color"
                           android:layout_gravity="center_horizontal"

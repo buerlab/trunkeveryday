@@ -279,7 +279,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         holder.picGridLayout.removeAllViews();
-        int width = (Utils.getScreenSize()[0] - 40)/3;
+        int width = (Utils.getScreenSize()[0] - 40)/4;
         if(trunk.trunkPicFilePaths!=null){
             for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
                 ImageView iv = new ImageView(this);

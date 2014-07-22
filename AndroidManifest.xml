@@ -46,7 +46,7 @@
         </activity>
 
         <activity android:name=".owner.activities.OwnerMainActivity"
-                  android:label="@string/app_name"
+                  android:label="天天回程车"
                   android:launchMode="singleInstance">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN"/>-->
@@ -65,7 +65,7 @@
         <activity android:name=".driver.activities.SetTrunkActivity"/>
 
         <activity android:name=".driver.activities.EditTrunkActivity"/>
-        <activity android:configChanges="orientation|keyboardHidden" android:name=".BaiduMapActivity" android:screenOrientation="sensor">
+        <activity android:configChanges="orientation|keyboardHidden" android:name=".activities.BaiduMapActivity" android:screenOrientation="sensor">
         </activity>
 
         <activity android:name=".activities.EditNickNameActivity"/>
@@ -189,4 +189,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>  <!-- 用于评论模块分享位置信息 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 <!-- 用于评论模块分享位置信息 -->
+
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 </manifest>

@@ -41,6 +41,8 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
 
     ImageView IDNumVerifyIcon;
 
+    TextView reminderText;
+    TextView reminderText2;
     public final static int EDIT_NICKNAME = 0;
 
 
@@ -74,6 +76,11 @@ public class OwnerProfileFragment extends BaseFragment implements View.OnClickLi
 
         driverLicenseContainer.setVisibility(View.GONE);
 
+        reminderText = (TextView)mRoot.findViewById(R.id.reminder_text);
+        reminderText.setText("1. 您的手机号码、身份证等信息不会公开。");
+
+        reminderText2= (TextView)mRoot.findViewById(R.id.reminder_text2);
+        reminderText2.setText("2. 审核通过后，您的货物将得到更多的展示机会。");
         IDNumVerifyIcon = (ImageView)mRoot.findViewById(R.id.idnum_verify);
 
         EventCenter.shared().addEventListener(DataEvent.USER_UPDATE, this);

@@ -9,6 +9,7 @@
     <color name="top_border">#DFDFDF</color>
     <color name="bottom_border">#E2E2E2</color>
     <color name="sub_text_color">#9C9C9C</color>
+    <color name="sub_text_color_2">#666</color>
     <color name="text_color">#000</color>
     <color name="bule_overlay">#660D92DD</color>
     <color name="menu">#1A1A1A</color>
