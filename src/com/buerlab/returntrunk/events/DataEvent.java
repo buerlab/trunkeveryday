@@ -8,6 +8,7 @@ public class DataEvent {
     static public final String PHONE_CALL = "phone_call";
     static public final String NEW_BILL = "new_bill";
     static public final String DELETE_BILL = "delete_bill";
+    static public final String UPDATE_BILL = "update_bill";
     static public final String ADDR_CHANGE = "address_change";
     static public final String TIME_CHANGE = "time_change";
     static public final String PERIOD_CHANGE = "period_change";

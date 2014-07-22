@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity implements JPushCenter.OnJpushLis
         setActionBarLayout("天天回程车",WITH_MENU);
         getSupportActionBar().hide();
 
-
+        MainController.shared().init(getApplicationContext());
 //      JPushCenter.shared().register(JPushProtocal.JPUSH_PHONE_CALL, this);
 //      Log.e(TAG, Utils.getDeviceInfo(this));
 

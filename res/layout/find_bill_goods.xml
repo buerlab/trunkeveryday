@@ -73,6 +73,7 @@
 
     <LinearLayout style="@style/infogroup_group_wrapper">
         <com.buerlab.returntrunk.views.NickNameBarView
+                android:id="@+id/find_bill_user_bar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 

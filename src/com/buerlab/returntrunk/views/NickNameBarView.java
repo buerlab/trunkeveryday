@@ -67,6 +67,10 @@ public class NickNameBarView extends LinearLayout {
         });
     }
 
+    public void setUser(NickBarData user){
+        setUser(user, user.userType);
+    }
+
     public void  setUser(NickBarData user,String myUserType){
         this.user =user;
         mNickName.setText(user.nickName);

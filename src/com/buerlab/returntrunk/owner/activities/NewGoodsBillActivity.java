@@ -20,6 +20,7 @@ import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.models.Address;
 
+import com.buerlab.returntrunk.utils.PeriodTimeUtils;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -32,6 +33,10 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
 
     private static final String TAG = "NewGoodsBillActivity";
 
+    private boolean mUpdateMode = false;
+    private String title =  "发送货单";
+    private String confirmBtnText = "马上发布";
+
     private EditText goodsText = null;
     private EditText weightText = null;
     private EditText priceText = null;
@@ -42,11 +47,10 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
     private TextView currEditView = null;
     private TextView validTimeText = null;
 
-    private List<String> currFromContent = null;
-    private List<String> currToContent = null;
-    private List<String> currTimeContent = null;
     private String currTimeStamp = "";
     private int currValidTimeSec = 24*60*60;
+
+    private Bill mBill = null;
 
     @Override
     public void onResume() {
@@ -66,8 +70,17 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
 
         super.onCreate(savedInstanceState);
 
+        if(getIntent().hasExtra("billid")){
+            mUpdateMode = true;
+            title = "修改货单";
+            confirmBtnText = "确认修改";
+
+            String billid = getIntent().getStringExtra("billid");
+            mBill = User.getInstance().getBill(billid);
+        }
+
         setContentView(R.layout.new_goods_bill_activity);
-        setActionBarLayout("发送货单",WITH_BACK);
+        setActionBarLayout(title, WITH_BACK);
 
         goodsText = (EditText)findViewById(R.id.new_bill_goods);
         weightText = (EditText)findViewById(R.id.new_bill_weight);
@@ -79,6 +92,8 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
         timeText = (TextView)findViewById(R.id.new_bill_time_text);
         validTimeText = (TextView)findViewById(R.id.new_bill_valid_time_text);
 
+        toText.setText(User.getInstance().homeLocation);
+
         //选择出发地监听事件
         LinearLayout pickFromBtn = (LinearLayout)findViewById(R.id.new_bill_from_btn);
         final NewGoodsBillActivity self = this;
@@ -88,8 +103,10 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
                 currEditView = fromText;
 
                 PickAddrDialog dialog = new PickAddrDialog(self,R.style.dialog);
-                if(currEditView != null && currEditView.getText().length() > 0)
+                if(currEditView != null && currEditView.length() > 0)
                     dialog.setAddr(currEditView.getText().toString());
+                else if(currEditView != null && currEditView.length() == 0)
+                    dialog.setAddr(User.getInstance().homeLocation);
                 dialog.show();
             }
         });
@@ -101,7 +118,7 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             public void onClick(View v) {
                 currEditView = toText;
                 PickAddrDialog dialog = new PickAddrDialog(self,R.style.dialog);
-                if(currEditView != null && currEditView.getText().length() > 0)
+                if(currEditView != null && currEditView.length() > 0)
                     dialog.setAddr(currEditView.getText().toString());
                 dialog.show();
             }
@@ -125,47 +142,88 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             @Override
             public void onClick(View v) {
                 PickPeriodDialog dialog = new PickPeriodDialog(self, R.style.dialog);
+                dialog.setPeriodSec(currValidTimeSec);
                 dialog.show();
             }
         });
 
         Button submitBtn = (Button)findViewById(R.id.new_bill_activity_submit);
+        submitBtn.setText(confirmBtnText);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currFromContent == null || currToContent == null || currTimeContent == null ||
-                   goodsText.getText().length() == 0 || priceText.getText().length() == 0 || weightText.getText().length() == 0){
+                if(fromText.length() == 0 || toText.length() == 0 || timeText.length() == 0 ||
+                   goodsText.length() == 0 || priceText.length() == 0 || weightText.length() == 0){
                     Toast toast = Toast.makeText(self, "请填写完整货单", 2);
                     toast.show();
                     return;
                 }
-                Bill bill = new Bill(Bill.BILLTYPE_GOODS, new Address(currFromContent).toFullString(),
-                        new Address(currToContent).toFullString(), currTimeStamp);
-                bill.validTimeSec = currValidTimeSec;
+                Bill bill = mBill == null ? new Bill(Bill.BILLTYPE_GOODS) : mBill;
+                bill.from = fromText.getText().toString();
+                bill.to = toText.getText().toString();
+                bill.time = currTimeStamp;
                 bill.setGoodsInfo(goodsText.getText().toString(), Float.valueOf(priceText.getText().toString()),
                         Float.valueOf(weightText.getText().toString()), commentText.getText().toString());
-
+                bill.comment = commentText.getText().toString();
                 NetService service = new NetService(self);
-                final Bill billToSend = bill;
-                service.sendBill(bill, new NetService.BillsCallBack() {
-                    @Override
-                    public void onCall(NetProtocol result, List<Bill> bills) {
-                        if (result.code == NetProtocol.SUCCESS) {
-                            self.finish();
-                            if(bills.size()>0){
-                                User.getInstance().addBill(bills.get(0));
+                if(!mUpdateMode){
+                    final Bill billToSend = bill;
+                    service.sendBill(bill, new NetService.BillsCallBack() {
+                        @Override
+                        public void onCall(NetProtocol result, List<Bill> bills) {
+                            if (result.code == NetProtocol.SUCCESS) {
+                                self.finish();
+                                if(bills.size()>0){
+                                    User.getInstance().addBill(bills.get(0));
 
-                                DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
-                                EventCenter.shared().dispatch(evt);
+                                    DataEvent evt = new DataEvent(DataEvent.NEW_BILL, bills.get(0));
+                                    EventCenter.shared().dispatch(evt);
+                                }
+
+                            } else {
+                                Utils.defaultNetProAction(self, result);
                             }
-
-                        } else {
-                            Utils.defaultNetProAction(self, result);
                         }
-                    }
-                });
+                    });
+                }else{
+                    service.updateBill(bill, new NetService.BillsCallBack() {
+                        @Override
+                        public void onCall(NetProtocol result, List<Bill> bills) {
+                            if (result.code == NetProtocol.SUCCESS) {
+                                self.finish();
+                                if(bills.size()>0){
+                                    User.getInstance().updateBill(bills.get(0));
+                                    DataEvent evt = new DataEvent(DataEvent.UPDATE_BILL, bills.get(0));
+                                    EventCenter.shared().dispatch(evt);
+                                }else{
+                                    Toast toast = Toast.makeText(self, "修改失败", 2);
+                                    toast.show();
+                                }
+
+                            } else {
+                                Utils.defaultNetProAction(self, result);
+                            }
+                        }
+                    });
+                }
+
             }
         });
+
+        if(mBill != null)
+            initBill(mBill);
+    }
+
+    public void initBill(Bill bill){
+
+        goodsText.setText(bill.material);
+        weightText.setText(String.valueOf(bill.weight));
+        priceText.setText(String.valueOf(bill.price));
+        fromText.setText(bill.from);
+        toText.setText(bill.to);
+        commentText.setText(bill.comment);
+        timeText.setText(Utils.timestampToDisplay(bill.time));
+        currValidTimeSec = bill.validTimeSec;
     }
 
     @Override
@@ -211,21 +269,16 @@ public class NewGoodsBillActivity extends BaseActivity implements EventCenter.On
             List<String> data = (List<String>)e.data;
             Address addr = new Address(data);
             currEditView.setText(addr.toFullString());
-            if(currEditView == fromText)
-                currFromContent = data;
-            else if(currEditView == toText)
-                currToContent = data;
         }else if(e.type.equals(DataEvent.TIME_CHANGE)){
             Bundle d = (Bundle)e.data;
 
             List<String> data = d.getStringArrayList("timeList");
             currEditView.setText(Bill.listToString(data));
             currTimeStamp = d.getString("timestamp");
-            currTimeContent = data;
         }else if(e.type.equals(DataEvent.PERIOD_CHANGE)){
             List data = (ArrayList)e.data;
-            currValidTimeSec = (Integer)data.get(1);
-            validTimeText.setText((String)data.get(0));
+            currValidTimeSec = (Integer)data.get(0);
+            validTimeText.setText(PeriodTimeUtils.getPeriodDesc(currValidTimeSec));
         }
     }
     @Override

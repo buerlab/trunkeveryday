@@ -8,6 +8,7 @@ import org.json.JSONObject;
  * Created by teddywu on 14-7-5.
  */
 public class NickBarData {
+    public String userType = "";
     public String userId = "";
     public String nickName = "";
     public double driverStars =0;
@@ -18,6 +19,8 @@ public class NickBarData {
 
     public NickBarData(JSONObject obj){
         try {
+            if(obj.has("userType"))
+                userType = obj.getString("userType");
             if(obj.has("userId")){
                 userId = obj.getString("userId");
             }

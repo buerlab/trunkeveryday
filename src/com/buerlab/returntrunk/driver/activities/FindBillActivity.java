@@ -16,6 +16,7 @@ import com.buerlab.returntrunk.FindBillListAdapter;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
+import com.buerlab.returntrunk.models.RecommendBill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.EventLogUtils;
@@ -81,9 +82,9 @@ public class FindBillActivity extends BackBaseActivity implements EventCenter.On
 
     public void refresh(){
         NetService service = new NetService(this);
-        service.findBills(new NetService.BillsCallBack() {
+        service.findBills(new NetService.RecomendBillsCallBack() {
             @Override
-            public void onCall(NetProtocol result, List<Bill> bills) {
+            public void onCall(NetProtocol result, List<RecommendBill> bills) {
                 if(bills != null){
                     findBillListAdapter.setBills(bills);
                     if(bills.size()>0){

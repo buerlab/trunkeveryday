@@ -175,6 +175,13 @@ public class User {
         return null;
     }
 
+    public void updateBill(Bill bill){
+        for(int i = 0; i < mBills.size(); i++){
+            if(mBills.get(i).id == bill.id)
+                mBills.set(i, bill);
+        }
+    }
+
     public void addBill(Bill bill){
         mBills.add(bill);
     }

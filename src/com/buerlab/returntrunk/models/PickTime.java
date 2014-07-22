@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by zhongqiling on 14-7-18.
  */
-public class AppTime {
+public class PickTime {
 
     private final int dayRange = 10;
     private long mTimeStamp = 0;
@@ -19,7 +19,7 @@ public class AppTime {
     private String[] mPeriodDesc = {"上午", "下午"};
     private String[] mTimeDesc = null;
 
-    public AppTime(){
+    public PickTime(){
         Calendar calendar = Calendar.getInstance();
         mDaysDesc = new String[dayRange];
         mDates = new ArrayList<List<Integer>>();

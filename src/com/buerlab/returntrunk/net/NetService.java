@@ -35,6 +35,7 @@ public class NetService {
     public interface BillsCallBack{ public void onCall(NetProtocol result, List<Bill> bills); }
 
     public interface HistoryBillsCallBack{ public void onCall(NetProtocol result, List<HistoryBill> bills); }
+    public interface RecomendBillsCallBack{ public void onCall(NetProtocol result, List<RecommendBill> bills); }
 
     public interface CommentsCallBack{ public void onCall(NetProtocol result, List<Comment> comments); }
 
@@ -127,22 +128,7 @@ public class NetService {
     }
 
     public void sendBill(Bill bill, final BillsCallBack callBack){
-        Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("billType", bill.billType);
-        parmsMap.put("fromAddr", bill.from);
-        parmsMap.put("toAddr", bill.to);
-        parmsMap.put("billTime", bill.time);
-        parmsMap.put("validTimeSec", String.valueOf(bill.validTimeSec));
-        if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
-            parmsMap.put("material", bill.material);
-            parmsMap.put("price", String.valueOf(bill.price));
-            parmsMap.put("weight", String.valueOf(bill.weight));
-        }else{
-            parmsMap.put("trunkLength", String.valueOf(bill.trunkLength));
-            parmsMap.put("trunkWeight", String.valueOf(bill.weight));
-            parmsMap.put("licensePlate", bill.licensePlate);
-        }
-
+        Map<String, String> parmsMap = parseBillToParms(bill);
         request(mContext.getString(R.string.server_addr)+"api/bill/send", createReqParms(parmsMap), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
@@ -162,6 +148,25 @@ public class NetService {
         });
     }
 
+    public void updateBill(Bill bill, final BillsCallBack callback){
+        Map<String, String> parmsMap = parseBillToParms(bill);
+        request(mContext.getString(R.string.server_addr)+"api/bill/update", createReqParms(parmsMap), "POST", new NetCallBack() {
+            @Override
+            public void onCall(NetProtocol result) {
+                if(result.code == NetProtocol.SUCCESS){
+                    ArrayList<Bill> bills = new ArrayList<Bill>();
+                    try{
+                        Bill bill = new Bill(result.data);
+                        bills.add(bill);
+                    }catch (Exception e){}
+                    callback.onCall(result, bills);
+                }else{
+                    Utils.defaultNetProAction(mActivity, result);
+                }
+            }
+        });
+    }
+
     public void deleteBill(Bill bill, final NetCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put("billid", bill.id);
@@ -169,12 +174,12 @@ public class NetService {
         request(mContext.getString(R.string.server_addr)+"api/bill/remove", createReqParms(parmsMap), "POST", callBack);
     }
 
-    public void findBills(final BillsCallBack callback){
+    public void findBills(final RecomendBillsCallBack callback){
         request(mContext.getString(R.string.server_addr)+"api/bill/recomend", createReqParms(null), "POST", new NetCallBack() {
             @Override
             public void onCall(NetProtocol result) {
                 if(result.code == NetProtocol.SUCCESS ){
-                    List<Bill> bills = result.arrayData != null ? extractBills(result.arrayData) : new ArrayList<Bill>();
+                    List<RecommendBill> bills = result.arrayData != null ? extractRecomendBills(result.arrayData) : new ArrayList<RecommendBill>();
                     callback.onCall(result, bills);
                 }else{
                     Utils.defaultNetProAction(mActivity, result);
@@ -218,9 +223,9 @@ public class NetService {
 
     public void pickBill(String billId, String toUserId, final NetCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
-        if(!billId.isEmpty()){
+        if(billId.length() > 0){
             parmsMap.put("billId", billId);
-        }else if(!toUserId.isEmpty()){
+        }else if(toUserId.length() > 0){
             parmsMap.put("toUserId", toUserId);
         }
         request(mContext.getString(R.string.server_addr) + "api/bill/pick", createReqParms(parmsMap), "POST", callBack);
@@ -248,12 +253,6 @@ public class NetService {
         parmsMap.put("targetId", targetUserId);
         parmsMap.put("billType", billType);
         request(mContext.getString(R.string.server_addr)+"api/bill/call", createReqParms(parmsMap), "POST", callback);
-    }
-
-    public void getUpdateBill(String billId, NetCallBack callback){
-        Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("billId", billId);
-        request(mContext.getString(R.string.server_addr)+"api/bill/update", createReqParms(parmsMap), "POST", callback);
     }
 
     public void inviteBill(String from, String to, NetCallBack callback){
@@ -318,7 +317,7 @@ public class NetService {
 
     public void getUserCompleteData(String userId,String getType, final NetCallBack callback){
         Map<String, String> parmsMap = new HashMap<String, String>();
-        parmsMap.put("userId",userId );
+        parmsMap.put("getUserId",userId );
         parmsMap.put("getType", getType);
         urlRequest(mContext.getString(R.string.server_addr) + "api/user/getCompleteData", createReqParms(parmsMap), "GET", callback);
     }
@@ -363,6 +362,28 @@ public class NetService {
     }
 
 
+    private Map<String, String> parseBillToParms(Bill bill){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put("billType", bill.billType);
+        parmsMap.put("fromAddr", bill.from);
+        parmsMap.put("toAddr", bill.to);
+        parmsMap.put("billTime", bill.time);
+        parmsMap.put("validTimeSec", String.valueOf(bill.validTimeSec));
+        parmsMap.put("comment", bill.comment);
+        if(bill.id.length() > 0){
+            parmsMap.put("billId", bill.id);
+        }
+        if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
+            parmsMap.put("material", bill.material);
+            parmsMap.put("price", String.valueOf(bill.price));
+            parmsMap.put("weight", String.valueOf(bill.weight));
+        }else{
+            parmsMap.put("trunkLength", String.valueOf(bill.trunkLength));
+            parmsMap.put("trunkWeight", String.valueOf(bill.weight));
+            parmsMap.put("licensePlate", bill.licensePlate);
+        }
+        return parmsMap;
+    }
 
     private String createReqParms(Map<String, String> parmsMap){
         String userId = Utils.getGlobalData(mContext,"userId");
@@ -713,7 +734,7 @@ public class NetService {
                 SharedPreferences pref = mContext.getSharedPreferences(mContext.getString(R.string.app_name), 0);
                 String casheCookieString = pref.getString("cookie", "");
                 Map<String, String> cookieMap = new HashMap<String, String>();
-                if(!casheCookieString.isEmpty()){
+                if(casheCookieString.length() > 0){
                     for(String eachCookie : casheCookieString.split(";")){
                         String[] keyAndValue = eachCookie.split("=");
                         cookieMap.put(keyAndValue[0], keyAndValue[1]);
@@ -762,9 +783,20 @@ public class NetService {
         return returnBills;
     }
 
+    private List<RecommendBill> extractRecomendBills(JSONArray data){
+        List<RecommendBill> bills = new ArrayList<RecommendBill>();
+        for(int i = 0; i < data.length(); i++){
+            try{
+                JSONObject item = data.getJSONObject(i);
+                bills.add(new RecommendBill(new NickBarData(item.getJSONObject("user")), new Bill(item.getJSONObject("bill"))));
+            }catch (Exception e){
+            }
+        }
+        return bills;
+    }
+
     private List<HistoryBill> extractHistoryBills(JSONArray data){
         List<HistoryBill> returnBills = new ArrayList<HistoryBill>();
-
 
         for(int i = 0; i < data.length(); i++){
             try{

@@ -149,7 +149,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                         FragmentTransaction transaction = manager.beginTransaction();
                         transaction.hide(entry);
                         transaction.commit();
-                        getActionBar().show();
+                        getSupportActionBar().show();
                         setActionBarLayout("天天回程车",WITH_MENU);
                     }
                 }

@@ -5,12 +5,13 @@ import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by zhongqiling on 14-5-30.
  */
-public class Bill {
+public class Bill{
 
     static public String BILLTYPE_TRUNK = "trunk";
     static public String BILLTYPE_GOODS = "goods";
@@ -59,6 +60,8 @@ public class Bill {
         return result;
     }
 
+    public Bill(String _billType){ billType = _billType; }
+
     public Bill(String _billType, String _from, String _to, String _time){
         billType = _billType;
         from = _from;
@@ -75,6 +78,8 @@ public class Bill {
             id = item.getString("id");
             setSenderName(item.getString("senderName"));
             senderId = item.getString("sender");
+            if(item.has("comment"))
+                comment = item.getString("comment");
             if(item.has("validTimeSec"))
                 validTimeSec = Integer.valueOf(item.getString("validTimeSec"));
 

@@ -112,6 +112,8 @@ public class PickAddrView extends LinearLayout {
         });
         if(regions != null && regions.length > 0)
         {
+            ArrayWheelAdapter<String> adapter = new ArrayWheelAdapter<String>(mContext, regions);
+            regionWheel.setViewAdapter(adapter);
             regionWheel.setVisibility(VISIBLE);
 //            LinearLayout.LayoutParams parms = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //            regionWheel = createRegView(new ArrayWheelAdapter(context, regions));

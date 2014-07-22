@@ -37,21 +37,21 @@
         </activity>
 
         <activity android:name=".driver.activities.MainActivity"
-                  android:label="首页"
-                  android:launchMode="singleInstance">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
-        </activity>
-
-        <activity android:name=".owner.activities.OwnerMainActivity"
-                  android:label="首页"
+                  android:label="@string/app_name"
                   android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity android:name=".owner.activities.OwnerMainActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleInstance">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.RegisterActivity"/>
