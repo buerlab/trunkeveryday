@@ -170,17 +170,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 //                        JPushUtils.registerAlias();
                         Utils.setGlobalData(self,"hasLogined", "true");
                         init();
-<<<<<<< HEAD
-                        FragmentManager manager = self.getSupportFragmentManager();
-//                        FragmentManager manager = self.getFragmentManager();
-                        Fragment entry = manager.findFragmentByTag("entry");
-                        FragmentTransaction transaction = manager.beginTransaction();
-                        transaction.hide(entry);
-                        transaction.commit();
-=======
 
                         hideEntryFragment();
->>>>>>> 87983fc25df29733005ecd05059c466e5ba43f34
                         getSupportActionBar().show();
                         setActionBarLayout("天天回程车",WITH_MENU);
                     }
