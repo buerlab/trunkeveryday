@@ -62,6 +62,14 @@ public class SettingFragment extends BaseFragment{
                 startActivity(i);
             }
         });
+
+        mView.findViewById(R.id.exit_confirm_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
+            }
+        });
         return  mView;
     }
 
