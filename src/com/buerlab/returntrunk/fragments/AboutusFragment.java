@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.FeedbackActivity;
+import com.buerlab.returntrunk.activities.UserAgreementActivity;
 import com.buerlab.returntrunk.utils.EventLogUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.socialize.bean.RequestType;
@@ -61,6 +62,14 @@ public class AboutusFragment extends BaseFragment {
                startActivity(intent);
            }
        });
+
+        mRoot.findViewById(R.id.user_agreement).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), UserAgreementActivity.class);
+                startActivity(intent);
+            }
+        });
 
         version = (TextView)mRoot.findViewById(R.id.version);
         version.setText(Utils.getVersion(getActivity()));

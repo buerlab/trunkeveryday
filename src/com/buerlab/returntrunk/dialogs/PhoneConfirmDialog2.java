@@ -41,7 +41,18 @@ public class PhoneConfirmDialog2 extends Dialog{
         getWindow().setAttributes(lp);
         getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL;
         setCanceledOnTouchOutside(true);
-
+        diaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        findViewById(R.id.dialog_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
         if(Utils.getVersionType(mConext).equals("driver")){
             EventLogUtils.EventLog(mConext, EventLogUtils.tthcc_driver_phoneConfirmDialog);
         }else {

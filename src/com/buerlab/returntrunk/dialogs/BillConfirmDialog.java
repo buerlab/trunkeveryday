@@ -90,6 +90,19 @@ public class BillConfirmDialog extends Dialog{
             }
         });
 
+        diaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        findViewById(R.id.dialog_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
+
         LinearLayout cancelBtn = (LinearLayout)findViewById(R.id.button_false);
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override

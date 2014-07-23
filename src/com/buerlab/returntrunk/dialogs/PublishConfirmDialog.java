@@ -152,6 +152,20 @@ public class PublishConfirmDialog extends Dialog implements EventCenter.OnEventL
             //TODO 货主版
         }
 
+        diaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        findViewById(R.id.dialog_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
+
     }
 
 
