@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.util.Log;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.driver.activities.AddTrunkActivity;
-import com.buerlab.returntrunk.driver.activities.InitDriverActivity;
-import com.buerlab.returntrunk.driver.activities.SetTrunkActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,6 +67,9 @@ public class User {
     public double driverStars;
     public double ownerStars;
 
+    public Settings driverSettings;
+    public Settings ownerSettings;
+
     static private User instance = null;
     static public User getInstance(){
         if(instance == null){
@@ -103,6 +104,9 @@ public class User {
         useTrunk = "";
         driverStars = 0;
         ownerStars = 0;
+
+        driverSettings = new Settings();
+        ownerSettings = new Settings();
     }
 
     public void initUser(JSONObject obj){
@@ -138,6 +142,15 @@ public class User {
             if(obj.has("ownerStars")){
                 this.ownerStars = obj.getDouble("ownerStars");
             }
+
+            if(obj.has("ownerSettings")){
+                this.ownerSettings = extrackSettings(obj.getJSONObject("ownerSettings"));
+            }
+
+            if(obj.has("driverSettings")){
+                this.driverSettings = extrackSettings(obj.getJSONObject("driverSettings"));
+            }
+
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
         }
@@ -231,6 +244,16 @@ public class User {
         return newBill;
     }
 
+    public static Settings extrackSettings(JSONObject data){
+        try{
+            boolean push = data.has("push") ? data.getBoolean("push") : true;
+            boolean gps = data.has("gps") ? data.getBoolean("gps") : true;
+            return new Settings(push,gps);
+        }catch (JSONException e){
+            Log.d("EXRACT SETTING ERROR INIT USER", e.toString());
+            return new Settings();
+        }
+    }
     public static List<Trunk> extractTrunk(JSONArray data){
         List<Trunk> result = new ArrayList<Trunk>();
 
