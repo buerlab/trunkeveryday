@@ -18,11 +18,28 @@
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
+                      android:padding="15dp"
                       >
             <TextView android:id="@+id/history_bill_msg"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="电话确认达成交易"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="8dp">
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:src="@drawable/qt_dw"/>
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="成交时间"
+                      android:textColor="@color/sub_text_color"/>
+            <TextView android:id="@+id/history_bill_deal_time"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text=""
+                      android:textColor="@color/sub_text_color"/>
         </LinearLayout>
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
@@ -35,7 +52,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/history_btn_bg"
                     />
-            <Button android:layout_width="wrap_content"
+            <Button android:id="@+id/history_bill_comment"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/bill_judge"
                     android:drawableLeft="@drawable/qt2_pj"

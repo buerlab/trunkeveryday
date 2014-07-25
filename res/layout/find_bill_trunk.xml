@@ -6,11 +6,23 @@
               android:layout_height="wrap_content">
 
     <LinearLayout style="@style/infogroup_group_wrapper">
-        <com.buerlab.returntrunk.views.NickNameBarView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+        <FrameLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+            <com.buerlab.returntrunk.views.NickNameBarView
+                    android:id="@+id/find_bill_user_bar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
-        </com.buerlab.returntrunk.views.NickNameBarView>
+            </com.buerlab.returntrunk.views.NickNameBarView>
+            <ImageView android:id="@+id/find_bill_type_logo"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="end"
+                       android:src="@drawable/bq_hcc2"/>
+        </FrameLayout>
+
         <LinearLayout android:layout_width="fill_parent"
                       android:layout_height="wrap_content"
 

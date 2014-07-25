@@ -1,11 +1,16 @@
 package com.buerlab.returntrunk.views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import com.buerlab.returntrunk.PhoneCallListener;
+import com.buerlab.returntrunk.PickBillCallListener;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.dialogs.RequestBillDialog;
 import com.buerlab.returntrunk.models.*;
@@ -17,6 +22,7 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -83,6 +89,13 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.find_bill_length)).setText(String.valueOf(bill.trunkLength));
         }
 
+        ImageView typeLogo = (ImageView)bView.findViewById(R.id.find_bill_type_logo);
+        if(typeLogo != null && recommendBill.recommendBillType.equals(Bill.BILLTYPE_TRUNK)){
+            typeLogo.setVisibility(View.VISIBLE);
+        }else if(typeLogo != null){
+            typeLogo.setVisibility(View.INVISIBLE);
+        }
+
         ImageView phoneBtn = (ImageView)bView.findViewById(R.id.find_bill_phone);
         phoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,11 +113,23 @@ public class ViewsFactory {
                             }
                         });
 
+                        new PhoneCallListener(bView.getContext())
+                                .listen(new PhoneCallListener.OnPhoneCallBack() {
+                                    @Override
+                                    public void onCalling() {
+                                    }
+
+                                    @Override
+                                    public void onCallEnd() {
+                                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog, bill);
+                                        dialog.show();
+                                    }
+                                });
+
                         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
                         BaseActivity.currActivity.startActivity(intent);
 
-                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog, bill);
-                        dialog.show();
+
                     }else{
                             Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
                             toast.show();
@@ -178,12 +203,12 @@ public class ViewsFactory {
     static public void fillHistoryBill(final View bView,final HistoryBill bill){
 
         ((NickNameBarView)bView.findViewById(R.id.history_bill_nickName_bar)).setUser(bill.senderData, bill.senderType);
-        ((TextView)bView.findViewById(R.id.nickname)).setText(bill.nickName);
-        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_from), bill.fromAddr);
-        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_to), bill.toAddr);
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_from), new Address(bill.fromAddr).toShortString());
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_to), new Address(bill.toAddr).toShortString());
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_mat), bill.material);
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_price), String.valueOf(bill.price));
         Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_weight), String.valueOf(bill.weight));
+        Utils.safeSetText((TextView) bView.findViewById(R.id.history_bill_deal_time), Utils.timestampToDisplay(bill.sendTime));
         Button callBtn = (Button)bView.findViewById(R.id.history_bill_call);
         Button commentBtn = (Button)bView.findViewById(R.id.history_bill_comment);
         if(callBtn != null)
@@ -207,7 +232,6 @@ public class ViewsFactory {
                     dialog.show();
                 }
             });
-
     }
 
 

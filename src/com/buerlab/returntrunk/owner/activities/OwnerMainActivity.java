@@ -182,6 +182,8 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                 }
             }
         });
+
+        service.uploadLocation(100.2,33333,"hubeu", "guangdjong","jfkdlasdf", null);
     }
 
     private void performRestoreInstanceState(Bundle savedInstanceState) {
@@ -229,7 +231,6 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
         if(getSupportActionBar() != null)
             getSupportActionBar().setHomeButtonEnabled(true);
         slideMenu = (SlideMenu)findViewById(R.id.main_slideMenu);
-
         slideMenu.init(this, R.menu.slide_menu_goods, new SlideMenuInterface.OnSlideMenuItemClickListener() {
             @Override
             public void onSlideMenuItemClick(int itemId) {
@@ -248,7 +249,6 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
 
         // set optional header image
         slideMenu.setHeaderImage(getResources().getDrawable(R.drawable.logo1));
-
 
         setFrag(0);
     }

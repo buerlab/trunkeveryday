@@ -24,6 +24,7 @@ public class OwnerHomeFragment extends BaseFragment {
 
     private static final String TAG = "OwnerHomeFragment";
 
+    private boolean hasInit = false;
     TextView tabTextTrunk;
     TextView tabTextGoods;
     ImageView logoTrunk;
@@ -31,8 +32,6 @@ public class OwnerHomeFragment extends BaseFragment {
 
 
     private  List<Integer> fragtaglist = Arrays.asList(R.id.owner_home_find_trunk_frag, R.id.owner_home_send_goods_frag);
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,11 +62,16 @@ public class OwnerHomeFragment extends BaseFragment {
         logoGoods =(ImageView)view.findViewById(R.id.tab_logo_goods);
         logoTrunk =(ImageView)view.findViewById(R.id.tab_logo_trunk);
 
-
-        setHomeFrag(0);
-
         showTrunkTab();
         return view;
+    }
+
+    @Override
+    public void onShow(){
+        if(!hasInit){
+            setHomeFrag(0);
+            hasInit = true;
+        }
     }
 
     private void showTrunkTab(){

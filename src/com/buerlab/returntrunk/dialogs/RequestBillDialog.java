@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.models.Bill;
@@ -46,6 +47,9 @@ public class RequestBillDialog extends Dialog {
 
 //        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
 //        pickAddrView.setListener(this);
+
+        TextView nameText = (TextView)findViewById(R.id.request_dialog_nickname);
+        nameText.setText(mBill.senderName);
 
         View b = (View)findViewById(R.id.button_true);
         final Dialog self = this;

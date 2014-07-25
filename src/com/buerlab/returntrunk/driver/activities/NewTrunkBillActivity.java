@@ -265,7 +265,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
             Bundle d = (Bundle)e.data;
 
             List<String> data = d.getStringArrayList("timeList");
-            currEditView.setText(Bill.listToString(data));
+            currEditView.setText(Utils.timeListToString(data));
             currTimeStamp = d.getString("timestamp");
         }else if(e.type.equals(DataEvent.PERIOD_CHANGE)){
             List data = (ArrayList)e.data;

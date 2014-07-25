@@ -150,7 +150,8 @@
             </LinearLayout>
 
         </LinearLayout>
-        <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content">
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:paddingLeft="20dp"
@@ -174,11 +175,14 @@
         <TextView android:id="@+id/new_bill_comment"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
+                  android:layout_marginTop="8dp"
                   android:paddingLeft="20dp"
                   android:paddingRight="20dp"
-                  android:layout_marginTop="8dp"
+                  android:textColor="@color/sub_text_color"
                   android:text="我是备注我是备注我是备注我是备注我是备注我是备注我是备注我是备注我是备注"
                 />
+
+
 
     </LinearLayout>
 

@@ -79,7 +79,7 @@ public class SendBillView extends LinearLayout {
             @Override
             public void onClick(View v) {
                 if(BaseActivity.currActivity != null){
-                    Class jumpTo = mBill.billType == Bill.BILLTYPE_GOODS ? NewGoodsBillActivity.class : NewTrunkBillActivity.class;
+                    Class jumpTo = mBill.billType.equals(Bill.BILLTYPE_GOODS) ? NewGoodsBillActivity.class : NewTrunkBillActivity.class;
                     Intent intent = new Intent(BaseActivity.currActivity, jumpTo);
                     intent.putExtra("billid", mBill.id);
                     BaseActivity.currActivity.startActivity(intent);

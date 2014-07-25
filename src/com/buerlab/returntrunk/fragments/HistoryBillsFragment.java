@@ -50,7 +50,6 @@ public class HistoryBillsFragment extends BaseFragment{
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-
                 new GetDataTask().execute(refreshView.getCurrentMode()==PullToRefreshBase.Mode.PULL_FROM_END);
             }
         });
@@ -83,13 +82,13 @@ public class HistoryBillsFragment extends BaseFragment{
                 }
             });
         }else{
-            service.getHistoryBill(User.getInstance().getHistoryBills().get(0).id, false, new NetService.HistoryBillsCallBack() {
-                @Override
-                public void onCall(NetProtocol result, List<HistoryBill> bills) {
-
-                }
-            });
-            mAdapter.setBills(User.getInstance().getHistoryBills());
+//            service.getHistoryBill(User.getInstance().getHistoryBills().get(0).id, false, new NetService.HistoryBillsCallBack() {
+//                @Override
+//                public void onCall(NetProtocol result, List<HistoryBill> bills) {
+//
+//                }
+//            });
+//            mAdapter.setBills(User.getInstance().getHistoryBills());
         }
     }
 
@@ -133,7 +132,6 @@ public class HistoryBillsFragment extends BaseFragment{
         @Override
         protected void onPostExecute(Boolean value) {
             extendBills(value);
-
             super.onPostExecute(value);
         }
     }

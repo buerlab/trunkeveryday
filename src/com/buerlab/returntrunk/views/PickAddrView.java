@@ -76,6 +76,8 @@ public class PickAddrView extends LinearLayout {
                 }
             }
         }
+
+        mListener.OnAddrChanged(getCurrAddr());
     }
 
     private  void init(Context context){
@@ -191,11 +193,10 @@ public class PickAddrView extends LinearLayout {
 
     public void setListener(OnAddrListener listener){
         mListener = listener;
-        //第一次读地址
+//        第一次读地址
         if(mListener != null){
             mListener.OnAddrChanged(getCurrAddr());
         }
-
     }
 
     private void updateCity(){

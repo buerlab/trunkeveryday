@@ -25,6 +25,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,8 +36,11 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
     private static final String TAG = "FindDriverFragment";
     private PullToRefreshListView mListView = null;
     private boolean billInited = false;
-    private List<RecommendBill> mBills = null;
 
+    private List<RecommendBill> totalBills = new ArrayList<RecommendBill>();
+    private List<RecommendBill> mBills = new ArrayList<RecommendBill>();
+    private final int numberOfShowOnce = 5;
+    private int billCursor = 0;
 
 
     private FindBillListAdapter2 findBillListAdapter = null;
@@ -57,7 +61,7 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
         mListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                new GetDataTask().execute(true);
+                new GetDataTask().execute(refreshView.getCurrentMode()==PullToRefreshBase.Mode.PULL_FROM_END);
             }
         });
 
@@ -90,16 +94,29 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
             @Override
             public void onCall(NetProtocol result, List<RecommendBill> bills) {
                 if(bills != null){
-                    mBills = bills;
+                    totalBills = bills;
+                    mBills = new ArrayList<RecommendBill>();
+                    billCursor = 0;
                     findBillListAdapter.setBills(mBills);
+                    extendBills();
 
                     if(mBills.size()>0)
                         noBillTips.setVisibility(View.INVISIBLE);
                     else
                         noBillTips.setVisibility(View.VISIBLE);
                 }
+                mListView.onRefreshComplete();
             }
         });
+    }
+
+    private void extendBills(){
+        if(billCursor < totalBills.size()){
+            int end = Math.min(totalBills.size(), billCursor+numberOfShowOnce);
+            mBills.addAll(totalBills.subList(billCursor, end));
+            billCursor += numberOfShowOnce;
+            findBillListAdapter.notifyDataSetChanged();
+        }
     }
 
     public void onEventCall(DataEvent e){
@@ -108,27 +125,27 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
         getActivity().startActivity(intent);
     }
 
-    public void onExtendBills(){
-        mListView.onRefreshComplete();
-    }
-
     private class GetDataTask extends AsyncTask<Boolean, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Boolean... params) {
             // Simulates a background job.
             try {
-                Thread.sleep(1000);
+                Thread.sleep(200);
             } catch (InterruptedException e) {
             }
-            return  params[0];
+            return params[0];
         }
 
         @Override
-        protected void onPostExecute(Boolean value) {
-            onExtendBills();
+        protected void onPostExecute(Boolean isPullEnd) {
+            if(isPullEnd){
+                extendBills();
+                mListView.onRefreshComplete();
+            }else
+                refresh();
 
-            super.onPostExecute(value);
+            super.onPostExecute(isPullEnd);
         }
     }
 }

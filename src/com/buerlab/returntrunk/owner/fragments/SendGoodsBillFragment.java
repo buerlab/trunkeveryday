@@ -83,12 +83,12 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
     public void onEventCall(DataEvent event){
         if(event.type.equals(DataEvent.NEW_BILL)){
             mAdapter.notifyDataSetChanged();
-
+            tipCheck();
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功!", 2);
             toast.show();
         }else if(event.type.equals(DataEvent.DELETE_BILL)){
             mAdapter.notifyDataSetChanged();
-
+            tipCheck();
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "已删除!", 2);
             toast.show();
         }else if(event.type.equals(DataEvent.UPDATE_BILL)){
@@ -103,12 +103,12 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
                 toast.show();
                 mAdapter.notifyDataSetChanged();
             }
+            tipCheck();
         }else if(event.type.equals(DataEvent.BILL_DUE_UPDATE)){
             for(String billid : (List<String>)event.data){
                 if(mAdapter.getViewOfBill(billid) != null)
                     ((SendBillView)mAdapter.getViewOfBill(billid)).updateValidTime();
             }
-
         }else if(event.type.equals(DataEvent.BILL_VISIT_UPDATE)){
             for(String billid : (List<String>)event.data){
                 if(mAdapter.getViewOfBill(billid) != null)
@@ -135,15 +135,20 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
                     if(bills != null) {
                         User.getInstance().initBills(bills);
                         adapter.setBills(bills);
-                        if(bills.size()>0){
-                            tips.setVisibility(View.GONE);
-                        }else {
-                            tips.setVisibility(View.VISIBLE);
-                        }
+                        tipCheck();
                     }
                 }
             }
         });
+    }
+
+    private void tipCheck(){
+
+        if(mAdapter.getBills().size()>0){
+            tips.setVisibility(View.GONE);
+        }else {
+            tips.setVisibility(View.VISIBLE);
+        }
     }
 
 }

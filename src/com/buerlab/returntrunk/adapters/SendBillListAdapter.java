@@ -32,6 +32,10 @@ public class SendBillListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public List<Bill> getBills(){
+        return mBills;
+    }
+
     @Override
     public int getCount(){
         return mBills.size();

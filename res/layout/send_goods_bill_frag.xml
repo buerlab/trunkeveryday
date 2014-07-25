@@ -47,10 +47,11 @@
         <!--android:layout_height="match_parent"/>-->
 
     </FrameLayout>
-    <ImageView android:layout_width="wrap_content"
-               android:layout_gravity="center_horizontal"
+    <ImageView android:layout_width="fill_parent"
+               android:layout_gravity="center"
                android:id="@+id/send_bill_send_btn"
                android:src="@drawable/clickable_yyfh"
                android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

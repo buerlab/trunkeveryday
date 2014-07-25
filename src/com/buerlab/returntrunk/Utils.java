@@ -97,7 +97,7 @@ public class Utils {
                 ret = format1.format(date);
             }else if(format ==YEAR_MONTH_DAY_TIME){
                 ret=(calendar.get(Calendar.MONTH)+1)+"月"+
-                    calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点左右";
+                    calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
             }else {
                 //默认
                 ret = calendar.get(Calendar.YEAR)+"年"+(calendar.get(Calendar.MONTH)+1)+"月"+
@@ -114,10 +114,24 @@ public class Utils {
         return timestampToDisplay(ts,YEAR_MONTH_DAY_TIME);
     }
     static public String timestampToDisplay(String ts){
-        return timestampToDisplay(Long.parseLong(ts));
+        try{
+            return timestampToDisplay(Long.parseLong(ts));
+        }catch (Exception e){
+            return "";
+        }
     }
     static public String timestampToDisplay(String ts,int format){
         return timestampToDisplay(Long.parseLong(ts,format));
+    }
+
+    static public String timeListToString(List<String> input){
+        String result = "";
+        if(input != null && input.size() > 0){
+            for(int i = 0; i < input.size(); i++)
+                result += input.get(i)+" ";
+            result = result.substring(0, result.length()-1);
+        }
+        return result;
     }
 
     static public int[] secTransform(long second){

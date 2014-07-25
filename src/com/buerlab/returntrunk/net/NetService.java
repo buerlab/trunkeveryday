@@ -83,6 +83,12 @@ public class NetService {
         urlRequest(mContext.getString(R.string.server_addr) + "api/user", createReqParms(null), "GET", callback);
     }
 
+    public void switchSetting(String setingType, boolean isAllow, NetCallBack callBack){
+        Map<String, String> parmsMap = new HashMap<String, String>();
+        parmsMap.put(setingType, boolToString(isAllow));
+        urlRequest(mContext.getString(R.string.server_addr) + "api/user/setting", createReqParms(null), "POST", callBack);
+    }
+
     //////////////////////////
     //TRUNK
     //////////////////////////
@@ -802,7 +808,8 @@ public class NetService {
         for(int i = 0; i < data.length(); i++){
             try{
                 JSONObject item = data.getJSONObject(i);
-                bills.add(new RecommendBill(new NickBarData(item.getJSONObject("user")), new Bill(item.getJSONObject("bill"))));
+                bills.add(new RecommendBill(new NickBarData(item.getJSONObject("user")), new Bill(item.getJSONObject("bill")),
+                                            item.getString("type")));
             }catch (Exception e){
             }
         }
@@ -867,6 +874,9 @@ public class NetService {
 
             return null;
         }
+    }
 
+    private String boolToString(boolean value){
+        return value ? "1" : "0";
     }
 }

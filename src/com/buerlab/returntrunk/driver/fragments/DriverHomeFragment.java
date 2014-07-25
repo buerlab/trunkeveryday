@@ -39,8 +39,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     private boolean mHasInit = false;
 
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -118,8 +116,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
     @Override
     public void onEventCall(DataEvent e) {
         if(e.type.equals(DataEvent.NEW_BILL)){
-            final Bill bill = (Bill)e.data;
-            User.getInstance().addBill(bill);
             changeTipsState();
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "添加成功", 2);
             toast.show();
@@ -170,7 +166,6 @@ public class DriverHomeFragment extends BaseFragment implements NewBillDialog.Ne
                 }
             });
         }else{
-            adapter.setBills(User.getInstance().getBills());
             changeTipsState();
         }
     }
