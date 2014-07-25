@@ -7,6 +7,6 @@
               android:gravity="center"
               android:background="#EFF4F5">
 <ImageView android:layout_width="wrap_content"
-           android:src="@drawable/qidongye1"
+           android:src="@drawable/qidongye"
            android:layout_height="wrap_content"/>
 </LinearLayout>

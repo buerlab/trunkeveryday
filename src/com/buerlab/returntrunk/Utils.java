@@ -25,6 +25,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.owner.activities.OwnerMainActivity;
 import com.buerlab.returntrunk.views.StarsView;
+import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -449,5 +450,15 @@ public class Utils {
             }
         }
         return false;
+    }
+
+
+    //获取友盟的配置信息
+    public static String getConfigString(Context c, String key, String defaultStr){
+            String value = MobclickAgent.getConfigParams(c, key);
+            if (value == null || value.length()==0){
+                value = defaultStr;
+            }
+            return  value;
     }
 }

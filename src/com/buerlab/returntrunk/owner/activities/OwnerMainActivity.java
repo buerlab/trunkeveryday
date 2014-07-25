@@ -224,7 +224,7 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
     }
 
     private void initTestin(){
-        TestinAgent.init(this, "13a21c8c3de0163680c2defe2015b610");
+        TestinAgent.init(this, "61c544bb7fefa0392340c2976e89e373");//此行必须放在super.onCreate后
     }
 
     private void init(){

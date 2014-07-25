@@ -1,16 +1,17 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppTheme" parent="@style/Theme.AppCompat.Light">
-        <!-- Setting values in the default namespace affects API levels 7-11 -->
+        <!-- Settings values in the default namespace affects API levels 7-11 -->
         <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:textSize">18sp</item>
+        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
 
 
 
     <style name="Widget.Styled.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
-        <!-- Setting values in the default namespace affects API levels 7-13 -->
+        <!-- Settings values in the default namespace affects API levels 7-13 -->
         <item name="background">@color/main_blue</item>
         <item name="android:textColor">@color/white</item>
 

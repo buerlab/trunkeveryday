@@ -18,6 +18,10 @@
     <string name="bill_judge">评价</string>
     <integer name="normal_font_size">26</integer>
 
+    <string name="on">开</string>
+    <string name="off">关</string>
+    <string name="summary_off">xx关</string>
+    <string name="summary_on">xx开</string>
     <string name="menu_new">12</string>
 
 </resources>

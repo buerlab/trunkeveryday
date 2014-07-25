@@ -9,34 +9,68 @@
     <LinearLayout android:layout_width="fill_parent"
                   android:orientation="vertical"
                   android:layout_height="wrap_content">
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginRight="20dp"
-                      android:padding="8dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="允许通知"
-                      android:textSize="22sp"
-                      android:layout_weight="1"/>
-            <ToggleButton android:id="@+id/setting_notify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <!--<LinearLayout android:layout_width="fill_parent"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginLeft="20dp"-->
+                      <!--android:layout_marginRight="20dp"-->
+                      <!--android:padding="8dp">-->
+            <!--<TextView android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:text="允许通知"-->
+                      <!--android:textSize="22sp"-->
+                      <!--android:layout_weight="1"/>-->
+            <!--<ToggleButton android:id="@+id/setting_notify"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout android:layout_width="fill_parent"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:layout_marginLeft="20dp"-->
+                      <!--android:layout_marginRight="20dp"-->
+                      <!--android:padding="8dp">-->
+            <!--<TextView android:layout_width="wrap_content"-->
+                      <!--android:layout_height="wrap_content"-->
+                      <!--android:text="允许定位"-->
+                      <!--android:textSize="22sp"-->
+                      <!--android:layout_weight="1"/>-->
+            <!--<ToggleButton android:id="@+id/setting_locate"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"/>-->
+        <LinearLayout style="@style/infogroup_group_wrapper"
+                      android:id="@+id/push_switch"
+                      android:background="@drawable/clickable_infogroup_group_wrapper"
+                >
+            <LinearLayout style="@style/infogroup_item_wrapper">
+                <TextView style="@style/infogroup_main_text"
+                          android:layout_weight="1"
+                          android:text="消息推送"
+                        />
+                <org.jraf.android.backport.switchwidget.Switch
+                        android:id="@+id/setting_push"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0"
+                        android:gravity="center_vertical"
+                        android:layout_height="50dp" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginRight="20dp"
-                      android:padding="8dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="允许定位"
-                      android:textSize="22sp"
-                      android:layout_weight="1"/>
-            <ToggleButton android:id="@+id/setting_locate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        <LinearLayout style="@style/infogroup_group_wrapper"
+                      android:id="@+id/gps_switch"
+                      android:background="@drawable/clickable_infogroup_group_wrapper"
+                >
+            <LinearLayout style="@style/infogroup_item_wrapper">
+                <TextView style="@style/infogroup_main_text"
+                          android:layout_weight="1"
+                          android:text="开启位置信息"
+                        />
+                <org.jraf.android.backport.switchwidget.Switch
+                        android:id="@+id/setting_locate"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="0"
+                        android:gravity="center_vertical"
+                        android:layout_height="50dp" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button style="@style/clickable_button_with_main_color"
@@ -46,13 +80,25 @@
                 android:layout_weight="1"
                 android:textSize="18sp"
                 android:id="@+id/logout_confirm_btn"
-                android:text="注销"
+                android:layout_marginBottom="0dp"
+                android:text="退出登录"
                 />
         <Button style="@style/clickable_button_with_main_color"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
+                android:textSize="18sp"
+                android:layout_marginBottom="0dp"
+                android:id="@+id/exit_confirm_btn"
+                android:text="关闭应用"
+                />
+        <Button style="@style/clickable_button_with_main_color"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:visibility="gone"
                 android:textSize="18sp"
                 android:id="@+id/see_my_complete_data"
                 android:text="查看自己的个人资料"
@@ -63,6 +109,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
+                android:visibility="gone"
                 android:id="@+id/commment_myself"
                 android:text="给自己写评价(货主评司机、司机评货主)"
                 />
@@ -72,9 +119,12 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
+                android:visibility="gone"
                 android:id="@+id/get_location"
                 android:text="获取某人的地理位置"
                 />
+
+
      </LinearLayout>
 
 </LinearLayout>

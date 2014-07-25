@@ -68,6 +68,19 @@ public class RequestBillDialog extends Dialog {
             }
         });
 
+        diaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        findViewById(R.id.dialog_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
         findViewById(R.id.button_false).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

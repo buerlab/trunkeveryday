@@ -5,6 +5,7 @@
         <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="android:actionBarStyle">@style/actionbar_def_style</item>
+        <item name="switchStyle">@style/Widget.Holo.Light.CompoundButton.Switch</item>
     </style>
 
     <style name="actionbar_def_style" parent="@style/Widget.AppCompat.Light.ActionBar">

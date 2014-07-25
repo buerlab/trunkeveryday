@@ -34,12 +34,13 @@
             />
 
     <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:id="@+id/user_agreement"
                   android:background="@drawable/clickable_infogroup_group_wrapper"
             >
         <LinearLayout style="@style/infogroup_item_wrapper">
             <TextView style="@style/infogroup_main_text"
                     android:layout_weight="1"
-                    android:text="协议声明"
+                    android:text="用户协议"
                     />
             <ImageView android:layout_width="wrap_content"
                        android:layout_height="wrap_content"

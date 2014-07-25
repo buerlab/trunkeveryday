@@ -73,7 +73,7 @@
         <activity android:name=".activities.EditIDNumActivity"/>
         <activity android:name=".driver.activities.EditDriverLicenseActivity"/>
         <activity android:name=".driver.activities.AddTrunkActivity"/>
-
+        <activity android:name=".activities.UserAgreementActivity"></activity>
         <activity android:label="@string/new_trunk_bill" android:name=".driver.activities.NewTrunkBillActivity" android:parentActivityName=".driver.activities.MainActivity">
             <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".driver.activities.MainActivity"/>
         </activity>

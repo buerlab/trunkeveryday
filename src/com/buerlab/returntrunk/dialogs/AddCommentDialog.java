@@ -113,6 +113,12 @@ public class AddCommentDialog extends Dialog implements View.OnClickListener{
         getWindow().getAttributes().gravity = Gravity.CENTER_VERTICAL;
         setCanceledOnTouchOutside(true);
         onItemClassListener = new OnItemClassListener();
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         initData();
     }
 

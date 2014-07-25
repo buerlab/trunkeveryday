@@ -20,6 +20,7 @@ import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.EventLogUtils;
+import org.jraf.android.backport.switchwidget.Switch;
 
 /**
  * Created by zhongqiling on 14-6-4.
@@ -38,39 +39,42 @@ public class SettingFragment extends BaseFragment{
         mView = inflater.inflate(R.layout.setting_frag, container, false);
 //        init();
 
-        final ToggleButton notifyBtn = (ToggleButton)mView.findViewById(R.id.setting_notify);
-        notifyBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                NetService service = new NetService(self.getActivity());
-                service.switchSetting(Setting.PushSetting, isChecked, new NetService.NetCallBack() {
-                    @Override
-                    public void onCall(NetProtocol result) {
-                        if(result.code == NetProtocol.SUCCESS){
-                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
-                            toast.show();
-                        }
-                    }
-                });
-            }
-        });
+//        final ToggleButton notifyBtn = (ToggleButton)mView.findViewById(R.id.setting_notify);
+//        notifyBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                NetService service = new NetService(self.getActivity());
+//                service.switchSetting(Setting.PushSetting, isChecked, new NetService.NetCallBack() {
+//                    @Override
+//                    public void onCall(NetProtocol result) {
+//                        if(result.code == NetProtocol.SUCCESS){
+//                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
+//                            toast.show();
+//                        }
+//                    }
+//                });
+//            }
+//        });
+//
+//        ToggleButton locateBtn = (ToggleButton)mView.findViewById(R.id.setting_locate);
+//        locateBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                NetService service = new NetService(self.getActivity());
+//                service.switchSetting(Setting.LocateSetting, isChecked, new NetService.NetCallBack() {
+//                    @Override
+//                    public void onCall(NetProtocol result) {
+//                        if(result.code == NetProtocol.SUCCESS){
+//                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
+//                            toast.show();
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
-        ToggleButton locateBtn = (ToggleButton)mView.findViewById(R.id.setting_locate);
-        locateBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                NetService service = new NetService(self.getActivity());
-                service.switchSetting(Setting.LocateSetting, isChecked, new NetService.NetCallBack() {
-                    @Override
-                    public void onCall(NetProtocol result) {
-                        if(result.code == NetProtocol.SUCCESS){
-                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
-                            toast.show();
-                        }
-                    }
-                });
-            }
-        });
+        Switch pushBtn = (Switch)mView.findViewById(R.id.setting_push);
+
 
         logoutBtn = (Button)mView.findViewById(R.id.logout_confirm_btn);
         logoutBtn.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +104,14 @@ public class SettingFragment extends BaseFragment{
             public void onClick(View v) {
                 Intent i = new Intent(self.getActivity(),BaiduMapActivity.class);
                 startActivity(i);
+            }
+        });
+
+        mView.findViewById(R.id.exit_confirm_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(0);
             }
         });
         return  mView;
