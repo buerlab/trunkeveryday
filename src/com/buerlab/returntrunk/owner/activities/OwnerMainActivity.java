@@ -182,8 +182,6 @@ public class OwnerMainActivity extends BaseActivity implements JPushCenter.OnJpu
                 }
             }
         });
-
-        service.uploadLocation(100.2,33333,"hubeu", "guangdjong","jfkdlasdf", null);
     }
 
     private void performRestoreInstanceState(Bundle savedInstanceState) {

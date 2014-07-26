@@ -39,9 +39,13 @@ public class SendGoodsBillFragment extends BaseFragment implements EventCenter.O
         ImageView sendBtn = (ImageView)view.findViewById(R.id.send_bill_send_btn);
 
         ListView listView = (ListView)view.findViewById(R.id.send_bill_list);
-        mAdapter = new SendBillListAdapter(getActivity());
+        if(mAdapter == null){
+            mAdapter = new SendBillListAdapter(getActivity());
+            listView.setAdapter(mAdapter);
+        }
+
         tips = (LinearLayout)view.findViewById(R.id.send_bill_frag_tips);
-        listView.setAdapter(mAdapter);
+
 
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override

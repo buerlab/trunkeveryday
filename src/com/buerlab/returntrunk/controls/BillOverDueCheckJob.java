@@ -28,7 +28,7 @@ public class BillOverDueCheckJob extends ScheduleJob {
                     billsToUpdate.add(bill.id);
                 billValidTimeMap.put(bill.id, validtime);
 
-                if(bill.getValidLeftSec()<0){
+                if(bill.getValidLeftSec()<=0){
                     billsToRemove.add(bill.id);
                 }
             }
