@@ -94,14 +94,23 @@ public class SendBillView extends LinearLayout {
         ((TextView)mContainer.findViewById(R.id.new_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)mContainer.findViewById(R.id.new_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)mContainer.findViewById(R.id.new_bill_time)).setText(Utils.timestampToDisplay(bill.time));
-        ((TextView)mContainer.findViewById(R.id.new_bill_comment)).setText(String.valueOf(bill.comment));
+
+        TextView commentTV = ((TextView)mContainer.findViewById(R.id.new_bill_comment));
+        if(bill.comment==null || bill.comment.length()==0){
+            commentTV.setVisibility(GONE);
+            commentTV.setText("");
+        }else {
+            commentTV.setVisibility(VISIBLE);
+            commentTV.setText(bill.comment);
+        }
         updateValidTime();
         updateVisitTimes();
 
         if(bill.billType.equals(Bill.BILLTYPE_GOODS)){
             ((TextView)mContainer.findViewById(R.id.new_bill_goods)).setText(bill.material);
-            ((TextView)mContainer.findViewById(R.id.new_bill_weight)).setText(String.valueOf(bill.weight));
-            ((TextView)mContainer.findViewById(R.id.new_bill_price)).setText(String.valueOf(bill.price));
+            ((TextView)mContainer.findViewById(R.id.new_bill_weight)).setText(Utils.getStringByFloat(bill.weight));
+
+            ((TextView)mContainer.findViewById(R.id.new_bill_price)).setText(Utils.getStringByFloat(bill.price));
         }
     }
 

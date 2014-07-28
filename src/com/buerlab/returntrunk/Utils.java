@@ -461,4 +461,10 @@ public class Utils {
             }
             return  value;
     }
+
+    public static String getStringByFloat(float num){
+        java.text.DecimalFormat df= new java.text.DecimalFormat("#,##0.0");
+        String strValue = df.format(num);
+        return strValue;
+    }
 }

@@ -8,10 +8,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import com.buerlab.returntrunk.PhoneCallListener;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
 import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.models.Address;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
@@ -69,7 +71,10 @@ public class PhoneConfirmDialog2 extends Dialog{
             //TODO 货主版
         }
 
-
+        ((TextView)findViewById(R.id.nickname)).setText(mBill.senderName);
+        ((TextView)findViewById(R.id.find_bill_from)).setText(new Address(mBill.from).toShortString());
+        ((TextView)findViewById(R.id.find_bill_to)).setText(new Address(mBill.to).toShortString());
+        ((TextView)findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(mBill.time));
 //        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
 //        pickAddrView.setListener(this);
 

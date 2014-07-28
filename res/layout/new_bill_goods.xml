@@ -55,7 +55,7 @@
                            android:src="@drawable/sj"/>
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="回程时间: "
+                          android:text="发货时间: "
                           android:textColor="@color/sub_text_color"
                         />
                 <TextView android:layout_width="wrap_content"
@@ -83,7 +83,7 @@
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/new_bill_visitedtimes"
-                          android:text="2,123次"
+                          android:text="0次"
                           android:textColor="@color/sub_text_color"
                         />
             </LinearLayout>
@@ -100,7 +100,7 @@
                        android:src="@drawable/yxq"/>
             <TextView android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:text="有效时间: "
+                      android:text="有效期: "
                       android:textColor="@color/sub_text_color"
                     />
             <TextView android:id="@+id/new_bill_valid_time"
@@ -126,6 +126,7 @@
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:text="食品"
+                          android:maxLength="6"
                           android:id="@+id/new_bill_goods"
                           android:textColor="@color/text_color"
                         />
@@ -144,7 +145,12 @@
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:id="@+id/new_bill_weight"
-                          android:text="10吨"
+                          android:text="10"
+                          android:textColor="@color/text_color"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="吨"
                           android:textColor="@color/text_color"
                         />
             </LinearLayout>
@@ -160,13 +166,18 @@
                     >
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="期待价格: "
+                          android:text="期望价格: "
                           android:textColor="@color/text_color"
                         />
                 <TextView android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:text="1200元"
+                          android:text="1200"
                           android:id="@+id/new_bill_price"
+                          android:textColor="@color/text_color"
+                        />
+                <TextView android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="元"
                           android:textColor="@color/text_color"
                         />
             </LinearLayout>

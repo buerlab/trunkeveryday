@@ -23,7 +23,7 @@ public class BillViewContxtMenu extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        CharSequence[] menuItems = {"删除", "取消"};
+        CharSequence[] menuItems = {"删除"};
         builder.setItems(menuItems, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
