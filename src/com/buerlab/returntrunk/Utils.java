@@ -102,7 +102,7 @@ public class Utils {
             }else {
                 //默认
                 ret = calendar.get(Calendar.YEAR)+"年"+(calendar.get(Calendar.MONTH)+1)+"月"+
-                        calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+" "+hours+"点";
+                        calendar.get(Calendar.DAY_OF_MONTH)+"日 "+period+""+hours+"点";
             }
             return ret;
 

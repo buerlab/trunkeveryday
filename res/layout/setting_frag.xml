@@ -109,7 +109,6 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                android:visibility="gone"
                 android:id="@+id/commment_myself"
                 android:text="给自己写评价(货主评司机、司机评货主)"
                 />

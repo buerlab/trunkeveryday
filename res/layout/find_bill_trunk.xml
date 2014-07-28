@@ -5,7 +5,8 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content">
 
-    <LinearLayout style="@style/infogroup_group_wrapper">
+    <LinearLayout style="@style/infogroup_group_wrapper"
+                  android:paddingBottom="5dp">
         <FrameLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="horizontal">
@@ -29,16 +30,17 @@
                 >
             <LinearLayout android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
-                          android:paddingLeft="15dp"
+                          android:paddingLeft="20dp"
                           android:layout_weight="1"
                           android:orientation="vertical">
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="fill_parent"
-                              android:layout_marginTop="8dp"
+                              android:layout_marginTop="5dp"
                               android:layout_weight="1">
                     <TextView android:layout_width="wrap_content"
                               android:layout_height="wrap_content"
                               android:layout_gravity="center_vertical"
+
                               android:text="广州•白云区"
                               android:textStyle="bold"
                               android:id="@+id/find_bill_from"
@@ -59,7 +61,7 @@
                 </LinearLayout>
                 <LinearLayout android:layout_width="wrap_content"
                               android:layout_height="fill_parent"
-                              android:layout_marginTop="8dp"
+                              android:layout_marginTop="5dp"
                               android:layout_weight="1">
                     <!--<TextView android:layout_width="wrap_content"-->
                               <!--android:layout_height="wrap_content"-->
@@ -72,11 +74,12 @@
                               android:id="@+id/find_bill_time"
                               android:layout_gravity="center_vertical"
                               android:text="2014-06-16"
+                              android:textColor="@color/sub_text_color_2"
                               android:textSize="16sp"
                             />
                 </LinearLayout>
                 <LinearLayout android:layout_width="fill_parent"
-                              android:layout_marginTop="8dp"
+                              android:layout_marginTop="5dp"
                               android:layout_height="wrap_content">
                     <LinearLayout android:layout_width="wrap_content"
                                   android:layout_height="fill_parent"
@@ -85,6 +88,7 @@
                         <ImageView android:id="@+id/find_bill_trunk_logo"
                                    android:layout_width="wrap_content"
                                    android:layout_height="wrap_content"
+                                   android:layout_marginLeft="-5dp"
                                    android:layout_gravity="center_vertical"
                                    android:src="@drawable/che_jzxc"
                                 />
@@ -93,17 +97,14 @@
                                   android:id="@+id/find_bill_trunk"
                                   android:layout_gravity="center_vertical"
                                   android:text="平板车"
+                                  android:textColor="@color/sub_text_color_2"
                                   android:textSize="16sp"
                                 />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="wrap_content"
-                                  android:layout_height="fill_parent"
-                                  android:layout_weight="1">
-
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:layout_gravity="center_vertical"
-                                  android:text="车长："
+                                  android:textColor="@color/sub_text_color_2"
+                                  android:text=" 长"
                                   android:textSize="16sp"
                                 />
                         <TextView android:layout_width="wrap_content"
@@ -111,26 +112,41 @@
                                   android:id="@+id/find_bill_length"
                                   android:layout_gravity="center_vertical"
                                   android:text="15"
+                                  android:textColor="@color/sub_text_color_2"
                                   android:textSize="16sp"
                                 />
-                    </LinearLayout>
-                    <LinearLayout android:layout_width="wrap_content"
-                                  android:layout_height="fill_parent"
-                                  android:layout_weight="1">
-
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:layout_gravity="center_vertical"
-                                  android:text="载重："
+                                  android:textColor="@color/sub_text_color_2"
+                                  android:text="米 "
+                                  android:textSize="16sp"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="载重"
+                                  android:textColor="@color/sub_text_color_2"
                                   android:textSize="16sp"
                                 />
                         <TextView android:layout_width="wrap_content"
                                   android:layout_height="wrap_content"
                                   android:id="@+id/find_bill_load"
                                   android:layout_gravity="center_vertical"
-                                  android:text="4t"
+                                  android:text="4"
+                                  android:textColor="@color/sub_text_color_2"
                                   android:textSize="16sp"
                                 />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="吨"
+                                  android:textColor="@color/sub_text_color_2"
+                                  android:textSize="16sp"
+                                />
+
+
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -142,6 +158,17 @@
                        android:src="@drawable/bq_dh2"
                        android:layout_height="wrap_content"/>
         </LinearLayout>
+        <android.support.v7.widget.GridLayout
+                android:background="@drawable/trunkpic_grid_wrapper"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:columnCount="4"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:id="@+id/trunk_gridlayout">
+        </android.support.v7.widget.GridLayout>
     </LinearLayout>
 
 </LinearLayout>

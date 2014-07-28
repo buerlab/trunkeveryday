@@ -2,7 +2,7 @@
 
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: /Users/zhongqiling/adedu/trunk/src/com/sina/sso/RemoteSSO.aidl
+ * Original file: /Users/teddywu/Documents/codes/retrunk/trunkapp/trunkeveryday/src/com/sina/sso/RemoteSSO.aidl
  */
 package com.sina.sso;
 public interface RemoteSSO extends android.os.IInterface

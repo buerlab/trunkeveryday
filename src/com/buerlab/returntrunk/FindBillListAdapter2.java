@@ -20,9 +20,10 @@ public class FindBillListAdapter2 extends BaseAdapter {
 
     private List<RecommendBill> mBills = new ArrayList<RecommendBill>();
     private LayoutInflater mInflater = null;
-
+    private Context mContext;
     public FindBillListAdapter2(Context context){
         mInflater = LayoutInflater.from(context);
+        mContext = context;
     }
 
     public void setBills(List<RecommendBill> bills){
@@ -48,6 +49,7 @@ public class FindBillListAdapter2 extends BaseAdapter {
         final RecommendBill bill = mBills.get(position);
         View view = convertView;
         if(view == null){
+
             view = ViewsFactory.createFindBill(mInflater, bill);
         }else{
             ViewsFactory.fillFindBill(view, bill);
