@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout style="@style/infogroup_group_wrapper">
+        <FrameLayout android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:orientation="horizontal">
+            <com.buerlab.returntrunk.views.NickNameBarView
+                    android:id="@+id/find_bill_user_bar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+            </com.buerlab.returntrunk.views.NickNameBarView>
+            <ImageView android:id="@+id/find_bill_type_logo"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="end"
+                       android:src="@drawable/bq_hcc2"/>
+        </FrameLayout>
+
+        <LinearLayout android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+
+                >
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:paddingLeft="15dp"
+                          android:layout_weight="1"
+                          android:orientation="vertical">
+                <LinearLayout android:layout_width="fill_parent"
+                              android:layout_marginTop="8dp"
+                              android:paddingTop="10dp"
+                              android:paddingBottom="10dp"
+                              android:layout_height="wrap_content">
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="fill_parent"
+                                  android:layout_weight="1">
+
+                        <ImageView android:id="@+id/find_bill_trunk_logo"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_gravity="center_vertical"
+                                   android:src="@drawable/che_jzxc"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:id="@+id/find_bill_trunk"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="平板车"
+                                  android:textSize="16sp"
+                                />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="fill_parent"
+                                  android:layout_weight="1">
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="车长："
+                                  android:textSize="16sp"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:id="@+id/find_bill_length"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="15"
+                                  android:textSize="16sp"
+                                />
+                    </LinearLayout>
+                    <LinearLayout android:layout_width="wrap_content"
+                                  android:layout_height="fill_parent"
+                                  android:layout_weight="1">
+
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="载重："
+                                  android:textSize="16sp"
+                                />
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:id="@+id/find_bill_load"
+                                  android:layout_gravity="center_vertical"
+                                  android:text="4t"
+                                  android:textSize="16sp"
+                                />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+            <ImageView android:layout_width="wrap_content"
+                       android:layout_weight="0"
+                       android:layout_gravity="center"
+                       android:id="@+id/find_bill_phone"
+                       android:src="@drawable/bq_dh2"
+                       android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

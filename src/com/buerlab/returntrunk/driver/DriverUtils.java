@@ -27,7 +27,7 @@ public class DriverUtils {
                 activity.finish();
             }else{
                 String tips ="";
-                if(result.msg!=null && !result.msg.isEmpty()){
+                if(result.msg!=null && result.msg.length() > 0){
                     tips = result.msg;
                 }else{
                     tips= "http request error, code:"+result.code+"msg:"+result.msg;

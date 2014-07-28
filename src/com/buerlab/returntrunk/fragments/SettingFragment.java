@@ -16,6 +16,7 @@ import com.buerlab.returntrunk.activities.LoginActivity;
 import com.buerlab.returntrunk.activities.UserCompleteDataActivity;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
 import com.buerlab.returntrunk.models.Setting;
+import com.buerlab.returntrunk.models.Settings;
 import com.buerlab.returntrunk.models.User;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
@@ -38,42 +39,46 @@ public class SettingFragment extends BaseFragment{
 
         mView = inflater.inflate(R.layout.setting_frag, container, false);
 //        init();
-
-//        final ToggleButton notifyBtn = (ToggleButton)mView.findViewById(R.id.setting_notify);
-//        notifyBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                NetService service = new NetService(self.getActivity());
-//                service.switchSetting(Setting.PushSetting, isChecked, new NetService.NetCallBack() {
-//                    @Override
-//                    public void onCall(NetProtocol result) {
-//                        if(result.code == NetProtocol.SUCCESS){
-//                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
-//                            toast.show();
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//
-//        ToggleButton locateBtn = (ToggleButton)mView.findViewById(R.id.setting_locate);
-//        locateBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                NetService service = new NetService(self.getActivity());
-//                service.switchSetting(Setting.LocateSetting, isChecked, new NetService.NetCallBack() {
-//                    @Override
-//                    public void onCall(NetProtocol result) {
-//                        if(result.code == NetProtocol.SUCCESS){
-//                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
-//                            toast.show();
-//                        }
-//                    }
-//                });
-//            }
-//        });
+        Settings userSetting = User.getInstance().getSetting();
 
         Switch pushBtn = (Switch)mView.findViewById(R.id.setting_push);
+        pushBtn.setChecked(userSetting.push);
+        pushBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                NetService service = new NetService(self.getActivity());
+                service.switchSetting(Setting.PushSetting, isChecked, new NetService.NetCallBack() {
+                    @Override
+                    public void onCall(NetProtocol result) {
+                        if(result.code == NetProtocol.SUCCESS){
+
+                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
+                            toast.show();
+                        }
+                    }
+                });
+            }
+        });
+
+        Switch locateBtn = (Switch)mView.findViewById(R.id.setting_locate);
+        locateBtn.setChecked(userSetting.gps);
+        locateBtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                NetService service = new NetService(self.getActivity());
+                service.switchSetting(Setting.LocateSetting, isChecked, new NetService.NetCallBack() {
+                    @Override
+                    public void onCall(NetProtocol result) {
+                        if(result.code == NetProtocol.SUCCESS){
+                            Toast toast = Toast.makeText(self.getActivity(), "成功", 2);
+                            toast.show();
+                        }
+                    }
+                });
+            }
+        });
+
+
 
 
         logoutBtn = (Button)mView.findViewById(R.id.logout_confirm_btn);

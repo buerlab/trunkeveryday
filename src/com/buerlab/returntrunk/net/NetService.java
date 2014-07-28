@@ -86,7 +86,7 @@ public class NetService {
     public void switchSetting(String setingType, boolean isAllow, NetCallBack callBack){
         Map<String, String> parmsMap = new HashMap<String, String>();
         parmsMap.put(setingType, boolToString(isAllow));
-        urlRequest(mContext.getString(R.string.server_addr) + "api/user/setting", createReqParms(null), "POST", callBack);
+        urlRequest(mContext.getString(R.string.server_addr) + "api/user/setting", createReqParms(parmsMap), "POST", callBack);
     }
 
     //////////////////////////

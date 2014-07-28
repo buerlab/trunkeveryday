@@ -189,27 +189,25 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
-        String versionType = Utils.getVersionType(this);
-        if(versionType.equals( "driver")){
-            Intent intent = new Intent(self,InitDriverActivity.class);
-            intent.putExtra("phonenum",phonenum);
-            startActivity(intent);
-        }else if(versionType.equals( "owner")) {
-            Intent intent = new Intent(self,InitOwnerActivity.class);
-            intent.putExtra("phonenum",phonenum);
-            startActivity(intent);
-        }else {
-            Utils.showToast(this,"versonType error");
-            return;
-        }
-
-
-
         if(regCode.length()!=6){
             //TODO 删掉验证码，聚焦
             Utils.showToast(this,"手机号码格式错误，请重新输入");
             return;
         }
+//
+//        String versionType = Utils.getVersionType(this);
+//        if(versionType.equals( "driver")){
+//            Intent intent = new Intent(self,InitDriverActivity.class);
+//            intent.putExtra("phonenum",phonenum);
+//            startActivity(intent);
+//        }else if(versionType.equals( "owner")) {
+//            Intent intent = new Intent(self,InitOwnerActivity.class);
+//            intent.putExtra("phonenum",phonenum);
+//            startActivity(intent);
+//        }else {
+//            Utils.showToast(this,"versonType error");
+//            return;
+//        }
 
         mService.verifyRegCode(phonenum, regCode, new NetService.NetCallBack() {
             @Override
@@ -233,7 +231,6 @@ public class RegisterActivity extends BaseActivity {
                                     startActivity(intent);
                                 }else {
                                     Utils.showToast(self,"versonType error");
-
                                 }
 
                             }else {

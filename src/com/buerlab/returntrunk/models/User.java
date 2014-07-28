@@ -70,6 +70,12 @@ public class User {
     public Settings driverSettings;
     public Settings ownerSettings;
 
+    public boolean driverCanPush = true;
+    public boolean ownerCanPush = true;
+
+    public boolean driverCanLocate = true;
+    public boolean ownerCanLocate = true;
+
     static private User instance = null;
     static public User getInstance(){
         if(instance == null){
@@ -150,6 +156,7 @@ public class User {
             if(obj.has("driverSettings")){
                 this.driverSettings = extrackSettings(obj.getJSONObject("driverSettings"));
             }
+
 
         }catch (JSONException e){
             Log.d("USER INIT ERROR", e.toString());
@@ -242,6 +249,9 @@ public class User {
     }
     public int getNewBillId(){
         return newBill;
+    }
+    public Settings getSetting(){
+        return userType == User.USERTYPE_TRUNK ? driverSettings : ownerSettings;
     }
 
     public static Settings extrackSettings(JSONObject data){
