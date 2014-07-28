@@ -264,6 +264,29 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         holder.loadTxtView.setText(String.valueOf(trunk.load));
         holder.lengthTxtView.setText(String.valueOf(trunk.length));
 
+        holder.licensePlateTxtView.setText(trunk.lisencePlate);
+        holder.typeTxtView.setText(trunk.type);
+        double num1 = ((int)(trunk.load*10))/10.0;
+        holder.loadTxtView.setText(num1+"吨");
+        num1 =  ((int)(trunk.length)*10)/10.0;
+        holder.lengthTxtView.setText(num1+ "米");
+
+        holder.typeIcon = (ImageView)convertView.findViewById(R.id.type_icon);
+
+        if(trunk.type.equals("厢车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_xc);
+        }else if(trunk.type.equals("低栏车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_dlc);
+        }else if(trunk.type.equals("高栏车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_glc);
+        }else if(trunk.type.equals("集装车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_jzxc);
+        }else if(trunk.type.equals("面包车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_mbc);
+        }else if(trunk.type.equals("平板车") ){
+            holder.typeIcon.setImageResource(R.drawable.che_cbc);
+        }
+
         int trunkLisenceVerified2 =  Integer.parseInt(trunk.trunkLicenseVerified);
         switch (trunkLisenceVerified2){
             case 0: holder.verifyIcon.setImageResource(R.drawable.qt2_zy);
@@ -277,9 +300,11 @@ public class UserCompleteDataActivity extends BackBaseActivity {
             default:break;
         }
 
+
         ImageLoader imageLoader = ImageLoader.getInstance();
         holder.picGridLayout.removeAllViews();
         int width = (Utils.getScreenSize()[0] - 40)/4;
+        holder.picGridLayout.setColumnCount(4);
         if(trunk.trunkPicFilePaths!=null){
             for(int i =0;i<trunk.trunkPicFilePaths.size();i++){
                 ImageView iv = new ImageView(this);
@@ -340,6 +365,7 @@ public class UserCompleteDataActivity extends BackBaseActivity {
         public TextView verifyText;
         public GridLayout picGridLayout;
         public ImageView isUsedImageView;
+        public ImageView typeIcon;
         public int position;
         public int isVerified;
     }

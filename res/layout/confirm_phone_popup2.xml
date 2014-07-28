@@ -4,8 +4,14 @@
               android:orientation="vertical"
               android:layout_width="wrap_content"
               android:gravity="center_vertical"
-              android:id="@+id/dialog_wrapper"
+
               android:layout_height="wrap_content">
+    <LinearLayout android:layout_width="fill_parent"
+                  android:orientation="vertical"
+                  android:id="@+id/dialog_wrapper"
+                  android:layout_height="wrap_content">
+
+
        <RelativeLayout android:layout_width="match_parent"
                      android:layout_height="wrap_content"
                      android:gravity="center_horizontal"
@@ -115,6 +121,7 @@
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
+                      android:id="@+id/button_yes"
                       android:background="@drawable/tc1"
                       android:gravity="center_horizontal">
             <TextView android:layout_width="wrap_content"
@@ -130,6 +137,7 @@
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_weight="1"
+                      android:id="@+id/button_no"
                       android:background="@drawable/tc2"
                       android:gravity="center_horizontal">
             <TextView android:layout_width="wrap_content"
@@ -141,5 +149,6 @@
                       android:text="否"
                     />
         </LinearLayout>
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>

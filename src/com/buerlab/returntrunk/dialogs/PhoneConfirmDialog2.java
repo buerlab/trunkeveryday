@@ -2,11 +2,19 @@ package com.buerlab.returntrunk.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import com.buerlab.returntrunk.PhoneCallListener;
 import com.buerlab.returntrunk.R;
 import com.buerlab.returntrunk.Utils;
+import com.buerlab.returntrunk.activities.BaseActivity;
+import com.buerlab.returntrunk.models.Bill;
+import com.buerlab.returntrunk.net.NetProtocol;
+import com.buerlab.returntrunk.net.NetService;
 import com.buerlab.returntrunk.utils.EventLogUtils;
 
 /**
@@ -15,6 +23,7 @@ import com.buerlab.returntrunk.utils.EventLogUtils;
 public class PhoneConfirmDialog2 extends Dialog{
 
     private Context mConext;
+    private Bill mBill;
     public PhoneConfirmDialog2(Context context) {
         super(context);
         mConext = context;
@@ -22,9 +31,10 @@ public class PhoneConfirmDialog2 extends Dialog{
     }
 
 
-    public PhoneConfirmDialog2(Context context, int theme) {
+    public PhoneConfirmDialog2(Context context,Bill bill, int theme) {
         super(context, theme);
         mConext = context;
+        mBill = bill;
         init();
     }
 
@@ -58,16 +68,69 @@ public class PhoneConfirmDialog2 extends Dialog{
         }else {
             //TODO 货主版
         }
+
+
 //        PickAddrView pickAddrView = (PickAddrView)findViewById(R.id.pick_addr_view);
 //        pickAddrView.setListener(this);
 
-//        Button b = (Button)findViewById(R.id.btn_ok);
-//        b.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dismiss();
-//            }
-//        });
+        findViewById(R.id.button_yes).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(BaseActivity.currActivity != null){
+                    if(mBill.phoneNum.length() > 0){
+                        NetService service = new NetService(mConext);
+                        service.billCall(mBill.senderId, mBill.billType, new NetService.NetCallBack() {
+                            @Override
+                            public void onCall(NetProtocol result) {
+                                if(result.code == NetProtocol.SUCCESS){
+                                    Utils.showToast(mConext,"billcall ok!");
+                                }
+                            }
+                        });
+
+                        new PhoneCallListener(mConext)
+                                .listen(new PhoneCallListener.OnPhoneCallBack() {
+                                    @Override
+                                    public void onCalling() {
+                                    }
+
+                                    @Override
+                                    public void onCallEnd() {
+                                        RequestBillDialog dialog = new RequestBillDialog(mConext, R.style.dialog, mBill);
+                                        dialog.show();
+                                    }
+                                });
+
+                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mBill.phoneNum));
+                        BaseActivity.currActivity.startActivity(intent);
+
+                    }else{
+                        Utils.showToast(BaseActivity.currActivity,"该用户没有手机号");
+                    }
+                }
+                dismiss();
+            }
+        });
+
+        findViewById(R.id.button_no).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
+        diaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        findViewById(R.id.dialog_wrapper).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
 
     }
 

@@ -1,5 +1,7 @@
 package com.buerlab.returntrunk.models;
 
+import java.util.ArrayList;
+
 /**
  * Created by zhongqiling on 14-7-22.
  */

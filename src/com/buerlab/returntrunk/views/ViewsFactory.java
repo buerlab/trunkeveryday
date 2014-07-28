@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.support.v7.widget.*;
+import android.support.v7.widget.GridLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.buerlab.returntrunk.PhoneCallListener;
 import com.buerlab.returntrunk.PickBillCallListener;
+import com.buerlab.returntrunk.activities.OnPhotoClick;
 import com.buerlab.returntrunk.dialogs.AddCommentDialog;
+import com.buerlab.returntrunk.dialogs.PhoneConfirmDialog2;
 import com.buerlab.returntrunk.dialogs.RequestBillDialog;
 import com.buerlab.returntrunk.models.*;
 import com.buerlab.returntrunk.R;
@@ -22,7 +26,9 @@ import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
+import com.buerlab.returntrunk.owner.fragments.FindDriverFragment;
 import com.buerlab.returntrunk.utils.MultiPicSelector.Util;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -74,7 +80,7 @@ public class ViewsFactory {
 
     static public void fillFindBill(final View bView, final RecommendBill recommendBill){
         final Bill bill = recommendBill.bill;
-        ((NickNameBarView)bView.findViewById(R.id.find_bill_user_bar)).setUser(recommendBill.userData);
+        ((NickNameBarView)bView.findViewById(R.id.find_bill_user_bar)).setUser(recommendBill.userData,User.getInstance().getUserType());
         ((TextView)bView.findViewById(R.id.find_bill_from)).setText(new Address(bill.from).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_to)).setText(new Address(bill.to).toShortString());
         ((TextView)bView.findViewById(R.id.find_bill_time)).setText(Utils.timestampToDisplay(bill.time));
@@ -84,9 +90,45 @@ public class ViewsFactory {
             ((TextView)bView.findViewById(R.id.find_bill_price)).setText(String.valueOf(bill.price));
         }
         else if(bill.billType.equals(Bill.BILLTYPE_TRUNK)){
-
+            ImageView typeIcon = ((ImageView)bView.findViewById(R.id.find_bill_trunk_logo));
+            ((TextView)bView.findViewById(R.id.find_bill_trunk)).setText(bill.trunkType);
             ((TextView)bView.findViewById(R.id.find_bill_load)).setText(String.valueOf(bill.trunkLoad));
             ((TextView)bView.findViewById(R.id.find_bill_length)).setText(String.valueOf(bill.trunkLength));
+            android.support.v7.widget.GridLayout gridLayout = (android.support.v7.widget.GridLayout)bView.findViewById(R.id.trunk_gridlayout);
+            gridLayout.removeAllViews();
+            ImageLoader imageLoader = ImageLoader.getInstance();
+            int width = (Utils.getScreenSize()[0] - 100)/8;
+                if(recommendBill.userData.trunkPicFilePaths!=null){
+                    for(int i =0;i<recommendBill.userData.trunkPicFilePaths.size();i++){
+                        ImageView iv = new ImageView(bView.getContext());
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+                        params.setMargins(0,0,5,0);
+                        params.width = width;
+                        params.height = width;
+                        gridLayout.addView(iv,params);
+
+                        imageLoader.displayImage(bView.getContext().getString(R.string.server_addr2)+recommendBill.userData.trunkPicFilePaths.get(i),iv);
+                        iv.setOnClickListener(new OnPhotoClick(bView.getContext(), i,recommendBill.userData.trunkPicFilePaths));
+                    }
+                    gridLayout.setVisibility(View.VISIBLE);
+                }else {
+                    gridLayout.setVisibility(View.GONE);
+                }
+
+            if(bill.trunkType.equals("厢车") ){
+                typeIcon.setImageResource(R.drawable.che_xc);
+            }else if(bill.trunkType.equals("低栏车") ){
+                typeIcon.setImageResource(R.drawable.che_dlc);
+            }else if(bill.trunkType.equals("高栏车") ){
+                typeIcon.setImageResource(R.drawable.che_glc);
+            }else if(bill.trunkType.equals("集装车") ){
+                typeIcon.setImageResource(R.drawable.che_jzxc);
+            }else if(bill.trunkType.equals("面包车") ){
+                typeIcon.setImageResource(R.drawable.che_mbc);
+            }else if(bill.trunkType.equals("平板车") ){
+                typeIcon.setImageResource(R.drawable.che_cbc);
+            }
         }
 
         ImageView typeLogo = (ImageView)bView.findViewById(R.id.find_bill_type_logo);
@@ -100,46 +142,21 @@ public class ViewsFactory {
         phoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(BaseActivity.currActivity != null){
-                    if(bill.phoneNum.length() > 0){
-                        NetService service = new NetService(bView.getContext());
-                        service.billCall(bill.senderId, bill.billType, new NetService.NetCallBack() {
-                            @Override
-                            public void onCall(NetProtocol result) {
-                                if(result.code == NetProtocol.SUCCESS){
-                                    Toast toast = Toast.makeText(bView.getContext(), "billcall ok!", 2);
-                                    toast.show();
-                                }
-                            }
-                        });
 
-                        new PhoneCallListener(bView.getContext())
-                                .listen(new PhoneCallListener.OnPhoneCallBack() {
-                                    @Override
-                                    public void onCalling() {
-                                    }
-
-                                    @Override
-                                    public void onCallEnd() {
-                                        RequestBillDialog dialog = new RequestBillDialog(bView.getContext(), R.style.dialog, bill);
-                                        dialog.show();
-                                    }
-                                });
-
-                        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + bill.phoneNum));
-                        BaseActivity.currActivity.startActivity(intent);
-
-
-                    }else{
-                            Toast toast = Toast.makeText(BaseActivity.currActivity, "该用户没有手机号", 2);
-                            toast.show();
-                    }
-                }
-
+                PhoneConfirmDialog2 phoneConfirmDialog2 = new PhoneConfirmDialog2(bView.getContext(),bill,R.style.dialog);
+                phoneConfirmDialog2.show();
             }
         });
 
+
+        bView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                return;
+            }
+        });
     }
+
 
     static public View createSendBill(LayoutInflater inflater, final Bill bill){
         int layoutId = bill.billType.equals(Bill.BILLTYPE_GOODS) ? R.layout.new_bill_goods : R.layout.new_bill_trunk;

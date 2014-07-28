@@ -29,13 +29,13 @@
 
 
     <LinearLayout android:id="@+id/bottomtab"
+                  android:background="@drawable/tab_wrapper"
                   android:layout_width="fill_parent"
-                  android:layout_height="56dp"
+                  android:layout_height="50dp"
                   android:orientation="horizontal"
-                  android:background="@drawable/dbtab"
                   android:clipToPadding="false">
         <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="52dp"
+                      android:layout_height="50dp"
                       android:layout_weight="1"
                       android:gravity="center_horizontal"
                       android:id="@+id/tab_trunk_wrapper"
@@ -57,14 +57,12 @@
                     />
          </LinearLayout>
         <LinearLayout android:layout_width="1dp"
-                      android:layout_height="60dp"
+                      android:layout_height="50dp"
                       android:layout_weight="0"
-                      android:background="#E2E2E2"
-                >
-
-                      </LinearLayout>
+                      android:background="#E2E2E2">
+        </LinearLayout>
         <LinearLayout android:layout_width="wrap_content"
-                      android:layout_height="52dp"
+                      android:layout_height="50dp"
                       android:layout_weight="1"
                       android:gravity="center_horizontal"
                       android:id="@+id/tab_goods_wrapper"
@@ -85,19 +83,5 @@
                       android:text="预约发货"
                     />
         </LinearLayout>
-        <!--<Button android:id="@+id/bottom_send_btn"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="找车"-->
-                <!--android:textColor="#000000"-->
-                <!--android:background="#999999"/>-->
-        <!--<Button android:id="@+id/bottom_list_btn"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="50dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="发货"-->
-                <!--android:textColor="#000000"-->
-                <!--android:background="#999999"/>-->
     </LinearLayout>
 </LinearLayout>

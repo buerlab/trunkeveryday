@@ -438,7 +438,7 @@ public class NetService {
 
     public void urlRequest(String url, String parms, String method, final NetCallBack callback){
         if(!Utils.isNetworkConnected(mContext)){
-            Utils.showToast(mContext,"当前网络不可用，请稍后再试");
+            Utils.showToast(mContext, "当前网络不可用，请稍后再试");
             return;
         }
 
@@ -808,7 +808,8 @@ public class NetService {
         for(int i = 0; i < data.length(); i++){
             try{
                 JSONObject item = data.getJSONObject(i);
-                bills.add(new RecommendBill(new NickBarData(item.getJSONObject("user")), new Bill(item.getJSONObject("bill")),
+                bills.add(new RecommendBill(new NickBarData(item.getJSONObject("user")) ,
+                                            new Bill(item.getJSONObject("bill")),
                                             item.getString("type")));
             }catch (Exception e){
             }

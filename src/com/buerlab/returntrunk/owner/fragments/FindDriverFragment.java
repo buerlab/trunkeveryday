@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,13 @@ import android.widget.ListView;
 import com.buerlab.returntrunk.FindBillListAdapter;
 import com.buerlab.returntrunk.FindBillListAdapter2;
 import com.buerlab.returntrunk.R;
+import com.buerlab.returntrunk.activities.GalleryUrlActivity;
 import com.buerlab.returntrunk.events.DataEvent;
 import com.buerlab.returntrunk.events.EventCenter;
 import com.buerlab.returntrunk.fragments.BaseFragment;
 import com.buerlab.returntrunk.models.Bill;
 import com.buerlab.returntrunk.models.RecommendBill;
+import com.buerlab.returntrunk.models.Trunk;
 import com.buerlab.returntrunk.net.NetProtocol;
 import com.buerlab.returntrunk.net.NetService;
 
@@ -25,6 +28,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,6 +91,7 @@ public class FindDriverFragment extends BaseFragment implements EventCenter.OnEv
         }
 
     }
+
 
     public void refresh(){
         NetService service = new NetService(getActivity());
