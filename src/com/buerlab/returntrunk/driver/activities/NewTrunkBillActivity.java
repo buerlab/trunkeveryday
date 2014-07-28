@@ -47,6 +47,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
     private TextView commentText = null;
     private TextView currEditView = null;
     private TextView validTimeText = null;
+    private Trunk currTrunk = null;
 
     private String currTimeStamp = "";
     private int currValidTimeSec = 5*3600;
@@ -106,6 +107,17 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
         adapter.setDropDownViewResource(R.layout.trunk_span_item);
 
         trunkSpinner.setAdapter(adapter);
+        trunkSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currTrunk = User.getInstance().trunks.get(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         //选择出发地监听事件
@@ -181,6 +193,7 @@ public class NewTrunkBillActivity extends BaseActivity implements EventCenter.On
                 bill.time = currTimeStamp;
                 bill.comment = commentText.getText().toString();
                 bill.validTimeSec = currValidTimeSec;
+                bill.setTrunk(currTrunk);
                 NetService service = new NetService(self);
                 if(!mUpdateMode){
                     final Bill billToSend = bill;

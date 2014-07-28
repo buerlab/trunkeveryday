@@ -384,8 +384,9 @@ public class NetService {
             parmsMap.put("price", String.valueOf(bill.price));
             parmsMap.put("weight", String.valueOf(bill.weight));
         }else{
+            parmsMap.put("trunkType", bill.trunkType);
             parmsMap.put("trunkLength", String.valueOf(bill.trunkLength));
-            parmsMap.put("trunkWeight", String.valueOf(bill.weight));
+            parmsMap.put("trunkLoad", String.valueOf(bill.trunkLoad));
             parmsMap.put("licensePlate", bill.licensePlate);
         }
         return parmsMap;

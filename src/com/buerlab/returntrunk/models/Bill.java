@@ -96,6 +96,16 @@ public class Bill{
                 weight = Float.valueOf(item.getString("weight"));
             if(item.has("price"))
                 price = Float.valueOf(item.getString("price"));
+
+            if(item.has("trunkType"))
+                trunkType = item.getString("trunkType");
+            if(item.has("licensePlate"))
+                licensePlate = item.getString("licensePlate");
+            if(item.has("trunkLength"))
+                trunkLength = Float.valueOf(item.getString("trunkLength"));
+            if(item.has("trunkLoad"))
+                trunkLoad = Float.valueOf(item.getString("trunkLoad"));
+
         }catch (Exception e){
             throw new Exception("bill init from jsonobject error:"+e.getMessage());
         }
